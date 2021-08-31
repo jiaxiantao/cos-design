@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "declaration": true, // 生成 `.d.ts` 文件
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports":true,
+    "esModuleInterop" : true
+  },
+  "include": [
+    "./src/*", 
+    "./index.d.ts" //配置的.d.ts文件
+  ],
+}

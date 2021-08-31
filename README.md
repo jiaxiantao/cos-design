@@ -1,4 +1,4 @@
-## Usage
+## 这是一个奇妙的组件库
 
 #### Start a dev process
 
@@ -15,3 +15,4 @@ yarn build
 # or
 # npm run build
 ```
+
