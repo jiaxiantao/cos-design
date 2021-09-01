@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "description": "cos-deisgn",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
