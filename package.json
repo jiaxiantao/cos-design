@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "1.4.9",
+  "version": "1.5.0",
   "description": "cos-deisgn",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -73,5 +73,9 @@
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   }
 }
