@@ -1,8 +1,8 @@
 {
   "name": "cos-design",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "cos-deisgn",
-  "main": "dist/index.js",
+  "main": "dist/js/module.js",
   "typings": "dist/index.d.ts",
   "keywords": [
     "cos",
@@ -18,9 +18,10 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js",
-    "build": "cross-env NODE_ENV=production  webpack --config webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "build:module": "cross-env NODE_ENV=production BUILD_MODE=module webpack --config webpack.config.js",
     "dev": "npm run start",
-    "pub": "npm run build && npm publish",
+    "pub": "npm run build:module && yarn publish",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
@@ -66,6 +67,7 @@
     "husky": "^7.0.2",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
+    "mini-css-extract-plugin": "^2.2.2",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
