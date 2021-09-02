@@ -4,7 +4,7 @@
  * @Author: jiaxiantao
  * @Date: 2021-08-24 17:47:29
  * @LastEditors: jiaxiantao
- * @LastEditTime: 2021-08-31 17:57:22
+ * @LastEditTime: 2021-09-01 16:36:12
  */
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
@@ -18,7 +18,7 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'MyLibrary',
+    library: 'cos-design-library',
     libraryTarget: 'umd' // 以库的形式导出入口文件时，输出的类型,这里是通过umd的方式来暴露library,适用于使用方import的方式导入npm包
   },
   devtool: 'inline-source-map',
@@ -90,6 +90,10 @@ module.exports = {
     compress: true,
     port: 4000,
     open: true
+  },
+  externals: {
+    react: 'react',
+    'react-dom': 'react-dom'
   },
   plugins: [
     new htmlWebpackPlugin({
