@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "1.6.9",
+  "version": "1.7.0",
   "description": "cos-deisgn",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
