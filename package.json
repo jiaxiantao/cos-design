@@ -1,8 +1,8 @@
 {
   "name": "cos-design",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "cos-deisgn",
-  "main": "dist/js/module.js",
+  "main": "dist/js/index.js",
   "typings": "dist/index.d.ts",
   "keywords": [
     "cos",
