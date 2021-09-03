@@ -1,9 +1,9 @@
 {
   "name": "cos-design",
-  "version": "1.6.5",
+  "version": "1.6.8",
   "description": "cos-deisgn",
-  "main": "dist/js/components.js",
-  "typings": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "keywords": [
     "cos",
     "cos-design"
@@ -11,7 +11,8 @@
   "files": [
     "LICENSE",
     "README.md",
-    "dist/*"
+    "dist/*",
+    "lib/*"
   ],
   "repository": "git@github.com:jiaxiantao/cos-design.git",
   "author": "jiaxiantao <jiaxiantao@souche.com>",
