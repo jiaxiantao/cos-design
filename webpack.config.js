@@ -4,22 +4,37 @@
  * @Author: jiaxiantao
  * @Date: 2021-08-24 17:47:29
  * @LastEditors: jiaxiantao
- * @LastEditTime: 2021-09-01 16:36:12
+ * @LastEditTime: 2021-09-03 16:15:00
  */
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const NODE_ENV = process.env.NODE_ENV || false;
+const BUILD_MODE = process.env.BUILD_MODE || false;
+const isProduction = NODE_ENV === 'production' || false;
+const isModuleBuild = BUILD_MODE === 'module' || false;
 
 module.exports = {
-  mode: 'development',
-
-  entry: './src/index.tsx',
-  // ["./src/index.tsx", "./src/output.ts"], //如果你将 entry 设置为一个 array，那么只有数组中的最后一个会被暴露成库
+  mode: isProduction ? 'production' : 'development',
+  entry: {
+    index: isModuleBuild ? './src/components/index.tsx' : './src/index.tsx'
+  }, //如果你将 entry 设置为一个 array，那么只有数组中的最后一个会被暴露成库
   output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
-    library: 'cos-design-library',
-    libraryTarget: 'umd' // 以库的形式导出入口文件时，输出的类型,这里是通过umd的方式来暴露library,适用于使用方import的方式导入npm包
+    filename: '[name].js',
+    path: path.resolve(__dirname, isModuleBuild ? 'lib' : 'dist'),
+    library: {
+      name: 'cosDesign',
+      type: 'umd' // 以库的形式导出入口文件时，输出的类型,这里是通过umd的方式来暴露library,适用于使用方import的方式导入npm包
+    }
+  },
+  // 实现代码分离
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: 'chunk' // 拆分 chunk 的名称。设为 false 将保持 chunk 的相同名称，因此不会不必要地更改名称。这是生产环境下构建的建议值。
+    }
   },
   devtool: 'inline-source-map',
   module: {
@@ -38,13 +53,13 @@ module.exports = {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
               modules: {
                 mode: 'local',
-                localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                localIdentName: 'cos-[path][name]__[local]--[hash:base64:5]'
               }
             }
           }
@@ -55,19 +70,19 @@ module.exports = {
         test: /\.css$/,
         // 排除业务模块，其他模块都不采用css modules方式解析
         exclude: [/src/],
-        use: ['style-loader', 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.less$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
               modules: {
                 mode: 'local',
-                localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                localIdentName: 'cos-[path][name]__[local]--[hash:base64:5]'
               }
             }
           },
@@ -81,7 +96,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json']
+    extensions: ['.tsx', '.ts', '.js', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
   },
   devServer: {
     static: {
@@ -91,14 +109,22 @@ module.exports = {
     port: 4000,
     open: true
   },
-  externals: {
-    react: 'react',
-    'react-dom': 'react-dom'
-  },
+  externals: isModuleBuild
+    ? {
+        react: 'react',
+        'react-dom': 'react-dom'
+      }
+    : {},
   plugins: [
-    new htmlWebpackPlugin({
-      template: 'public/index.html'
+    new MiniCssExtractPlugin({
+      // 类似于 webpackOptions.output 中的选项
+      // 所有选项都是可选的
+      filename: 'css/[name].css'
     }),
-    new CleanWebpackPlugin()
-  ]
+    !isModuleBuild &&
+      new htmlWebpackPlugin({
+        template: 'public/index.html'
+      }),
+    isProduction && new CleanWebpackPlugin()
+  ].filter(Boolean)
 };
