@@ -2,15 +2,15 @@
   "compilerOptions": {
     "outDir": "./lib/",
     "sourceMap": true,
-    "noImplicitAny": true,
+    "noImplicitAny": true, // 如果没有设置明确的类型会报错，默认值为false
     "declaration": true, // 生成 `.d.ts` 文件
     "module": "es6",
     "target": "es5",
     "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports":true,
-    "esModuleInterop" : true
+    "moduleResolution": "node", // 用于选择模块解析策略，有"node"和"classic"两种类型
+    "allowSyntheticDefaultImports":true, // 用来指定允许从没有默认导出的模块中默认导入
+    "esModuleInterop" : true // 通过导入内容创建命名空间，实现CommonJS和ES模块之间的互操作性
   },
   "include": [
     "./src/*", 
