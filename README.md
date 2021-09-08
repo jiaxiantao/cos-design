@@ -1,4 +1,16 @@
-## 这是一个奇妙的组件库
+## 这是一个 React Hooks 的组件库
+
+#### usage
+
+```bash
+yarn add cos-design
+# or
+# npm install cos-design
+```
+
+```bash
+import { components } from 'cos-design';
+```
 
 #### Start a dev process
 
@@ -15,4 +27,10 @@ yarn build
 # or
 # npm run build
 ```
+#### Build production module
 
+```bash
+yarn build:module
+# or
+# npm run build:module
+```

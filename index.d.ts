@@ -4,10 +4,11 @@
  * @Author: jiaxiantao
  * @Date: 2021-08-24 20:45:47
  * @LastEditors: jiaxiantao
- * @LastEditTime: 2021-08-27 11:49:52
+ * @LastEditTime: 2021-09-06 20:08:33
  */
 declare module '*.less';
 declare module '*.png';
+declare module '*.jpg';
 declare module '*.sass';
 
 declare module '*.svg' {

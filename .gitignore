@@ -1,8 +1,10 @@
 yarn.lock
+yarn-error.log
 dist
+lib
 node_modules
 .vscode
 .doc
-*.log
-*.lock
+
+
 
