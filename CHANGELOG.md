@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-06-18
+
+### Changed
+
+- React 升级至 19，Vite 升级至 8
+- TypeScript、ESLint 9（flat config）、Stylelint 17 等依赖升级至最新稳定版
+- react-router 升级至 v7
+- 最低 Node.js 版本要求提升至 20
+
 ## [2.1.0] - 2026-06-18
 
 ### Added
@@ -43,5 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Webpack 及相关 loader 依赖
 - UMD 格式产物
 
+[2.2.0]: https://github.com/jiaxiantao/cos-design/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/jiaxiantao/cos-design/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/jiaxiantao/cos-design/compare/v1.7.5...v2.0.0

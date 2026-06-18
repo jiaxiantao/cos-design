@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
 [![license](https://img.shields.io/npm/l/cos-design.svg)](https://github.com/jiaxiantao/cos-design/blob/main/LICENSE)
 
-基于 React 18 + Vite 6 + TypeScript 5 的 React 组件库。
+基于 React 19 + Vite 8 + TypeScript 5 的 React 组件库。
 
 ## 特性
 
@@ -50,7 +50,7 @@ function App() {
 
 ## 本地开发
 
-> **要求 Node.js >= 18**（项目含 `.nvmrc`，推荐使用 Node 20）
+> **要求 Node.js >= 20**（项目含 `.nvmrc`，推荐使用 Node 22）
 
 ### 第一步：切换 Node 版本
 

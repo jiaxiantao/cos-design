@@ -14,7 +14,7 @@ export interface ChargeProps {
   initQuantity?: number;
 }
 
-const Charge = (props: ChargeProps): JSX.Element => {
+const Charge = (props: ChargeProps): React.ReactElement => {
   const { initQuantity = 0 } = props;
   const [quantity, setQuantity] = useState(initQuantity);
 

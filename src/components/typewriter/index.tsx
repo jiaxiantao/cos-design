@@ -31,8 +31,10 @@ const Typewriter: React.FC<TypewriterProps> = ({
     if (!isDeleting && displayText === current) {
       timer = setTimeout(() => setIsDeleting(true), pause);
     } else if (isDeleting && displayText === '') {
-      setIsDeleting(false);
-      setTextIndex((i) => (i + 1) % texts.length);
+      timer = setTimeout(() => {
+        setIsDeleting(false);
+        setTextIndex((i) => (i + 1) % texts.length);
+      }, 0);
     } else {
       const next = isDeleting ? current.slice(0, displayText.length - 1) : current.slice(0, displayText.length + 1);
       timer = setTimeout(() => setDisplayText(next), isDeleting ? deleteSpeed : speed);
