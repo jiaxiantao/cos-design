@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-06-18
+
+### Added
+
+- `Fireworks` 烟花特效组件（Canvas，支持自动燃放与点击触发）
+- `MatrixRain` 黑客帝国数字雨背景组件
+- `ParticleNetwork` 粒子连线网络组件（鼠标互动）
+- `Typewriter` 终端风格打字机文字组件
+- `NeonText` 霓虹灯发光文字组件
+- `WaveButton` 波纹扩散按钮组件
+- 开发环境首页组件导航，路由由配置自动生成
+
+### Changed
+
+- 重设计 `Turntable` 为可交互抽奖转盘
+- 修复 `CanvasClock` 画布时钟渲染错位问题
+
 ## [2.0.0] - 2026-06-18
 
 ### Changed
@@ -26,4 +43,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Webpack 及相关 loader 依赖
 - UMD 格式产物
 
+[2.1.0]: https://github.com/jiaxiantao/cos-design/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/jiaxiantao/cos-design/compare/v1.7.5...v2.0.0

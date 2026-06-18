@@ -35,12 +35,18 @@ function App() {
 
 ## 组件
 
-| 组件          | 说明            |
-| ------------- | --------------- |
-| `CanvasClock` | Canvas 画布时钟 |
-| `Charge`      | 充电特效        |
-| `ReturnCity`  | 回城特效        |
-| `Turntable`   | 转盘            |
+| 组件              | 说明                 |
+| ----------------- | -------------------- |
+| `CanvasClock`     | Canvas 画布时钟      |
+| `Charge`          | 充电特效             |
+| `ReturnCity`      | 回城特效             |
+| `Turntable`       | 抽奖转盘             |
+| `Fireworks`       | 烟花特效（点击燃放） |
+| `MatrixRain`      | 黑客帝国数字雨       |
+| `ParticleNetwork` | 粒子连线网络         |
+| `Typewriter`      | 打字机文字效果       |
+| `NeonText`        | 霓虹灯发光文字       |
+| `WaveButton`      | 波纹扩散按钮         |
 
 ## 本地开发
 
@@ -70,15 +76,7 @@ npm run setup
 npx --yes pnpm@9 dev
 ```
 
-访问 `http://localhost:4000` 进入首页，点击卡片跳转到对应组件演示：
-
-| 路由           | 组件             |
-| -------------- | ---------------- |
-| `/`            | 首页（组件导航） |
-| `/canvasClock` | 画布时钟         |
-| `/charge`      | 充电特效         |
-| `/returnCity`  | 回城特效         |
-| `/turntable`   | 转盘             |
+访问 `http://localhost:4000` 进入首页，点击卡片跳转到对应组件演示（共 10 个组件）。
 
 ## 脚本
 
