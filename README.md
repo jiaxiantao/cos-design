@@ -47,6 +47,11 @@ function App() {
 | `Typewriter`      | 打字机文字效果       |
 | `NeonText`        | 霓虹灯发光文字       |
 | `WaveButton`      | 波纹扩散按钮         |
+| `FlipCounter`     | 数字翻牌器           |
+| `Countdown`       | 活动倒计时           |
+| `Confetti`        | 彩纸庆祝喷射         |
+| `GlitchText`      | 故障风发光文字       |
+| `MeteorRain`      | 流星雨背景           |
 
 ## 本地开发
 
@@ -76,7 +81,7 @@ npm run setup
 npx --yes pnpm@9 dev
 ```
 
-访问 `http://localhost:4000` 进入首页，点击卡片跳转到对应组件演示（共 10 个组件）。
+访问 `http://localhost:4000` 进入首页，点击卡片跳转到对应组件演示（共 15 个组件）。
 
 ## 脚本
 
@@ -129,6 +134,10 @@ git tag v2.2.0 && git push origin v2.2.0
 ```
 
 推送后可在 [Actions](https://github.com/jiaxiantao/cos-design/actions) 查看发布进度。若 npm 上已存在相同版本号，会自动跳过发布。
+
+## 文档
+
+- [完整介绍与实践指南](./docs/cos-design-intro.md) — 项目背景、架构、组件能力与适用场景
 
 ## 参与贡献
 

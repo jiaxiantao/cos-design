@@ -41,6 +41,40 @@
   font-size: 15px;
 }
 
+.searchWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.search {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 16px;
+  border: 1px solid rgb(148 163 184 / 20%);
+  border-radius: 10px;
+  background: rgb(15 23 42 / 80%);
+  color: #e2e8f0;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: #64748b;
+  }
+
+  &:focus {
+    border-color: rgb(56 189 248 / 50%);
+  }
+}
+
+.searchCount {
+  color: #64748b;
+  font-size: 13px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -128,6 +162,14 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 12px;
   color: #64748b;
+}
+
+.empty {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
 }
 
 .footer {

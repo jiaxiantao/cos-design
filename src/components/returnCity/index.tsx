@@ -1,78 +1,68 @@
-/*
- * @Description: 回城特效
- * @version: 1.0.0
- * @Author: Xiantao Jia
- * @Date: 2022-04-22 14:12:37
- * @LastEditors: Xiantao Jia
- * @LastEditTime: 2022-04-22 17:03:17
- */
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './style/index.module.less';
 
 export interface ReturnCityProps {
-  shining?: number;
+  /** 星星数量，默认按屏幕宽度自动计算 */
+  starCount?: number;
+  /** 光壁数量，默认 6 */
+  glassCount?: number;
+  /** 光壁半径（px），默认 150 */
+  glassRadius?: number;
 }
 
-const ReturnCity: React.FC<ReturnCityProps> = () => {
-  // 添加星星
+const ReturnCity: React.FC<ReturnCityProps> = ({ starCount, glassCount = 6, glassRadius = 150 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const glassWrapRef = useRef<HTMLDivElement>(null);
 
-  const addStar = (wrap: Element, length: number) => {
-    for (let index = 0; index < length; index++) {
-      setTimeout(function () {
+  useEffect(() => {
+    const container = containerRef.current;
+    const glassWrap = glassWrapRef.current;
+    if (!container || !glassWrap) return;
+
+    const timeouts: number[] = [];
+    const stars: HTMLDivElement[] = [];
+    const glasses: HTMLDivElement[] = [];
+    const count = starCount ?? Math.floor(document.documentElement.clientWidth / 20);
+
+    for (let index = 0; index < count; index++) {
+      const timeout = window.setTimeout(() => {
         const star = document.createElement('div');
         star.className = styles.star;
         const width = document.body.clientWidth;
         const height = document.body.clientHeight;
-        const left = Math.random() * width + 'px';
-        const top = Math.random() * height + 'px';
-        star.style.top = top;
-        star.style.left = left;
-        wrap.append(star);
-        // setInterval(() => {
-        //   const left = Math.random() * width + 'px';
-        //   const top = Math.random() * height + 'px';
-        //   star.style.top = top;
-        //   star.style.left = left;
-        // }, 2000);
+        star.style.top = `${Math.random() * height}px`;
+        star.style.left = `${Math.random() * width}px`;
+        container.append(star);
+        stars.push(star);
       }, Math.random() * 2000);
-    }
-  };
-  // 添加光壁
-  const creatGlass = () => {
-    // 光壁
-    const glassNum = 6;
-    const glassRadius = '150px'; // 半径
-    const glassWrap = document.getElementById('glassWrap');
-    if (!glassWrap) {
-      return;
+      timeouts.push(timeout);
     }
 
-    // 生成光壁
-    for (let i = 0; i < glassNum; i++) {
+    for (let i = 0; i < glassCount; i++) {
       const glass = document.createElement('div');
       glass.className = styles.glassItem;
-      glass.style.transform = `rotateY(${i * (360 / glassNum)}deg) translateZ(${glassRadius})`;
+      glass.style.transform = `rotateY(${i * (360 / glassCount)}deg) translateZ(${glassRadius}px)`;
       glassWrap.appendChild(glass);
-      setTimeout(() => {
+      glasses.push(glass);
+      const timeout = window.setTimeout(() => {
         glass.style.top = '0px';
         glass.style.opacity = '1';
       }, i * 300);
+      timeouts.push(timeout);
     }
-  };
 
-  useEffect(() => {
-    const container = document.getElementById('returnCityContainer');
-    if (container) {
-      addStar(container, document.documentElement.clientWidth / 20);
-    }
-    creatGlass();
-  }, []);
+    return () => {
+      timeouts.forEach(clearTimeout);
+      stars.forEach((star) => star.remove());
+      glasses.forEach((glass) => glass.remove());
+    };
+  }, [starCount, glassCount, glassRadius]);
 
   return (
-    <div id="returnCityContainer" className={styles.returnCityContainer}>
-      <div id="glassWrap" className={styles.glassWrap}></div>
+    <div ref={containerRef} className={styles.returnCityContainer}>
+      <div ref={glassWrapRef} className={styles.glassWrap}></div>
     </div>
   );
 };
+
 export default ReturnCity;

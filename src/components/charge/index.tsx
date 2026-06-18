@@ -1,36 +1,54 @@
-/*
- * @Description: 充电特效
- * @version: 1.0.0
- * @Author: Xiantao Jia
- * @Date: 2022-04-21 16:42:33
- * @LastEditors: Xiantao Jia
- * @LastEditTime: 2022-04-22 14:14:27
- */
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './style/index.module.less';
 
 export interface ChargeProps {
+  /** 初始电量（非受控），默认 0 */
   initQuantity?: number;
+  /** 受控电量 0–100 */
+  value?: number;
+  /** 电量变化回调 */
+  onChange?: (value: number) => void;
+  /** 是否自动充电，默认 true */
+  autoCharge?: boolean;
+  /** 充电间隔（毫秒），默认 500 */
+  interval?: number;
+  /** 每次增量，默认 0.01 */
+  step?: number;
 }
 
 const Charge = (props: ChargeProps): React.ReactElement => {
-  const { initQuantity = 0 } = props;
-  const [quantity, setQuantity] = useState(initQuantity);
+  const { initQuantity = 0, value, onChange, autoCharge = true, interval = 500, step = 0.01 } = props;
+
+  const isControlled = value !== undefined;
+  const [innerQuantity, setInnerQuantity] = useState(initQuantity);
+  const quantity = isControlled ? value : innerQuantity;
+  const quantityRef = useRef(quantity);
 
   useEffect(() => {
-    let newQuantity = quantity;
-    setInterval(() => {
-      newQuantity = Number(Number((newQuantity += 0.01)).toFixed(2));
-      setQuantity(newQuantity);
-    }, 500);
-  }, []);
+    quantityRef.current = quantity;
+  }, [quantity]);
+
+  useEffect(() => {
+    if (!autoCharge) return;
+
+    const timer = window.setInterval(() => {
+      const next = Number((quantityRef.current + step).toFixed(2));
+      if (isControlled) {
+        onChange?.(next);
+      } else {
+        setInnerQuantity(next);
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [autoCharge, interval, isControlled, onChange, step]);
+
+  const display = quantity ? quantity.toString().padEnd(4, '0') : '0';
 
   return (
     <div className={styles.chargeContainer}>
       <div className={styles.contrast}>
-        <div className={styles.text}>{quantity ? quantity.toString().padEnd(4, '0') : 0}%</div>
-        <span></span>
+        <div className={styles.text}>{display}%</div>
         <span></span>
         <span></span>
         <span></span>
@@ -51,4 +69,5 @@ const Charge = (props: ChargeProps): React.ReactElement => {
     </div>
   );
 };
+
 export default Charge;

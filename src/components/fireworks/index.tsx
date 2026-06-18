@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import styles from './style/index.module.less';
 
 export interface FireworksProps {
@@ -6,6 +6,11 @@ export interface FireworksProps {
   height?: number;
   /** 是否自动燃放，默认 true */
   auto?: boolean;
+}
+
+export interface FireworksHandle {
+  /** 手动燃放烟花，可指定 x 坐标 */
+  launch: (x?: number) => void;
 }
 
 interface Particle {
@@ -26,9 +31,12 @@ interface Rocket {
   color: string;
   exploded: boolean;
   particles: Particle[];
+  age: number;
 }
 
 const COLORS = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#a66cff', '#ff85c0'];
+const GRAVITY = 0.12;
+const MAX_ROCKET_AGE = 240;
 
 const randomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
 
@@ -49,7 +57,7 @@ const createExplosion = (x: number, y: number, color: string): Particle[] => {
   });
 };
 
-const Fireworks: React.FC<FireworksProps> = ({ width = 800, height = 500, auto = true }) => {
+const Fireworks = forwardRef<FireworksHandle, FireworksProps>(({ width = 800, height = 500, auto = true }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rocketsRef = useRef<Rocket[]>([]);
   const frameRef = useRef(0);
@@ -61,14 +69,17 @@ const Fireworks: React.FC<FireworksProps> = ({ width = 800, height = 500, auto =
         x: startX,
         y: height,
         vy: -(Math.random() * 4 + 6),
-        targetY: Math.random() * height * 0.4 + height * 0.1,
+        targetY: Math.random() * height * 0.35 + height * 0.15,
         color: randomColor(),
         exploded: false,
-        particles: []
+        particles: [],
+        age: 0
       });
     },
     [height, width]
   );
+
+  useImperativeHandle(ref, () => ({ launch }), [launch]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -93,14 +104,20 @@ const Fireworks: React.FC<FireworksProps> = ({ width = 800, height = 500, auto =
 
       rocketsRef.current = rocketsRef.current.filter((rocket) => {
         if (!rocket.exploded) {
+          rocket.age += 1;
           rocket.y += rocket.vy;
-          rocket.vy *= 0.98;
+          rocket.vy += GRAVITY;
           ctx.beginPath();
           ctx.arc(rocket.x, rocket.y, 2.5, 0, Math.PI * 2);
           ctx.fillStyle = rocket.color;
           ctx.fill();
 
-          if (rocket.vy >= 0 || rocket.y <= rocket.targetY) {
+          const atApex = rocket.vy >= 0;
+          const reachedTarget = rocket.y <= rocket.targetY;
+          const outOfBounds = rocket.y < 0;
+          const timedOut = rocket.age >= MAX_ROCKET_AGE;
+
+          if (atApex || reachedTarget || outOfBounds || timedOut) {
             rocket.exploded = true;
             rocket.particles = createExplosion(rocket.x, rocket.y, rocket.color);
           }
@@ -149,6 +166,8 @@ const Fireworks: React.FC<FireworksProps> = ({ width = 800, height = 500, auto =
       <p className={styles.hint}>点击画布燃放烟花</p>
     </div>
   );
-};
+});
+
+Fireworks.displayName = 'Fireworks';
 
 export default Fireworks;

@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-06-18
+
+### Added
+
+- `FlipCounter` 数字翻牌器，机械翻牌风格数字展示
+- `Countdown` 活动倒计时，支持目标时间与结束回调
+- `Confetti` 彩纸庆祝喷射（Canvas），支持 `ref.burst()` 手动触发
+- `GlitchText` 赛博朋克故障风文字
+- `MeteorRain` 流星雨背景动画
+
+### Fixed
+
+- `Fireworks` 修复部分烟花升空后不爆炸的问题（加入重力与多重爆炸判定）
+
+## [2.3.0] - 2026-06-18
+
+### Added
+
+- Playground 首页支持组件搜索过滤
+- 演示页新增「查看代码」侧栏，支持一键复制使用示例
+- `Charge` 支持受控模式（`value` / `onChange`）及 `autoCharge`、`interval`、`step` 配置
+- `Fireworks` 支持 `ref.launch()` 手动触发燃放，导出 `FireworksHandle` 类型
+- `ReturnCity` 支持 `starCount`、`glassCount`、`glassRadius` 配置
+- 新增项目介绍文档 `docs/cos-design-intro.md`
+
+### Changed
+
+- `Charge` 修复 `setInterval` 未清理导致的内存泄漏
+- `ReturnCity` 改用 ref 替代 `getElementById`，并清理定时器
+
+### Removed
+
+- `ReturnCity` 移除未生效的 `shining` prop
+
 ## [2.2.0] - 2026-06-18
 
 ### Changed
@@ -52,6 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Webpack 及相关 loader 依赖
 - UMD 格式产物
 
+[2.4.0]: https://github.com/jiaxiantao/cos-design/compare/v2.3.0...v2.4.0
+[2.3.0]: https://github.com/jiaxiantao/cos-design/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/jiaxiantao/cos-design/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/jiaxiantao/cos-design/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/jiaxiantao/cos-design/compare/v1.7.5...v2.0.0

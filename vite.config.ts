@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
     },
     css: {
       modules: {
-        generateScopedName: 'cos-[local]'
+        generateScopedName: 'cos-[local]-[hash:base64:5]'
       },
       preprocessorOptions: {
         less: {
