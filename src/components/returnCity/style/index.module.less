@@ -1,0 +1,70 @@
+.returnCityContainer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+
+  /* 星星 */
+  .star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fd400a;
+    animation: star infinite 2s;
+  }
+
+  /* 玻璃壁 */
+
+  .glassWrap {
+    width: 100px;
+    height: 175px;
+
+    /* background: #666; */
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    transform-style: preserve-3d;
+    animation: rotate 10s linear infinite;
+
+    .glassItem {
+      position: absolute;
+      left: 0;
+      opacity: 0;
+      top: -250px;
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s ease-in;
+      border-radius: 5px;
+      box-shadow: 0 0 10px 3px rgb(255 0 0 / 70%);
+      background: rgb(173 71 2 / 34%);
+    }
+  }
+
+  /* 旋转动画 */
+  @keyframes rotate {
+    from {
+      transform: translate(-50%, 50%) rotateY(360deg);
+    }
+    to {
+      transform: translate(-50%, 50%) rotateY(0deg);
+    }
+  }
+
+  @keyframes star {
+    0% {
+      filter: blur(1px) contrast(15) hue-rotate(0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+      filter: blur(1px) contrast(15) hue-rotate(360deg);
+    }
+    100% {
+      opacity: 0;
+      filter: blur(1px) contrast(15) hue-rotate(0);
+    }
+  }
+}

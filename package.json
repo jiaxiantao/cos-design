@@ -1,85 +1,107 @@
 {
   "name": "cos-design",
-  "version": "1.7.0",
-  "description": "cos-deisgn",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "keywords": [
-    "cos",
-    "cos-design"
-  ],
+  "version": "2.0.0",
+  "description": "A React component library built with Vite",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "files": [
+    "dist",
     "LICENSE",
     "README.md",
-    "dist/*",
-    "lib/*"
+    "CHANGELOG.md"
   ],
-  "repository": "git@github.com:jiaxiantao/cos-design.git",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.less"
+  ],
+  "keywords": [
+    "cos",
+    "cos-design",
+    "react",
+    "component-library",
+    "vite",
+    "typescript"
+  ],
+  "homepage": "https://github.com/jiaxiantao/cos-design#readme",
+  "bugs": {
+    "url": "https://github.com/jiaxiantao/cos-design/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiaxiantao/cos-design.git"
+  },
   "author": "jiaxiantao <jiaxiantao@souche.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "build:module": "cross-env NODE_ENV=production BUILD_MODE=module webpack --config webpack.config.js",
-    "pub": "npm run build:module && yarn publish",
-    "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
-    "lint-staged": "lint-staged",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
-    "lint:js": "eslint --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
-    "lint:prettier": "check-prettier lint",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
-    "prettier": "prettier -c --write \"**/*\""
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
+    "setup": "node scripts/install.mjs",
+    "preinstall": "npx only-allow pnpm",
+    "dev": "vite",
+    "build": "tsc -p tsconfig.build.json --noEmit && vite build --mode lib",
+    "build:demo": "vite build",
+    "preview": "vite preview",
+    "pub": "pnpm build && pnpm publish",
+    "prepare": "husky",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && stylelint \"src/**/*.less\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx}\" && stylelint \"src/**/*.less\"",
+    "lint:js": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:style": "stylelint \"src/**/*.less\"",
+    "format": "prettier -c --write \"**/*.{ts,tsx,less,md,json}\"",
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
-      "prettier --write",
-      "git add"
-    ],
-    "**/*.{js,jsx}": "npm run lint-staged:js",
-    "**/*.{js,ts,tsx}": "npm run lint-staged:js"
+    "**/*.less": "stylelint",
+    "**/*.{ts,tsx,less,md,json}": "prettier --write",
+    "**/*.{ts,tsx}": "eslint --fix"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "@babel/preset-react": "^7.14.5",
-    "@types/react": "^17.0.19",
-    "@types/react-dom": "^17.0.9",
-    "@typescript-eslint/eslint-plugin": "^4.31.0",
-    "@typescript-eslint/parser": "^4.31.0",
-    "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.25.1",
-    "html-webpack-plugin": "^5.3.2",
-    "husky": "^7.0.2",
-    "less": "^4.1.1",
-    "less-loader": "^10.0.1",
-    "lint-staged": "^11.1.2",
-    "mini-css-extract-plugin": "^2.2.2",
-    "prettier": "^2.3.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "style-loader": "^3.2.1",
-    "stylelint": "^13.13.1",
-    "ts-loader": "^9.2.5",
-    "typescript": "^4.3.5",
-    "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.0.0"
+    "@types/node": "^22.13.10",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "less": "^4.2.2",
+    "lint-staged": "^15.4.3",
+    "only-allow": "^1.2.1",
+    "prettier": "^3.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^6.30.0",
+    "react-router-dom": "^6.30.0",
+    "stylelint": "^16.15.0",
+    "stylelint-config-standard": "^37.0.0",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-lib-inject-css": "^2.2.1"
   },
   "peerDependencies": {
     "react": ">=16.12.0",
     "react-dom": ">=16.12.0"
-  }
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531"
 }

@@ -1,36 +1,116 @@
-## 这是一个 React Hooks 的组件库
+# cos-design
 
-#### usage
+[![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
+[![license](https://img.shields.io/npm/l/cos-design.svg)](https://github.com/jiaxiantao/cos-design/blob/main/LICENSE)
+
+基于 React 18 + Vite 6 + TypeScript 5 的 React 组件库。
+
+## 特性
+
+- 开箱即用的 React 组件
+- ESM / CJS 双格式输出，完整 TypeScript 类型支持
+- 样式自动注入，无需手动引入 CSS
+- 使用 pnpm + Vite 的现代工程化方案
+
+## 安装
 
 ```bash
+pnpm add cos-design
+# or
+npm install cos-design
+# or
 yarn add cos-design
-# or
-# npm install cos-design
 ```
+
+## 使用
+
+```tsx
+import { CanvasClock, Charge, ReturnCity, Turntable } from 'cos-design';
+
+function App() {
+  return <CanvasClock width={400} height={400} />;
+}
+```
+
+## 组件
+
+| 组件          | 说明            |
+| ------------- | --------------- |
+| `CanvasClock` | Canvas 画布时钟 |
+| `Charge`      | 充电特效        |
+| `ReturnCity`  | 回城特效        |
+| `Turntable`   | 转盘            |
+
+## 本地开发
+
+> **要求 Node.js >= 18**（项目含 `.nvmrc`，推荐使用 Node 20）
+
+### 第一步：切换 Node 版本
 
 ```bash
-import { components } from 'cos-design';
+nvm use
+# 若未安装 Node 20
+nvm install 20 && nvm use 20
 ```
 
-#### Start a dev process
+### 第二步：安装依赖
+
+**不要直接运行 `pnpm install`**（若本机 corepack 有问题会报错），请使用：
 
 ```bash
-yarn start
-# or
-# npm start
+npm run setup
 ```
 
-#### Build production bundle
+该命令会通过 `npx` 直接调用 pnpm，绕过 corepack。
 
-```bash
-yarn build
-# or
-# npm run build
-```
-#### Build production module
+### 第三步：启动开发
 
 ```bash
-yarn build:module
-# or
-# npm run build:module
+npx --yes pnpm@9 dev
 ```
+
+访问 `http://localhost:4000` 进入首页，点击卡片跳转到对应组件演示：
+
+| 路由           | 组件             |
+| -------------- | ---------------- |
+| `/`            | 首页（组件导航） |
+| `/canvasClock` | 画布时钟         |
+| `/charge`      | 充电特效         |
+| `/returnCity`  | 回城特效         |
+| `/turntable`   | 转盘             |
+
+## 脚本
+
+| 命令                     | 说明                            |
+| ------------------------ | ------------------------------- |
+| `npm run setup`          | 安装依赖（推荐，绕过 corepack） |
+| `npx --yes pnpm@9 dev`   | 启动本地演示                    |
+| `npx --yes pnpm@9 build` | 构建组件库                      |
+| `npx --yes pnpm@9 lint`  | 代码检查                        |
+| `npx --yes pnpm@9 pub`   | 构建并发布到 npm                |
+
+## 修复本机 pnpm（可选）
+
+若希望直接使用 `pnpm` 命令，在 **Node 20+** 环境下执行：
+
+```bash
+nvm use 20
+corepack disable
+hash -r
+npm install -g pnpm@9
+which pnpm        # 确认路径不在 corepack 下
+pnpm -v
+```
+
+## 参与贡献
+
+欢迎提交 Issue 与 Pull Request，请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+## 更新日志
+
+详见 [CHANGELOG.md](./CHANGELOG.md)。
+
+## License
+
+[MIT](./LICENSE) © jiaxiantao

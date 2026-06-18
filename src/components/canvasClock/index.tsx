@@ -1,274 +1,122 @@
-/*
- * @Descripttion: canvas 时钟
- * @version: 1.0.0
- * @Author: jiaxiantao
- * @Date: 2021-06-25 11:20:17
- * @LastEditors: jiaxiantao
- * @LastEditTime: 2021-09-01 16:52:51
- */
-import React, { useEffect, useRef } from 'react';
-import styles from './style/index.less';
+import React, { useCallback, useEffect, useRef } from 'react';
+import styles from './style/index.module.less';
 
 export interface CanvasClockProps {
   width?: number;
   height?: number;
 }
 
-export const CanvasClock = (props: CanvasClockProps) => {
-  const { width = 400, height = 400 } = props;
-
+const CanvasClock: React.FC<CanvasClockProps> = ({ width = 400, height = 400 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const size = Math.min(width, height);
+  const radius = size / 2 - 16;
+  const center = size / 2;
 
-  /**
-   * @desc: 获取当前时间
-   * @param {*}
-   * @return {*}
-   */
-  const getCurrentTime = () => {
-    // 获取当前时，分，秒，毫秒
-    const time = new Date();
-    const hour = time.getHours() % 12;
-    const min = time.getMinutes();
-    const sec = time.getSeconds();
-    const milliSec = time.getMilliseconds();
-    return {
-      hour,
-      min,
-      sec,
-      milliSec
-    };
-  };
+  const drawClock = useCallback(
+    (ctx: CanvasRenderingContext2D) => {
+      ctx.clearRect(0, 0, size, size);
 
-  /**
-   * @desc: 创建中心点
-   * @param {*}
-   * @return {*}
-   */
-  const createCenterPointer = (ctx: CanvasRenderingContext2D) => {
-    // 画中间的小圆
-    ctx.beginPath();
-    ctx.arc(0, 0, 3, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.fillStyle = 'black';
-    ctx.fill();
-    ctx.closePath();
-  };
-
-  /**
-   * @desc:  绘制刻度
-   * @param {*}
-   * @return {*}
-   */
-  const drawScale = (ctx: CanvasRenderingContext2D) => {
-    // 保存上一次的状态
-    ctx.save();
-    // 绘制刻度，也是跟绘制时分秒针一样，只不过刻度是死的
-    ctx.lineWidth = 1;
-    for (let i = 0; i < 60; i += 1) {
-      ctx.rotate((2 * Math.PI) / 60);
-      ctx.beginPath();
-      ctx.moveTo(94, 0);
-      ctx.lineTo(100, 0);
-      ctx.stroke();
-      ctx.closePath();
-    }
-    // 恢复成上一次保存的状态
-    ctx.restore();
-    ctx.save();
-
-    ctx.lineWidth = 1;
-    for (let i = 0; i < 12; i += 1) {
-      ctx.rotate((2 * Math.PI) / 12);
-      ctx.beginPath();
-      ctx.lineTo(90, 0);
-      ctx.lineTo(91, 2);
-      ctx.lineTo(100, 2);
-      // ctx.lineTo(100, 0);
-      // 画圆线使用arc(中心点X,中心点Y,半径,起始角度,结束角度)
-      ctx.arc(0, 0, 100, 0, (2 * Math.PI) / 250);
-      ctx.lineTo(100, -2);
-      ctx.lineTo(91, -2);
-      ctx.lineTo(90, 0);
-      ctx.stroke();
-      ctx.fillStyle = 'black';
-      ctx.fill();
-      ctx.closePath();
-    }
-    ctx.restore();
-  };
-
-  /**
-   * @desc:  绘制数字
-   * @param {*}
-   * @return {*}
-   */
-  const drawScaleNumber = (ctx: CanvasRenderingContext2D) => {
-    ctx.save();
-    // 绘制刻度，也是跟绘制时分秒针一样，只不过刻度是死的
-    ctx.lineWidth = 1;
-    const textRadius = 80; // 设置文字半径为80，与边界相差20个像素
-    for (let i = 0; i < 12; i += 1) {
-      ctx.font = '16px Arial';
-      ctx.fillText(
-        (i + 1).toString(),
-        textRadius * Math.sin((Math.PI * (i + 1)) / 6) - (Math.ceil(i / 8) * 8) / 2,
-        -(textRadius * Math.cos((Math.PI * (i + 1)) / 6) - 12 / 2)
-      );
-    }
-    ctx.restore();
-  };
-
-  /**
-   * @desc: 创建指针
-   * @param {*}
-   * @return {*}
-   */
-  const createPointer = (ctx: CanvasRenderingContext2D) => {
-    const { hour, min, sec, milliSec } = getCurrentTime();
-    // 保存上一次的状态
-    ctx.save();
-    // 时针
-    ctx.rotate(((2 * Math.PI) / 12) * (hour + min / 60) - Math.PI / 2);
-    ctx.beginPath();
-    // moveTo设置画线起点
-    ctx.moveTo(-3, 0);
-    // lineTo设置画线经过点
-    ctx.lineTo(0, 3);
-    ctx.lineTo(45, 3);
-    ctx.lineTo(50, 0);
-    ctx.lineTo(45, -3);
-    ctx.lineTo(0, -3);
-    ctx.lineTo(-3, 0);
-    // 设置线宽
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-
-    // 创建黑色阴影，模糊级数是 4
-    ctx.shadowBlur = 4;
-    ctx.shadowColor = 'black';
-    // 填充颜色
-    ctx.fillStyle = 'black';
-    ctx.fill();
-
-    ctx.closePath();
-    // 恢复成上一次保存的状态
-    ctx.restore();
-    ctx.save();
-
-    // 分针
-    ctx.rotate(((2 * Math.PI) / 60) * (min + sec / 60) - Math.PI / 2);
-    ctx.beginPath();
-    // moveTo设置画线起点
-    ctx.moveTo(-2, 0);
-    // lineTo设置画线经过点
-    ctx.lineTo(0, 2);
-    ctx.lineTo(52, 2);
-    ctx.lineTo(60, 0);
-    ctx.lineTo(52, -2);
-    ctx.lineTo(0, -2);
-    ctx.lineTo(-2, 0);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#1e80ff';
-    ctx.stroke();
-    // 创建蓝色阴影，模糊级数是 3
-    ctx.shadowBlur = 3;
-    ctx.shadowColor = '#1e80ff';
-    // 填充颜色
-    ctx.fillStyle = '#1e80ff';
-    ctx.fill();
-    ctx.closePath();
-    ctx.restore();
-    ctx.save();
-
-    // 秒针
-    ctx.rotate(((2 * Math.PI) / 60) * (sec - 1 + milliSec / 1000) - Math.PI / 2);
-    ctx.beginPath();
-    // moveTo设置画线起点
-    ctx.moveTo(-1, 0);
-    ctx.lineTo(0, 1);
-    ctx.lineTo(60, 1);
-    ctx.lineTo(70, 0);
-    ctx.lineTo(60, -1);
-    ctx.lineTo(0, -1);
-    ctx.lineTo(-1, 0);
-    ctx.strokeStyle = '#e9686b';
-    ctx.stroke();
-    // 创建红色阴影，模糊级数是 2
-    ctx.shadowBlur = 2;
-    ctx.shadowColor = '#e9686b';
-    // 填充颜色
-    ctx.fillStyle = '#e9686b';
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.restore();
-  };
-
-  /**
-   * @desc: 绘制时钟
-   * @param {*} ctx
-   * @return {*}
-   */
-  const drawClock = (ctx: CanvasRenderingContext2D) => {
-    if (ctx) {
       ctx.save();
-      // 保存清除状态
-      ctx.clearRect(0, 0, 200, 200);
+      ctx.translate(center, center);
 
-      // 设置中心点，此时100，100变成了坐标的0，0
-      ctx.translate(100, 100);
+      // 外圈
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.strokeStyle = '#d1d5db';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
-      // 创建中心点
-      createCenterPointer(ctx);
+      // 分钟刻度
+      for (let i = 0; i < 60; i++) {
+        const angle = (i / 60) * Math.PI * 2;
+        const inner = radius - (i % 5 === 0 ? 14 : 8);
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(angle) * inner, Math.sin(angle) * inner);
+        ctx.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+        ctx.strokeStyle = i % 5 === 0 ? '#374151' : '#9ca3af';
+        ctx.lineWidth = i % 5 === 0 ? 2 : 1;
+        ctx.stroke();
+      }
 
-      // 创建渐变内环
-      // createRadialGradient(ctx);
+      // 小时数字
+      ctx.fillStyle = '#111827';
+      ctx.font = `bold ${Math.floor(size / 22)}px system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let i = 1; i <= 12; i++) {
+        const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+        const textRadius = radius - 32;
+        ctx.fillText(String(i), Math.cos(angle) * textRadius, Math.sin(angle) * textRadius);
+      }
 
-      // 绘制刻度
-      drawScale(ctx);
-      // 绘制数字
-      drawScaleNumber(ctx);
+      const now = new Date();
+      const hour = now.getHours() % 12;
+      const min = now.getMinutes();
+      const sec = now.getSeconds();
+      const ms = now.getMilliseconds();
 
-      // 创建指针
-      createPointer(ctx);
+      const drawHand = (angle: number, length: number, width: number, color: string, shadow: string) => {
+        ctx.save();
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, width);
+        ctx.lineTo(length, 0);
+        ctx.lineTo(0, -width);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.shadowColor = shadow;
+        ctx.shadowBlur = 4;
+        ctx.fill();
+        ctx.restore();
+      };
+
+      const hourAngle = ((hour + min / 60) / 12) * Math.PI * 2 - Math.PI / 2;
+      const minAngle = ((min + sec / 60) / 60) * Math.PI * 2 - Math.PI / 2;
+      const secAngle = ((sec + ms / 1000) / 60) * Math.PI * 2 - Math.PI / 2;
+
+      drawHand(hourAngle, radius * 0.5, 4, '#111827', 'rgb(0 0 0 / 40%)');
+      drawHand(minAngle, radius * 0.72, 3, '#1e80ff', 'rgb(30 128 255 / 40%)');
+      drawHand(secAngle, radius * 0.85, 2, '#e9686b', 'rgb(233 104 107 / 40%)');
+
+      // 中心圆点
+      ctx.beginPath();
+      ctx.arc(0, 0, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#111827';
+      ctx.fill();
 
       ctx.restore();
-    }
-  };
-
-  /**
-   * @desc: 创建时钟
-   * @param {*}
-   * @return {*}
-   */
-  const createClock = () => {
-    if (canvasRef && canvasRef.current) {
-      const canvasTarget = canvasRef.current;
-      if (canvasTarget) {
-        const ctx: CanvasRenderingContext2D = canvasTarget.getContext('2d');
-        // 放大两倍，容器再缩小两倍，防止放大的时候模糊
-        ctx.scale(2, 2);
-        if (ctx) {
-          // 渲染函数
-          const animloop = () => {
-            drawClock(ctx);
-            // console.log('canvas');
-            requestAnimationFrame(animloop);
-          };
-          animloop();
-        }
-      }
-    }
-  };
+    },
+    [center, radius, size]
+  );
 
   useEffect(() => {
-    createClock();
-  }, []);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    let frameId = 0;
+    const tick = () => {
+      drawClock(ctx);
+      frameId = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => cancelAnimationFrame(frameId);
+  }, [drawClock, size]);
 
   return (
-    <div className={styles.canvasClock}>
-      <canvas ref={canvasRef} width={width} height={height} className={styles.canvasTarget}></canvas>
+    <div className={styles.canvasClock} style={{ width: size, height: size }}>
+      <canvas ref={canvasRef} className={styles.canvasTarget} style={{ width: size, height: size }} />
     </div>
   );
 };
