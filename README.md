@@ -101,6 +101,35 @@ which pnpm        # 确认路径不在 corepack 下
 pnpm -v
 ```
 
+## 自动发布（CI/CD）
+
+推送到 `master` 分支后，GitHub Actions 会自动执行 lint、构建，并将**新版本**发布到 [npm](https://www.npmjs.com/package/cos-design)。
+
+### 首次配置（仅需一次）
+
+1. 打开 [npm Access Tokens](https://www.npmjs.com/settings/jiaxiantao/tokens)
+2. 创建 **Granular Access Token**：
+   - Permissions: Packages → **Read and write**
+   - 勾选 **Bypass 2FA for publish**（自动化发布必须）
+3. 打开 GitHub 仓库 → **Settings** → **Secrets and variables** → **Actions**
+4. 新建 Secret：`NPM_TOKEN`，值为上一步的 token
+
+### 发布新版本
+
+```bash
+# 1. 更新 package.json 中的 version（如 2.2.0）
+# 2. 更新 CHANGELOG.md
+# 3. 提交并推送
+git add .
+git commit -m "chore: release v2.2.0"
+git push origin master
+
+# 4.（可选）打 tag
+git tag v2.2.0 && git push origin v2.2.0
+```
+
+推送后可在 [Actions](https://github.com/jiaxiantao/cos-design/actions) 查看发布进度。若 npm 上已存在相同版本号，会自动跳过发布。
+
 ## 参与贡献
 
 欢迎提交 Issue 与 Pull Request，请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md)。

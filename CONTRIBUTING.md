@@ -63,6 +63,18 @@ pnpm -v
 pnpm install   # 此时应可正常使用
 ```
 
+## 发布流程
+
+项目已配置 GitHub Actions 自动发布。维护者只需：
+
+1. 在 `package.json` 中递增 `version`
+2. 更新 `CHANGELOG.md`
+3. 推送到 `master` 分支
+
+CI 会自动 lint、build，并在 npm 上不存在该版本时执行 `pnpm publish`。
+
+> 需在 GitHub Secrets 中配置 `NPM_TOKEN`（npm Granular Token，含 Publish 权限且 Bypass 2FA）。
+
 ## 提交规范
 
 建议使用 [Conventional Commits](https://www.conventionalcommits.org/) 风格：
