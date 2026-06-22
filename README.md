@@ -33,25 +33,31 @@ function App() {
 }
 ```
 
-## 组件
+## 组件（49 个 · 6 大分类）
 
-| 组件              | 说明                 |
-| ----------------- | -------------------- |
-| `CanvasClock`     | Canvas 画布时钟      |
-| `Charge`          | 充电特效             |
-| `ReturnCity`      | 回城特效             |
-| `Turntable`       | 抽奖转盘             |
-| `Fireworks`       | 烟花特效（点击燃放） |
-| `MatrixRain`      | 黑客帝国数字雨       |
-| `ParticleNetwork` | 粒子连线网络         |
-| `Typewriter`      | 打字机文字效果       |
-| `NeonText`        | 霓虹灯发光文字       |
-| `WaveButton`      | 波纹扩散按钮         |
-| `FlipCounter`     | 数字翻牌器           |
-| `Countdown`       | 活动倒计时           |
-| `Confetti`        | 彩纸庆祝喷射         |
-| `GlitchText`      | 故障风发光文字       |
-| `MeteorRain`      | 流星雨背景           |
+### 背景氛围
+
+`MatrixRain` · `MeteorRain` · `ParticleNetwork` · `Aurora` · `RippleWater` · `SmokeFog` · `CyberGrid` · `Snowfall` · `Starfield`
+
+### 文字动效
+
+`Typewriter` · `NeonText` · `GlitchText` · `ScrambleText` · `SplitReveal` · `WaveText` · `GradientFlow` · `BurnAway` · `BarcodeScan`
+
+### 交互玩具
+
+`WaveButton` · `Spotlight` · `MagneticButton` · `HolographicCard` · `ClickSpark` · `CursorTrail` · `LiquidGlass`
+
+### 游戏营销
+
+`Turntable` · `Confetti` · `Charge` · `ScratchCard` · `SlotMachine` · `DiceRoll` · `RedPacketRain` · `ProgressChest` · `RadarScan`
+
+### 数据装饰
+
+`CanvasClock` · `FlipCounter` · `Countdown` · `LiquidProgress` · `AudioVisualizer` · `Speedometer` · `TimelinePulse` · `OrbitalChart`
+
+### 物理创意
+
+`Fireworks` · `ReturnCity` · `NewtonCradle` · `GravityBalls` · `DnaHelix` · `ElectricArc` · `MazeGenerator`
 
 ## 本地开发
 
@@ -81,7 +87,7 @@ npm run setup
 npx --yes pnpm@9 dev
 ```
 
-访问 `http://localhost:4000` 进入首页，点击卡片跳转到对应组件演示（共 15 个组件）。
+访问 `http://localhost:4000` 进入首页，按分类浏览并跳转到对应组件演示（共 49 个组件）。
 
 ## 脚本
 

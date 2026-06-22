@@ -1,0 +1,110 @@
+.newtonCradle {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #1e293b, #0f172a);
+  border-radius: 12px;
+}
+
+.frame {
+  display: flex;
+  gap: 0;
+  height: 160px;
+  align-items: flex-start;
+  border-top: 3px solid #475569;
+  padding: 0 8px;
+}
+
+.pendulum {
+  --ball-size: 28px;
+  --string-length: 112px;
+
+  width: var(--ball-size);
+  height: calc(var(--string-length) + var(--ball-size));
+  position: relative;
+  transform-origin: top center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pendulum[data-role='left'] {
+  animation: swing-left 2.6s linear infinite;
+}
+
+.pendulum[data-role='right'] {
+  animation: swing-right 2.6s linear infinite;
+}
+
+.string {
+  width: 2px;
+  height: var(--string-length);
+  background: #64748b;
+}
+
+.ball {
+  width: var(--ball-size);
+  height: var(--ball-size);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    color-mix(in srgb, var(--ball-color, #38bdf8) 80%, #fff),
+    var(--ball-color, #38bdf8)
+  );
+  box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
+}
+
+/*
+ * 牛顿摆周期分四段（每段 25%）：
+ * A 0–25%  左球从峰值下落到底部（重力加速 → ease-in-sine）
+ * B 25–50% 右球被撞飞，从底部升到峰值（减速 → ease-out-sine）
+ * C 50–75% 右球从峰值回落到底部（加速 → ease-in-sine）
+ * D 75–100% 左球被撞回，从底部升到峰值（减速 → ease-out-sine）
+ * 碰撞瞬间速度连续：下落球以最大速度抵达，被撞球以最大速度离开。
+ */
+@keyframes swing-left {
+  0% {
+    transform: rotate(-22deg);
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0); /* ease-in-sine */
+  }
+
+  25% {
+    transform: rotate(0deg);
+    animation-timing-function: linear; /* 底部静止，等待右球往返 */
+  }
+
+  75% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1); /* ease-out-sine */
+  }
+
+  100% {
+    transform: rotate(-22deg);
+  }
+}
+
+@keyframes swing-right {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: linear; /* 底部静止，等待左球下落 */
+  }
+
+  25% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1); /* ease-out-sine */
+  }
+
+  50% {
+    transform: rotate(22deg);
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0); /* ease-in-sine */
+  }
+
+  75% {
+    transform: rotate(0deg);
+    animation-timing-function: linear;
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}

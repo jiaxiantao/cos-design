@@ -1,0 +1,48 @@
+.splitReveal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+  background: #0a0a0a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.text {
+  display: flex;
+  margin: 0;
+  color: var(--reveal-color, #f8fafc);
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.char {
+  display: inline-block;
+  opacity: 0;
+  animation: reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fromTop {
+  transform: translateY(-60px);
+}
+
+.fromBottom {
+  transform: translateY(60px);
+}
+
+.fromLeft {
+  transform: translateX(-60px);
+}
+
+.fromRight {
+  transform: translateX(60px);
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

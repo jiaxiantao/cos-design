@@ -1,0 +1,35 @@
+.aurora {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #020617;
+}
+
+.band {
+  position: absolute;
+  inset: -40%;
+  opacity: 0.55;
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, var(--aurora-color) 0%, transparent 70%);
+  filter: blur(48px);
+  animation: aurora-flow var(--aurora-duration, 14s) ease-in-out infinite;
+  animation-delay: var(--aurora-delay, 0s);
+
+  &:nth-child(even) {
+    animation-direction: reverse;
+  }
+}
+
+@keyframes aurora-flow {
+  0%,
+  100% {
+    transform: translate(-10%, -5%) scale(1) rotate(0deg);
+  }
+
+  33% {
+    transform: translate(15%, 10%) scale(1.15) rotate(8deg);
+  }
+
+  66% {
+    transform: translate(-5%, 15%) scale(0.95) rotate(-6deg);
+  }
+}
