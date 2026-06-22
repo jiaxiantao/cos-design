@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.1] - 2026-06-18
+
+### Fixed
+
+- `Charge` 恢复原版 gooey 充电动效，修正气泡 nth-child 错位与容器高度动画，Demo 全屏展示
+- `Fireworks` 移除重复自动燃放逻辑，页面隐藏时暂停动画
+- `Countdown` 校验无效日期，倒计时结束后停止定时器
+- `Typewriter` 空文案保护，`texts` 变更时重置状态
+- `Confetti` 分离自动喷射与画布循环，避免重复触发
+- `ReturnCity` 基于容器尺寸定位星星，默认 `glassCount` 改为 8
+- `FlipCounter` 修复翻牌数字裁切与动画层逻辑
+
+### Changed
+
+- Canvas 组件（Fireworks、Confetti、MeteorRain、MatrixRain、ParticleNetwork）页面隐藏时暂停 RAF
+- `MeteorRain` 优化流星绘制，避免每帧创建渐变对象
+- `MatrixRain` 叠层标题支持 `showOverlay` / `title` / `subtitle` 配置
+- `ParticleNetwork` 新增 `repelRadius`，支持触摸互动
+- `WaveButton` 支持原生 `button` 属性（如 `disabled`）
+
 ## [2.4.0] - 2026-06-18
 
 ### Added
@@ -86,6 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Webpack 及相关 loader 依赖
 - UMD 格式产物
 
+[2.4.1]: https://github.com/jiaxiantao/cos-design/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/jiaxiantao/cos-design/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/jiaxiantao/cos-design/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/jiaxiantao/cos-design/compare/v2.1.0...v2.2.0

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface MatrixRainProps {
@@ -8,11 +9,25 @@ export interface MatrixRainProps {
   density?: number;
   /** 主色调 */
   color?: string;
+  /** 是否显示标题叠层，默认 true */
+  showOverlay?: boolean;
+  /** 叠层标题 */
+  title?: string;
+  /** 叠层副标题 */
+  subtitle?: string;
 }
 
 const CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*アイウエオカキクケコ';
 
-const MatrixRain: React.FC<MatrixRainProps> = ({ width = 800, height = 500, density = 0.6, color = '#00ff41' }) => {
+const MatrixRain: React.FC<MatrixRainProps> = ({
+  width = 800,
+  height = 500,
+  density = 0.6,
+  color = '#00ff41',
+  showOverlay = true,
+  title = 'MATRIX',
+  subtitle = '数字雨效果'
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -31,10 +46,17 @@ const MatrixRain: React.FC<MatrixRainProps> = ({ width = 800, height = 500, dens
     const drops = Array.from({ length: columns }, () => Math.random() * -50);
 
     let frameId = 0;
+    let paused = document.hidden;
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+
     const draw = () => {
+      frameId = requestAnimationFrame(draw);
+      if (paused) return;
+
       ctx.fillStyle = 'rgb(0 0 0 / 8%)';
       ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = color;
       ctx.font = `${fontSize}px monospace`;
 
       drops.forEach((y, i) => {
@@ -48,21 +70,24 @@ const MatrixRain: React.FC<MatrixRainProps> = ({ width = 800, height = 500, dens
         }
         drops[i] += 1;
       });
-
-      frameId = requestAnimationFrame(draw);
     };
 
     draw();
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      cancelAnimationFrame(frameId);
+      unbindVisibility();
+    };
   }, [color, density, height, width]);
 
   return (
     <div className={styles.matrixRain} style={{ width, height }}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
-      <div className={styles.overlay}>
-        <h2 className={styles.title}>MATRIX</h2>
-        <p className={styles.subtitle}>数字雨效果</p>
-      </div>
+      {showOverlay && (
+        <div className={styles.overlay}>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.subtitle}>{subtitle}</p>
+        </div>
+      )}
     </div>
   );
 };

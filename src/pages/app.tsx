@@ -4,13 +4,13 @@ import { Navigate, Route, Routes } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { componentDemos } from './config/components';
 import DemoLayout from './demo-layout';
+import ChargeDemo from './demos/charge-demo';
 import FireworksDemo from './demos/fireworks-demo';
 import FlipCounterDemo from './demos/flip-counter-demo';
 import Home from './home';
 
 const {
   CanvasClock,
-  Charge,
   Confetti,
   Countdown,
   GlitchText,
@@ -31,7 +31,7 @@ const CountdownDemo = () => {
 
 const demoComponents: Record<string, React.ReactNode> = {
   CanvasClock: <CanvasClock />,
-  Charge: <Charge />,
+  Charge: <ChargeDemo />,
   ReturnCity: <ReturnCity />,
   Turntable: <Turntable />,
   Fireworks: <FireworksDemo />,

@@ -1,4 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface FireworksProps {
@@ -93,14 +94,17 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>(({ width = 800, he
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     let timer = 0;
+    let paused = document.hidden;
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+
     const tick = () => {
       frameRef.current = requestAnimationFrame(tick);
+      if (paused) return;
+
       ctx.fillStyle = 'rgb(15 23 42 / 25%)';
       ctx.fillRect(0, 0, width, height);
-
-      if (auto && Math.random() < 0.03) {
-        launch();
-      }
 
       rocketsRef.current = rocketsRef.current.filter((rocket) => {
         if (!rocket.exploded) {
@@ -152,6 +156,7 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>(({ width = 800, he
     return () => {
       cancelAnimationFrame(frameRef.current);
       clearInterval(timer);
+      unbindVisibility();
     };
   }, [auto, height, launch, width]);
 

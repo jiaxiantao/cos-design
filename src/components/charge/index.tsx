@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { clamp } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface ChargeProps {
@@ -19,52 +20,74 @@ export interface ChargeProps {
 const Charge = (props: ChargeProps): React.ReactElement => {
   const { initQuantity = 0, value, onChange, autoCharge = true, interval = 500, step = 0.01 } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const isControlled = value !== undefined;
-  const [innerQuantity, setInnerQuantity] = useState(initQuantity);
-  const quantity = isControlled ? value : innerQuantity;
+  const [innerQuantity, setInnerQuantity] = useState(() => clamp(initQuantity, 0, 100));
+  const quantity = clamp(isControlled ? value : innerQuantity, 0, 100);
   const quantityRef = useRef(quantity);
+  const onChangeRef = useRef(onChange);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   useEffect(() => {
     quantityRef.current = quantity;
   }, [quantity]);
 
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateHeight = () => {
+      el.style.setProperty('--charge-h', `${el.clientHeight}px`);
+    };
+
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!autoCharge) return;
 
     const timer = window.setInterval(() => {
-      const next = Number((quantityRef.current + step).toFixed(2));
+      if (quantityRef.current >= 100) return;
+      const next = Math.min(100, Number((quantityRef.current + step).toFixed(2)));
       if (isControlled) {
-        onChange?.(next);
+        onChangeRef.current?.(next);
       } else {
         setInnerQuantity(next);
       }
     }, interval);
 
     return () => clearInterval(timer);
-  }, [autoCharge, interval, isControlled, onChange, step]);
+  }, [autoCharge, interval, isControlled, step]);
 
-  const display = quantity ? quantity.toString().padEnd(4, '0') : '0';
+  const display = quantity.toFixed(2);
 
   return (
-    <div className={styles.chargeContainer}>
+    <div ref={containerRef} className={styles.chargeContainer}>
       <div className={styles.contrast}>
         <div className={styles.text}>{display}%</div>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <div className={styles.circle}></div>
-        <div className={styles.button}></div>
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <div className={styles.circle} />
+        <div className={styles.button} />
       </div>
     </div>
   );

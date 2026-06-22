@@ -1,4 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface ConfettiProps {
@@ -61,12 +62,19 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const particlesRef = useRef<Particle[]>([]);
     const frameRef = useRef(0);
+    const sizeRef = useRef({ width, height, particleCount });
+    sizeRef.current = { width, height, particleCount };
 
     const burst = useCallback(() => {
-      particlesRef.current.push(...createParticles(width, height, particleCount));
-    }, [height, particleCount, width]);
+      const { width: w, height: h, particleCount: count } = sizeRef.current;
+      particlesRef.current.push(...createParticles(w, h, count));
+    }, []);
 
     useImperativeHandle(ref, () => ({ burst }), [burst]);
+
+    useEffect(() => {
+      if (auto) burst();
+    }, [auto, burst]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
@@ -79,10 +87,15 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
       if (!ctx) return;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      if (auto) burst();
+      let paused = document.hidden;
+      const unbindVisibility = bindVisibilityPause((hidden) => {
+        paused = hidden;
+      });
 
       const tick = () => {
         frameRef.current = requestAnimationFrame(tick);
+        if (paused) return;
+
         ctx.clearRect(0, 0, width, height);
 
         particlesRef.current = particlesRef.current.filter((p) => {
@@ -107,8 +120,11 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
       };
 
       tick();
-      return () => cancelAnimationFrame(frameRef.current);
-    }, [auto, burst, height, width]);
+      return () => {
+        cancelAnimationFrame(frameRef.current);
+        unbindVisibility();
+      };
+    }, [height, width]);
 
     return (
       <div className={styles.confetti} style={{ width, height }}>

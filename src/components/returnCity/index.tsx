@@ -2,15 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import styles from './style/index.module.less';
 
 export interface ReturnCityProps {
-  /** 星星数量，默认按屏幕宽度自动计算 */
+  /** 星星数量，默认按容器宽度自动计算 */
   starCount?: number;
-  /** 光壁数量，默认 6 */
+  /** 光壁数量，默认 8 */
   glassCount?: number;
   /** 光壁半径（px），默认 150 */
   glassRadius?: number;
 }
 
-const ReturnCity: React.FC<ReturnCityProps> = ({ starCount, glassCount = 6, glassRadius = 150 }) => {
+const ReturnCity: React.FC<ReturnCityProps> = ({ starCount, glassCount = 8, glassRadius = 150 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const glassWrapRef = useRef<HTMLDivElement>(null);
 
@@ -22,14 +22,13 @@ const ReturnCity: React.FC<ReturnCityProps> = ({ starCount, glassCount = 6, glas
     const timeouts: number[] = [];
     const stars: HTMLDivElement[] = [];
     const glasses: HTMLDivElement[] = [];
-    const count = starCount ?? Math.floor(document.documentElement.clientWidth / 20);
+    const { width, height } = container.getBoundingClientRect();
+    const count = starCount ?? Math.max(20, Math.floor(width / 20));
 
     for (let index = 0; index < count; index++) {
       const timeout = window.setTimeout(() => {
         const star = document.createElement('div');
         star.className = styles.star;
-        const width = document.body.clientWidth;
-        const height = document.body.clientHeight;
         star.style.top = `${Math.random() * height}px`;
         star.style.left = `${Math.random() * width}px`;
         container.append(star);

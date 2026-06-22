@@ -47,22 +47,39 @@ const UNITS: { key: keyof Omit<TimeLeft, 'total'>; label: string }[] = [
 
 const Countdown: React.FC<CountdownProps> = ({ targetDate, onEnd, showLabels = true, color = '#f472b6' }) => {
   const targetMs = useMemo(() => parseTarget(targetDate), [targetDate]);
+  const isValid = !Number.isNaN(targetMs);
   const [, setTick] = useState(0);
   const endedRef = useRef(false);
-  const timeLeft = calcTimeLeft(targetMs);
+  const onEndRef = useRef(onEnd);
+  const timeLeft = isValid ? calcTimeLeft(targetMs) : { days: 0, hours: 0, minutes: 0, seconds: 0, total: 0 };
 
   useEffect(() => {
+    onEndRef.current = onEnd;
+  }, [onEnd]);
+
+  useEffect(() => {
+    if (!isValid) return;
     endedRef.current = false;
-    const timer = window.setInterval(() => setTick((t) => t + 1), 1000);
-    return () => clearInterval(timer);
-  }, [targetMs]);
 
-  useEffect(() => {
-    if (timeLeft.total <= 0 && !endedRef.current) {
-      endedRef.current = true;
-      onEnd?.();
-    }
-  }, [timeLeft.total, onEnd]);
+    const timer = window.setInterval(() => {
+      setTick((t) => t + 1);
+      if (Date.now() >= targetMs && !endedRef.current) {
+        endedRef.current = true;
+        onEndRef.current?.();
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isValid, targetMs]);
+
+  if (!isValid) {
+    return (
+      <div className={styles.countdown}>
+        <p className={styles.invalid}>无效的目标时间</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.countdown} style={{ '--countdown-color': color } as React.CSSProperties}>

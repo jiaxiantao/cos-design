@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface ParticleNetworkProps {
@@ -8,6 +9,8 @@ export interface ParticleNetworkProps {
   particleCount?: number;
   /** 连线距离 */
   linkDistance?: number;
+  /** 鼠标排斥半径 */
+  repelRadius?: number;
   /** 粒子颜色 */
   color?: string;
 }
@@ -25,6 +28,7 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
   height = 500,
   particleCount = 60,
   linkDistance = 120,
+  repelRadius = 150,
   color = '#38bdf8'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -57,12 +61,23 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     let frameId = 0;
+    let paused = document.hidden;
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+
     const draw = () => {
+      if (paused) {
+        frameId = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.fillStyle = '#0f172a';
       ctx.fillRect(0, 0, width, height);
 
       const particles = particlesRef.current;
       const mouse = mouseRef.current;
+      const repelRadiusSq = repelRadius * repelRadius;
 
       particles.forEach((p) => {
         p.x += p.vx;
@@ -72,10 +87,11 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
 
         const dx = mouse.x - p.x;
         const dy = mouse.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          p.vx -= dx * 0.0003;
-          p.vy -= dy * 0.0003;
+        const distSq = dx * dx + dy * dy;
+        if (distSq < repelRadiusSq && distSq > 0) {
+          const dist = Math.sqrt(distSq);
+          p.vx -= (dx / dist) * 0.15;
+          p.vy -= (dy / dist) * 0.15;
         }
       });
 
@@ -83,8 +99,9 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < linkDistance) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < linkDistance * linkDistance) {
+            const dist = Math.sqrt(distSq);
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -108,15 +125,27 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
     };
 
     draw();
-    return () => cancelAnimationFrame(frameId);
-  }, [color, height, initParticles, linkDistance, width]);
+    return () => {
+      cancelAnimationFrame(frameId);
+      unbindVisibility();
+    };
+  }, [color, height, initParticles, linkDistance, repelRadius, width]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  const updatePointer = (clientX: number, clientY: number, rect: DOMRect) => {
+    mouseRef.current = { x: clientX - rect.left, y: clientY - rect.top };
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    updatePointer(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect());
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    updatePointer(touch.clientX, touch.clientY, e.currentTarget.getBoundingClientRect());
+  };
+
+  const resetPointer = () => {
     mouseRef.current = { x: -1000, y: -1000 };
   };
 
@@ -127,9 +156,11 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
         className={styles.canvas}
         style={{ width, height }}
         onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={resetPointer}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={resetPointer}
       />
-      <p className={styles.hint}>移动鼠标与粒子互动</p>
+      <p className={styles.hint}>移动鼠标或手指与粒子互动</p>
     </div>
   );
 };

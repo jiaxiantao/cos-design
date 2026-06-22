@@ -14,12 +14,14 @@ export interface TypewriterProps {
 
 const DEFAULT_TEXTS = ['Hello, cos-design!', '欢迎来到组件库 ✨', 'Build something fun 🚀'];
 
-const Typewriter: React.FC<TypewriterProps> = ({
-  texts = DEFAULT_TEXTS,
-  speed = 100,
-  deleteSpeed = 50,
-  pause = 2000
-}) => {
+interface TypewriterCoreProps {
+  texts: string[];
+  speed: number;
+  deleteSpeed: number;
+  pause: number;
+}
+
+const TypewriterCore: React.FC<TypewriterCoreProps> = ({ texts, speed, deleteSpeed, pause }) => {
   const [displayText, setDisplayText] = useState('');
   const [textIndex, setTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -58,6 +60,25 @@ const Typewriter: React.FC<TypewriterProps> = ({
         </p>
       </div>
     </div>
+  );
+};
+
+const Typewriter: React.FC<TypewriterProps> = ({
+  texts = DEFAULT_TEXTS,
+  speed = 100,
+  deleteSpeed = 50,
+  pause = 2000
+}) => {
+  const safeTexts = texts.length > 0 ? texts : DEFAULT_TEXTS;
+
+  return (
+    <TypewriterCore
+      key={safeTexts.join('\0')}
+      texts={safeTexts}
+      speed={speed}
+      deleteSpeed={deleteSpeed}
+      pause={pause}
+    />
   );
 };
 

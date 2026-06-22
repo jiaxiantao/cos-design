@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface MeteorRainProps {
@@ -42,8 +43,15 @@ const MeteorRain: React.FC<MeteorRainProps> = ({ width = 800, height = 500, mete
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+    let paused = document.hidden;
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+
     const tick = () => {
       frameRef.current = requestAnimationFrame(tick);
+      if (paused) return;
+
       ctx.fillStyle = 'rgb(15 23 42 / 15%)';
       ctx.fillRect(0, 0, width, height);
 
@@ -59,26 +67,28 @@ const MeteorRain: React.FC<MeteorRainProps> = ({ width = 800, height = 500, mete
           meteor.opacity = Math.random() * 0.5 + 0.3;
         }
 
-        const gradient = ctx.createLinearGradient(
-          meteor.x,
-          meteor.y,
-          meteor.x - meteor.length,
-          meteor.y - meteor.length * 0.6
-        );
-        gradient.addColorStop(0, `rgb(255 255 255 / ${meteor.opacity})`);
-        gradient.addColorStop(1, 'rgb(255 255 255 / 0)');
+        const tailX = meteor.x - meteor.length;
+        const tailY = meteor.y - meteor.length * 0.6;
 
         ctx.beginPath();
-        ctx.strokeStyle = gradient;
+        ctx.strokeStyle = `rgb(255 255 255 / ${meteor.opacity})`;
         ctx.lineWidth = 2;
         ctx.moveTo(meteor.x, meteor.y);
-        ctx.lineTo(meteor.x - meteor.length, meteor.y - meteor.length * 0.6);
+        ctx.lineTo(tailX, tailY);
         ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgb(255 255 255 / ${Math.min(1, meteor.opacity + 0.2)})`;
+        ctx.arc(meteor.x, meteor.y, 1.5, 0, Math.PI * 2);
+        ctx.fill();
       });
     };
 
     tick();
-    return () => cancelAnimationFrame(frameRef.current);
+    return () => {
+      cancelAnimationFrame(frameRef.current);
+      unbindVisibility();
+    };
   }, [height, width]);
 
   return (
