@@ -28,6 +28,11 @@ const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab 
   const [grabbed, setGrabbed] = useState(0);
   const [active, setActive] = useState(true);
   const activeRef = useRef(true);
+  const onGrabRef = useRef(onGrab);
+
+  useEffect(() => {
+    onGrabRef.current = onGrab;
+  }, [onGrab]);
 
   useEffect(() => {
     activeRef.current = active;
@@ -131,7 +136,7 @@ const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab 
       if (Math.abs(mx - p.x) < 30 && Math.abs(my - p.y) < 35) {
         grabbedOne = true;
         setGrabbed((g) => g + p.amount);
-        onGrab?.(p.amount);
+        onGrabRef.current?.(p.amount);
         return { ...p, grabbed: true };
       }
       return p;

@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { getCategoryMeta } from '../config/categories';
 import { componentDemos } from '../config/components';
@@ -10,6 +10,7 @@ const ComponentPage = () => {
   const { pathname } = useLocation();
   const [copied, setCopied] = useState(false);
   const [showCode, setShowCode] = useState(false);
+  const copyTimerRef = useRef(0);
 
   const currentIndex = componentDemos.findIndex((item) => item.path === pathname);
   const current = componentDemos[currentIndex];
@@ -21,6 +22,8 @@ const ComponentPage = () => {
     return sameCategory[idx + 1] ?? null;
   }, [current, pathname]);
 
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
+
   if (!current) {
     return <Navigate to="/" replace />;
   }
@@ -30,7 +33,8 @@ const ComponentPage = () => {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(current.codeExample);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    clearTimeout(copyTimerRef.current);
+    copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000);
   };
 
   return (

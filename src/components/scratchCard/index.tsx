@@ -22,7 +22,12 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const revealedRef = useRef(false);
+  const onRevealRef = useRef(onReveal);
   const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    onRevealRef.current = onReveal;
+  }, [onReveal]);
 
   const drawCover = useCallback(
     (ctx: CanvasRenderingContext2D) => {
@@ -38,27 +43,24 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
     [coverColor, height, width]
   );
 
-  const checkReveal = useCallback(
-    (canvas: HTMLCanvasElement) => {
-      if (revealedRef.current) return;
+  const checkReveal = useCallback((canvas: HTMLCanvasElement) => {
+    if (revealedRef.current) return;
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      let transparent = 0;
-      for (let i = 3; i < imageData.data.length; i += 4) {
-        if (imageData.data[i] < 128) transparent++;
-      }
-      const ratio = transparent / (canvas.width * canvas.height);
-      if (ratio > 0.45) {
-        revealedRef.current = true;
-        setRevealed(true);
-        onReveal?.();
-      }
-    },
-    [onReveal]
-  );
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let transparent = 0;
+    for (let i = 3; i < imageData.data.length; i += 4) {
+      if (imageData.data[i] < 128) transparent++;
+    }
+    const ratio = transparent / (canvas.width * canvas.height);
+    if (ratio > 0.45) {
+      revealedRef.current = true;
+      setRevealed(true);
+      onRevealRef.current?.();
+    }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;

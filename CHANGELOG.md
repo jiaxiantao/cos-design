@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.3] - 2026-06-23
+
+### Fixed
+
+- `Charge` 电量数值与绿色充电动效同步，通过 `clip-path` 绑定 `--charge-pct`
+- `Turntable` 旋转动画结束后增加 `cancelled` 守卫，避免卸载后 `setState`
+- `Countdown` 目标时间已过期时立即触发 `onEnd`
+- `MazeGenerator` 迷宫绘制完成后停止 rAF 循环
+- `ProgressChest` / `ScratchCard` / `RedPacketRain` 回调改用 ref，避免闭包陈旧
+- Playground 复制代码按钮卸载时清理 `setTimeout`
+
+### Changed
+
+- `Charge` 演示页支持滑块调节电量与自动充电开关
+- `CanvasClock` 补充宽高 props 说明（始终渲染为正方形）
+- 移除未引用的 `home/`、`demo-layout/` 页面与 `public/models/bantha` 资源
+- README 分类名称与 Playground 统一为「背景动效」
+
 ## [3.0.2] - 2026-06-23
 
 ### Changed

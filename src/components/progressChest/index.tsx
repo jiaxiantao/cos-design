@@ -13,18 +13,23 @@ export interface ProgressChestProps {
 
 const ProgressChest: React.FC<ProgressChestProps> = ({ progress = 0, onOpen, label = '开启宝箱' }) => {
   const openedRef = useRef(false);
+  const onOpenRef = useRef(onOpen);
   const pct = clamp(progress, 0, 100);
   const isOpen = pct >= 100;
 
   useEffect(() => {
+    onOpenRef.current = onOpen;
+  }, [onOpen]);
+
+  useEffect(() => {
     if (isOpen && !openedRef.current) {
       openedRef.current = true;
-      onOpen?.();
+      onOpenRef.current?.();
     }
     if (!isOpen) {
       openedRef.current = false;
     }
-  }, [isOpen, onOpen]);
+  }, [isOpen]);
 
   return (
     <div className={styles.progressChest}>

@@ -14,6 +14,7 @@
     overflow: hidden;
     filter: contrast(15) hue-rotate(0);
     animation: hueRotate 6s linear infinite;
+    clip-path: inset(calc(100% - var(--charge-pct, 0) * 1%) 0 0 0);
 
     .text {
       width: 300px;

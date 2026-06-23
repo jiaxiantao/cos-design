@@ -60,7 +60,7 @@ export default function Page() {
 ## 组件一览（49 个 · 6 大分类）
 
 <details open>
-<summary><strong>背景氛围</strong> — 9 个 · 动态场景与粒子背景</summary>
+<summary><strong>背景动效</strong> — 9 个 · 动态场景与粒子背景</summary>
 
 <br>
 

@@ -61,6 +61,12 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate, onEnd, showLabels = t
     if (!isValid) return;
     endedRef.current = false;
 
+    if (Date.now() >= targetMs) {
+      endedRef.current = true;
+      onEndRef.current?.();
+      return;
+    }
+
     const timer = window.setInterval(() => {
       setTick((t) => t + 1);
       if (Date.now() >= targetMs && !endedRef.current) {

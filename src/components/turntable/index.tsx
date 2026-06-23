@@ -200,7 +200,7 @@ const Turntable: React.FC<TurntableProps> = ({
 
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
-      } else {
+      } else if (!token.cancelled) {
         const finalIndex = getIndexByRotation(rotation);
         const prize = prizes[finalIndex];
         rotationRef.current = rotation;

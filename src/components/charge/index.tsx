@@ -68,7 +68,11 @@ const Charge = (props: ChargeProps): React.ReactElement => {
   const display = quantity.toFixed(2);
 
   return (
-    <div ref={containerRef} className={styles.chargeContainer}>
+    <div
+      ref={containerRef}
+      className={styles.chargeContainer}
+      style={{ '--charge-pct': quantity } as React.CSSProperties}
+    >
       <div className={styles.contrast}>
         <div className={styles.text}>{display}%</div>
         <span />

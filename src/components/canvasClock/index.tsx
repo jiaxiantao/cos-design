@@ -3,7 +3,9 @@ import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface CanvasClockProps {
+  /** 画布宽度（与 height 取较小值作为正方形边长） */
   width?: number;
+  /** 画布高度（与 width 取较小值作为正方形边长） */
   height?: number;
 }
 

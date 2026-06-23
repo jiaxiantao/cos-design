@@ -91,8 +91,11 @@ const MazeGenerator: React.FC<MazeGeneratorProps> = ({ width = 400, height = 300
     });
 
     const draw = () => {
-      frameId = requestAnimationFrame(draw);
-      if (paused) return;
+      if (paused) {
+        frameId = requestAnimationFrame(draw);
+        return;
+      }
+
       reveal = Math.min(totalWalls, reveal + 2);
 
       ctx.fillStyle = '#0f172a';
@@ -145,6 +148,10 @@ const MazeGenerator: React.FC<MazeGeneratorProps> = ({ width = 400, height = 300
         }
       }
       ctx.shadowBlur = 0;
+
+      if (reveal < totalWalls) {
+        frameId = requestAnimationFrame(draw);
+      }
     };
 
     draw();
