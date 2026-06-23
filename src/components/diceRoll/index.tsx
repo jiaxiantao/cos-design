@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './style/index.module.less';
 
 export interface DiceRollProps {
@@ -21,6 +21,16 @@ const DiceRoll: React.FC<DiceRollProps> = ({ onRoll, sides = 6 }) => {
   const [rolling, setRolling] = useState(false);
   const [value, setValue] = useState(1);
   const [rotation, setRotation] = useState({ x: 0, y: 0, z: 0 });
+  const onRollRef = useRef(onRoll);
+  const timerRef = useRef(0);
+
+  useEffect(() => {
+    onRollRef.current = onRoll;
+  }, [onRoll]);
+
+  useEffect(() => {
+    return () => clearTimeout(timerRef.current);
+  }, []);
 
   const handleRoll = () => {
     if (rolling) return;
@@ -37,10 +47,11 @@ const DiceRoll: React.FC<DiceRollProps> = ({ onRoll, sides = 6 }) => {
       z: Math.random() * 360
     });
 
-    window.setTimeout(() => {
+    clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => {
       setValue(result);
       setRolling(false);
-      onRoll?.(result);
+      onRollRef.current?.(result);
     }, 1200);
   };
 

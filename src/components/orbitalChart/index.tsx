@@ -81,10 +81,16 @@ const OrbitalChart: React.FC<OrbitalChartProps> = ({ data = DEFAULT_DATA, size =
         }
       });
 
+      const dominant = data.reduce((best, item) => (item.value > best.value ? item : best), data[0]);
+      const dominantPct = Math.round((dominant.value / total) * 100);
+
       ctx.fillStyle = '#e2e8f0';
-      ctx.font = '12px system-ui';
+      ctx.font = 'bold 14px system-ui';
       ctx.textAlign = 'center';
-      ctx.fillText(`${Math.round((data[0]?.value / total) * 100) || 0}%`, cx, cy + 4);
+      ctx.fillText(`${dominantPct}%`, cx, cy + 2);
+      ctx.font = '10px system-ui';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(dominant.label, cx, cy + 16);
     };
 
     draw();

@@ -49,6 +49,12 @@ const Turntable: React.FC<TurntableProps> = ({
 
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<TurntablePrize | null>(null);
+  const onSpinEndRef = useRef(onSpinEnd);
+  const spinTokenRef = useRef<{ cancelled: boolean } | null>(null);
+
+  useEffect(() => {
+    onSpinEndRef.current = onSpinEnd;
+  }, [onSpinEnd]);
 
   const canvasSize = size + 48;
 
@@ -148,6 +154,7 @@ const Turntable: React.FC<TurntableProps> = ({
 
   useEffect(() => {
     return () => {
+      if (spinTokenRef.current) spinTokenRef.current.cancelled = true;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -177,8 +184,12 @@ const Turntable: React.FC<TurntableProps> = ({
 
     const startRotation = currentRotation;
     const startTime = performance.now();
+    const token = { cancelled: false };
+    spinTokenRef.current = token;
 
     const animate = (now: number) => {
+      if (token.cancelled) return;
+
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / spinDuration, 1);
       const eased = easeOutCubic(progress);
@@ -195,7 +206,7 @@ const Turntable: React.FC<TurntableProps> = ({
         rotationRef.current = rotation;
         setSpinning(false);
         setResult(prize);
-        onSpinEnd?.(prize, finalIndex);
+        onSpinEndRef.current?.(prize, finalIndex);
       }
     };
 

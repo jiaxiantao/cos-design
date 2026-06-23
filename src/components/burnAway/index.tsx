@@ -16,6 +16,11 @@ const BurnAway: React.FC<BurnAwayProps> = ({ text = 'BURN', fontSize = 64, onCom
   const [burning, setBurning] = useState(false);
   const [done, setDone] = useState(false);
   const completedRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   const startBurn = useCallback(() => {
     if (burning || done) return;
@@ -91,9 +96,11 @@ const BurnAway: React.FC<BurnAwayProps> = ({ text = 'BURN', fontSize = 64, onCom
 
     let frameId = 0;
     let elapsed = 0;
+    let cancelled = false;
     const duration = 2500;
 
     const animate = (now: number, prev: number) => {
+      if (cancelled) return;
       const dt = Math.min((now - prev) / 16, 2);
       elapsed += dt * 16;
       ctx.clearRect(0, 0, w, h);
@@ -125,17 +132,22 @@ const BurnAway: React.FC<BurnAwayProps> = ({ text = 'BURN', fontSize = 64, onCom
       if (elapsed < duration && alive > 0) {
         frameId = requestAnimationFrame((t) => animate(t, now));
       } else {
-        setDone(true);
-        if (!completedRef.current) {
-          completedRef.current = true;
-          onComplete?.();
+        if (!cancelled) {
+          setDone(true);
+          if (!completedRef.current) {
+            completedRef.current = true;
+            onCompleteRef.current?.();
+          }
         }
       }
     };
 
     frameId = requestAnimationFrame((t) => animate(t, t));
-    return () => cancelAnimationFrame(frameId);
-  }, [burning, done, text, fontSize, onComplete]);
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frameId);
+    };
+  }, [burning, done, text, fontSize]);
 
   return (
     <div className={styles.burnAway}>

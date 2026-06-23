@@ -16,7 +16,13 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ symbols = DEFAULT_SYMBOLS, on
   const [spinning, setSpinning] = useState(false);
   const [offsets, setOffsets] = useState([0, 0, 0]);
   const [results, setResults] = useState<string[]>([]);
-  const frameRefs = useRef<number[]>([0, 0, 0]);
+  const frameRef = useRef(0);
+  const onSpinEndRef = useRef(onSpinEnd);
+  const spinTokenRef = useRef<{ cancelled: boolean } | null>(null);
+
+  useEffect(() => {
+    onSpinEndRef.current = onSpinEnd;
+  }, [onSpinEnd]);
 
   const itemHeight = 80;
   const visibleCount = 3;
@@ -36,54 +42,47 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ symbols = DEFAULT_SYMBOLS, on
     setResults([]);
 
     const targets = [0, 1, 2].map(() => Math.floor(Math.random() * symbols.length));
-    const finalOffsets = targets.map((t) => -(t + symbols.length * 10) * itemHeight);
+    // 中间行（第 2 行）为开奖线：offset 使 symbols[t] 落在正中
+    const finalOffsets = targets.map((t) => -(t - 1 + symbols.length * 10) * itemHeight);
     const startOffsets = [...offsets];
     const duration = 2000;
     const delays = [0, 300, 600];
     const startTime = performance.now();
-    let completed = 0;
+    const token = { cancelled: false };
+    spinTokenRef.current = token;
 
-    const animate = (reelIndex: number) => {
-      const delay = delays[reelIndex];
-      const animateFrame = (now: number) => {
-        const elapsed = now - startTime - delay;
-        if (elapsed < 0) {
-          frameRefs.current[reelIndex] = requestAnimationFrame(animateFrame);
-          return;
-        }
+    const animateFrame = (now: number) => {
+      if (token.cancelled) return;
 
+      const next = startOffsets.map((start, reelIndex) => {
+        const elapsed = now - startTime - delays[reelIndex];
+        if (elapsed < 0) return start;
         const progress = Math.min(elapsed / duration, 1);
         const eased = easeOutCubic(progress);
-        const current = startOffsets[reelIndex] + (finalOffsets[reelIndex] - startOffsets[reelIndex]) * eased;
+        return start + (finalOffsets[reelIndex] - start) * eased;
+      });
 
-        setOffsets((prev) => {
-          const next = [...prev];
-          next[reelIndex] = current;
-          return next;
-        });
+      setOffsets(next);
 
-        if (progress < 1) {
-          frameRefs.current[reelIndex] = requestAnimationFrame(animateFrame);
-        } else {
-          completed++;
-          if (completed === 3) {
-            const finalResults = targets.map((t) => symbols[t]);
-            setResults(finalResults);
-            setSpinning(false);
-            onSpinEnd?.(finalResults);
-          }
-        }
-      };
-      frameRefs.current[reelIndex] = requestAnimationFrame(animateFrame);
+      const allDone = delays.every((delay) => now - startTime - delay >= duration);
+
+      if (!allDone) {
+        frameRef.current = requestAnimationFrame(animateFrame);
+      } else if (!token.cancelled) {
+        const finalResults = targets.map((t) => symbols[t]);
+        setResults(finalResults);
+        setSpinning(false);
+        onSpinEndRef.current?.(finalResults);
+      }
     };
 
-    [0, 1, 2].forEach(animate);
+    frameRef.current = requestAnimationFrame(animateFrame);
   };
 
   useEffect(() => {
-    const frames = frameRefs.current;
     return () => {
-      frames.forEach((id) => cancelAnimationFrame(id));
+      if (spinTokenRef.current) spinTokenRef.current.cancelled = true;
+      cancelAnimationFrame(frameRef.current);
     };
   }, []);
 

@@ -27,6 +27,11 @@ const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab 
   const spawnTimerRef = useRef(0);
   const [grabbed, setGrabbed] = useState(0);
   const [active, setActive] = useState(true);
+  const activeRef = useRef(true);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   const width = 400;
   const height = 500;
@@ -59,14 +64,17 @@ const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab 
       paused = hidden;
     });
 
-    const endTimer = window.setTimeout(() => setActive(false), duration);
+    const endTimer = window.setTimeout(() => {
+      activeRef.current = false;
+      setActive(false);
+    }, duration);
 
     const tick = () => {
       frameRef.current = requestAnimationFrame(tick);
       if (paused) return;
 
       spawnTimerRef.current++;
-      if (active && spawnTimerRef.current % 20 === 0) {
+      if (activeRef.current && spawnTimerRef.current % 20 === 0) {
         spawnPacket();
       }
 
@@ -110,7 +118,7 @@ const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab 
       clearTimeout(endTimer);
       unbind();
     };
-  }, [active, duration, spawnPacket]);
+  }, [duration, spawnPacket]);
 
   const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

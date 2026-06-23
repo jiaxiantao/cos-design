@@ -39,22 +39,25 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
   );
 
   const checkReveal = useCallback(
-    (ctx: CanvasRenderingContext2D) => {
+    (canvas: HTMLCanvasElement) => {
       if (revealedRef.current) return;
 
-      const imageData = ctx.getImageData(0, 0, width, height);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       let transparent = 0;
       for (let i = 3; i < imageData.data.length; i += 4) {
         if (imageData.data[i] < 128) transparent++;
       }
-      const ratio = transparent / (width * height);
+      const ratio = transparent / (canvas.width * canvas.height);
       if (ratio > 0.45) {
         revealedRef.current = true;
         setRevealed(true);
         onReveal?.();
       }
     },
-    [height, onReveal, width]
+    [onReveal]
   );
 
   useEffect(() => {
@@ -80,7 +83,7 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
     ctx.beginPath();
     ctx.arc(x, y, 20, 0, Math.PI * 2);
     ctx.fill();
-    checkReveal(ctx);
+    checkReveal(canvas);
   };
 
   const getPos = (e: React.MouseEvent | React.TouchEvent) => {

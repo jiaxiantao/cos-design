@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useRef } from 'react';
-import { clamp } from '../_shared/visibility';
+import { bindVisibilityPause, clamp } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface LiquidProgressProps {
@@ -18,17 +18,27 @@ const LiquidProgress: React.FC<LiquidProgressProps> = ({ value = 0, max = 100, s
   useEffect(() => {
     let frame = 0;
     let t = 0;
+    let paused = document.hidden;
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+
     const animate = () => {
-      t += 0.04;
-      const wave = waveRef.current;
-      if (wave) {
-        const y = fillY + Math.sin(t) * 2;
-        wave.setAttribute('d', `M0,${y} Q25,${y - 4 + Math.sin(t * 1.3) * 3} 50,${y} T100,${y} V100 H0 Z`);
+      if (!paused) {
+        t += 0.04;
+        const wave = waveRef.current;
+        if (wave) {
+          const y = fillY + Math.sin(t) * 2;
+          wave.setAttribute('d', `M0,${y} Q25,${y - 4 + Math.sin(t * 1.3) * 3} 50,${y} T100,${y} V100 H0 Z`);
+        }
       }
       frame = requestAnimationFrame(animate);
     };
     frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(frame);
+      unbindVisibility();
+    };
   }, [fillY]);
 
   const stroke = 10;

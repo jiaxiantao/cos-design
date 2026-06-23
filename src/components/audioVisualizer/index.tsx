@@ -45,7 +45,11 @@ const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       if (!useMic || !navigator.mediaDevices?.getUserMedia) return;
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        if (cancelled) return;
+        if (cancelled) {
+          stream.getTracks().forEach((t) => t.stop());
+          stream = null;
+          return;
+        }
         audioCtx = new AudioContext();
         analyser = audioCtx.createAnalyser();
         analyser.fftSize = 256;

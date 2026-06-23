@@ -1,158 +1,257 @@
+<div align="center">
+
 # cos-design
+
+**49 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
 [![license](https://img.shields.io/npm/l/cos-design.svg)](https://github.com/jiaxiantao/cos-design/blob/main/LICENSE)
+[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-基于 React 19 + Vite 8 + TypeScript 5 的 React 组件库。
+[在线预览](https://github.com/jiaxiantao/cos-design#本地开发) · [v3.0 发布博客](./docs/cos-design-v3-release.md) · [完整指南](./docs/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
 
-## 特性
+</div>
 
-- 开箱即用的 React 组件
-- ESM / CJS 双格式输出，完整 TypeScript 类型支持
-- 样式自动注入，无需手动引入 CSS
-- 使用 pnpm + Vite 的现代工程化方案
+---
 
-## 安装
+## 这是什么？
+
+**cos-design** 是一个面向**视觉表达**的 React 组件库——不是 Ant Design 的替代品，而是给页面加氛围、加趣味、加记忆点的「特效层」。
+
+适合用在：
+
+| 场景         | 你可以用它做什么                   |
+| ------------ | ---------------------------------- |
+| 营销活动页   | 转盘抽奖、刮刮乐、红包雨、烟花庆祝 |
+| 品牌 Landing | 极光背景、霓虹标题、全息卡片       |
+| 数据大屏     | 翻牌器、仪表盘、液体进度环         |
+| 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成         |
+
+> 15 个组件太单薄，49 个刚好组成一套完整的「视觉工具箱」。
+
+---
+
+## 30 秒上手
 
 ```bash
 pnpm add cos-design
-# or
-npm install cos-design
-# or
-yarn add cos-design
 ```
 
-## 使用
-
 ```tsx
-import { CanvasClock, Charge, ReturnCity, Turntable } from 'cos-design';
+import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
 
-function App() {
-  return <CanvasClock width={400} height={400} />;
+export default function Page() {
+  return (
+    <>
+      <ScrambleText text="GRAND OPENING" />
+      <ScratchCard prize="🎉 恭喜中奖！" />
+      <Fireworks width={800} height={500} />
+    </>
+  );
 }
 ```
 
-## 组件（49 个 · 6 大分类）
+无需手动引入 CSS，样式自动注入。完整 TypeScript 类型开箱即用。
 
-### 背景氛围
+---
 
-`MatrixRain` · `MeteorRain` · `ParticleNetwork` · `Aurora` · `RippleWater` · `SmokeFog` · `CyberGrid` · `Snowfall` · `Starfield`
+## 组件一览（49 个 · 6 大分类）
 
-### 文字动效
+<details open>
+<summary><strong>背景氛围</strong> — 9 个 · 动态场景与粒子背景</summary>
 
-`Typewriter` · `NeonText` · `GlitchText` · `ScrambleText` · `SplitReveal` · `WaveText` · `GradientFlow` · `BurnAway` · `BarcodeScan`
+<br>
 
-### 交互玩具
+| 组件              | 说明                     |
+| ----------------- | ------------------------ |
+| `MatrixRain`      | 黑客帝国数字雨           |
+| `MeteorRain`      | 流星雨穿越               |
+| `ParticleNetwork` | 粒子连线网络（支持触摸） |
+| `Aurora`          | 极光渐变光带             |
+| `RippleWater`     | 点击水波纹               |
+| `SmokeFog`        | 烟雾雾气飘动             |
+| `CyberGrid`       | 赛博透视地面             |
+| `Snowfall`        | 雪花 / 樱花飘落          |
+| `Starfield`       | 3D 纵深星空              |
 
-`WaveButton` · `Spotlight` · `MagneticButton` · `HolographicCard` · `ClickSpark` · `CursorTrail` · `LiquidGlass`
+</details>
 
-### 游戏营销
+<details>
+<summary><strong>文字动效</strong> — 9 个 · 标题与 Banner 动画</summary>
 
-`Turntable` · `Confetti` · `Charge` · `ScratchCard` · `SlotMachine` · `DiceRoll` · `RedPacketRain` · `ProgressChest` · `RadarScan`
+<br>
 
-### 数据装饰
+| 组件           | 说明         |
+| -------------- | ------------ |
+| `Typewriter`   | 终端打字机   |
+| `NeonText`     | 霓虹发光字   |
+| `GlitchText`   | 故障风闪烁   |
+| `ScrambleText` | 乱码解密文字 |
+| `SplitReveal`  | 字母分裂入场 |
+| `WaveText`     | 正弦波浪文字 |
+| `GradientFlow` | 流光渐变字   |
+| `BurnAway`     | 燃烧消失     |
+| `BarcodeScan`  | 扫描线覆盖   |
 
-`CanvasClock` · `FlipCounter` · `Countdown` · `LiquidProgress` · `AudioVisualizer` · `Speedometer` · `TimelinePulse` · `OrbitalChart`
+</details>
 
-### 物理创意
+<details>
+<summary><strong>交互玩具</strong> — 7 个 · 鼠标驱动的趣味反馈</summary>
 
-`Fireworks` · `ReturnCity` · `NewtonCradle` · `GravityBalls` · `DnaHelix` · `ElectricArc` · `MazeGenerator`
+<br>
+
+| 组件              | 说明         |
+| ----------------- | ------------ |
+| `WaveButton`      | 水波扩散按钮 |
+| `Spotlight`       | 手电筒照亮   |
+| `MagneticButton`  | 磁吸按钮     |
+| `HolographicCard` | 全息反光卡片 |
+| `ClickSpark`      | 点击火花     |
+| `CursorTrail`     | 光标拖尾     |
+| `LiquidGlass`     | 液态毛玻璃   |
+
+</details>
+
+<details>
+<summary><strong>游戏营销</strong> — 9 个 · 抽奖与活动玩法</summary>
+
+<br>
+
+| 组件            | 说明         |
+| --------------- | ------------ |
+| `Turntable`     | 抽奖转盘     |
+| `Confetti`      | 彩纸喷射庆祝 |
+| `Charge`        | 充电动效     |
+| `ScratchCard`   | 刮刮乐       |
+| `SlotMachine`   | 老虎机       |
+| `DiceRoll`      | 3D 掷骰子    |
+| `RedPacketRain` | 红包雨       |
+| `ProgressChest` | 宝箱进度     |
+| `RadarScan`     | 雷达扫描 HUD |
+
+</details>
+
+<details>
+<summary><strong>数据装饰</strong> — 8 个 · 大屏与时间展示</summary>
+
+<br>
+
+| 组件              | 说明            |
+| ----------------- | --------------- |
+| `CanvasClock`     | Canvas 模拟时钟 |
+| `FlipCounter`     | 机械翻牌数字    |
+| `Countdown`       | 活动倒计时      |
+| `LiquidProgress`  | 液体进度环      |
+| `AudioVisualizer` | 音频可视化      |
+| `Speedometer`     | 速度仪表盘      |
+| `TimelinePulse`   | 时间轴脉冲      |
+| `OrbitalChart`    | 轨道占比图      |
+
+</details>
+
+<details>
+<summary><strong>物理创意</strong> — 7 个 · 物理模拟与视觉实验</summary>
+
+<br>
+
+| 组件            | 说明         |
+| --------------- | ------------ |
+| `Fireworks`     | 烟花燃放     |
+| `ReturnCity`    | 回城传送特效 |
+| `NewtonCradle`  | 牛顿摆       |
+| `GravityBalls`  | 重力球池     |
+| `DnaHelix`      | DNA 双螺旋   |
+| `ElectricArc`   | 电弧闪电     |
+| `MazeGenerator` | 迷宫生成器   |
+
+</details>
+
+---
+
+## 特性
+
+- **49 个组件**，覆盖背景、文字、交互、营销、数据、物理六大场景
+- **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
+- **ESM / CJS** 双格式，完整 `.d.ts` 类型
+- **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
+- Canvas 组件**页面隐藏时自动暂停**动画，省电友好
+- **GitHub Actions** 自动 lint、构建、npm 发布
+
+---
 
 ## 本地开发
 
-> **要求 Node.js >= 20**（项目含 `.nvmrc`，推荐使用 Node 22）
-
-### 第一步：切换 Node 版本
+> 要求 **Node.js >= 20**（推荐 Node 22，项目含 `.nvmrc`）
 
 ```bash
+git clone git@github.com:jiaxiantao/cos-design.git
+cd cos-design
 nvm use
-# 若未安装 Node 20
-nvm install 20 && nvm use 20
+npm run setup          # 安装依赖（绕过 corepack 问题）
+npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-### 第二步：安装依赖
+访问 **http://localhost:4000** — 按分类浏览全部 49 个组件，右侧可查看与复制示例代码。
 
-**不要直接运行 `pnpm install`**（若本机 corepack 有问题会报错），请使用：
+---
 
-```bash
-npm run setup
+## 常用命令
+
+| 命令                     | 说明           |
+| ------------------------ | -------------- |
+| `npm run setup`          | 安装依赖       |
+| `npx --yes pnpm@9 dev`   | 启动本地演示   |
+| `npx --yes pnpm@9 build` | 构建组件库     |
+| `npx --yes pnpm@9 lint`  | 代码检查       |
+| `npx --yes pnpm@9 pub`   | 构建并发布 npm |
+
+---
+
+## 使用注意
+
+**Canvas 组件请客户端渲染**（依赖 `window` / `canvas` / `requestAnimationFrame`）：
+
+```tsx
+import dynamic from 'next/dynamic';
+
+const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), { ssr: false });
 ```
 
-该命令会通过 `npx` 直接调用 pnpm，绕过 corepack。
+**控制使用密度** — 一个页面建议「一个强视觉背景 + 若干局部交互」，避免全场动画互相抢戏。
 
-### 第三步：启动开发
-
-```bash
-npx --yes pnpm@9 dev
-```
-
-访问 `http://localhost:4000` 进入首页，按分类浏览并跳转到对应组件演示（共 49 个组件）。
-
-## 脚本
-
-| 命令                     | 说明                            |
-| ------------------------ | ------------------------------- |
-| `npm run setup`          | 安装依赖（推荐，绕过 corepack） |
-| `npx --yes pnpm@9 dev`   | 启动本地演示                    |
-| `npx --yes pnpm@9 build` | 构建组件库                      |
-| `npx --yes pnpm@9 lint`  | 代码检查                        |
-| `npx --yes pnpm@9 pub`   | 构建并发布到 npm                |
-
-## 修复本机 pnpm（可选）
-
-若希望直接使用 `pnpm` 命令，在 **Node 20+** 环境下执行：
-
-```bash
-nvm use 20
-corepack disable
-hash -r
-npm install -g pnpm@9
-which pnpm        # 确认路径不在 corepack 下
-pnpm -v
-```
-
-## 自动发布（CI/CD）
-
-推送到 `master` 分支后，GitHub Actions 会自动执行 lint、构建，并将**新版本**发布到 [npm](https://www.npmjs.com/package/cos-design)。
-
-### 首次配置（仅需一次）
-
-1. 打开 [npm Access Tokens](https://www.npmjs.com/settings/jiaxiantao/tokens)
-2. 创建 **Granular Access Token**：
-   - Permissions: Packages → **Read and write**
-   - 勾选 **Bypass 2FA for publish**（自动化发布必须）
-3. 打开 GitHub 仓库 → **Settings** → **Secrets and variables** → **Actions**
-4. 新建 Secret：`NPM_TOKEN`，值为上一步的 token
-
-### 发布新版本
-
-```bash
-# 1. 更新 package.json 中的 version（如 2.2.0）
-# 2. 更新 CHANGELOG.md
-# 3. 提交并推送
-git add .
-git commit -m "chore: release v2.2.0"
-git push origin master
-
-# 4.（可选）打 tag
-git tag v2.2.0 && git push origin v2.2.0
-```
-
-推送后可在 [Actions](https://github.com/jiaxiantao/cos-design/actions) 查看发布进度。若 npm 上已存在相同版本号，会自动跳过发布。
+---
 
 ## 文档
 
-- [完整介绍与实践指南](./docs/cos-design-intro.md) — 项目背景、架构、组件能力与适用场景
+| 文档                                             | 内容                             |
+| ------------------------------------------------ | -------------------------------- |
+| [v3.0 发布博客](./docs/cos-design-v3-release.md) | 重大升级解读、分类体系、技术实现 |
+| [完整介绍与实践指南](./docs/cos-design-intro.md) | 架构、使用规则、组件详解         |
+| [CHANGELOG](./CHANGELOG.md)                      | 版本更新记录                     |
+| [CONTRIBUTING](./CONTRIBUTING.md)                | 参与贡献指南                     |
+
+---
+
+## 自动发布
+
+推送到 `master` 后，GitHub Actions 自动 lint、构建，并将新版本发布到 [npm](https://www.npmjs.com/package/cos-design)。
+
+首次配置需在 GitHub Secrets 中设置 `NPM_TOKEN`（需勾选 **Bypass 2FA for publish**）。详见 [npm Access Tokens](https://www.npmjs.com/settings/jiaxiantao/tokens)。
+
+---
 
 ## 参与贡献
 
-欢迎提交 Issue 与 Pull Request，请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+欢迎提交 Issue 与 Pull Request！
 
-## 更新日志
+---
 
-详见 [CHANGELOG.md](./CHANGELOG.md)。
+<div align="center">
 
-## License
+**如果觉得有用，欢迎 Star ⭐**
 
-[MIT](./LICENSE) © jiaxiantao
+[MIT](./LICENSE) © [jiaxiantao](https://github.com/jiaxiantao)
+
+</div>

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { bindVisibilityPause } from '../_shared/visibility';
 import styles from './style/index.module.less';
 
 export interface CanvasClockProps {
@@ -105,13 +106,23 @@ const CanvasClock: React.FC<CanvasClockProps> = ({ width = 400, height = 400 }) 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     let frameId = 0;
+    let paused = document.hidden;
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+
     const tick = () => {
-      drawClock(ctx);
+      if (!paused) {
+        drawClock(ctx);
+      }
       frameId = requestAnimationFrame(tick);
     };
     tick();
 
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      cancelAnimationFrame(frameId);
+      unbindVisibility();
+    };
   }, [drawClock, size]);
 
   return (

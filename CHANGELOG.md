@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2026-06-22
+
+### Fixed
+
+- `ScratchCard` 修复 HiDPI 屏幕下刮开进度检测不准确
+- `SlotMachine` 修复开奖符号与中间行不对齐；合并为单 rAF 循环；卸载时取消动画
+- `AudioVisualizer` 修复组件卸载时麦克风流未释放
+- `OrbitalChart` 中心标签改为显示占比最大的数据项
+- `DiceRoll` 修复卸载时 `setTimeout` 未清理
+- `BurnAway` / `Turntable` 修复卸载后仍触发回调的问题
+- `RedPacketRain` 修复结束时动画循环被意外重启
+- `TimelinePulse` 修复轴线与圆点垂直不对齐
+- `NewtonCradle` 修复摆动不符合动量守恒的视觉问题
+
+### Changed
+
+- `CanvasClock`、`LiquidProgress` 页面隐藏时暂停动画循环
+- 优化 `README.md` 排版与组件分类展示
+
 ## [3.0.0] - 2026-06-18
 
 ### Added
@@ -127,6 +146,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Webpack 及相关 loader 依赖
 - UMD 格式产物
 
+[3.0.1]: https://github.com/jiaxiantao/cos-design/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/jiaxiantao/cos-design/compare/v2.4.1...v3.0.0
 [2.4.1]: https://github.com/jiaxiantao/cos-design/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/jiaxiantao/cos-design/compare/v2.3.0...v2.4.0
