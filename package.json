@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A React component library built with Vite",
   "type": "module",
   "main": "./dist/index.cjs",

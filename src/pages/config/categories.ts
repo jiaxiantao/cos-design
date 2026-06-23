@@ -10,7 +10,7 @@ export interface CategoryMeta {
 export const COMPONENT_CATEGORIES: CategoryMeta[] = [
   {
     id: 'background',
-    label: '背景氛围',
+    label: '背景动效',
     description: 'Canvas / CSS 动态背景与粒子场景',
     accent: '#38bdf8'
   },

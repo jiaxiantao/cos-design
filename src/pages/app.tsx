@@ -1,29 +1,25 @@
-import React from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { componentDemos } from './config/components';
-import { demoComponents } from './config/demo-components';
-import DemoLayout from './demo-layout';
-import Home from './home';
+import CatalogPage from './playground/catalog-page';
+import ComponentPage from './playground/component-page';
+import PlaygroundLayout from './playground/playground-layout';
+import { PlaygroundSearchProvider } from './playground/search-context';
 
 const App = () => {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {componentDemos.map((item) => (
-          <Route
-            key={item.path}
-            path={item.path}
-            element={
-              <DemoLayout title={item.name} code={item.codeExample}>
-                {demoComponents[item.name] ?? <p>演示暂未配置</p>}
-              </DemoLayout>
-            }
-          />
-        ))}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <PlaygroundSearchProvider>
+        <Routes>
+          <Route element={<PlaygroundLayout />}>
+            <Route index element={<CatalogPage />} />
+            {componentDemos.map((item) => (
+              <Route key={item.path} path={item.path.replace(/^\//, '')} element={<ComponentPage />} />
+            ))}
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </PlaygroundSearchProvider>
     </HashRouter>
   );
 };

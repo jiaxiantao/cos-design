@@ -1,0 +1,268 @@
+.shell {
+  --bg: #0c0d12;
+  --surface: #12141c;
+  --surface-2: #181b26;
+  --border: rgb(255 255 255 / 8%);
+  --text: #e8eaef;
+  --text-muted: #8b92a8;
+  --accent: #8b5cf6;
+  --accent-soft: rgb(139 92 246 / 18%);
+
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+  height: 64px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: #fff;
+  font-size: 16px;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  strong {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  small {
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+}
+
+.searchWrap {
+  flex: 1;
+  max-width: 520px;
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.search {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    border-color: rgb(139 92 246 / 50%);
+  }
+}
+
+.stats {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.statBadge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  overflow-y: auto;
+}
+
+.sidebarTitle {
+  margin: 0 0 12px 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.categoryNav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.categoryGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+
+  &:hover {
+    background: rgb(255 255 255 / 4%);
+    color: var(--text);
+  }
+}
+
+.categoryItemActive {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.categoryCount {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 25%);
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.componentList {
+  margin: 4px 0 8px;
+  padding: 0 0 0 8px;
+  list-style: none;
+}
+
+.componentLink {
+  display: block;
+  padding: 7px 12px 7px 20px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &:hover {
+    color: var(--text);
+    background: rgb(255 255 255 / 4%);
+  }
+}
+
+.componentLinkActive {
+  color: #c4b5fd;
+  background: rgb(139 92 246 / 12%);
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  background: var(--bg);
+}
+
+@media (width <= 900px) {
+  .topbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .brand {
+    min-width: auto;
+  }
+
+  .searchWrap {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .stats {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    width: 200px;
+  }
+}
+
+@media (width <= 640px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
