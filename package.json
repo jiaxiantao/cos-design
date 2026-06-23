@@ -36,7 +36,7 @@
     "vite",
     "typescript"
   ],
-  "homepage": "https://github.com/jiaxiantao/cos-design#readme",
+  "homepage": "https://jiaxiantao.github.io/cos-design/",
   "bugs": {
     "url": "https://github.com/jiaxiantao/cos-design/issues"
   },
@@ -52,6 +52,7 @@
     "dev": "vite",
     "build": "tsc -p tsconfig.build.json --noEmit && vite build --mode lib",
     "build:demo": "vite build",
+    "build:pages": "vite build --mode pages",
     "preview": "vite preview",
     "pub": "pnpm build && pnpm publish",
     "prepare": "husky",

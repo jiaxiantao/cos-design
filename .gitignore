@@ -22,4 +22,5 @@ yarn-error.log
 
 # Test coverage
 coverage
-/docs
+
+# GitHub Pages demo build output is committed in docs/

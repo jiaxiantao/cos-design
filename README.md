@@ -10,7 +10,7 @@
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[在线预览](https://github.com/jiaxiantao/cos-design#本地开发) · [v3.0 发布博客](./docs/cos-design-v3-release.md) · [完整指南](./docs/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
+[在线预览](https://jiaxiantao.github.io/cos-design/) · [v3.0 发布博客](./website-content/cos-design-v3-release.md) · [完整指南](./website-content/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
 
 </div>
 
@@ -225,12 +225,12 @@ const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
 
 ## 文档
 
-| 文档                                             | 内容                             |
-| ------------------------------------------------ | -------------------------------- |
-| [v3.0 发布博客](./docs/cos-design-v3-release.md) | 重大升级解读、分类体系、技术实现 |
-| [完整介绍与实践指南](./docs/cos-design-intro.md) | 架构、使用规则、组件详解         |
-| [CHANGELOG](./CHANGELOG.md)                      | 版本更新记录                     |
-| [CONTRIBUTING](./CONTRIBUTING.md)                | 参与贡献指南                     |
+| 文档                                                        | 内容                             |
+| ----------------------------------------------------------- | -------------------------------- |
+| [v3.0 发布博客](./website-content/cos-design-v3-release.md) | 重大升级解读、分类体系、技术实现 |
+| [完整介绍与实践指南](./website-content/cos-design-intro.md) | 架构、使用规则、组件详解         |
+| [CHANGELOG](./CHANGELOG.md)                                 | 版本更新记录                     |
+| [CONTRIBUTING](./CONTRIBUTING.md)                           | 参与贡献指南                     |
 
 ---
 

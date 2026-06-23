@@ -6,8 +6,10 @@ import { libInjectCss } from 'vite-plugin-lib-inject-css';
 
 export default defineConfig(({ mode }) => {
   const isLib = mode === 'lib';
+  const isPages = mode === 'pages';
 
   return {
+    base: isPages ? '/cos-design/' : '/',
     publicDir: isLib ? false : 'public',
     plugins: isLib
       ? [
@@ -60,9 +62,14 @@ export default defineConfig(({ mode }) => {
           outDir: 'dist',
           emptyOutDir: true
         }
-      : {
-          outDir: 'dist-demo',
-          emptyOutDir: true
-        }
+      : isPages
+        ? {
+            outDir: 'docs',
+            emptyOutDir: true
+          }
+        : {
+            outDir: 'dist-demo',
+            emptyOutDir: true
+          }
   };
 });

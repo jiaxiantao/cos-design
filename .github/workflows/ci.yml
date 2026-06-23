@@ -40,6 +40,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Build GitHub Pages
+        run: pnpm build:pages
+
       - name: Upload build artifact
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
