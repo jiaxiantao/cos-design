@@ -17,6 +17,12 @@ export interface ChargeProps {
   step?: number;
 }
 
+const BUBBLE_COUNT = 15;
+const CIRCLE_TOP = 10;
+const CIRCLE_SIZE = 300;
+/** 气泡融入圆环的纵向位置（距容器顶部） */
+const MERGE_FROM_TOP = CIRCLE_TOP + CIRCLE_SIZE - 52;
+
 const Charge = (props: ChargeProps): React.ReactElement => {
   const { initQuantity = 0, value, onChange, autoCharge = true, interval = 500, step = 0.01 } = props;
 
@@ -40,7 +46,8 @@ const Charge = (props: ChargeProps): React.ReactElement => {
     if (!el) return;
 
     const updateHeight = () => {
-      el.style.setProperty('--charge-h', `${el.clientHeight}px`);
+      const riseMax = Math.max(0, el.clientHeight - MERGE_FROM_TOP);
+      el.style.setProperty('--charge-rise-max', `${riseMax}px`);
     };
 
     updateHeight();
@@ -71,28 +78,17 @@ const Charge = (props: ChargeProps): React.ReactElement => {
     <div
       ref={containerRef}
       className={styles.chargeContainer}
+      data-auto={autoCharge ? 'true' : 'false'}
       style={{ '--charge-pct': quantity } as React.CSSProperties}
     >
       <div className={styles.contrast}>
-        <div className={styles.text}>{display}%</div>
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
+        {Array.from({ length: BUBBLE_COUNT }, (_, i) => (
+          <span key={i} className={styles.bubble} data-index={i + 1} />
+        ))}
         <div className={styles.circle} />
         <div className={styles.button} />
       </div>
+      <div className={styles.text}>{display}%</div>
     </div>
   );
 };

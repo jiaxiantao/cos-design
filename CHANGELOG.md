@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.4] - 2026-06-23
+
+### Fixed
+
+- `Charge` 恢复 gooey 充电动效，移除错误的 `clip-path` 裁剪
+- 气泡上升至圆环融合点后淡出消失，不再继续上飘或被硬切边截断
+
+### Changed
+
+- `Charge` 演示页移除浮层控件，仅保留纯充电动画
+
 ## [3.0.3] - 2026-06-23
 
 ### Fixed

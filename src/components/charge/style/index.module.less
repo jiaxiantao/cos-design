@@ -5,6 +5,23 @@
   background-color: black;
   position: relative;
 
+  .text {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin-left: -150px;
+    text-align: center;
+    z-index: 10;
+    font-size: 30px;
+    line-height: 300px;
+    color: white;
+    pointer-events: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   .contrast {
     position: absolute;
     inset: 0;
@@ -14,35 +31,17 @@
     overflow: hidden;
     filter: contrast(15) hue-rotate(0);
     animation: hueRotate 6s linear infinite;
-    clip-path: inset(calc(100% - var(--charge-pct, 0) * 1%) 0 0 0);
 
-    .text {
-      width: 300px;
-      height: 300px;
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      margin-left: -150px;
-      text-align: center;
-      z-index: 9;
-      font-size: 30px;
-      line-height: 300px;
-      color: white;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    span {
+    .bubble {
       filter: blur(5px);
       position: absolute;
       border-radius: 10px;
       background: #00ff6f;
-      animation: moveUp ease-in-out infinite;
+      animation: moveUp ease-out infinite;
       bottom: 0;
-      transition: transform 300ms linear;
-      will-change: transform;
+      will-change: transform, opacity;
 
-      &:nth-child(2) {
+      &[data-index='1'] {
         width: 20px;
         height: 20px;
         left: 50%;
@@ -50,7 +49,7 @@
         animation-delay: 2s;
       }
 
-      &:nth-child(3) {
+      &[data-index='2'] {
         width: 22px;
         height: 22px;
         left: 54%;
@@ -58,7 +57,7 @@
         animation-delay: 4s;
       }
 
-      &:nth-child(4) {
+      &[data-index='3'] {
         width: 24px;
         height: 24px;
         left: 45%;
@@ -66,7 +65,7 @@
         animation-delay: 1s;
       }
 
-      &:nth-child(5) {
+      &[data-index='4'] {
         width: 20px;
         height: 22px;
         left: 54%;
@@ -74,7 +73,7 @@
         animation-delay: 0s;
       }
 
-      &:nth-child(6) {
+      &[data-index='5'] {
         width: 22px;
         height: 22px;
         left: 52%;
@@ -82,7 +81,7 @@
         animation-delay: 5s;
       }
 
-      &:nth-child(7) {
+      &[data-index='6'] {
         width: 20px;
         height: 20px;
         left: 50%;
@@ -90,7 +89,7 @@
         animation-delay: 1.2s;
       }
 
-      &:nth-child(8) {
+      &[data-index='7'] {
         width: 22px;
         height: 22px;
         left: 54%;
@@ -98,7 +97,7 @@
         animation-delay: 3.5s;
       }
 
-      &:nth-child(9) {
+      &[data-index='8'] {
         width: 24px;
         height: 24px;
         left: 51%;
@@ -106,7 +105,7 @@
         animation-delay: 4.2s;
       }
 
-      &:nth-child(10) {
+      &[data-index='9'] {
         width: 26px;
         height: 26px;
         left: 42%;
@@ -114,7 +113,7 @@
         animation-delay: 4s;
       }
 
-      &:nth-child(11) {
+      &[data-index='10'] {
         width: 26px;
         height: 22px;
         left: 54%;
@@ -122,7 +121,7 @@
         animation-delay: 4.3s;
       }
 
-      &:nth-child(12) {
+      &[data-index='11'] {
         width: 22px;
         height: 22px;
         left: 42%;
@@ -130,7 +129,7 @@
         animation-delay: 0.3s;
       }
 
-      &:nth-child(13) {
+      &[data-index='12'] {
         width: 24px;
         height: 24px;
         left: 46%;
@@ -138,7 +137,7 @@
         animation-delay: 2s;
       }
 
-      &:nth-child(14) {
+      &[data-index='13'] {
         width: 22px;
         height: 22px;
         left: 48%;
@@ -146,7 +145,7 @@
         animation-delay: 3.2s;
       }
 
-      &:nth-child(15) {
+      &[data-index='14'] {
         width: 26px;
         height: 22px;
         left: 55%;
@@ -154,7 +153,7 @@
         animation-delay: 2.9s;
       }
 
-      &:nth-child(16) {
+      &[data-index='15'] {
         width: 26px;
         height: 22px;
         left: 52%;
@@ -212,6 +211,12 @@
     }
   }
 
+  &[data-auto='false'] .bubble {
+    animation-play-state: paused;
+    transform: translateY(calc(-1 * var(--charge-rise-max, 225px) * var(--charge-pct, 0) / 100));
+    opacity: calc(1 - var(--charge-pct, 0) / 100);
+  }
+
   @keyframes circleRotate {
     0% {
       transform: rotate(0deg);
@@ -235,10 +240,22 @@
   @keyframes moveUp {
     0% {
       transform: translateY(0);
+      opacity: 1;
+    }
+
+    72% {
+      transform: translateY(calc(-1 * var(--charge-rise-max, 225px)));
+      opacity: 1;
+    }
+
+    82% {
+      transform: translateY(calc(-1 * var(--charge-rise-max, 225px)));
+      opacity: 0;
     }
 
     100% {
-      transform: translateY(calc(-1 * var(--charge-h, 100vh) + 245px));
+      transform: translateY(calc(-1 * var(--charge-rise-max, 225px)));
+      opacity: 0;
     }
   }
 }
