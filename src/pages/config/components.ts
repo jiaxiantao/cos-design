@@ -551,5 +551,71 @@ export const componentDemos: ComponentDemoItem[] = [
     codeExample: `import { MazeGenerator } from 'cos-design';
 
 <MazeGenerator width={400} height={400} />`
+  },
+  {
+    name: 'DoublePendulum',
+    path: '/doublePendulum',
+    title: '双摆混沌',
+    description: '双摆混沌轨迹，展现经典力学中的蝴蝶效应。',
+    tags: ['Canvas', '物理'],
+    category: 'physics' as const,
+    codeExample: `import { DoublePendulum } from 'cos-design';
+
+<DoublePendulum width={400} height={400} />`
+  },
+  {
+    name: 'PlasmaBall',
+    path: '/plasmaBall',
+    title: '等离子球',
+    description: '静电球效果，鼠标吸引电弧。',
+    tags: ['Canvas', '交互'],
+    category: 'physics' as const,
+    codeExample: `import { PlasmaBall } from 'cos-design';
+
+<PlasmaBall width={320} height={320} />`
+  },
+  {
+    name: 'MetaballPool',
+    path: '/metaballPool',
+    title: '液态融合球',
+    description: 'Metaball 软球融合，鼠标推开液体。',
+    tags: ['Canvas', '物理'],
+    category: 'physics' as const,
+    codeExample: `import { MetaballPool } from 'cos-design';
+
+<MetaballPool width={500} height={320} />`
+  },
+  {
+    name: 'SolarSystem',
+    path: '/solarSystem',
+    title: '太阳系',
+    description: '行星公转与月球绕地，含土星环。',
+    tags: ['Canvas', '天文'],
+    category: 'physics' as const,
+    codeExample: `import { SolarSystem } from 'cos-design';
+
+<SolarSystem width={400} height={400} speed={1.2} />`
+  },
+  {
+    name: 'LorenzAttractor',
+    path: '/lorenzAttractor',
+    title: '洛伦兹吸引子',
+    description: '3D 混沌蝴蝶轨迹，缓慢旋转展示。',
+    tags: ['Canvas', '数学'],
+    category: 'physics' as const,
+    codeExample: `import { LorenzAttractor } from 'cos-design';
+
+<LorenzAttractor width={400} height={360} />`
+  },
+  {
+    name: 'RopeChain',
+    path: '/ropeChain',
+    title: '绳索链条',
+    description: 'Verlet 积分绳索，拖拽摆动。',
+    tags: ['Canvas', '物理'],
+    category: 'physics' as const,
+    codeExample: `import { RopeChain } from 'cos-design';
+
+<RopeChain width={400} height={400} segments={16} />`
   }
 ];

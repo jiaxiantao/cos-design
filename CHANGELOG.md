@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-06-23
+
+### Added
+
+- 物理创意分类新增 6 个组件：`DoublePendulum`、`PlasmaBall`、`MetaballPool`、`SolarSystem`、`LorenzAttractor`、`RopeChain`
+
+### Fixed
+
+- `NewtonCradle` 改为 Canvas 单摆物理模拟，碰撞后动量正确传递至对端小球
+
+### Changed
+
+- Playground 顶栏搜索图标放大，统计徽章文字居中
+
 ## [3.1.0] - 2026-06-23
 
 ### Added

@@ -2,7 +2,7 @@
 
 # cos-design
 
-**49 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
+**55 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
@@ -29,7 +29,7 @@
 | 数据大屏     | 翻牌器、仪表盘、液体进度环         |
 | 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成         |
 
-> 15 个组件太单薄，49 个刚好组成一套完整的「视觉工具箱」。
+> 15 个组件太单薄，55 个刚好组成一套完整的「视觉工具箱」。
 
 ---
 
@@ -73,7 +73,7 @@ export default function Page() {
 
 ---
 
-## 组件一览（49 个 · 6 大分类）
+## 组件一览（55 个 · 6 大分类）
 
 <details open>
 <summary><strong>背景动效</strong> — 9 个 · 动态场景与粒子背景</summary>
@@ -168,19 +168,25 @@ export default function Page() {
 </details>
 
 <details>
-<summary><strong>物理创意</strong> — 7 个 · 物理模拟与视觉实验</summary>
+<summary><strong>物理创意</strong> — 13 个 · 物理模拟与视觉实验</summary>
 
 <br>
 
-| 组件            | 说明         |
-| --------------- | ------------ |
-| `Fireworks`     | 烟花燃放     |
-| `ReturnCity`    | 回城传送特效 |
-| `NewtonCradle`  | 牛顿摆       |
-| `GravityBalls`  | 重力球池     |
-| `DnaHelix`      | DNA 双螺旋   |
-| `ElectricArc`   | 电弧闪电     |
-| `MazeGenerator` | 迷宫生成器   |
+| 组件              | 说明         |
+| ----------------- | ------------ |
+| `Fireworks`       | 烟花燃放     |
+| `ReturnCity`      | 回城传送特效 |
+| `NewtonCradle`    | 牛顿摆       |
+| `GravityBalls`    | 重力球池     |
+| `DnaHelix`        | DNA 双螺旋   |
+| `ElectricArc`     | 电弧闪电     |
+| `MazeGenerator`   | 迷宫生成器   |
+| `DoublePendulum`  | 双摆混沌轨迹 |
+| `PlasmaBall`      | 等离子静电球 |
+| `MetaballPool`    | 液态融合球   |
+| `SolarSystem`     | 太阳系公转   |
+| `LorenzAttractor` | 洛伦兹吸引子 |
+| `RopeChain`       | 绳索链条摆动 |
 
 </details>
 
@@ -188,7 +194,7 @@ export default function Page() {
 
 ## 特性
 
-- **49 个组件**，覆盖背景、文字、交互、营销、数据、物理六大场景
+- **55 个组件**，覆盖背景、文字、交互、营销、数据、物理六大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
@@ -209,7 +215,7 @@ npm run setup          # 安装依赖（绕过 corepack 问题）
 npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-访问 **http://localhost:4000** — 按分类浏览全部 49 个组件，右侧可查看与复制示例代码。
+访问 **http://localhost:4000** — 按分类浏览全部 55 个组件，右侧可查看与复制示例代码。
 
 ---
 

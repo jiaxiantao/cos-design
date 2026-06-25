@@ -77,14 +77,24 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
   color: var(--text-muted);
-  font-size: 16px;
   pointer-events: none;
+
+  svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .search {
   width: 100%;
-  padding: 10px 14px 10px 38px;
+  padding: 10px 14px 10px 42px;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface-2);
@@ -109,12 +119,16 @@
 }
 
 .statBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text-muted);
   font-size: 12px;
+  line-height: 1;
   white-space: nowrap;
 }
 

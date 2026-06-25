@@ -360,6 +360,43 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     }
   ],
+  DoublePendulum: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'trailLength',
+      type: 'number',
+      required: false,
+      default: '120',
+      description: ''
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#38bdf8'",
+      description: ''
+    },
+    {
+      name: 'color2',
+      type: 'string',
+      required: false,
+      default: "'#a78bfa'",
+      description: ''
+    }
+  ],
   ElectricArc: [
     {
       name: 'width',
@@ -595,6 +632,43 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     }
   ],
+  LorenzAttractor: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '360',
+      description: ''
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: ''
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f472b6'",
+      description: ''
+    },
+    {
+      name: 'pointCount',
+      type: 'number',
+      required: false,
+      default: '2000',
+      description: ''
+    }
+  ],
   MagneticButton: [
     {
       name: 'children',
@@ -699,6 +773,36 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     }
   ],
+  MetaballPool: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '300',
+      description: ''
+    },
+    {
+      name: 'ballCount',
+      type: 'number',
+      required: false,
+      default: '5',
+      description: ''
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#38bdf8'",
+      description: ''
+    }
+  ],
   MeteorRain: [
     {
       name: 'width',
@@ -766,6 +870,20 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#38bdf8'",
       description: ''
+    },
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '280',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '200',
+      description: ''
     }
   ],
   OrbitalChart: [
@@ -826,6 +944,36 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#38bdf8'",
       description: '粒子颜色'
+    }
+  ],
+  PlasmaBall: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '320',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '320',
+      description: ''
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#a78bfa'",
+      description: ''
+    },
+    {
+      name: 'arcCount',
+      type: 'number',
+      required: false,
+      default: '8',
+      description: ''
     }
   ],
   ProgressChest: [
@@ -934,6 +1082,43 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#38bdf8'",
       description: '涟漪颜色'
+    }
+  ],
+  RopeChain: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'segments',
+      type: 'number',
+      required: false,
+      default: '16',
+      description: ''
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#38bdf8'",
+      description: ''
+    },
+    {
+      name: 'gravity',
+      type: 'number',
+      required: false,
+      default: '0.4',
+      description: ''
     }
   ],
   ScrambleText: [
@@ -1063,6 +1248,36 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '120',
       description: '粒子数量'
+    }
+  ],
+  SolarSystem: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: ''
+    },
+    {
+      name: 'showOrbits',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: ''
     }
   ],
   Speedometer: [

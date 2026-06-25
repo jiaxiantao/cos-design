@@ -13,6 +13,13 @@ const GitHubIcon = () => (
   </svg>
 );
 
+const SearchIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-3.5-3.5" />
+  </svg>
+);
+
 const PlaygroundLayout = () => {
   const { pathname } = useLocation();
   const { query, setQuery } = usePlaygroundSearch();
@@ -61,7 +68,7 @@ const PlaygroundLayout = () => {
 
         <div className={styles.searchWrap}>
           <span className={styles.searchIcon} aria-hidden>
-            ⌕
+            <SearchIcon />
           </span>
           <input
             type="search"
