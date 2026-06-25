@@ -1,0 +1,118 @@
+.section {
+  margin: 20px 20px 0;
+  padding: 20px 22px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 14px;
+  background: #0e1018;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.count {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(139 92 246 / 15%);
+  color: #a78bfa;
+  font-size: 11px;
+}
+
+.desc {
+  margin: 0 0 14px;
+  color: #8b92a8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid rgb(255 255 255 / 6%);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+
+  th,
+  td {
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(255 255 255 / 5%);
+  }
+
+  th {
+    background: rgb(255 255 255 / 3%);
+    color: #8b92a8;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: rgb(255 255 255 / 2%);
+  }
+}
+
+.propName {
+  color: #c4b5fd;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.propType {
+  color: #7dd3fc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  white-space: nowrap;
+}
+
+.propDefault {
+  color: #86efac;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  word-break: break-all;
+}
+
+.propDesc {
+  color: #9ca3af;
+  line-height: 1.55;
+  min-width: 120px;
+}
+
+.required {
+  color: #fca5a5;
+  font-weight: 600;
+}
+
+.optional {
+  color: #6b7280;
+}
+
+@media (width <= 640px) {
+  .section {
+    margin: 0 12px 16px;
+    padding: 16px;
+  }
+
+  .table {
+    font-size: 11px;
+
+    th,
+    td {
+      padding: 8px;
+    }
+  }
+}

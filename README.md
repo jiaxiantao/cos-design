@@ -10,7 +10,7 @@
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[在线预览](https://jiaxiantao.github.io/cos-design/) · [v3.0 发布博客](./website-content/cos-design-v3-release.md) · [完整指南](./website-content/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
+[在线预览](https://jiaxiantao.github.io/cos-design/) · [快速开始](./QUICKSTART.md) · [v3.0 发布博客](./website-content/cos-design-v3-release.md) · [完整指南](./website-content/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
 
 </div>
 
@@ -33,11 +33,17 @@
 
 ---
 
-## 30 秒上手
+## 快速开始
+
+> 完整说明见 **[QUICKSTART.md](./QUICKSTART.md)** · Playground 内访问 **#/quickstart**
+
+### 安装
 
 ```bash
 pnpm add cos-design
 ```
+
+### 最简示例
 
 ```tsx
 import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
@@ -54,6 +60,16 @@ export default function Page() {
 ```
 
 无需手动引入 CSS，样式自动注入。完整 TypeScript 类型开箱即用。
+
+### 使用注意（摘要）
+
+| 注意点   | 说明                                                            |
+| -------- | --------------------------------------------------------------- |
+| **SSR**  | Canvas 组件需在 Next.js 等框架中 `dynamic(..., { ssr: false })` |
+| **尺寸** | Canvas 组件需明确 `width` / `height`，父容器也应有可见高度      |
+| **密度** | 建议每页「一个强背景 + 若干局部交互」，避免多 Canvas 抢性能     |
+| **权限** | `AudioVisualizer` 开启麦克风时需 HTTPS 与用户授权               |
+| **省电** | 标签页隐藏时，多数 Canvas 动画自动暂停                          |
 
 ---
 
@@ -211,6 +227,8 @@ npx --yes pnpm@9 dev   # 启动 Playground
 
 ## 使用注意
 
+详见 [QUICKSTART.md](./QUICKSTART.md)。以下为高频场景摘要：
+
 **Canvas 组件请客户端渲染**（依赖 `window` / `canvas` / `requestAnimationFrame`）：
 
 ```tsx
@@ -227,6 +245,7 @@ const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
 
 | 文档                                                        | 内容                             |
 | ----------------------------------------------------------- | -------------------------------- |
+| [快速开始](./QUICKSTART.md)                                 | 安装、用法、注意事项与常见问题   |
 | [v3.0 发布博客](./website-content/cos-design-v3-release.md) | 重大升级解读、分类体系、技术实现 |
 | [完整介绍与实践指南](./website-content/cos-design-intro.md) | 架构、使用规则、组件详解         |
 | [CHANGELOG](./CHANGELOG.md)                                 | 版本更新记录                     |

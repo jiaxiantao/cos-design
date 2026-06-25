@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-06-23
+
+### Added
+
+- Playground **快速开始** 页面（`#/quickstart`）与仓库根目录 `QUICKSTART.md`
+- 组件页 **实时编辑代码**（`react-live`），修改后预览立即更新
+- 各组件 **配置参数** 表格，由 `pnpm extract-props` 从源码自动生成
+- 顶栏 **GitHub** 图标外链仓库
+
+### Changed
+
+- 组件页「编辑代码」打开时自动滚动至编辑器
+- 配置参数展示在页面底部（预览 / 编辑区下方）
+- README 增加快速开始入口与使用注意摘要
+
 ## [3.0.4] - 2026-06-23
 
 ### Fixed

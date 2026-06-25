@@ -5,6 +5,14 @@ import { componentDemos } from '../config/components';
 import { usePlaygroundSearch } from './search-context';
 import styles from './style/playground-layout.module.less';
 
+const GITHUB_URL = 'https://github.com/jiaxiantao/cos-design';
+
+const GitHubIcon = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+  </svg>
+);
+
 const PlaygroundLayout = () => {
   const { pathname } = useLocation();
   const { query, setQuery } = usePlaygroundSearch();
@@ -67,6 +75,16 @@ const PlaygroundLayout = () => {
         <div className={styles.stats}>
           <span className={styles.statBadge}>{componentDemos.length} 组件</span>
           <span className={styles.statBadge}>{COMPONENT_CATEGORIES.length} 分类</span>
+          <a
+            className={styles.githubLink}
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="在 GitHub 查看源码"
+            title="GitHub"
+          >
+            <GitHubIcon />
+          </a>
         </div>
       </header>
 
@@ -74,6 +92,12 @@ const PlaygroundLayout = () => {
         <aside className={styles.sidebar}>
           <p className={styles.sidebarTitle}>分类导航</p>
           <nav className={styles.categoryNav}>
+            <Link
+              to="/quickstart"
+              className={`${styles.quickstartLink} ${pathname === '/quickstart' ? styles.quickstartLinkActive : ''}`}
+            >
+              快速开始
+            </Link>
             {COMPONENT_CATEGORIES.map((cat) => {
               const items = filteredDemos.filter((item) => item.category === cat.id);
               const isActiveCat = activeCategory === cat.id;

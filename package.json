@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "3.0.4",
+  "version": "3.1.0",
   "description": "A React component library built with Vite",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -53,6 +53,7 @@
     "build": "tsc -p tsconfig.build.json --noEmit && vite build --mode lib",
     "build:demo": "vite build",
     "build:pages": "vite build --mode pages",
+    "extract-props": "node scripts/extract-component-props.mjs",
     "preview": "vite preview",
     "pub": "pnpm build && pnpm publish",
     "prepare": "husky",
@@ -87,6 +88,7 @@
     "prettier": "^3.8.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-live": "^4.1.8",
     "react-router": "^7.18.0",
     "react-router-dom": "^7.18.0",
     "stylelint": "^17.13.0",

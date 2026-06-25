@@ -1,0 +1,106 @@
+.livePreview {
+  position: relative;
+  min-height: 420px;
+  margin: 0 20px;
+  padding: 24px;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at center, #1a1d2e 0%, #0e1018 100%);
+  overflow: auto;
+
+  > div {
+    position: relative;
+    width: 100%;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.liveError {
+  margin: 12px 20px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgb(248 113 113 / 35%);
+  background: rgb(127 29 29 / 25%);
+  color: #fecaca;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.codeSection {
+  margin: 20px 20px 0;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-margin-top: 24px;
+}
+
+.codeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgb(255 255 255 / 6%);
+  background: #0c0d12;
+  color: #8b92a8;
+  font-size: 12px;
+}
+
+.codeActions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  padding: 4px 10px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 6px;
+  background: transparent;
+  color: #c4b5fd;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgb(139 92 246 / 40%);
+  }
+}
+
+.editor {
+  display: block;
+  width: 100%;
+  min-height: 180px;
+  max-height: 320px;
+  box-sizing: border-box;
+  overflow: auto;
+  margin: 0;
+  padding: 16px;
+  border: none;
+  resize: vertical;
+  background: #0c0d12;
+  color: #e2e8f0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.65;
+  outline: none;
+}
+
+.hint {
+  margin: 0;
+  padding: 10px 14px 12px;
+  border-top: 1px solid rgb(255 255 255 / 6%);
+  background: #0c0d12;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+@media (width <= 640px) {
+  .livePreview {
+    min-height: 320px;
+    margin: 0 12px;
+    padding: 16px;
+  }
+}

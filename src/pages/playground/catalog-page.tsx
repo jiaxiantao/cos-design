@@ -11,6 +11,13 @@ const CatalogPage = () => {
         <p className={styles.subtitle}>
           从左侧分类选择组件，或在顶部搜索框快速定位。共 {componentDemos.length} 个视觉特效组件。
         </p>
+        <Link to="/quickstart" className={styles.quickstartBanner}>
+          <span className={styles.quickstartLabel}>新手上路</span>
+          <span className={styles.quickstartText}>查看快速开始 — 安装、用法与注意事项</span>
+          <span className={styles.quickstartArrow} aria-hidden>
+            →
+          </span>
+        </Link>
       </div>
 
       <div className={styles.grid}>

@@ -118,6 +118,29 @@
   white-space: nowrap;
 }
 
+.githubLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition:
+    color 0.15s,
+    background 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    color: var(--text);
+    border-color: rgb(255 255 255 / 18%);
+    background: rgb(255 255 255 / 6%);
+  }
+}
+
 .body {
   flex: 1;
   display: flex;
@@ -148,6 +171,31 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.quickstartLink {
+  display: block;
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgb(139 92 246 / 25%);
+  background: rgb(139 92 246 / 10%);
+  color: #c4b5fd;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgb(139 92 246 / 18%);
+  }
+}
+
+.quickstartLinkActive {
+  background: rgb(139 92 246 / 22%);
+  border-color: rgb(139 92 246 / 45%);
+  color: #ddd6fe;
 }
 
 .categoryGroup {

@@ -4,16 +4,23 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { getCategoryMeta } from '../config/categories';
 import { componentDemos } from '../config/components';
 import { demoComponents } from '../config/demo-components';
+import LiveDemoPlayground from './live-demo';
+import PropsTable from './props-table';
 import styles from './style/component-page.module.less';
 
 const ComponentPage = () => {
   const { pathname } = useLocation();
   const [copied, setCopied] = useState(false);
-  const [showCode, setShowCode] = useState(false);
+  const [editSession, setEditSession] = useState<{ path: string; code: string } | null>(null);
   const copyTimerRef = useRef(0);
+  const editorRef = useRef<HTMLDivElement>(null);
+  const shouldScrollToEditor = useRef(false);
 
   const currentIndex = componentDemos.findIndex((item) => item.path === pathname);
   const current = componentDemos[currentIndex];
+
+  const showCode = editSession?.path === pathname;
+  const editorCode = showCode ? editSession.code : (current?.codeExample ?? '');
 
   const next = useMemo(() => {
     if (!current) return null;
@@ -24,6 +31,14 @@ const ComponentPage = () => {
 
   useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
+  useEffect(() => {
+    if (!showCode || !shouldScrollToEditor.current) return;
+    shouldScrollToEditor.current = false;
+    requestAnimationFrame(() => {
+      editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }, [showCode, pathname]);
+
   if (!current) {
     return <Navigate to="/" replace />;
   }
@@ -31,10 +46,23 @@ const ComponentPage = () => {
   const categoryMeta = getCategoryMeta(current.category);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(current.codeExample);
+    await navigator.clipboard.writeText(editorCode);
     setCopied(true);
     clearTimeout(copyTimerRef.current);
     copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleToggleCode = () => {
+    if (showCode) {
+      setEditSession(null);
+      return;
+    }
+    shouldScrollToEditor.current = true;
+    setEditSession({ path: pathname, code: current.codeExample });
+  };
+
+  const handleReset = () => {
+    setEditSession({ path: pathname, code: current.codeExample });
   };
 
   return (
@@ -48,29 +76,28 @@ const ComponentPage = () => {
             <span className={styles.categoryTag} style={{ '--tag-color': categoryMeta.accent } as CSSProperties}>
               {categoryMeta.label}
             </span>
-            <button type="button" className={styles.codeBtn} onClick={() => setShowCode((v) => !v)}>
-              {showCode ? '隐藏代码' : '查看代码'}
+            <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>
+              {showCode ? '关闭编辑' : '编辑代码'}
             </button>
           </div>
           <h1 className={styles.name}>{current.name}</h1>
           <p className={styles.desc}>{current.description}</p>
         </header>
 
-        <div className={styles.preview}>{demoComponents[current.name] ?? <p>演示暂未配置</p>}</div>
-
-        {showCode && (
-          <div className={styles.codeSection}>
-            <div className={styles.codeHeader}>
-              <span>使用示例</span>
-              <button type="button" className={styles.copyBtn} onClick={handleCopy}>
-                {copied ? '已复制' : '复制'}
-              </button>
-            </div>
-            <pre className={styles.codeBlock}>
-              <code>{current.codeExample}</code>
-            </pre>
-          </div>
+        {showCode ? (
+          <LiveDemoPlayground
+            editorCode={editorCode}
+            onEditorCodeChange={(code) => setEditSession({ path: pathname, code })}
+            onCopy={handleCopy}
+            copied={copied}
+            onReset={handleReset}
+            editorRef={editorRef}
+          />
+        ) : (
+          <div className={styles.preview}>{demoComponents[current.name] ?? <p>演示暂未配置</p>}</div>
         )}
+
+        <PropsTable componentName={current.name} />
 
         {next && (
           <footer className={styles.footer}>
