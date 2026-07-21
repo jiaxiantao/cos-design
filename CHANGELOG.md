@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2026-07-21
+
+### Added
+
+- 新增 `WeatherBackground` 天气背景组件，支持 15 种天气：大晴天 / 多云 / 阴天 / 小中大雨 / 雷阵雨 / 雾 / 小中大雪 / 雨夹雪 / 冰雹 / 霾 / 大风
+- 雪天使用程序化六重对称冰晶贴图，每片雪花形态各不相同
+- Props 提取脚本自动展开字符串联合类型别名（如 `WeatherType` → `'sunny' | ...`）
+
+### Changed
+
+- 配置参数表将长字符串联合类型拆分为可换行标签，默认值列不再强制断词换行
+- `WeatherBackground` 置于背景动效分类首位
+
 ## [3.2.0] - 2026-06-23
 
 ### Added

@@ -106,5 +106,7 @@ export { default as Typewriter } from './typewriter';
 export type { TypewriterProps } from './typewriter';
 export { default as WaveButton } from './waveButton';
 export type { WaveButtonProps } from './waveButton';
+export { default as WeatherBackground } from './weatherBackground';
+export type { WeatherBackgroundProps, WeatherType } from './weatherBackground';
 export { default as WaveText } from './waveText';
 export type { WaveTextProps } from './waveText';

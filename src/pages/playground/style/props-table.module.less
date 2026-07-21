@@ -77,13 +77,33 @@
 .propType {
   color: #7dd3fc;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overflow-wrap: break-word;
+}
+
+.typeCell {
+  max-width: 420px;
+}
+
+.typeUnion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.typeTag {
+  padding: 1px 7px;
+  border: 1px solid rgb(125 211 252 / 25%);
+  border-radius: 6px;
+  background: rgb(125 211 252 / 8%);
+  color: #7dd3fc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   white-space: nowrap;
 }
 
 .propDefault {
   color: #86efac;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  word-break: break-all;
+  white-space: nowrap;
 }
 
 .propDesc {

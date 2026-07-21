@@ -2,7 +2,7 @@
 
 # cos-design
 
-**55 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
+**56 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
@@ -29,7 +29,7 @@
 | 数据大屏     | 翻牌器、仪表盘、液体进度环         |
 | 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成         |
 
-> 15 个组件太单薄，55 个刚好组成一套完整的「视觉工具箱」。
+> 15 个组件太单薄，56 个刚好组成一套完整的「视觉工具箱」。
 
 ---
 
@@ -73,24 +73,25 @@ export default function Page() {
 
 ---
 
-## 组件一览（55 个 · 6 大分类）
+## 组件一览（56 个 · 6 大分类）
 
 <details open>
-<summary><strong>背景动效</strong> — 9 个 · 动态场景与粒子背景</summary>
+<summary><strong>背景动效</strong> — 10 个 · 动态场景与粒子背景</summary>
 
 <br>
 
-| 组件              | 说明                     |
-| ----------------- | ------------------------ |
-| `MatrixRain`      | 黑客帝国数字雨           |
-| `MeteorRain`      | 流星雨穿越               |
-| `ParticleNetwork` | 粒子连线网络（支持触摸） |
-| `Aurora`          | 极光渐变光带             |
-| `RippleWater`     | 点击水波纹               |
-| `SmokeFog`        | 烟雾雾气飘动             |
-| `CyberGrid`       | 赛博透视地面             |
-| `Snowfall`        | 雪花 / 樱花飘落          |
-| `Starfield`       | 3D 纵深星空              |
+| 组件                | 说明                                                |
+| ------------------- | --------------------------------------------------- |
+| `MatrixRain`        | 黑客帝国数字雨                                      |
+| `MeteorRain`        | 流星雨穿越                                          |
+| `ParticleNetwork`   | 粒子连线网络（支持触摸）                            |
+| `Aurora`            | 极光渐变光带                                        |
+| `RippleWater`       | 点击水波纹                                          |
+| `SmokeFog`          | 烟雾雾气飘动                                        |
+| `CyberGrid`         | 赛博透视地面                                        |
+| `Snowfall`          | 雪花 / 樱花飘落                                     |
+| `Starfield`         | 3D 纵深星空                                         |
+| `WeatherBackground` | 天气背景（晴 / 雨 / 雪 / 霾 / 冰雹 / 大风等 15 种） |
 
 </details>
 
@@ -194,7 +195,7 @@ export default function Page() {
 
 ## 特性
 
-- **55 个组件**，覆盖背景、文字、交互、营销、数据、物理六大场景
+- **56 个组件**，覆盖背景、文字、交互、营销、数据、物理六大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
@@ -215,7 +216,7 @@ npm run setup          # 安装依赖（绕过 corepack 问题）
 npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-访问 **http://localhost:4000** — 按分类浏览全部 55 个组件，右侧可查看与复制示例代码。
+访问 **http://localhost:4000** — 按分类浏览全部 56 个组件，右侧可查看与复制示例代码。
 
 ---
 

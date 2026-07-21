@@ -1535,5 +1535,29 @@ export const componentProps: ComponentPropsMap = {
       default: '56',
       description: '字号'
     }
+  ],
+  WeatherBackground: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '800',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '450',
+      description: ''
+    },
+    {
+      name: 'weather',
+      type: "'sunny' | 'partlyCloudy' | 'overcast' | 'lightRain' | 'moderateRain' | 'heavyRain' | 'thunderstorm' | 'fog' | 'lightSnow' | 'moderateSnow' | 'heavySnow' | 'sleet' | 'hail' | 'smog' | 'gale' | 'snow'",
+      required: false,
+      default: "'sunny'",
+      description:
+        '天气类型：sunny 大晴天 / partlyCloudy 多云 / overcast 阴天 / lightRain 小雨 / moderateRain 中雨 / heavyRain 大雨 / thunderstorm 雷阵雨 / fog 雾 / lightSnow 小雪 / moderateSnow 中雪 / heavySnow 大雪 / sleet 雨夹雪 / hail 冰雹 / smog 霾 / gale 大风'
+    }
   ]
 };

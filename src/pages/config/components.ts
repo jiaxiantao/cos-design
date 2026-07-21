@@ -14,6 +14,17 @@ export interface ComponentDemoItem {
 
 export const componentDemos: ComponentDemoItem[] = [
   {
+    name: 'WeatherBackground',
+    path: '/weatherBackground',
+    title: '天气背景',
+    description: '晴 / 云 / 雨 / 雪 / 雷 / 雾 / 霾 / 冰雹 / 大风，15 种细分天气场景。',
+    tags: ['Canvas', '特效'],
+    category: 'background' as const,
+    codeExample: `import { WeatherBackground } from 'cos-design';
+
+<WeatherBackground weather="thunderstorm" width={800} height={450} />`
+  },
+  {
     name: 'MatrixRain',
     path: '/matrixRain',
     title: '黑客帝国数字雨',

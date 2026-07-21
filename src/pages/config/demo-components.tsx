@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ChargeDemo from '../demos/charge-demo';
 import FireworksDemo from '../demos/fireworks-demo';
 import FlipCounterDemo from '../demos/flip-counter-demo';
+import WeatherBackgroundDemo from '../demos/weather-background-demo';
 
 const CountdownDemo = () => {
   const [target] = useState(() => Date.now() + 3 * 24 * 60 * 60 * 1000);
@@ -101,5 +102,6 @@ export const demoComponents: Record<string, React.ReactNode> = {
   Turntable: <C.Turntable />,
   Typewriter: <C.Typewriter />,
   WaveButton: <C.WaveButton />,
-  WaveText: <C.WaveText text="WAVE TEXT" fontSize={48} />
+  WaveText: <C.WaveText text="WAVE TEXT" fontSize={48} />,
+  WeatherBackground: <WeatherBackgroundDemo />
 };
