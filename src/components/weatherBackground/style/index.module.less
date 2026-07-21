@@ -1,8 +1,39 @@
 .weatherBackground {
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .canvas {
   display: block;
+}
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgb(12 18 28 / 32%);
+  backdrop-filter: blur(2px);
+  color: rgb(255 255 255 / 88%);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.loadingSpinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgb(255 255 255 / 25%);
+  border-top-color: rgb(255 255 255 / 92%);
+  border-radius: 50%;
+  animation: weather-loading-spin 0.8s linear infinite;
+}
+
+@keyframes weather-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

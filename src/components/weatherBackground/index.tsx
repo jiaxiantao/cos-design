@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { bindVisibilityPause } from '../_shared/visibility';
+import { useLiveWeather } from './live-weather';
 import styles from './style/index.module.less';
 
 export type WeatherType =
@@ -26,6 +27,18 @@ export interface WeatherBackgroundProps {
   height?: number;
   /** 天气类型：sunny 大晴天 / partlyCloudy 多云 / overcast 阴天 / lightRain 小雨 / moderateRain 中雨 / heavyRain 大雨 / thunderstorm 雷阵雨 / fog 雾 / lightSnow 小雪 / moderateSnow 中雪 / heavySnow 大雪 / sleet 雨夹雪 / hail 冰雹 / smog 霾 / gale 大风 */
   weather?: WeatherType;
+  /** 夜间模式：渲染深夜天空、月亮与星空；live 模式下自动按当地实际日夜覆盖此值 */
+  night?: boolean;
+  /** 接入 Open-Meteo 实况：自动定位并按真实天气渲染，定位或请求失败时回退到 weather */
+  live?: boolean;
+  /** live 模式查询纬度（-90 ~ 90），与 longitude 同时配置时跳过浏览器定位 */
+  latitude?: number;
+  /** live 模式查询经度（-180 ~ 180），与 latitude 同时配置时跳过浏览器定位 */
+  longitude?: number;
+  /** live 模式解析出真实天气后回调 */
+  onLiveWeather?: (weather: WeatherType) => void;
+  /** 外部受控 loading：在当前画面上叠加加载遮罩（live 模式定位/请求期间会自动显示，无需传入） */
+  loading?: boolean;
 }
 
 interface WeatherConfig {
@@ -253,6 +266,41 @@ const CONFIGS: Record<WeatherType, WeatherConfig> = {
   }
 };
 
+/** 夜间天空渐变与可见星星数量（云越多星越少） */
+const NIGHT_CONFIGS: Record<WeatherType, { sky: [string, string]; stars: number }> = {
+  sunny: { sky: ['#0b1a33', '#27476e'], stars: 110 },
+  partlyCloudy: { sky: ['#0f1f38', '#2c4666'], stars: 60 },
+  overcast: { sky: ['#181f2a', '#333e4e'], stars: 0 },
+  lightRain: { sky: ['#151b26', '#2b3442'], stars: 0 },
+  moderateRain: { sky: ['#11161f', '#242c3a'], stars: 0 },
+  heavyRain: { sky: ['#0c1017', '#1c232e'], stars: 0 },
+  thunderstorm: { sky: ['#0a0e18', '#192132'], stars: 0 },
+  fog: { sky: ['#1c222b', '#3a434e'], stars: 0 },
+  lightSnow: { sky: ['#161e2b', '#3a4656'], stars: 20 },
+  moderateSnow: { sky: ['#131a26', '#333f4f'], stars: 8 },
+  heavySnow: { sky: ['#101623', '#2a3545'], stars: 0 },
+  sleet: { sky: ['#121924', '#2c3745'], stars: 0 },
+  hail: { sky: ['#0e141d', '#26303e'], stars: 0 },
+  smog: { sky: ['#1a1812', '#38321f'], stars: 0 },
+  gale: { sky: ['#101a26', '#2e3d4d'], stars: 30 },
+  snow: { sky: ['#131a26', '#333f4f'], stars: 8 }
+};
+
+/** 夜间云色：整体压暗并偏冷蓝 */
+const toNightCloudColor = ([r, g, b]: [number, number, number]): [number, number, number] => [
+  Math.round(r * 0.3 + 18),
+  Math.round(g * 0.3 + 24),
+  Math.round(b * 0.3 + 42)
+];
+
+interface Star {
+  x: number;
+  y: number;
+  r: number;
+  phase: number;
+  speed: number;
+}
+
 interface Cloud {
   x: number;
   y: number;
@@ -436,8 +484,31 @@ const displaceBolt = (
   return [...left.slice(0, -1), ...right];
 };
 
-const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, height = 450, weather = 'sunny' }) => {
+const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
+  width = 800,
+  height = 450,
+  weather = 'sunny',
+  night = false,
+  live = false,
+  latitude,
+  longitude,
+  onLiveWeather,
+  loading = false
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const liveState = useLiveWeather(live, latitude != null && longitude != null ? { latitude, longitude } : undefined);
+  const activeWeather = live && liveState.weather ? liveState.weather : weather;
+  const activeNight = live && liveState.current ? !liveState.current.isDay : night;
+  const showLoading = loading || (live && (liveState.status === 'locating' || liveState.status === 'fetching'));
+
+  const onLiveWeatherRef = useRef(onLiveWeather);
+  useEffect(() => {
+    onLiveWeatherRef.current = onLiveWeather;
+  });
+
+  useEffect(() => {
+    if (liveState.weather) onLiveWeatherRef.current?.(liveState.weather);
+  }, [liveState.weather]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -450,10 +521,30 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const cfg = CONFIGS[weather];
+    const cfg = CONFIGS[activeWeather];
+    const nightCfg = NIGHT_CONFIGS[activeWeather];
+    const sky = activeNight ? nightCfg.sky : cfg.sky;
+    const cloudRgb = activeNight ? toNightCloudColor(cfg.cloudColor) : cfg.cloudColor;
     const sunX = width * 0.72;
     const sunY = height * 0.26;
     const sunR = Math.min(width, height) * 0.09;
+
+    const stars: Star[] = activeNight
+      ? Array.from({ length: nightCfg.stars }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height * 0.72,
+          r: 0.4 + Math.random() * 1.1,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.015 + Math.random() * 0.035
+        }))
+      : [];
+
+    const moonCraters = [
+      { dx: -0.32, dy: 0.08, r: 0.17 },
+      { dx: 0.24, dy: -0.22, r: 0.12 },
+      { dx: 0.04, dy: 0.34, r: 0.1 },
+      { dx: 0.36, dy: 0.24, r: 0.07 }
+    ];
 
     const clouds: Cloud[] = Array.from({ length: cfg.cloudCount }, () => {
       const scale = 0.7 + Math.random() * 0.9;
@@ -494,7 +585,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
     const flakes: Flake[] = Array.from({ length: cfg.snowCount }, () => makeFlake(width, height));
 
     const hailstones: Hailstone[] =
-      weather === 'hail'
+      activeWeather === 'hail'
         ? Array.from({ length: 130 }, () => ({
             x: Math.random() * (width + 180) - 90,
             y: Math.random() * height,
@@ -507,7 +598,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
         : [];
 
     const windStreaks: WindStreak[] =
-      weather === 'gale'
+      activeWeather === 'gale'
         ? Array.from({ length: 46 }, () => ({
             x: Math.random() * width,
             y: Math.random() * height,
@@ -533,13 +624,56 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
 
     const drawSky = () => {
       const grad = ctx.createLinearGradient(0, 0, 0, height);
-      grad.addColorStop(0, cfg.sky[0]);
-      grad.addColorStop(1, cfg.sky[1]);
+      grad.addColorStop(0, sky[0]);
+      grad.addColorStop(1, sky[1]);
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
     };
 
+    const drawStars = () => {
+      for (const star of stars) {
+        const twinkle = 0.35 + (Math.sin(t * star.speed + star.phase) + 1) * 0.325;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(226, 235, 255, ${twinkle})`;
+        ctx.fill();
+      }
+    };
+
+    const drawMoon = () => {
+      if (cfg.sun === 'none') return;
+      const moonR = sunR * 0.88;
+      const dimmed = cfg.sun === 'dim';
+
+      const glow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, moonR * (dimmed ? 1.8 : 2.8));
+      glow.addColorStop(0, `rgba(214, 226, 245, ${dimmed ? 0.18 : 0.35})`);
+      glow.addColorStop(1, 'rgba(214, 226, 245, 0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, width, height);
+
+      const bodyAlpha = dimmed ? 0.5 : 1;
+      const body = ctx.createRadialGradient(sunX - moonR * 0.25, sunY - moonR * 0.25, 0, sunX, sunY, moonR);
+      body.addColorStop(0, `rgba(245, 248, 252, ${bodyAlpha})`);
+      body.addColorStop(1, `rgba(196, 208, 226, ${bodyAlpha})`);
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, moonR, 0, Math.PI * 2);
+      ctx.fillStyle = body;
+      ctx.fill();
+
+      for (const crater of moonCraters) {
+        ctx.beginPath();
+        ctx.arc(sunX + crater.dx * moonR, sunY + crater.dy * moonR, crater.r * moonR, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(170, 184, 206, ${bodyAlpha * 0.55})`;
+        ctx.fill();
+      }
+    };
+
     const drawSun = () => {
+      if (activeNight) {
+        drawStars();
+        drawMoon();
+        return;
+      }
       if (cfg.sun === 'none') return;
 
       if (cfg.sun === 'full') {
@@ -588,9 +722,9 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
     };
 
     const drawClouds = () => {
-      const [r, g, b] = cfg.cloudColor;
+      const [r, g, b] = cloudRgb;
       for (const cloud of clouds) {
-        cloud.x += cloud.speed * (weather === 'gale' ? 7 : 1);
+        cloud.x += cloud.speed * (activeWeather === 'gale' ? 7 : 1);
         if (cloud.x - 140 * cloud.scale > width) cloud.x = -160 * cloud.scale;
 
         for (const puff of cloud.puffs) {
@@ -651,7 +785,8 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
     };
 
     const drawFog = () => {
-      const fogRgb = weather === 'smog' ? '168, 155, 126' : '226, 232, 238';
+      let fogRgb = activeWeather === 'smog' ? '168, 155, 126' : '226, 232, 238';
+      if (activeNight) fogRgb = activeWeather === 'smog' ? '96, 88, 66' : '138, 150, 168';
       for (const bank of fogBanks) {
         bank.x += bank.speed;
         if (bank.speed > 0 && bank.x - bank.rw > width) bank.x = -bank.rw;
@@ -819,7 +954,9 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
 
     const drawHaze = () => {
       if (cfg.haze <= 0) return;
-      ctx.fillStyle = weather === 'smog' ? `rgba(177, 164, 135, ${cfg.haze})` : `rgba(220, 226, 232, ${cfg.haze})`;
+      let hazeRgb = activeWeather === 'smog' ? '177, 164, 135' : '220, 226, 232';
+      if (activeNight) hazeRgb = activeWeather === 'smog' ? '82, 74, 54' : '116, 128, 145';
+      ctx.fillStyle = `rgba(${hazeRgb}, ${cfg.haze})`;
       ctx.fillRect(0, 0, width, height);
     };
 
@@ -846,11 +983,17 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ width = 800, heig
       cancelAnimationFrame(frameId);
       unbindVisibility();
     };
-  }, [height, weather, width]);
+  }, [activeNight, activeWeather, height, width]);
 
   return (
     <div className={styles.weatherBackground} style={{ width, height }}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
+      {showLoading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingSpinner} />
+          <span>天气加载中…</span>
+        </div>
+      )}
     </div>
   );
 };

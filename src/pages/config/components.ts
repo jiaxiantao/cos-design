@@ -17,11 +17,13 @@ export const componentDemos: ComponentDemoItem[] = [
     name: 'WeatherBackground',
     path: '/weatherBackground',
     title: '天气背景',
-    description: '晴 / 云 / 雨 / 雪 / 雷 / 雾 / 霾 / 冰雹 / 大风，15 种细分天气场景。',
-    tags: ['Canvas', '特效'],
+    description: '15 种细分天气场景，支持接入 Open-Meteo 自动定位渲染真实天气。',
+    tags: ['Canvas', '特效', 'API'],
     category: 'background' as const,
     codeExample: `import { WeatherBackground } from 'cos-design';
 
+// 手动指定天气；夜间加 night；接入 Open-Meteo 实况改用：
+// <WeatherBackground live latitude={39.9} longitude={116.4} />
 <WeatherBackground weather="thunderstorm" width={800} height={450} />`
   },
   {

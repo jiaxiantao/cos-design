@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-07-21
+
+### Added
+
+- `WeatherBackground` 接入 Open-Meteo 实况：支持 `live`、可选 `latitude` / `longitude`（未配置则用浏览器定位）
+- 日夜效果：手动 `night`，实况模式按当地 `is_day` 自动切换月亮、星空与夜间色调
+- 实况请求中在当前画面上叠加 loading 遮罩，切换城市时不再闪回默认天气
+- 导出 `useLiveWeather`、`mapWmoCodeToWeatherType` 及坐标相关类型
+
+### Fixed
+
+- WMO 码 1（mainly clear）映射为 `sunny`，与官方晴 / 多云 / 阴三档对齐
+- Playground 示例去掉并列多根 JSX，修复「编辑代码」语法错误
+
 ## [3.3.0] - 2026-07-21
 
 ### Added

@@ -108,5 +108,12 @@ export { default as WaveButton } from './waveButton';
 export type { WaveButtonProps } from './waveButton';
 export { default as WeatherBackground } from './weatherBackground';
 export type { WeatherBackgroundProps, WeatherType } from './weatherBackground';
+export { mapWmoCodeToWeatherType, useLiveWeather } from './weatherBackground/live-weather';
+export type {
+  LiveWeatherCoords,
+  LiveWeatherState,
+  LiveWeatherStatus,
+  OpenMeteoCurrent
+} from './weatherBackground/live-weather';
 export { default as WaveText } from './waveText';
 export type { WaveTextProps } from './waveText';

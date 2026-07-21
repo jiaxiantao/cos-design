@@ -1558,6 +1558,48 @@ export const componentProps: ComponentPropsMap = {
       default: "'sunny'",
       description:
         '天气类型：sunny 大晴天 / partlyCloudy 多云 / overcast 阴天 / lightRain 小雨 / moderateRain 中雨 / heavyRain 大雨 / thunderstorm 雷阵雨 / fog 雾 / lightSnow 小雪 / moderateSnow 中雪 / heavySnow 大雪 / sleet 雨夹雪 / hail 冰雹 / smog 霾 / gale 大风'
+    },
+    {
+      name: 'night',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '夜间模式：渲染深夜天空、月亮与星空；live 模式下自动按当地实际日夜覆盖此值'
+    },
+    {
+      name: 'live',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '接入 Open-Meteo 实况：自动定位并按真实天气渲染，定位或请求失败时回退到 weather'
+    },
+    {
+      name: 'latitude',
+      type: 'number',
+      required: false,
+      default: '',
+      description: 'live 模式查询纬度（-90 ~ 90），与 longitude 同时配置时跳过浏览器定位'
+    },
+    {
+      name: 'longitude',
+      type: 'number',
+      required: false,
+      default: '',
+      description: 'live 模式查询经度（-180 ~ 180），与 latitude 同时配置时跳过浏览器定位'
+    },
+    {
+      name: 'onLiveWeather',
+      type: '(weather: WeatherType) => void',
+      required: false,
+      default: '',
+      description: 'live 模式解析出真实天气后回调'
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '外部受控 loading：在当前画面上叠加加载遮罩（live 模式定位/请求期间会自动显示，无需传入）'
     }
   ]
 };
