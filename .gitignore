@@ -4,6 +4,7 @@ node_modules
 # Build output
 dist
 dist-demo
+dist-pages
 lib
 
 # Lock files from other package managers
@@ -22,5 +23,3 @@ yarn-error.log
 
 # Test coverage
 coverage
-
-# GitHub Pages demo build output is committed in docs/

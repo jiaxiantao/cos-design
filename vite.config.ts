@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => {
         }
       : isPages
         ? {
-            outDir: 'docs',
+            outDir: 'dist-pages',
             emptyOutDir: true
           }
         : {
