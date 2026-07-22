@@ -8,16 +8,27 @@ import LiveDemoPlayground from './live-demo';
 import PropsTable from './props-table';
 import styles from './style/component-page.module.less';
 
+/** 路由目录名 → npm 子包名（kebab-case） */
+const toScopedPackageName = (path: string) => {
+  const dir = path.replace(/^\//, '');
+  const id = dir.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+  return `@cos-design/${id}`;
+};
+
 const ComponentPage = () => {
   const { pathname } = useLocation();
   const [copied, setCopied] = useState(false);
+  const [installCopied, setInstallCopied] = useState(false);
   const [editSession, setEditSession] = useState<{ path: string; code: string } | null>(null);
   const copyTimerRef = useRef(0);
+  const installTimerRef = useRef(0);
   const editorRef = useRef<HTMLDivElement>(null);
   const shouldScrollToEditor = useRef(false);
 
   const currentIndex = componentDemos.findIndex((item) => item.path === pathname);
   const current = componentDemos[currentIndex];
+  const scopedPackage = current ? toScopedPackageName(current.path) : '';
+  const installCmd = scopedPackage ? `pnpm add ${scopedPackage}` : '';
 
   const showCode = editSession?.path === pathname;
   const editorCode = showCode ? editSession.code : (current?.codeExample ?? '');
@@ -29,7 +40,13 @@ const ComponentPage = () => {
     return sameCategory[idx + 1] ?? null;
   }, [current, pathname]);
 
-  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
+  useEffect(
+    () => () => {
+      clearTimeout(copyTimerRef.current);
+      clearTimeout(installTimerRef.current);
+    },
+    []
+  );
 
   useEffect(() => {
     if (!showCode || !shouldScrollToEditor.current) return;
@@ -50,6 +67,13 @@ const ComponentPage = () => {
     setCopied(true);
     clearTimeout(copyTimerRef.current);
     copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyInstall = async () => {
+    await navigator.clipboard.writeText(installCmd);
+    setInstallCopied(true);
+    clearTimeout(installTimerRef.current);
+    installTimerRef.current = window.setTimeout(() => setInstallCopied(false), 2000);
   };
 
   const handleToggleCode = () => {
@@ -82,6 +106,12 @@ const ComponentPage = () => {
           </div>
           <h1 className={styles.name}>{current.name}</h1>
           <p className={styles.desc}>{current.description}</p>
+          <div className={styles.installRow}>
+            <code className={styles.installCmd}>{installCmd}</code>
+            <button type="button" className={styles.installCopyBtn} onClick={handleCopyInstall}>
+              {installCopied ? '已复制' : '复制安装'}
+            </button>
+          </div>
         </header>
 
         {showCode ? (

@@ -16,34 +16,67 @@ cos-design 是一套面向**视觉表达**的 React 组件库（49 个特效组�
 
 ## 安装
 
+支持两种方式：
+
+### 方式 A：安装全部组件
+
 ```bash
-# 全部组件
 pnpm add cos-design
 # 或
 npm install cos-design
 # 或
 yarn add cos-design
-
-# 按需安装单个组件（例如天气背景）
-pnpm add @cos-design/weather-background
 ```
 
-> 子包名为 kebab-case：目录 `weatherBackground` → `@cos-design/weather-background`，`scratchCard` → `@cos-design/scratch-card`。
-> 依赖 `@cos-design/shared` 的组件会自动安装该工具包，无需手动添加。
+### 方式 B：按需安装单个组件
+
+只下载用到的包，减小依赖体积。包名规则：**源码目录 camelCase → npm 包 kebab-case**。
+
+```bash
+pnpm add @cos-design/weather-background
+pnpm add @cos-design/fireworks
+pnpm add @cos-design/scratch-card
+```
+
+| 组件目录            | npm 包名                         |
+| ------------------- | -------------------------------- |
+| `weatherBackground` | `@cos-design/weather-background` |
+| `scratchCard`       | `@cos-design/scratch-card`       |
+| `matrixRain`        | `@cos-design/matrix-rain`        |
+| `fireworks`         | `@cos-design/fireworks`          |
+
+依赖 `@cos-design/shared` 的组件会自动安装该工具包，无需手动添加。
 
 ---
 
 ## 最简示例
 
+### 从聚合包导入
+
 ```tsx
 import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
-// 或：import { WeatherBackground } from '@cos-design/weather-background';
 
 export default function Page() {
   return (
     <>
       <ScrambleText text="GRAND OPENING" />
       <ScratchCard prize="🎉 恭喜中奖！" />
+      <Fireworks width={800} height={500} />
+    </>
+  );
+}
+```
+
+### 从子包导入
+
+```tsx
+import { WeatherBackground } from '@cos-design/weather-background';
+import { Fireworks } from '@cos-design/fireworks';
+
+export default function Page() {
+  return (
+    <>
+      <WeatherBackground weather="thunderstorm" width={800} height={450} />
       <Fireworks width={800} height={500} />
     </>
   );

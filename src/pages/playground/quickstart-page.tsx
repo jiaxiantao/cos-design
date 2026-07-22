@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
 import styles from './style/quickstart-page.module.less';
 
-const INSTALL_SNIPPET = `pnpm add cos-design`;
+const INSTALL_FULL_SNIPPET = `# 安装全部组件（推荐快速试用）
+pnpm add cos-design
+# 或 npm install cos-design / yarn add cos-design`;
+
+const INSTALL_SINGLE_SNIPPET = `# 只装需要的组件（体积更小）
+pnpm add @cos-design/weather-background
+pnpm add @cos-design/fireworks
+pnpm add @cos-design/scratch-card`;
 
 const BASIC_SNIPPET = `import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
 
@@ -15,12 +22,30 @@ export default function Page() {
   );
 }`;
 
+const SINGLE_SNIPPET = `import { WeatherBackground } from '@cos-design/weather-background';
+import { Fireworks } from '@cos-design/fireworks';
+
+export default function Page() {
+  return (
+    <>
+      <WeatherBackground weather="thunderstorm" width={800} height={450} />
+      <Fireworks width={800} height={500} />
+    </>
+  );
+}`;
+
 const SSR_SNIPPET = `import dynamic from 'next/dynamic';
 
 const Fireworks = dynamic(
   () => import('cos-design').then((m) => m.Fireworks),
   { ssr: false }
-);`;
+);
+
+// 按需包同样适用：
+// const WeatherBackground = dynamic(
+//   () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+//   { ssr: false }
+// );`;
 
 const IMPERATIVE_SNIPPET = `import { useRef } from 'react';
 import { Fireworks, type FireworksHandle } from 'cos-design';
@@ -33,6 +58,14 @@ const NOTES = [
   {
     title: '无需手动引入 CSS',
     desc: '样式随组件自动注入，安装后即可使用。'
+  },
+  {
+    title: '两种安装方式',
+    desc: 'cos-design 一次装齐全部；@cos-design/<kebab-name> 按需安装单个组件。依赖 @cos-design/shared 的组件会自动带上工具包。'
+  },
+  {
+    title: '包名是 kebab-case',
+    desc: '源码目录 weatherBackground 对应 npm 包 @cos-design/weather-background（npm 要求新包名全小写）。'
   },
   {
     title: 'Canvas 组件请客户端渲染',
@@ -73,12 +106,21 @@ const CATEGORIES = [
   { label: '物理创意', desc: '物理模拟与视觉实验', examples: 'Fireworks、NewtonCradle、MazeGenerator' }
 ];
 
+const NAMING_ROWS = [
+  { dir: 'weatherBackground', pkg: '@cos-design/weather-background' },
+  { dir: 'scratchCard', pkg: '@cos-design/scratch-card' },
+  { dir: 'matrixRain', pkg: '@cos-design/matrix-rain' },
+  { dir: 'fireworks', pkg: '@cos-design/fireworks' }
+];
+
 const QuickstartPage = () => (
   <div className={styles.page}>
     <header className={styles.hero}>
       <p className={styles.eyebrow}>Quick Start</p>
       <h1 className={styles.title}>快速开始</h1>
-      <p className={styles.subtitle}>几分钟内完成安装与接入。左侧分类浏览全部组件，每页可复制对应示例代码。</p>
+      <p className={styles.subtitle}>
+        几分钟内完成安装与接入。支持一次安装全部，或按组件拆包按需安装。左侧分类浏览全部组件，每页可复制对应示例代码。
+      </p>
       <div className={styles.heroActions}>
         <a
           className={styles.primaryBtn}
@@ -86,31 +128,69 @@ const QuickstartPage = () => (
           target="_blank"
           rel="noreferrer"
         >
-          npm 包
+          聚合包 cos-design
+        </a>
+        <a className={styles.secondaryBtn} href="https://www.npmjs.com/org/cos-design" target="_blank" rel="noreferrer">
+          @cos-design 子包
         </a>
       </div>
     </header>
 
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>1. 安装</h2>
-      <p className={styles.sectionDesc}>要求 React &gt;= 18，Node.js &gt;= 20。</p>
+      <p className={styles.sectionDesc}>要求 React &gt;= 18，Node.js &gt;= 20。任选一种方式：</p>
+
+      <h3 className={styles.subHeading}>方式 A：安装全部组件</h3>
+      <p className={styles.sectionDesc}>适合快速试用、多组件同页，API 与以往一致。</p>
       <pre className={styles.code}>
-        <code>{INSTALL_SNIPPET}</code>
+        <code>{INSTALL_FULL_SNIPPET}</code>
       </pre>
+
+      <h3 className={styles.subHeading}>方式 B：按需安装单个组件</h3>
+      <p className={styles.sectionDesc}>
+        只下载用到的包，减小依赖体积。包名规则：源码目录 camelCase → npm 包 kebab-case。
+      </p>
+      <pre className={styles.code}>
+        <code>{INSTALL_SINGLE_SNIPPET}</code>
+      </pre>
+      <div className={styles.namingTable}>
+        <div className={styles.namingHead}>
+          <span>组件目录</span>
+          <span>npm 包名</span>
+        </div>
+        {NAMING_ROWS.map((row) => (
+          <div key={row.pkg} className={styles.namingRow}>
+            <code>{row.dir}</code>
+            <code>{row.pkg}</code>
+          </div>
+        ))}
+      </div>
+      <p className={styles.sectionDesc}>
+        依赖共享工具的组件会自动安装 <code className={styles.inlineCode}>@cos-design/shared</code>
+        ，无需手动添加。各组件页标题旁也可复制对应安装命令。
+      </p>
     </section>
 
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>2. 基础用法</h2>
+      <h3 className={styles.subHeading}>从聚合包导入</h3>
       <p className={styles.sectionDesc}>按需导入组件，无需单独引入样式文件。</p>
       <pre className={styles.code}>
         <code>{BASIC_SNIPPET}</code>
+      </pre>
+      <h3 className={styles.subHeading}>从子包导入</h3>
+      <p className={styles.sectionDesc}>
+        安装对应 <code className={styles.inlineCode}>@cos-design/*</code> 后，从该包导入即可。
+      </p>
+      <pre className={styles.code}>
+        <code>{SINGLE_SNIPPET}</code>
       </pre>
     </section>
 
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>3. 组件分类</h2>
       <p className={styles.sectionDesc}>
-        共 49 个组件，按场景分为 6 类。点击左侧导航进入演示，或
+        共 56 个组件，按场景分为 6 类。点击左侧导航进入演示，或
         <Link to="/" className={styles.inlineLink}>
           返回目录
         </Link>

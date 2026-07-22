@@ -58,6 +58,68 @@
   }
 }
 
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  border: 1px solid rgb(255 255 255 / 12%);
+  background: rgb(255 255 255 / 4%);
+  color: #c7ccd8;
+
+  &:hover {
+    background: rgb(255 255 255 / 8%);
+    border-color: rgb(255 255 255 / 18%);
+  }
+}
+
+.namingTable {
+  margin: 0 0 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 8%);
+}
+
+.namingHead,
+.namingRow {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+}
+
+.namingHead {
+  background: rgb(255 255 255 / 4%);
+  color: #8b92a8;
+  font-weight: 600;
+}
+
+.namingRow {
+  border-top: 1px solid rgb(255 255 255 / 6%);
+  background: #0a0b10;
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #e2e8f0;
+  }
+}
+
+.inlineCode {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 6%);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  color: #ddd6fe;
+}
+
 .section {
   margin-bottom: 28px;
   padding: 22px 24px;

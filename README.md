@@ -48,13 +48,15 @@ pnpm add @cos-design/weather-background
 pnpm add @cos-design/fireworks
 ```
 
+> 目录 `weatherBackground` → `@cos-design/weather-background`；依赖 `@cos-design/shared` 的组件会自动安装工具包。
+
 ### 最简示例
 
 ```tsx
 // 全量包
 import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
 
-// 或按需安装的子包
+// 按需子包
 // import { WeatherBackground } from '@cos-design/weather-background';
 
 export default function Page() {

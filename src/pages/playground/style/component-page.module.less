@@ -77,6 +77,39 @@
   line-height: 1.6;
 }
 
+.installRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.installCmd {
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #0a0b10;
+  border: 1px solid rgb(255 255 255 / 8%);
+  color: #ddd6fe;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+}
+
+.installCopyBtn {
+  padding: 6px 12px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
+  color: #c7ccd8;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgb(255 255 255 / 8%);
+  }
+}
+
 .preview {
   position: relative;
   min-height: 420px;
