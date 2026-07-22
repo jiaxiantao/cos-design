@@ -145,7 +145,7 @@ jobs:
 
       - name: Publish packages to npm
         if: steps.check.outputs.published == 'false'
-        run: pnpm --filter "./packages/**" publish --access public --no-git-checks --provenance --ignore-scripts
+        run: node scripts/publish-packages.mjs
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
