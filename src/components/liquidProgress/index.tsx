@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useRef } from 'react';
-import { bindVisibilityPause, clamp } from '../_shared/visibility';
+import { bindVisibilityPause, clamp } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface LiquidProgressProps {

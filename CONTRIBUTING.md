@@ -4,13 +4,13 @@
 
 ## 开发环境
 
-- **Node.js >= 18**（推荐 Node 20，见 `.nvmrc`）
+- **Node.js >= 20**（见 `.nvmrc`）
 - pnpm >= 9
 
 ## 快速开始
 
 ```bash
-# 1. 切换 Node 版本（必须 >= 18）
+# 1. 切换 Node 版本（必须 >= 20）
 nvm use
 
 # 2. 安装依赖（不要用 pnpm install，用 setup 脚本）
@@ -20,16 +20,30 @@ npm run setup
 npx --yes pnpm@9 dev
 ```
 
+## 仓库结构
+
+本仓库是 pnpm monorepo：
+
+| 路径                  | 说明                                    |
+| --------------------- | --------------------------------------- |
+| `src/components/*`    | 组件源码（Playground 与构建入口）       |
+| `packages/shared`     | `@cos-design/shared` 公共工具           |
+| `packages/<name>`     | `@cos-design/<name>` 可独立安装的组件包 |
+| `packages/cos-design` | 聚合包 `cos-design`（一次安装全部）     |
+
+新增组件后运行 `pnpm sync:packages` 生成对应子包元数据。
+
 ## 常用命令
 
-| 命令                        | 说明                       |
-| --------------------------- | -------------------------- |
-| `npm run setup`             | 安装依赖                   |
-| `npx --yes pnpm@9 dev`      | 启动开发服务器             |
-| `npx --yes pnpm@9 build`    | 构建组件库                 |
-| `npx --yes pnpm@9 lint`     | 运行 ESLint 与 Stylelint   |
-| `npx --yes pnpm@9 lint:fix` | 自动修复可修复的 lint 问题 |
-| `npx --yes pnpm@9 format`   | 格式化代码                 |
+| 命令                             | 说明                       |
+| -------------------------------- | -------------------------- |
+| `npm run setup`                  | 同步包元数据并安装依赖     |
+| `npx --yes pnpm@9 dev`           | 启动开发服务器             |
+| `npx --yes pnpm@9 build`         | 构建全部子包与聚合包       |
+| `npx --yes pnpm@9 sync:packages` | 按组件目录同步 packages/\* |
+| `npx --yes pnpm@9 lint`          | 运行 ESLint 与 Stylelint   |
+| `npx --yes pnpm@9 lint:fix`      | 自动修复可修复的 lint 问题 |
+| `npx --yes pnpm@9 format`        | 格式化代码                 |
 
 ## 故障排查
 
@@ -43,7 +57,7 @@ npx --yes pnpm@9 dev
 # 1. 切换到 Node 20
 nvm install 20
 nvm use 20
-node -v   # 确认 >= v18.12
+node -v   # 确认 >= v20
 
 # 2. 用 setup 脚本安装（不依赖本机 pnpm）
 npm run setup
@@ -67,13 +81,17 @@ pnpm install   # 此时应可正常使用
 
 项目已配置 GitHub Actions 自动发布。维护者只需：
 
-1. 在 `package.json` 中递增 `version`
+1. 在根目录 `package.json` 中递增 `version`（`pnpm sync:packages` / `pnpm build` 会同步到各子包）
 2. 更新 `CHANGELOG.md`
 3. 推送到 `master` 分支
 
-CI 会自动 lint、build，并在 npm 上不存在该版本时执行 `pnpm publish`。
+CI 会自动 lint、build，并在 npm 上不存在该版本时发布：
 
-> 需在 GitHub Secrets 中配置 `NPM_TOKEN`（npm Granular Token，含 Publish 权限且 Bypass 2FA）。
+- `cos-design`（聚合包）
+- `@cos-design/shared`
+- `@cos-design/<component>`（每个组件一个包）
+
+> 首次发布 scoped 包前，需在 npm 创建并拥有 `@cos-design` organization，且 `NPM_TOKEN` 对该 scope 有 Publish 权限。
 
 ## 提交规范
 

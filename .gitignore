@@ -6,6 +6,7 @@ dist
 dist-demo
 dist-pages
 lib
+packages/*/dist
 
 # Lock files from other package managers
 package-lock.json

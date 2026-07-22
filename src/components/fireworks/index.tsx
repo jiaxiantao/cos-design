@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
-import { bindVisibilityPause } from '../_shared/visibility';
+import { bindVisibilityPause } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface FireworksProps {

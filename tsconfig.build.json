@@ -14,9 +14,10 @@
     "emitDeclarationOnly": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@cos-design/shared": ["packages/shared/src/index.ts"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "packages/shared/src", "src/vite-env.d.ts"],
   "exclude": ["src/main.tsx", "src/pages"]
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '../_shared/visibility';
+import { bindVisibilityPause } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface CanvasClockProps {

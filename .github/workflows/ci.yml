@@ -37,18 +37,18 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Build library
+      - name: Build packages
         run: pnpm build
 
       - name: Build GitHub Pages
         run: pnpm build:pages
 
-      - name: Upload build artifact
+      - name: Upload packages artifact
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
-          name: dist
-          path: dist/
+          name: packages
+          path: packages/
           retention-days: 1
 
       - name: Upload pages artifact
@@ -104,11 +104,16 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: pnpm
 
-      - name: Download build artifact
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          HUSKY: 0
+
+      - name: Download packages artifact
         uses: actions/download-artifact@v4
         with:
-          name: dist
-          path: dist/
+          name: packages
+          path: packages/
 
       - name: Get package version
         id: version
@@ -125,8 +130,8 @@ jobs:
             echo "Version ${{ steps.version.outputs.version }} not found on npm, will publish."
           fi
 
-      - name: Publish to npm
+      - name: Publish packages to npm
         if: steps.check.outputs.published == 'false'
-        run: pnpm publish --no-git-checks --provenance --ignore-scripts
+        run: pnpm --filter "./packages/**" publish --access public --no-git-checks --provenance --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

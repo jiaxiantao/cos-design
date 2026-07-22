@@ -93,6 +93,623 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))
 
+  packages/audioVisualizer:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/aurora:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/barcodeScan:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/burnAway:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/canvasClock:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/charge:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/clickSpark:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/confetti:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/cos-design:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/countdown:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/cursorTrail:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/cyberGrid:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/diceRoll:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/dnaHelix:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/doublePendulum:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/electricArc:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/fireworks:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/flipCounter:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/glitchText:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/gradientFlow:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/gravityBalls:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/holographicCard:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/liquidGlass:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/liquidProgress:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/lorenzAttractor:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/magneticButton:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/matrixRain:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/mazeGenerator:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/metaballPool:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/meteorRain:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/neonText:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/newtonCradle:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/orbitalChart:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/particleNetwork:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/plasmaBall:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/progressChest:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/radarScan:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/redPacketRain:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/returnCity:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/rippleWater:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/ropeChain:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/scrambleText:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/scratchCard:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/shared: {}
+
+  packages/slotMachine:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/smokeFog:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/snowfall:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/solarSystem:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/speedometer:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/splitReveal:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/spotlight:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/starfield:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/timelinePulse:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/turntable:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/typewriter:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/waveButton:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/waveText:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/weatherBackground:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
 packages:
 
   '@ast-grep/napi-darwin-arm64@0.36.3':

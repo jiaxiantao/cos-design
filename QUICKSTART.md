@@ -17,12 +17,19 @@ cos-design 是一套面向**视觉表达**的 React 组件库（49 个特效组�
 ## 安装
 
 ```bash
+# 全部组件
 pnpm add cos-design
 # 或
 npm install cos-design
 # 或
 yarn add cos-design
+
+# 按需安装单个组件（例如天气背景）
+pnpm add @cos-design/weatherBackground
 ```
+
+> 子包命名与源码目录一致，例如 `@cos-design/fireworks`、`@cos-design/scratchCard`。
+> 依赖 `@cos-design/shared` 的组件会自动安装该工具包，无需手动添加。
 
 ---
 
@@ -30,6 +37,7 @@ yarn add cos-design
 
 ```tsx
 import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
+// 或：import { WeatherBackground } from '@cos-design/weatherBackground';
 
 export default function Page() {
   return (

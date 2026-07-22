@@ -18,14 +18,17 @@ export default defineConfig(({ mode }) => {
           dts({
             include: ['src'],
             exclude: ['src/main.tsx', 'src/pages'],
-            outDir: 'dist',
-            rollupTypes: true
+            outDir: 'packages/cos-design/dist',
+            rollupTypes: false,
+            copyDtsFiles: true,
+            entryRoot: '.'
           })
         ]
       : [react()],
     resolve: {
       alias: {
-        '@': resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'src'),
+        '@cos-design/shared': resolve(__dirname, 'packages/shared/src/index.ts')
       }
     },
     css: {
@@ -53,13 +56,14 @@ export default defineConfig(({ mode }) => {
           rollupOptions: {
             external: ['react', 'react-dom', 'react/jsx-runtime'],
             output: {
+              exports: 'named',
               globals: {
                 react: 'React',
                 'react-dom': 'ReactDOM'
               }
             }
           },
-          outDir: 'dist',
+          outDir: 'packages/cos-design/dist',
           emptyOutDir: true
         }
       : isPages

@@ -1,0 +1,58 @@
+{
+  "name": "cos-design",
+  "version": "3.5.0",
+  "description": "A React component library built with Vite",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.less"
+  ],
+  "keywords": [
+    "cos",
+    "cos-design",
+    "react",
+    "component-library",
+    "vite",
+    "typescript"
+  ],
+  "homepage": "https://jiaxiantao.github.io/cos-design/",
+  "bugs": {
+    "url": "https://github.com/jiaxiantao/cos-design/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiaxiantao/cos-design.git",
+    "directory": "packages/cos-design"
+  },
+  "author": "jiaxiantao <jiaxiantao@souche.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

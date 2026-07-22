@@ -1,5 +1,5 @@
 import React from 'react';
-import { clamp } from '../_shared/visibility';
+import { clamp } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface TimelinePulseProps {

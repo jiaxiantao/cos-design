@@ -16,9 +16,11 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@cos-design/shared": ["packages/shared/src/index.ts"],
+      "@cos-design/*": ["packages/*/src/index.ts"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "packages/shared/src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
