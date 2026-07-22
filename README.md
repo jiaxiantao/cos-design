@@ -43,8 +43,8 @@
 # 安装全部组件
 pnpm add cos-design
 
-# 或按需安装单个组件（包名与目录一致）
-pnpm add @cos-design/weatherBackground
+# 或按需安装单个组件（npm 包名为 kebab-case）
+pnpm add @cos-design/weather-background
 pnpm add @cos-design/fireworks
 ```
 
@@ -55,7 +55,7 @@ pnpm add @cos-design/fireworks
 import { Fireworks, ScrambleText, ScratchCard } from 'cos-design';
 
 // 或按需安装的子包
-// import { WeatherBackground } from '@cos-design/weatherBackground';
+// import { WeatherBackground } from '@cos-design/weather-background';
 
 export default function Page() {
   return (

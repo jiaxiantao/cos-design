@@ -5,11 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.1] - 2026-07-22
+
+### Fixed
+
+- 子包名改为 kebab-case（如 `@cos-design/weather-background`），符合 npm 新包命名规则（禁止大写字母）
+
 ## [3.5.0] - 2026-07-22
 
 ### Added
 
-- 支持按组件拆包安装：`pnpm add @cos-design/<component>`（如 `@cos-design/weatherBackground`）
+- 支持按组件拆包安装：`pnpm add @cos-design/<component>`（如 `@cos-design/weather-background`）
 - 新增 `@cos-design/shared` 公共工具包；聚合包 `cos-design` 仍可一次安装全部组件
 - pnpm monorepo 与多包构建 / 发布流水线（`pnpm sync:packages`、`pnpm build`）
 

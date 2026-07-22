@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/doublePendulum",
-  "version": "3.5.0",
+  "name": "@cos-design/double-pendulum",
+  "version": "3.5.1",
   "description": "DoublePendulum component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

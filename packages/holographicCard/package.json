@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/holographicCard",
-  "version": "3.5.0",
+  "name": "@cos-design/holographic-card",
+  "version": "3.5.1",
   "description": "HolographicCard component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

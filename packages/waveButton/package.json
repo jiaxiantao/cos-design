@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/waveButton",
-  "version": "3.5.0",
+  "name": "@cos-design/wave-button",
+  "version": "3.5.1",
   "description": "WaveButton component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

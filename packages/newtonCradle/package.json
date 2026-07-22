@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/newtonCradle",
-  "version": "3.5.0",
+  "name": "@cos-design/newton-cradle",
+  "version": "3.5.1",
   "description": "NewtonCradle component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

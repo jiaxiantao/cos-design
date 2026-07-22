@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/shared",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "Shared utilities for cos-design components",
   "type": "module",
   "main": "./dist/index.cjs",

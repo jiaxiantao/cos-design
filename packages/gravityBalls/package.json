@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/gravityBalls",
-  "version": "3.5.0",
+  "name": "@cos-design/gravity-balls",
+  "version": "3.5.1",
   "description": "GravityBalls component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/scrambleText",
-  "version": "3.5.0",
+  "name": "@cos-design/scramble-text",
+  "version": "3.5.1",
   "description": "ScrambleText component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

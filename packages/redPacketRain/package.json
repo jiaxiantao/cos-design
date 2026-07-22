@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/redPacketRain",
-  "version": "3.5.0",
+  "name": "@cos-design/red-packet-rain",
+  "version": "3.5.1",
   "description": "RedPacketRain component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

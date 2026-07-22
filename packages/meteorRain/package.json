@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/meteorRain",
-  "version": "3.5.0",
+  "name": "@cos-design/meteor-rain",
+  "version": "3.5.1",
   "description": "MeteorRain component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

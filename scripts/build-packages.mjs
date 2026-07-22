@@ -12,6 +12,7 @@ import {
   ROOT,
   componentUsesShared,
   listComponentNames,
+  packageNameOf,
   toExportName
 } from './component-packages.mjs';
 
@@ -101,7 +102,8 @@ async function buildPackage(name, { usesShared = false } = {}) {
   );
   if (name === 'shared') writeSharedTypesEntry();
   else writeTypesEntry(name);
-  console.log(`  ✓ @cos-design/${name === 'shared' ? 'shared' : name}`);
+  const label = name === 'shared' ? '@cos-design/shared' : packageNameOf(name);
+  console.log(`  ✓ ${label}`);
 }
 
 async function main() {

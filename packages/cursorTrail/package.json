@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/cursorTrail",
-  "version": "3.5.0",
+  "name": "@cos-design/cursor-trail",
+  "version": "3.5.1",
   "description": "CursorTrail component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

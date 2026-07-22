@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/magneticButton",
-  "version": "3.5.0",
+  "name": "@cos-design/magnetic-button",
+  "version": "3.5.1",
   "description": "MagneticButton component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

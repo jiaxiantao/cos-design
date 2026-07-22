@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/returnCity",
-  "version": "3.5.0",
+  "name": "@cos-design/return-city",
+  "version": "3.5.1",
   "description": "ReturnCity component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

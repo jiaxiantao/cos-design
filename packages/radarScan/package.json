@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/radarScan",
-  "version": "3.5.0",
+  "name": "@cos-design/radar-scan",
+  "version": "3.5.1",
   "description": "RadarScan component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

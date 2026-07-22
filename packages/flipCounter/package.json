@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/flipCounter",
-  "version": "3.5.0",
+  "name": "@cos-design/flip-counter",
+  "version": "3.5.1",
   "description": "FlipCounter component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

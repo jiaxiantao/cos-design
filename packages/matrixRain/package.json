@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/matrixRain",
-  "version": "3.5.0",
+  "name": "@cos-design/matrix-rain",
+  "version": "3.5.1",
   "description": "MatrixRain component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

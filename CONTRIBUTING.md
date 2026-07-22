@@ -24,12 +24,12 @@ npx --yes pnpm@9 dev
 
 本仓库是 pnpm monorepo：
 
-| 路径                  | 说明                                    |
-| --------------------- | --------------------------------------- |
-| `src/components/*`    | 组件源码（Playground 与构建入口）       |
-| `packages/shared`     | `@cos-design/shared` 公共工具           |
-| `packages/<name>`     | `@cos-design/<name>` 可独立安装的组件包 |
-| `packages/cos-design` | 聚合包 `cos-design`（一次安装全部）     |
+| 路径                  | 说明                                                                                           |
+| --------------------- | ---------------------------------------------------------------------------------------------- |
+| `src/components/*`    | 组件源码（Playground 与构建入口）                                                              |
+| `packages/shared`     | `@cos-design/shared` 公共工具                                                                  |
+| `packages/<name>`     | `@cos-design/<kebab-name>` 组件包（如 `weatherBackground` → `@cos-design/weather-background`） |
+| `packages/cos-design` | 聚合包 `cos-design`（一次安装全部）                                                            |
 
 新增组件后运行 `pnpm sync:packages` 生成对应子包元数据。
 

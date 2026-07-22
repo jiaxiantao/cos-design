@@ -70,6 +70,11 @@ export function toExportName(dirName) {
   return dirName.charAt(0).toUpperCase() + dirName.slice(1);
 }
 
+/** 目录名 camelCase → npm 包名段 kebab-case（npm 禁止新包名含大写字母） */
+export function toPackageId(dirName) {
+  return dirName.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 export function packageNameOf(dirName) {
-  return `@cos-design/${dirName}`;
+  return `@cos-design/${toPackageId(dirName)}`;
 }

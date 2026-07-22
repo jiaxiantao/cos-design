@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/lorenzAttractor",
-  "version": "3.5.0",
+  "name": "@cos-design/lorenz-attractor",
+  "version": "3.5.1",
   "description": "LorenzAttractor component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

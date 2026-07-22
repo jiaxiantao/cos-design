@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/diceRoll",
-  "version": "3.5.0",
+  "name": "@cos-design/dice-roll",
+  "version": "3.5.1",
   "description": "DiceRoll component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

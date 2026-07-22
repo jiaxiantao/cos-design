@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/speedometer",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "Speedometer component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/ropeChain",
-  "version": "3.5.0",
+  "name": "@cos-design/rope-chain",
+  "version": "3.5.1",
   "description": "RopeChain component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

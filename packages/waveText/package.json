@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/waveText",
-  "version": "3.5.0",
+  "name": "@cos-design/wave-text",
+  "version": "3.5.1",
   "description": "WaveText component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

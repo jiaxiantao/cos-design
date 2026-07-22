@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/liquidProgress",
-  "version": "3.5.0",
+  "name": "@cos-design/liquid-progress",
+  "version": "3.5.1",
   "description": "LiquidProgress component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

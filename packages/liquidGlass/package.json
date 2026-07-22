@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/liquidGlass",
-  "version": "3.5.0",
+  "name": "@cos-design/liquid-glass",
+  "version": "3.5.1",
   "description": "LiquidGlass component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

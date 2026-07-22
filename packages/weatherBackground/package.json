@@ -1,6 +1,6 @@
 {
-  "name": "@cos-design/weatherBackground",
-  "version": "3.5.0",
+  "name": "@cos-design/weather-background",
+  "version": "3.5.1",
   "description": "WeatherBackground component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",
