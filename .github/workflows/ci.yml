@@ -130,8 +130,22 @@ jobs:
             echo "Version ${{ steps.version.outputs.version }} not found on npm, will publish."
           fi
 
+      - name: Configure npm auth
+        if: steps.check.outputs.published == 'false'
+        run: |
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "::error::NPM_TOKEN secret is empty. Set it in repo Settings → Secrets → Actions."
+            exit 1
+          fi
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+          echo "registry=https://registry.npmjs.org/" >> .npmrc
+          echo "always-auth=true" >> .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish packages to npm
         if: steps.check.outputs.published == 'false'
         run: pnpm --filter "./packages/**" publish --access public --no-git-checks --provenance --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
