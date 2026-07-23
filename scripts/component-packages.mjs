@@ -56,14 +56,32 @@ export function listComponentNames() {
 }
 
 export function componentUsesShared(name) {
-  const entry = join(COMPONENTS_DIR, name, 'index.tsx');
-  if (!existsSync(entry)) return false;
-  const source = readFileSync(entry, 'utf8');
-  return (
-    source.includes("@cos-design/shared") ||
-    source.includes("../_shared/visibility") ||
-    source.includes("../_shared")
-  );
+  const dir = join(COMPONENTS_DIR, name);
+  if (!existsSync(dir)) return false;
+
+  const stack = [dir];
+  while (stack.length) {
+    const current = stack.pop();
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const fullPath = join(current, entry.name);
+      if (entry.isDirectory()) {
+        stack.push(fullPath);
+        continue;
+      }
+      if (!/\.(ts|tsx)$/.test(entry.name)) continue;
+
+      const source = readFileSync(fullPath, 'utf8');
+      if (
+        source.includes('@cos-design/shared') ||
+        source.includes('../_shared/visibility') ||
+        source.includes('../_shared')
+      ) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 export function toExportName(dirName) {
