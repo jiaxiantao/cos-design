@@ -79,17 +79,32 @@ pnpm install   # 此时应可正常使用
 
 ## 发布流程
 
-项目已配置 GitHub Actions 自动发布。维护者只需：
+项目已配置「只发变更组件」：未改动的子包保持原版本，不会重新 publish。
 
-1. 在根目录 `package.json` 中递增 `version`（`pnpm sync:packages` / `pnpm build` 会同步到各子包）
-2. 更新 `CHANGELOG.md`
-3. 推送到 `master` 分支
+### 日常发版
 
-CI 会自动 lint、build，并在 npm 上不存在该版本时发布：
+1. 完成组件改动并确保 `pnpm lint` / `pnpm build` 通过
+2. 运行 `pnpm release`（自动对比上次 `v*` tag，检测变更包并 patch bump）
+   - 变更的组件子包会升版本
+   - 聚合包 `cos-design`（及根目录 `version`）会升版本
+   - 若只改了 `@cos-design/shared`：只发 `shared` + `cos-design`，**不**跟发依赖它的其他组件
+   - 可用 `pnpm release -- --dry-run` 预览；`pnpm release -- --since=v3.5.3` 指定基线
+3. 检查 `CHANGELOG.md` 与版本号后提交：`git commit -m "chore: release vX.Y.Z"`
+4. 推送到 `master`
 
-- `cos-design`（聚合包）
-- `@cos-design/shared`
-- `@cos-design/<component>`（每个组件一个包）
+CI 会自动 lint、build，并：
+
+- 仅 publish **npm 上尚不存在** 的 `name@version`（未 bump 的子包会被 skip）
+- 发布成功后打 `vX.Y.Z` tag，作为下次 `pnpm release` 的对比基线
+
+### 首次启用
+
+若仓库还没有 `v*` tag，先为当前已发布版本打标：
+
+```bash
+git tag v3.5.3
+git push origin v3.5.3
+```
 
 > 首次发布 scoped 包前，需在 npm 创建并拥有 `@cos-design` organization，且 `NPM_TOKEN` 对该 scope 有 Publish 权限。
 

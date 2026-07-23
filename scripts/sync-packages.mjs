@@ -1,6 +1,6 @@
-#!/usr/bin/env node
 /**
  * 根据 src/components 同步生成 packages/<name>/package.json 与入口文件。
+ * 组件 / shared 保留已有版本号；聚合包 cos-design 与根目录 version 对齐。
  * 用法：node scripts/sync-packages.mjs
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -20,15 +20,27 @@ function writeJson(path, data) {
   writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
+function readExistingVersion(pkgPath, fallback) {
+  if (!existsSync(pkgPath)) return fallback;
+  try {
+    const version = JSON.parse(readFileSync(pkgPath, 'utf8')).version;
+    return typeof version === 'string' && version ? version : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function createComponentPackage(name) {
   const dir = join(PACKAGES_DIR, name);
   const srcDir = join(dir, 'src');
+  const pkgPath = join(dir, 'package.json');
   mkdirSync(srcDir, { recursive: true });
 
   const usesShared = componentUsesShared(name);
   const exportName = toExportName(name);
   const extra = EXTRA_EXPORTS[name];
   const componentPath = `../../../src/components/${name}`;
+  const version = readExistingVersion(pkgPath, VERSION);
 
   const lines = [
     `export { default } from '${componentPath}';`,
@@ -69,7 +81,7 @@ function createComponentPackage(name) {
 
   const pkg = {
     name: packageNameOf(name),
-    version: VERSION,
+    version,
     description: `${exportName} component from cos-design`,
     type: 'module',
     main: './dist/index.cjs',
@@ -117,7 +129,7 @@ function createComponentPackage(name) {
     };
   }
 
-  writeJson(join(dir, 'package.json'), pkg);
+  writeJson(pkgPath, pkg);
 
   const licenseSrc = join(ROOT, 'LICENSE');
   if (existsSync(licenseSrc)) {
@@ -183,7 +195,7 @@ function createUmbrellaPackage() {
 
 const sharedPkgPath = join(PACKAGES_DIR, 'shared', 'package.json');
 const sharedPkg = JSON.parse(readFileSync(sharedPkgPath, 'utf8'));
-sharedPkg.version = VERSION;
+sharedPkg.version = readExistingVersion(sharedPkgPath, VERSION);
 const licenseSrc = join(ROOT, 'LICENSE');
 if (existsSync(licenseSrc)) {
   cpSync(licenseSrc, join(PACKAGES_DIR, 'shared', 'LICENSE'));
@@ -196,4 +208,11 @@ for (const name of names) {
 }
 createUmbrellaPackage();
 
-console.log(`Synced ${names.length} component packages + shared + cos-design @ ${VERSION}`);
+const uniqueVersions = new Set([
+  VERSION,
+  sharedPkg.version,
+  ...names.map((n) => readExistingVersion(join(PACKAGES_DIR, n, 'package.json'), VERSION))
+]);
+console.log(
+  `Synced ${names.length} component packages + shared + cos-design (root/umbrella=${VERSION}; versions=${[...uniqueVersions].sort().join(', ')})`
+);

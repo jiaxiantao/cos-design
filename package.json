@@ -26,6 +26,7 @@
     "setup": "node scripts/install.mjs",
     "preinstall": "npx only-allow pnpm",
     "sync:packages": "node scripts/sync-packages.mjs",
+    "release": "node scripts/release-changed.mjs",
     "dev": "vite",
     "build": "node scripts/build-packages.mjs",
     "build:lib": "tsc -p tsconfig.build.json --noEmit && vite build --mode lib",

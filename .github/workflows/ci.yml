@@ -87,12 +87,14 @@ jobs:
       cancel-in-progress: false
 
     permissions:
-      contents: read
+      contents: write
       id-token: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -119,15 +121,15 @@ jobs:
         id: version
         run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
-      - name: Check if version already published
+      - name: Check if umbrella version already published
         id: check
         run: |
           if npm view cos-design@"${{ steps.version.outputs.version }}" version 2>/dev/null; then
             echo "published=true" >> "$GITHUB_OUTPUT"
-            echo "Version ${{ steps.version.outputs.version }} already exists on npm, skip publish."
+            echo "cos-design@${{ steps.version.outputs.version }} already exists on npm — skip publish (no selective release in this commit)."
           else
             echo "published=false" >> "$GITHUB_OUTPUT"
-            echo "Version ${{ steps.version.outputs.version }} not found on npm, will publish."
+            echo "cos-design@${{ steps.version.outputs.version }} not on npm — will publish changed packages only."
           fi
 
       - name: Configure npm auth
@@ -143,9 +145,23 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish packages to npm
+      - name: Publish changed packages to npm
         if: steps.check.outputs.published == 'false'
         run: node scripts/publish-packages.mjs
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
+
+      - name: Tag release
+        if: steps.check.outputs.published == 'false'
+        run: |
+          TAG="v${{ steps.version.outputs.version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists, skip."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag "$TAG"
+            git push origin "$TAG"
+            echo "Created tag $TAG"
+          fi

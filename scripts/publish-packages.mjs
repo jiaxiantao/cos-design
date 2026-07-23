@@ -1,6 +1,6 @@
-#!/usr/bin/env node
 /**
- * 发布 packages/*；若某版本已存在则跳过，避免部分成功后重跑整批失败。
+ * 发布 packages/*；若某版本已存在则跳过。
+ * 配合「只发变更组件」：未 bump 的子包版本仍在 npm 上，会被自动 skip。
  */
 import { spawnSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
@@ -26,6 +26,8 @@ let failed = 0;
 let published = 0;
 let skipped = 0;
 
+const planned = [];
+
 for (const dir of dirs) {
   const pkgPath = join(packagesDir, dir, 'package.json');
   const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
@@ -37,6 +39,19 @@ for (const dir of dirs) {
     continue;
   }
 
+  planned.push({ dir, name, version });
+}
+
+if (planned.length === 0) {
+  console.log('\nNothing to publish.');
+  process.exit(0);
+}
+
+console.log(`\nWill publish ${planned.length} package(s):`);
+for (const item of planned) console.log(`  - ${item.name}@${item.version}`);
+console.log('');
+
+for (const { dir, name, version } of planned) {
   console.log(`▶ publish ${name}@${version}`);
   const result = spawnSync(
     'pnpm',
