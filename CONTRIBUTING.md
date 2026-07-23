@@ -35,15 +35,16 @@ npx --yes pnpm@9 dev
 
 ## 常用命令
 
-| 命令                             | 说明                       |
-| -------------------------------- | -------------------------- |
-| `npm run setup`                  | 同步包元数据并安装依赖     |
-| `npx --yes pnpm@9 dev`           | 启动开发服务器             |
-| `npx --yes pnpm@9 build`         | 构建全部子包与聚合包       |
-| `npx --yes pnpm@9 sync:packages` | 按组件目录同步 packages/\* |
-| `npx --yes pnpm@9 lint`          | 运行 ESLint 与 Stylelint   |
-| `npx --yes pnpm@9 lint:fix`      | 自动修复可修复的 lint 问题 |
-| `npx --yes pnpm@9 format`        | 格式化代码                 |
+| 命令                             | 说明                                             |
+| -------------------------------- | ------------------------------------------------ |
+| `npm run setup`                  | 同步包元数据并安装依赖                           |
+| `npx --yes pnpm@9 dev`           | 启动开发服务器                                   |
+| `npx --yes pnpm@9 build`         | 构建全部子包与聚合包                             |
+| `npx --yes pnpm@9 sync:packages` | 按组件目录同步 packages/\*（保留各子包独立版本） |
+| `npx --yes pnpm@9 release`       | 检测变更组件并 bump（可加 `-- --dry-run`）       |
+| `npx --yes pnpm@9 lint`          | 运行 ESLint 与 Stylelint                         |
+| `npx --yes pnpm@9 lint:fix`      | 自动修复可修复的 lint 问题                       |
+| `npx --yes pnpm@9 format`        | 格式化代码                                       |
 
 ## 故障排查
 
