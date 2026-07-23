@@ -1,12 +1,17 @@
 import { CONFIGS, NIGHT_CONFIGS, toNightCloudColor } from '../configs';
-import { makeHailstone } from '../sprites/hail';
-import { makeFlake } from '../sprites/snow';
+import { makeCloud, makeFogSprite } from '../sprites/cloud';
+import { makeMoonSprite, makeSunSprite } from '../sprites/celestial';
+import { createHailSpritePool, makeHailstone } from '../sprites/hail';
+import { createFlakeSpritePool, makeFlake } from '../sprites/snow';
 import type {
+  CelestialSprite,
   Cloud,
   Drop,
   Flake,
   FogBank,
+  FogSprite,
   Hailstone,
+  MoonCrater,
   SceneState,
   Splash,
   Star,
@@ -22,10 +27,19 @@ export interface WeatherSceneLayout {
   sunX: number;
   sunY: number;
   sunR: number;
+  skyGradient: CanvasGradient;
+  celestial: CelestialSprite | null;
+  fogSprite: FogSprite | null;
 }
 
+/** 雾团贴图颜色（与 draw-atmosphere 的 drawFog 保持一致） */
+const fogColor = (weather: string, night: boolean): string => {
+  if (night) return weather === 'smog' ? '96, 88, 66' : '138, 150, 168';
+  return weather === 'smog' ? '168, 155, 126' : '226, 232, 238';
+};
+
 export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout & { state: SceneState } {
-  const { width, height, activeWeather, activeNight } = params;
+  const { ctx, width, height, activeWeather, activeNight } = params;
   const cfg = CONFIGS[activeWeather];
   const nightCfg = NIGHT_CONFIGS[activeWeather];
   const sky = activeNight ? nightCfg.sky : cfg.sky;
@@ -33,6 +47,10 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
   const sunX = width * 0.72;
   const sunY = height * 0.26;
   const sunR = Math.min(width, height) * 0.09;
+
+  const skyGradient = ctx.createLinearGradient(0, 0, 0, height);
+  skyGradient.addColorStop(0, sky[0]);
+  skyGradient.addColorStop(1, sky[1]);
 
   const stars: Star[] = activeNight
     ? Array.from({ length: nightCfg.stars }, () => ({
@@ -44,28 +62,19 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
       }))
     : [];
 
-  const moonCraters = [
+  const moonCraters: MoonCrater[] = [
     { dx: -0.32, dy: 0.08, r: 0.17 },
     { dx: 0.24, dy: -0.22, r: 0.12 },
     { dx: 0.04, dy: 0.34, r: 0.1 },
     { dx: 0.36, dy: 0.24, r: 0.07 }
   ];
 
-  const clouds: Cloud[] = Array.from({ length: cfg.cloudCount }, () => {
-    const scale = 0.7 + Math.random() * 0.9;
-    const puffCount = 4 + Math.floor(Math.random() * 3);
-    return {
-      x: Math.random() * (width + 240) - 120,
-      y: height * 0.06 + Math.random() * height * cfg.cloudSpread,
-      scale,
-      speed: 0.12 + Math.random() * 0.22,
-      puffs: Array.from({ length: puffCount }, (_, i) => ({
-        dx: (i - puffCount / 2) * 26 + (Math.random() - 0.5) * 14,
-        dy: (Math.random() - 0.5) * 14,
-        r: 22 + Math.random() * 20
-      }))
-    };
-  });
+  // 日/月贴图：一次性烘焙，主循环仅按 breath 缩放绘制
+  const celestial = activeNight ? makeMoonSprite(cfg, sunR, moonCraters) : makeSunSprite(cfg, sunR);
+
+  const clouds: Cloud[] = Array.from({ length: cfg.cloudCount }, () =>
+    makeCloud(width, height, cfg.cloudSpread, cloudRgb, cfg.cloudAlpha)
+  );
 
   const drops: Drop[] = cfg.rain
     ? Array.from({ length: cfg.rain.count }, () => ({
@@ -87,10 +96,15 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
     alpha: 0.16 + Math.random() * 0.14
   }));
 
-  const flakes: Flake[] = Array.from({ length: cfg.snowCount }, () => makeFlake(width, height));
+  const fogSprite = cfg.fogBanks > 0 ? makeFogSprite(fogColor(activeWeather, activeNight)) : null;
 
+  const flakePool = cfg.snowCount > 0 ? createFlakeSpritePool() : null;
+  const flakes: Flake[] =
+    flakePool != null ? Array.from({ length: cfg.snowCount }, () => makeFlake(width, height, flakePool)) : [];
+
+  const hailPool = activeWeather === 'hail' ? createHailSpritePool() : null;
   const hailstones: Hailstone[] =
-    activeWeather === 'hail' ? Array.from({ length: 145 }, () => makeHailstone(width, height)) : [];
+    hailPool != null ? Array.from({ length: 145 }, () => makeHailstone(width, height, hailPool)) : [];
 
   const windStreaks: WindStreak[] =
     activeWeather === 'gale'
@@ -118,6 +132,9 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
     sunX,
     sunY,
     sunR,
+    skyGradient,
+    celestial,
+    fogSprite,
     state: {
       stars,
       moonCraters,
@@ -127,6 +144,7 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
       fogBanks,
       flakes,
       hailstones,
+      hailPool: hailPool ?? [],
       windStreaks,
       t,
       flashAlpha,

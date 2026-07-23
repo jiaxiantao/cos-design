@@ -196,6 +196,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     snowCount: 0,
     lightning: false
   },
+  /** @deprecated 请使用 moderateSnow */
   snow: {
     sky: ['#9fb0c4', '#dde5ee'],
     sun: 'none',
@@ -210,6 +211,9 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     lightning: false
   }
 };
+
+// 让 deprecated 别名与 moderateSnow 始终指向同一份配置，避免两处漂移
+CONFIGS.snow = CONFIGS.moderateSnow;
 
 /** 夜间天空渐变与可见星星数量（云越多星越少） */
 export const NIGHT_CONFIGS: Record<WeatherType, { sky: [string, string]; stars: number }> = {
@@ -228,8 +232,11 @@ export const NIGHT_CONFIGS: Record<WeatherType, { sky: [string, string]; stars: 
   hail: { sky: ['#0e141d', '#26303e'], stars: 0 },
   smog: { sky: ['#1a1812', '#38321f'], stars: 0 },
   gale: { sky: ['#101a26', '#2e3d4d'], stars: 30 },
+  /** @deprecated 请使用 moderateSnow */
   snow: { sky: ['#131a26', '#333f4f'], stars: 8 }
 };
+
+NIGHT_CONFIGS.snow = NIGHT_CONFIGS.moderateSnow;
 
 /** 夜间云色：整体压暗并偏冷蓝 */
 export const toNightCloudColor = ([r, g, b]: [number, number, number]): [number, number, number] => [

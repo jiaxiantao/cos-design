@@ -64,6 +64,11 @@ export interface Cloud {
   scale: number;
   speed: number;
   puffs: { dx: number; dy: number; r: number }[];
+  /** 预渲染贴图（puffs 已烘焙），每帧只平移绘制 */
+  sprite: HTMLCanvasElement;
+  /** 贴图左上角相对 cloud.x/cloud.y 的偏移 */
+  ox: number;
+  oy: number;
 }
 
 export interface Drop {
@@ -98,7 +103,10 @@ export interface Flake {
   rotation: number;
   rotationSpeed: number;
   opacity: number;
+  /** 来自共享贴图池 */
   sprite: HTMLCanvasElement;
+  /** 绘制边长（贴图按此缩放） */
+  drawSize: number;
 }
 
 export interface Hailstone {
@@ -115,7 +123,10 @@ export interface Hailstone {
   phase: number;
   gust: number;
   maxBounces: number;
+  /** 来自共享贴图池 */
   sprite: HTMLCanvasElement;
+  /** 绘制边长（贴图按此缩放） */
+  drawSize: number;
   rotation: number;
   rotationSpeed: number;
 }
@@ -136,6 +147,21 @@ export interface MoonCrater {
   r: number;
 }
 
+/** 预渲染的日/月贴图，绘制时按 breath 轻微缩放 */
+export interface CelestialSprite {
+  canvas: HTMLCanvasElement;
+  /** 贴图中心到边的半长 */
+  half: number;
+  breathSpeed: number;
+  breathAmp: number;
+}
+
+/** 预渲染的雾团贴图（alpha=1 的柔边圆），绘制时按 bank 缩放并叠加透明度 */
+export interface FogSprite {
+  canvas: HTMLCanvasElement;
+  baseR: number;
+}
+
 export interface SceneState {
   stars: Star[];
   moonCraters: MoonCrater[];
@@ -145,6 +171,8 @@ export interface SceneState {
   fogBanks: FogBank[];
   flakes: Flake[];
   hailstones: Hailstone[];
+  /** 冰雹共享贴图池，落地回收时复用 */
+  hailPool: HTMLCanvasElement[];
   windStreaks: WindStreak[];
   t: number;
   flashAlpha: number;

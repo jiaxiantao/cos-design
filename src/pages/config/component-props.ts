@@ -1217,7 +1217,7 @@ export const componentProps: ComponentPropsMap = {
       type: 'number',
       required: false,
       default: '0.5',
-      description: '雾气密度 0~1，默认 0.5'
+      description: '雾气密度 0~1，默认 0.5；点击/触摸画面可使雾气向外散开'
     }
   ],
   Snowfall: [

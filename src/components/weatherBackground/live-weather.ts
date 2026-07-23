@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { WeatherType } from './index';
 
 export interface OpenMeteoCurrent {
-  /** WMO 天气码 */
+  /** Open-Meteo 精简天气码（WMO WW 子集，非完整 4677） */
   weatherCode: number;
   /** 10 米风速（km/h） */
   windSpeed: number;
@@ -26,40 +26,53 @@ export interface LiveWeatherState {
 /** 蒲福 6 级（强风）起按大风场景渲染 */
 const GALE_WIND_KMH = 39;
 
+/**
+ * Open-Meteo 精简天气码 → WeatherType。
+ * 码表来自 Open-Meteo（WMO WW 精简子集），不是完整 WMO 4677（00–99）。
+ * Open-Meteo 无雨夹雪 / 霾 / 沙尘码；`sleet`、`smog` 仅供手动指定。
+ * @see https://open-meteo.com/en/docs
+ */
 const WMO_MAP: Record<number, WeatherType> = {
   0: 'sunny',
-  // 1 = mainly clear（晴、少云），更接近晴天而非多云
+  // 1 = mainly clear（晴、少云）
   1: 'sunny',
   2: 'partlyCloudy',
   3: 'overcast',
   45: 'fog',
   48: 'fog',
+  // 毛毛雨：轻 / 中 / 密
   51: 'lightRain',
-  53: 'lightRain',
+  53: 'moderateRain',
   55: 'moderateRain',
-  56: 'sleet',
-  57: 'sleet',
+  // 冻毛毛雨：不是雨夹雪，按对应强度的雨近似
+  56: 'lightRain',
+  57: 'moderateRain',
+  // 雨：轻 / 中 / 大
   61: 'lightRain',
   63: 'moderateRain',
   65: 'heavyRain',
-  66: 'sleet',
-  67: 'sleet',
+  // 冻雨：不是雨夹雪，按对应强度的雨近似
+  66: 'lightRain',
+  67: 'heavyRain',
+  // 雪：轻 / 中 / 大
   71: 'lightSnow',
   73: 'moderateSnow',
   75: 'heavySnow',
   77: 'lightSnow',
+  // 阵雨
   80: 'lightRain',
   81: 'moderateRain',
   82: 'heavyRain',
+  // 阵雪：85 轻；86 为中或大
   85: 'lightSnow',
   86: 'heavySnow',
   95: 'thunderstorm',
-  // 96 / 99 为雷暴伴轻微 / 强冰雹，主导现象是雷暴，按雷阵雨渲染（hail 场景无闪电）
-  96: 'thunderstorm',
-  99: 'thunderstorm'
+  // 雷暴伴冰雹：突出冰雹视觉（组件暂无「雷暴+雹」合成场景）
+  96: 'hail',
+  99: 'hail'
 };
 
-/** WMO 天气码 → WeatherType；无降水且风速达强风时映射为大风 */
+/** Open-Meteo / WMO 精简天气码 → WeatherType；无降水且风速达强风时映射为大风 */
 export const mapWmoCodeToWeatherType = (code: number, windSpeedKmh = 0): WeatherType => {
   const base = WMO_MAP[code] ?? 'overcast';
   const calmScene = base === 'sunny' || base === 'partlyCloudy' || base === 'overcast';

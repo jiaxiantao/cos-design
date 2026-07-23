@@ -93,16 +93,16 @@ export default function Page() {
 
 | 组件                | 说明                                           |
 | ------------------- | ---------------------------------------------- |
+| `WeatherBackground` | 天气背景（15 种场景 · Open-Meteo 实况 · 日夜） |
+| `SmokeFog`          | 烟雾雾气飘动                                   |
 | `MatrixRain`        | 黑客帝国数字雨                                 |
 | `MeteorRain`        | 流星雨穿越                                     |
 | `ParticleNetwork`   | 粒子连线网络（支持触摸）                       |
 | `Aurora`            | 极光渐变光带                                   |
 | `RippleWater`       | 点击水波纹                                     |
-| `SmokeFog`          | 烟雾雾气飘动                                   |
 | `CyberGrid`         | 赛博透视地面                                   |
 | `Snowfall`          | 雪花 / 樱花飘落                                |
 | `Starfield`         | 3D 纵深星空                                    |
-| `WeatherBackground` | 天气背景（15 种场景 · Open-Meteo 实况 · 日夜） |
 
 </details>
 

@@ -48,8 +48,8 @@ export function drawSnow(scene: WeatherSceneRuntime) {
     f.y += f.speed;
     f.x += Math.sin(scene.state.t * 0.02 + f.phase) * (0.3 + f.size * 0.08) + f.drift;
     f.rotation += f.rotationSpeed;
-    if (f.y - f.sprite.height > scene.height) {
-      f.y = -f.sprite.height;
+    if (f.y - f.drawSize > scene.height) {
+      f.y = -f.drawSize;
       f.x = Math.random() * scene.width;
       f.phase = Math.random() * Math.PI * 2;
       f.drift = (Math.random() - 0.5) * 0.4;
@@ -58,17 +58,19 @@ export function drawSnow(scene: WeatherSceneRuntime) {
     if (f.x > scene.width + 20) f.x = -20;
     if (f.x < -20) f.x = scene.width + 20;
 
+    const half = f.drawSize / 2;
     scene.ctx.save();
     scene.ctx.globalAlpha = f.opacity;
     scene.ctx.translate(f.x, f.y);
     scene.ctx.rotate(f.rotation);
-    scene.ctx.drawImage(f.sprite, -f.sprite.width / 2, -f.sprite.height / 2);
+    scene.ctx.drawImage(f.sprite, -half, -half, f.drawSize, f.drawSize);
     scene.ctx.restore();
   }
 }
 
 export function drawHail(scene: WeatherSceneRuntime) {
   if (scene.state.hailstones.length === 0) return;
+  const pool = scene.state.hailPool;
 
   for (const h of scene.state.hailstones) {
     if (h.delay > 0) {
@@ -97,17 +99,18 @@ export function drawHail(scene: WeatherSceneRuntime) {
         h.vx = h.vx * (0.55 + Math.random() * 0.25) + (Math.random() - 0.5) * 1.6;
         h.bounces += 1;
       } else {
-        resetHailstone(h, scene.width, scene.height, true);
+        resetHailstone(h, scene.width, scene.height, pool, true);
         continue;
       }
     }
 
+    const half = h.drawSize / 2;
     h.rotation += h.rotationSpeed;
     scene.ctx.save();
     scene.ctx.globalAlpha = h.opacity;
     scene.ctx.translate(h.x, h.y);
     scene.ctx.rotate(h.rotation);
-    scene.ctx.drawImage(h.sprite, -h.sprite.width / 2, -h.sprite.height / 2);
+    scene.ctx.drawImage(h.sprite, -half, -half, h.drawSize, h.drawSize);
     scene.ctx.restore();
   }
 }

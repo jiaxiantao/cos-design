@@ -48,10 +48,16 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
 
   return (
     <div className={styles.weatherBackground} style={{ width, height }}>
-      <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+        style={{ width, height }}
+        role="img"
+        aria-label={`天气背景：${activeWeather}${activeNight ? '（夜间）' : ''}`}
+      />
       {showLoading && (
-        <div className={styles.loadingOverlay}>
-          <div className={styles.loadingSpinner} />
+        <div className={styles.loadingOverlay} role="status" aria-live="polite">
+          <div className={styles.loadingSpinner} aria-hidden />
           <span>天气加载中…</span>
         </div>
       )}

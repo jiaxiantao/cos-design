@@ -27,6 +27,17 @@ export const componentDemos: ComponentDemoItem[] = [
 <WeatherBackground weather="thunderstorm" width={800} height={450} />`
   },
   {
+    name: 'SmokeFog',
+    path: '/smokeFog',
+    title: '烟雾雾气',
+    description: 'Canvas 噪声雾气缓慢飘动；点击画面可使雾气向外散开。',
+    tags: ['Canvas', '特效'],
+    category: 'background' as const,
+    codeExample: `import { SmokeFog } from 'cos-design';
+
+<SmokeFog width={800} height={500} />`
+  },
+  {
     name: 'MatrixRain',
     path: '/matrixRain',
     title: '黑客帝国数字雨',
@@ -80,17 +91,6 @@ export const componentDemos: ComponentDemoItem[] = [
     codeExample: `import { RippleWater } from 'cos-design';
 
 <RippleWater width={800} height={500} />`
-  },
-  {
-    name: 'SmokeFog',
-    path: '/smokeFog',
-    title: '烟雾雾气',
-    description: 'Canvas 噪声雾气缓慢飘动的悬疑氛围。',
-    tags: ['Canvas', '特效'],
-    category: 'background' as const,
-    codeExample: `import { SmokeFog } from 'cos-design';
-
-<SmokeFog width={800} height={500} />`
   },
   {
     name: 'CyberGrid',

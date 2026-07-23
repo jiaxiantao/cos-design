@@ -1,6 +1,9 @@
 import type { Hailstone } from '../types';
 
-/** 不规则冰雹：随机凹凸的球状贴图，每颗形态固定不闪烁 */
+/** 基准半径：池内贴图统一按此尺寸烘焙，绘制时按粒子 r 缩放 */
+const HAIL_BASE_R = 3.2;
+
+/** 冰块冰雹：随机凹凸的球状贴图 */
 const makeHailSprite = (radius: number): HTMLCanvasElement => {
   const s = Math.ceil(radius * 2.8 + 4);
   const cv = document.createElement('canvas');
@@ -45,7 +48,6 @@ const makeHailSprite = (radius: number): HTMLCanvasElement => {
   c.lineWidth = Math.max(0.45, radius * 0.11);
   c.stroke();
 
-  // 随机凹陷阴影
   const dentCount = 1 + Math.floor(Math.random() * 2);
   for (let d = 0; d < dentCount; d++) {
     const dentAngle = Math.random() * Math.PI * 2;
@@ -65,7 +67,6 @@ const makeHailSprite = (radius: number): HTMLCanvasElement => {
     c.fill();
   }
 
-  // 随机突起高光
   if (Math.random() < 0.75) {
     const bumpAngle = Math.random() * Math.PI * 2;
     const bumpX = cx + Math.cos(bumpAngle) * radius * (0.38 + Math.random() * 0.28);
@@ -84,11 +85,22 @@ const makeHailSprite = (radius: number): HTMLCanvasElement => {
   return cv;
 };
 
-export const resetHailstone = (h: Hailstone, width: number, height: number, spawnAbove = true) => {
-  // 横向覆盖略宽于画布，避免边缘规律性；少量偏置制造簇状但不整齐
+/** 预生成共享冰雹贴图池；reset 只换贴图引用，不再分配新 canvas */
+export const createHailSpritePool = (count = 16): HTMLCanvasElement[] =>
+  Array.from({ length: count }, () => makeHailSprite(HAIL_BASE_R));
+
+const pick = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
+export const resetHailstone = (
+  h: Hailstone,
+  width: number,
+  height: number,
+  pool: HTMLCanvasElement[],
+  spawnAbove = true
+) => {
+  h.r = 1.4 + Math.pow(Math.random(), 1.35) * 3.4;
   h.x = Math.random() * (width + 260) - 130 + (Math.random() - 0.5) * 40;
   h.y = spawnAbove ? -h.r - Math.random() * height * 0.55 : Math.random() * height;
-  h.r = 1.4 + Math.pow(Math.random(), 1.35) * 3.4;
   h.vx = -1.2 - Math.random() * 4.8 + (Math.random() - 0.5) * 1.2;
   h.vy = 5.5 + Math.random() * 11;
   h.bounces = 0;
@@ -98,12 +110,13 @@ export const resetHailstone = (h: Hailstone, width: number, height: number, spaw
   h.phase = Math.random() * Math.PI * 2;
   h.gust = (Math.random() - 0.5) * 1.4;
   h.maxBounces = Math.random() < 0.62 ? 1 : 0;
-  h.sprite = makeHailSprite(h.r);
+  h.sprite = pick(pool);
+  h.drawSize = h.r * 2.8 + 4;
   h.rotation = Math.random() * Math.PI * 2;
   h.rotationSpeed = (Math.random() - 0.5) * 0.06;
 };
 
-export const makeHailstone = (width: number, height: number): Hailstone => {
+export const makeHailstone = (width: number, height: number, pool: HTMLCanvasElement[]): Hailstone => {
   const h: Hailstone = {
     x: 0,
     y: 0,
@@ -117,10 +130,11 @@ export const makeHailstone = (width: number, height: number): Hailstone => {
     phase: 0,
     gust: 0,
     maxBounces: 1,
-    sprite: makeHailSprite(2),
+    sprite: pool[0],
+    drawSize: 2 * 2.8 + 4,
     rotation: 0,
     rotationSpeed: 0
   };
-  resetHailstone(h, width, height, Math.random() < 0.72);
+  resetHailstone(h, width, height, pool, Math.random() < 0.72);
   return h;
 };

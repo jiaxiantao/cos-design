@@ -16,7 +16,7 @@ const makeDotSprite = (radius: number): HTMLCanvasElement => {
   return cv;
 };
 
-/** 近景雪花：随机参数生成的六重对称冰晶，每片形态各不相同 */
+/** 近景雪花：随机参数生成的六重对称冰晶 */
 const makeCrystalSprite = (radius: number): HTMLCanvasElement => {
   const s = Math.ceil(radius * 2 + 6);
   const cv = document.createElement('canvas');
@@ -83,9 +83,25 @@ const makeCrystalSprite = (radius: number): HTMLCanvasElement => {
   return cv;
 };
 
-export const makeFlake = (width: number, height: number, y?: number): Flake => {
+export interface FlakeSpritePool {
+  dots: HTMLCanvasElement[];
+  crystals: HTMLCanvasElement[];
+}
+
+/** 预生成少量雪花贴图供粒子复用（大雪 300 片不再各自一张 canvas） */
+export const createFlakeSpritePool = (): FlakeSpritePool => ({
+  dots: [1.2, 1.6, 2.0, 2.3].map((size) => makeDotSprite(size)),
+  crystals: [2.6, 3.2, 3.8, 4.4, 5.0].map((size) => makeCrystalSprite(size * 2.4))
+});
+
+const pick = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
+export const makeFlake = (width: number, height: number, pool: FlakeSpritePool, y?: number): Flake => {
   const size = 1 + Math.pow(Math.random(), 1.6) * 4.2;
   const isCrystal = size >= 2.4;
+  const sprite = isCrystal ? pick(pool.crystals) : pick(pool.dots);
+  // 按粒子 size 缩放绘制，贴图本身来自共享池
+  const drawSize = isCrystal ? size * 4.8 + 6 : size * 2 + 4;
   return {
     x: Math.random() * width,
     y: y ?? Math.random() * height,
@@ -96,6 +112,7 @@ export const makeFlake = (width: number, height: number, y?: number): Flake => {
     rotation: Math.random() * Math.PI * 2,
     rotationSpeed: (Math.random() - 0.5) * 0.025,
     opacity: 0.55 + Math.random() * 0.45,
-    sprite: isCrystal ? makeCrystalSprite(size * 2.4) : makeDotSprite(size)
+    sprite,
+    drawSize
   };
 };
