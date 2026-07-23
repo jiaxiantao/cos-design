@@ -1,6 +1,6 @@
 {
   "name": "cos-design-monorepo",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "private": true,
   "description": "cos-design monorepo — React visual effect components",
   "type": "module",

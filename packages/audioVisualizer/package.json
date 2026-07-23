@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/audio-visualizer",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "AudioVisualizer component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

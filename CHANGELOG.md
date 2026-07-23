@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.2] - 2026-07-23
+
+### Changed
+
+- `WeatherBackground` 性能优化：天空 / 日夜 / 云 / 雾预烘焙贴图，雪花与冰雹复用贴图池，支持 `prefers-reduced-motion` 静态降级
+- `SmokeFog` 支持点击 / 触摸驱散雾气
+
+### Fixed
+
+- `WeatherBackground` 补充 canvas 语义标签与 loading 状态可读性
+
 ## [3.5.1] - 2026-07-22
 
 ### Fixed

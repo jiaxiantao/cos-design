@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/particle-network",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "ParticleNetwork component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/weather-background",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "WeatherBackground component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -50,8 +50,5 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
-  },
-  "dependencies": {
-    "@cos-design/shared": "workspace:*"
   }
 }
