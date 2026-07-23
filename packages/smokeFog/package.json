@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/smoke-fog",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "SmokeFog component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -27,6 +27,25 @@ export const componentDemos: ComponentDemoItem[] = [
 <WeatherBackground weather="thunderstorm" width={800} height={450} />`
   },
   {
+    name: 'RippleWater',
+    path: '/rippleWater',
+    title: '水波纹',
+    description: '真实感水面背景，点击后产生物理扩散的水花涟漪。',
+    tags: ['WebGL', '交互'],
+    category: 'background' as const,
+    codeExample: `import { RippleWater } from 'cos-design';
+
+<RippleWater
+  width={800}
+  height={500}
+  fromColor="#52ade3"
+  toColor="#013565"
+  waveAmplitude={1}
+  shimmer={1.2}
+  rippleStrength={1.2}
+/>`
+  },
+  {
     name: 'SmokeFog',
     path: '/smokeFog',
     title: '烟雾雾气',
@@ -80,17 +99,6 @@ export const componentDemos: ComponentDemoItem[] = [
     codeExample: `import { Aurora } from 'cos-design';
 
 <Aurora width={800} height={500} />`
-  },
-  {
-    name: 'RippleWater',
-    path: '/rippleWater',
-    title: '水波纹',
-    description: '点击水面产生扩散涟漪的交互背景。',
-    tags: ['Canvas', '交互'],
-    category: 'background' as const,
-    codeExample: `import { RippleWater } from 'cos-design';
-
-<RippleWater width={800} height={500} />`
   },
   {
     name: 'CyberGrid',

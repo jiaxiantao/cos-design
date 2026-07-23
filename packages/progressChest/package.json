@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/progress-chest",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "ProgressChest component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

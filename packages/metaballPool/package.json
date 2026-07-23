@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/metaball-pool",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "MetaballPool component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

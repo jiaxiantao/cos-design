@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/aurora",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "Aurora component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

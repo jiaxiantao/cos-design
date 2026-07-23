@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/solar-system",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "SolarSystem component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

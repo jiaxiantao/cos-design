@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/gradient-flow",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "GradientFlow component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

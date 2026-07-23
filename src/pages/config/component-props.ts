@@ -1077,11 +1077,102 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     },
     {
+      name: 'fromColor',
+      type: 'string',
+      required: false,
+      default: "'#52ade3'",
+      description: '水面渐变浅端（左上）'
+    },
+    {
+      name: 'toColor',
+      type: 'string',
+      required: false,
+      default: "'#013565'",
+      description: '水面渐变深端（右下）'
+    },
+    {
       name: 'color',
       type: 'string',
       required: false,
-      default: "'#38bdf8'",
-      description: '涟漪颜色'
+      default: "'#a8d8f5'",
+      description: '涟漪高光色'
+    },
+    {
+      name: 'waveAmplitude',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '环境波浪强度 0~2，默认 1'
+    },
+    {
+      name: 'waveSpeed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '环境波浪速度 0~3，默认 1'
+    },
+    {
+      name: 'shimmer',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '波光闪烁强度 0~2，默认 1'
+    },
+    {
+      name: 'reflection',
+      type: 'number',
+      required: false,
+      default: '0.38',
+      description: '水面反射强度 0~1，默认 0.38'
+    },
+    {
+      name: 'rippleStrength',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '点击涟漪力度 0~3，默认 1'
+    },
+    {
+      name: 'rippleRadius',
+      type: 'number',
+      required: false,
+      default: '6',
+      description: '涟漪落点半径（仿真格点 2~12），默认 6'
+    },
+    {
+      name: 'damping',
+      type: 'number',
+      required: false,
+      default: '0.985',
+      description: '涟漪衰减 0.9~0.999，越大越持久，默认 0.985'
+    },
+    {
+      name: 'spread',
+      type: 'number',
+      required: false,
+      default: '0.5',
+      description: '涟漪传播速度 0.3~0.7，默认 0.5'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应点击/触摸产生涟漪，默认 true'
+    },
+    {
+      name: 'showHint',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示底部提示，默认 true'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'点击水面产生涟漪'",
+      description: '底部提示文案'
     }
   ],
   RopeChain: [

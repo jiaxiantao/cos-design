@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.3] - 2026-07-23
+
+### Changed
+
+- `RippleWater` 重写为 WebGL 高度场水面：波光粼粼、物理扩散涟漪，默认湖蓝对角渐变
+- `RippleWater` 新增波浪 / 波光 / 涟漪物理 / 交互等配置参数，侧边栏排序至天气背景之后
+
 ## [3.5.2] - 2026-07-23
 
 ### Changed

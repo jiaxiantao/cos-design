@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/cyber-grid",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "CyberGrid component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",
