@@ -1322,7 +1322,7 @@ export const componentProps: ComponentPropsMap = {
       type: 'string | [string, string, string]',
       required: false,
       default: 'DEFAULT_BG',
-      description: ''
+      description: '背景色：单色会生成轻微渐变，或传 [上, 中, 下]；默认深色夜景'
     },
     {
       name: 'speed',
@@ -1667,6 +1667,117 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '56',
       description: '字号'
+    }
+  ],
+  WeatherBackground: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '800',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '450',
+      description: ''
+    },
+    {
+      name: 'weather',
+      type: "'sunny' | 'partlyCloudy' | 'overcast' | 'rain' | 'lightRain' | 'moderateRain' | 'heavyRain' | 'thunderstorm' | 'fog' | 'snow' | 'lightSnow' | 'moderateSnow' | 'heavySnow' | 'sleet' | 'hail' | 'smog' | 'gale'",
+      required: false,
+      default: "'partlyCloudy'",
+      description:
+        '天气类型：sunny / partlyCloudy / overcast / rain 雨天 / thunderstorm / fog / snow 雪天 / sleet / hail / smog；雨量用 rainLevel，雪量用 snowLevel，风效用 windLevel'
+    },
+    {
+      name: 'time',
+      type: 'string',
+      required: false,
+      default: "'14:00'",
+      description: ''
+    },
+    {
+      name: 'live',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description:
+        '接入 Open-Meteo 实况：自动定位并按真实天气渲染，定位或请求失败时回退到 weather；时刻随当地时钟东升西落'
+    },
+    {
+      name: 'latitude',
+      type: 'number',
+      required: false,
+      default: '',
+      description: '纬度（-90 ~ 90）：用于日出日落与昼夜判定；live 未配置时可跳过浏览器定位'
+    },
+    {
+      name: 'longitude',
+      type: 'number',
+      required: false,
+      default: '',
+      description: '经度（-180 ~ 180）：与 latitude 同时配置'
+    },
+    {
+      name: 'windLevel',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_WIND_LEVEL',
+      description: '蒲福风级 0~12，默认 3（微风）；live 模式下使用 Open-Meteo 实况风速'
+    },
+    {
+      name: 'rainLevel',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_RAIN_LEVEL',
+      description:
+        '雨量档 1~10：1~2 毛毛雨 / 3~4 小雨 / 5~6 中雨 / 7~8 暴雨 / 9~10 特大暴雨，默认 5；rain / thunderstorm / sleet 生效；live 模式下由实况推导'
+    },
+    {
+      name: 'snowLevel',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_SNOW_LEVEL',
+      description:
+        '雪量档 1~10：1~2 毛毛雪 / 3~4 小雪 / 5~6 中雪 / 7~8 暴雪 / 9~10 特大暴雪，默认 5；snow / sleet 生效；live 模式下由实况推导'
+    },
+    {
+      name: 'hailLevel',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_HAIL_LEVEL',
+      description: '冰雹强度 1~3：1 细雹 / 2 密雹 / 3 巨雹，默认 2；仅 hail 天气生效；live 模式下由实况推导'
+    },
+    {
+      name: 'fogLevel',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_FOG_LEVEL',
+      description: '雾浓度 1~3：1 薄雾 / 2 中雾 / 3 浓雾，默认 2；仅 fog 天气生效；live 模式下由实况推导'
+    },
+    {
+      name: 'smogLevel',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_SMOG_LEVEL',
+      description: '霾强度 1~3：1 轻霾 / 2 中霾 / 3 重霾，默认 2；仅 smog 天气生效；live 模式下由实况推导'
+    },
+    {
+      name: 'onLiveWeather',
+      type: '(weather: WeatherType) => void',
+      required: false,
+      default: '',
+      description: 'live 模式解析出真实天气后回调'
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '外部受控 loading：在当前画面上叠加加载遮罩（live 模式定位/请求期间会自动显示，无需传入）'
     }
   ]
 };

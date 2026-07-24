@@ -1,6 +1,10 @@
 /**
  * 从组件源码 *Props 接口与 JSDoc 提取配置参数文档。
  * 运行: pnpm extract-props
+ *
+ * 支持：
+ * - Props 写在 index.tsx
+ * - Props 写在同目录 types.ts（如 WeatherBackground）
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -24,10 +28,11 @@ const parseTypeAliases = (content) => {
   return aliases;
 };
 
-const parsePropsFromFile = (content, componentName) => {
+const parsePropsInterface = (content) => {
   const ifaceMatch = content.match(/export interface (\w+Props)(?:\s+extends\s+[^{]+)?\s*\{([\s\S]*?)\n\}/);
-  if (!ifaceMatch) return [];
+  if (!ifaceMatch) return null;
 
+  const componentName = ifaceMatch[1].replace(/Props$/, '');
   const body = ifaceMatch[2];
   const props = [];
   const lines = body.split('\n');
@@ -54,20 +59,7 @@ const parsePropsFromFile = (content, componentName) => {
     pendingDoc = '';
   }
 
-  const destructureMatch =
-    content.match(new RegExp(`const ${componentName}[\\s\\S]*?=\\s*\\(\\{([\\s\\S]*?)\\}\\s*[,)]`)) ||
-    content.match(new RegExp(`const \\{([\\s\\S]*?)\\}\\s*=\\s*props`));
-
-  if (destructureMatch?.[1]) {
-    applyDefaults(props, destructureMatch[1]);
-  }
-
-  const aliases = parseTypeAliases(content);
-  for (const prop of props) {
-    if (aliases[prop.type]) prop.type = aliases[prop.type];
-  }
-
-  return props;
+  return { componentName, props };
 };
 
 const applyDefaults = (props, destructureBody) => {
@@ -77,6 +69,50 @@ const applyDefaults = (props, destructureBody) => {
   }
 };
 
+const applyDefaultsFromIndex = (props, componentName, indexContent) => {
+  const destructureMatch =
+    indexContent.match(new RegExp(`const ${componentName}[\\s\\S]*?=\\s*\\(\\{([\\s\\S]*?)\\}\\s*[,)]`)) ||
+    indexContent.match(new RegExp(`const \\{([\\s\\S]*?)\\}\\s*=\\s*props`));
+  if (destructureMatch?.[1]) applyDefaults(props, destructureMatch[1]);
+};
+
+const applyAliases = (props, ...contents) => {
+  const aliases = Object.assign({}, ...contents.map(parseTypeAliases));
+  for (const prop of props) {
+    if (aliases[prop.type]) prop.type = aliases[prop.type];
+  }
+};
+
+/** 解析组件目录：优先 index.tsx 的 interface，否则读 types.ts */
+const extractComponentProps = (dirPath) => {
+  const indexPath = path.join(dirPath, 'index.tsx');
+  if (!fs.existsSync(indexPath)) return null;
+
+  const indexContent = fs.readFileSync(indexPath, 'utf8');
+  let parsed = parsePropsInterface(indexContent);
+  let typesContent = '';
+
+  if (!parsed) {
+    const typesPath = path.join(dirPath, 'types.ts');
+    if (!fs.existsSync(typesPath)) return null;
+    typesContent = fs.readFileSync(typesPath, 'utf8');
+    parsed = parsePropsInterface(typesContent);
+    if (!parsed) return null;
+  }
+
+  const { componentName, props } = parsed;
+  if (!props.length) return null;
+
+  applyDefaultsFromIndex(props, componentName, indexContent);
+  if (!typesContent) {
+    const typesPath = path.join(dirPath, 'types.ts');
+    if (fs.existsSync(typesPath)) typesContent = fs.readFileSync(typesPath, 'utf8');
+  }
+  applyAliases(props, indexContent, typesContent);
+
+  return { componentName, props };
+};
+
 const dirs = fs
   .readdirSync(componentsDir, { withFileTypes: true })
   .filter((d) => d.isDirectory() && d.name !== '_shared');
@@ -84,16 +120,8 @@ const dirs = fs
 const result = {};
 
 for (const dir of dirs) {
-  const indexPath = path.join(componentsDir, dir.name, 'index.tsx');
-  if (!fs.existsSync(indexPath)) continue;
-
-  const content = fs.readFileSync(indexPath, 'utf8');
-  const exportMatch = content.match(/export interface (\w+Props)/);
-  if (!exportMatch) continue;
-
-  const componentName = exportMatch[1].replace(/Props$/, '');
-  const props = parsePropsFromFile(content, componentName);
-  if (props.length) result[componentName] = props;
+  const extracted = extractComponentProps(path.join(componentsDir, dir.name));
+  if (extracted) result[extracted.componentName] = extracted.props;
 }
 
 if (result.WaveButton) {

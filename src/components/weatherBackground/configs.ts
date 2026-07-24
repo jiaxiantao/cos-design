@@ -40,6 +40,21 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     snowCount: 0,
     lightning: false
   },
+  /** 雨天默认中雨；实际由 rainLevel 1~10 连续插值；天空按毛毛/小、中、暴三档 CONFIGS */
+  rain: {
+    sky: ['#55637a', '#7e8ba0'],
+    sun: 'none',
+    cloudCount: 8,
+    cloudColor: [51, 65, 85],
+    cloudAlpha: 0.65,
+    cloudSpread: 0.26,
+    rain: { count: 150, speed: 10, wind: -1.5, alpha: 0.5, splash: true },
+    fogBanks: 0,
+    haze: 0.06,
+    snowCount: 0,
+    lightning: false
+  },
+  /** @deprecated 请使用 rain + rainLevel={2} */
   lightRain: {
     sky: ['#6b7a8f', '#9aa7b8'],
     sun: 'none',
@@ -196,7 +211,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     snowCount: 0,
     lightning: false
   },
-  /** @deprecated 请使用 moderateSnow */
+  /** 雪天默认中雪；实际渲染由 resolveSceneWeather + snowLevel 选 light/moderate/heavy */
   snow: {
     sky: ['#9fb0c4', '#dde5ee'],
     sun: 'none',
@@ -212,31 +227,26 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
   }
 };
 
-// 让 deprecated 别名与 moderateSnow 始终指向同一份配置，避免两处漂移
-CONFIGS.snow = CONFIGS.moderateSnow;
-
 /** 夜间天空渐变与可见星星数量（云越多星越少） */
 export const NIGHT_CONFIGS: Record<WeatherType, { sky: [string, string]; stars: number }> = {
   sunny: { sky: ['#0b1a33', '#27476e'], stars: 110 },
   partlyCloudy: { sky: ['#0f1f38', '#2c4666'], stars: 60 },
   overcast: { sky: ['#181f2a', '#333e4e'], stars: 0 },
+  rain: { sky: ['#11161f', '#242c3a'], stars: 0 },
   lightRain: { sky: ['#151b26', '#2b3442'], stars: 0 },
   moderateRain: { sky: ['#11161f', '#242c3a'], stars: 0 },
   heavyRain: { sky: ['#0c1017', '#1c232e'], stars: 0 },
   thunderstorm: { sky: ['#0a0e18', '#192132'], stars: 0 },
   fog: { sky: ['#1c222b', '#3a434e'], stars: 0 },
+  snow: { sky: ['#131a26', '#333f4f'], stars: 8 },
   lightSnow: { sky: ['#161e2b', '#3a4656'], stars: 20 },
   moderateSnow: { sky: ['#131a26', '#333f4f'], stars: 8 },
   heavySnow: { sky: ['#101623', '#2a3545'], stars: 0 },
   sleet: { sky: ['#121924', '#2c3745'], stars: 0 },
   hail: { sky: ['#0e141d', '#26303e'], stars: 0 },
   smog: { sky: ['#1a1812', '#38321f'], stars: 0 },
-  gale: { sky: ['#101a26', '#2e3d4d'], stars: 30 },
-  /** @deprecated 请使用 moderateSnow */
-  snow: { sky: ['#131a26', '#333f4f'], stars: 8 }
+  gale: { sky: ['#101a26', '#2e3d4d'], stars: 30 }
 };
-
-NIGHT_CONFIGS.snow = NIGHT_CONFIGS.moderateSnow;
 
 /** 夜间云色：整体压暗并偏冷蓝 */
 export const toNightCloudColor = ([r, g, b]: [number, number, number]): [number, number, number] => [

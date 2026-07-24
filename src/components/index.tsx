@@ -108,12 +108,80 @@ export { default as WaveButton } from './waveButton';
 export type { WaveButtonProps } from './waveButton';
 export { default as WeatherBackground } from './weatherBackground';
 export type { WeatherBackgroundProps, WeatherType } from './weatherBackground';
-export { mapWmoCodeToWeatherType, useLiveWeather } from './weatherBackground/live-weather';
+export { formatLocalHm, mapWmoCodeToWeatherType, useLiveWeather, useSunTimes } from './weatherBackground/live-weather';
 export type {
   LiveWeatherCoords,
   LiveWeatherState,
   LiveWeatherStatus,
   OpenMeteoCurrent
 } from './weatherBackground/live-weather';
+export {
+  DEFAULT_FOG_LEVEL,
+  FOG_LEVEL_LABELS,
+  clampFogLevel,
+  fogBankAlphaScale,
+  fogLevelFromVisibility,
+  fogLevelFromWmo,
+  formatFogLevel,
+  intensifyFogConfig,
+  supportsFogLevel
+} from './weatherBackground/fog';
+export type { FogLevel } from './weatherBackground/fog';
+export {
+  DEFAULT_HAIL_LEVEL,
+  HAIL_LEVEL_LABELS,
+  clampHailLevel,
+  formatHailLevel,
+  hailLevelFromWmo,
+  hailSpec,
+  supportsHailLevel
+} from './weatherBackground/hail-level';
+export type { HailIntensitySpec, HailLevel } from './weatherBackground/hail-level';
+export {
+  DEFAULT_SMOG_LEVEL,
+  SMOG_LEVEL_LABELS,
+  clampSmogLevel,
+  formatSmogLevel,
+  intensifySmogConfig,
+  smogBankAlphaScale,
+  smogLevelFromVisibility,
+  supportsSmogLevel
+} from './weatherBackground/smog';
+export type { SmogLevel } from './weatherBackground/smog';
+export {
+  DEFAULT_RAIN_LEVEL,
+  DEFAULT_SNOW_LEVEL,
+  MAX_PRECIP_LEVEL,
+  MIN_PRECIP_LEVEL,
+  RAIN_LEVEL_LABELS,
+  SNOW_LEVEL_LABELS,
+  clampPrecipLevel,
+  formatPrecipLevel,
+  intensifyRainConfig,
+  intensifySnowCount,
+  isRainWeather,
+  isSnowWeather,
+  normalizeWeatherType,
+  precipBand,
+  precipLabel,
+  rainLevelFromWeather,
+  rainLevelFromWmo,
+  resolveSceneWeather,
+  snowLevelFromWeather,
+  snowLevelFromWmo,
+  supportsRainLevel,
+  supportsSnowLevel
+} from './weatherBackground/precipitation';
+export type { PrecipLevel } from './weatherBackground/precipitation';
+export {
+  DEFAULT_WIND_LEVEL,
+  buildWindMotion,
+  kmhToWindLevel,
+  sampleWindField,
+  visualWindLevel,
+  windLevelToKmh,
+  windStreakSpec
+} from './weatherBackground/wind';
+export type { WindFieldSample, WindMotion } from './weatherBackground/wind';
 export { default as WaveText } from './waveText';
 export type { WaveTextProps } from './waveText';

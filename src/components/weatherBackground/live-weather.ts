@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
+import type { DayCycleTimes } from './day-cycle';
 import type { WeatherType } from './index';
+import { fogLevelFromVisibility, fogLevelFromWmo, type FogLevel } from './fog';
+import { hailLevelFromWmo, type HailLevel } from './hail-level';
+import { normalizeWeatherType, rainLevelFromWmo, snowLevelFromWmo, type PrecipLevel } from './precipitation';
+import { smogLevelFromVisibility, type SmogLevel } from './smog';
 
 export interface OpenMeteoCurrent {
   /** Open-Meteo 精简天气码（WMO WW 子集，非完整 4677） */
@@ -10,6 +15,26 @@ export interface OpenMeteoCurrent {
   isDay: boolean;
   latitude: number;
   longitude: number;
+  /** 当地时区（IANA，如 Asia/Shanghai），来自 Open-Meteo timezone=auto */
+  timezone: string | null;
+  /** 观测时刻（当地墙钟 HH:mm） */
+  localTime: string | null;
+  /** 能见度（米）；可能缺失 */
+  visibility: number | null;
+  /** 实况雨量档 1~10；非雨为 null */
+  rainLevel: PrecipLevel | null;
+  /** 实况雪量档 1~10；非雪为 null */
+  snowLevel: PrecipLevel | null;
+  /** 实况雾浓度 1~3；非雾为 null */
+  fogLevel: FogLevel | null;
+  /** 实况冰雹强度 1~3；非冰雹为 null */
+  hailLevel: HailLevel | null;
+  /** 实况霾强度 1~3；非霾为 null */
+  smogLevel: SmogLevel | null;
+  /** 当日日出（ms），来自 Open-Meteo daily */
+  sunrise: number | null;
+  /** 当日日落（ms），来自 Open-Meteo daily */
+  sunset: number | null;
 }
 
 export type LiveWeatherStatus = 'idle' | 'locating' | 'fetching' | 'success' | 'error';
@@ -17,21 +42,23 @@ export type LiveWeatherStatus = 'idle' | 'locating' | 'fetching' | 'success' | '
 export interface LiveWeatherState {
   /** 映射后的组件天气类型，成功前为 null */
   weather: WeatherType | null;
+  /** 实况雨量档；非雨天为 null */
+  rainLevel: PrecipLevel | null;
+  /** 实况雪量档；非雪天为 null */
+  snowLevel: PrecipLevel | null;
+  /** 实况雾浓度；非雾天为 null */
+  fogLevel: FogLevel | null;
+  /** 实况冰雹强度；非冰雹为 null */
+  hailLevel: HailLevel | null;
+  /** 实况霾强度；非霾天为 null */
+  smogLevel: SmogLevel | null;
   status: LiveWeatherStatus;
   error: string | null;
   /** Open-Meteo 原始实况数据 */
   current: OpenMeteoCurrent | null;
 }
 
-/** 蒲福 6 级（强风）起按大风场景渲染 */
-const GALE_WIND_KMH = 39;
-
-/**
- * Open-Meteo 精简天气码 → WeatherType。
- * 码表来自 Open-Meteo（WMO WW 精简子集），不是完整 WMO 4677（00–99）。
- * Open-Meteo 无雨夹雪 / 霾 / 沙尘码；`sleet`、`smog` 仅供手动指定。
- * @see https://open-meteo.com/en/docs
- */
+/** Open-Meteo 精简天气码 → WeatherType（雨/雪已合并为 rain / snow） */
 const WMO_MAP: Record<number, WeatherType> = {
   0: 'sunny',
   // 1 = mainly clear（晴、少云）
@@ -40,49 +67,71 @@ const WMO_MAP: Record<number, WeatherType> = {
   3: 'overcast',
   45: 'fog',
   48: 'fog',
-  // 毛毛雨：轻 / 中 / 密
-  51: 'lightRain',
-  53: 'moderateRain',
-  55: 'moderateRain',
-  // 冻毛毛雨：不是雨夹雪，按对应强度的雨近似
-  56: 'lightRain',
-  57: 'moderateRain',
-  // 雨：轻 / 中 / 大
-  61: 'lightRain',
-  63: 'moderateRain',
-  65: 'heavyRain',
-  // 冻雨：不是雨夹雪，按对应强度的雨近似
-  66: 'lightRain',
-  67: 'heavyRain',
-  // 雪：轻 / 中 / 大
-  71: 'lightSnow',
-  73: 'moderateSnow',
-  75: 'heavySnow',
-  77: 'lightSnow',
-  // 阵雨
-  80: 'lightRain',
-  81: 'moderateRain',
-  82: 'heavyRain',
-  // 阵雪：85 轻；86 为中或大
-  85: 'lightSnow',
-  86: 'heavySnow',
+  // 毛毛雨 / 雨 / 阵雨 → 雨天
+  51: 'rain',
+  53: 'rain',
+  55: 'rain',
+  56: 'rain',
+  57: 'rain',
+  61: 'rain',
+  63: 'rain',
+  65: 'rain',
+  66: 'rain',
+  67: 'rain',
+  80: 'rain',
+  81: 'rain',
+  82: 'rain',
+  // 雪 / 阵雪 → 雪天
+  71: 'snow',
+  73: 'snow',
+  75: 'snow',
+  77: 'snow',
+  85: 'snow',
+  86: 'snow',
   95: 'thunderstorm',
   // 雷暴伴冰雹：突出冰雹视觉（组件暂无「雷暴+雹」合成场景）
   96: 'hail',
   99: 'hail'
 };
 
-/** Open-Meteo / WMO 精简天气码 → WeatherType；无降水且风速达强风时映射为大风 */
-export const mapWmoCodeToWeatherType = (code: number, windSpeedKmh = 0): WeatherType => {
-  const base = WMO_MAP[code] ?? 'overcast';
-  const calmScene = base === 'sunny' || base === 'partlyCloudy' || base === 'overcast';
-  if (calmScene && windSpeedKmh >= GALE_WIND_KMH) return 'gale';
-  return base;
+/** Open-Meteo / WMO 精简天气码 → WeatherType */
+export const mapWmoCodeToWeatherType = (code: number): WeatherType => {
+  return normalizeWeatherType(WMO_MAP[code] ?? 'overcast');
 };
 
-const IDLE_STATE: LiveWeatherState = { weather: null, status: 'idle', error: null, current: null };
-const LOCATING_STATE: LiveWeatherState = { weather: null, status: 'locating', error: null, current: null };
-const FETCHING_STATE: LiveWeatherState = { weather: null, status: 'fetching', error: null, current: null };
+const IDLE_STATE: LiveWeatherState = {
+  weather: null,
+  rainLevel: null,
+  snowLevel: null,
+  fogLevel: null,
+  hailLevel: null,
+  smogLevel: null,
+  status: 'idle',
+  error: null,
+  current: null
+};
+const LOCATING_STATE: LiveWeatherState = {
+  weather: null,
+  rainLevel: null,
+  snowLevel: null,
+  fogLevel: null,
+  hailLevel: null,
+  smogLevel: null,
+  status: 'locating',
+  error: null,
+  current: null
+};
+const FETCHING_STATE: LiveWeatherState = {
+  weather: null,
+  rainLevel: null,
+  snowLevel: null,
+  fogLevel: null,
+  hailLevel: null,
+  smogLevel: null,
+  status: 'fetching',
+  error: null,
+  current: null
+};
 
 export interface LiveWeatherCoords {
   latitude: number;
@@ -91,6 +140,48 @@ export interface LiveWeatherCoords {
 
 const isValidCoords = (coords?: LiveWeatherCoords): coords is LiveWeatherCoords =>
   coords != null && Number.isFinite(coords.latitude) && Number.isFinite(coords.longitude);
+
+const parseIsoMs = (value: unknown): number | null => {
+  if (typeof value !== 'string' || !value) return null;
+  const ms = Date.parse(value);
+  return Number.isFinite(ms) ? ms : null;
+};
+
+/** 从 Open-Meteo current.time（当地墙钟）解析 HH:mm */
+const parseLocalHm = (value: unknown): string | null => {
+  if (typeof value !== 'string' || !value) return null;
+  const m = value.match(/T(\d{2}):(\d{2})/);
+  return m ? `${m[1]}:${m[2]}` : null;
+};
+
+/**
+ * 按 IANA 时区取当前当地 HH:mm（用于实况滑块随时钟走动）。
+ * 时区无效时回退到 observationLocalTime。
+ */
+export const formatLocalHm = (timeZone: string | null | undefined, fallbackHm?: string | null): string | null => {
+  if (timeZone) {
+    try {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone,
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).formatToParts(new Date());
+      const hour = parts.find((p) => p.type === 'hour')?.value;
+      const minute = parts.find((p) => p.type === 'minute')?.value;
+      if (hour != null && minute != null) return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
+    } catch {
+      // invalid timeZone
+    }
+  }
+  return fallbackHm ?? null;
+};
+
+/** 从实况结果取出日弧用的日出日落；缺省时返回 null */
+export const getDayCycleTimesFromLive = (current: OpenMeteoCurrent | null): DayCycleTimes | null => {
+  if (!current?.sunrise || !current?.sunset) return null;
+  return { sunrise: current.sunrise, sunset: current.sunset };
+};
 
 /**
  * Open-Meteo 实况天气。
@@ -127,7 +218,10 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
         const params = new URLSearchParams({
           latitude: String(lat),
           longitude: String(lon),
-          current: 'weather_code,wind_speed_10m,is_day'
+          current: 'weather_code,wind_speed_10m,is_day,visibility',
+          daily: 'sunrise,sunset',
+          timezone: 'auto',
+          forecast_days: '1'
         });
         const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
           signal: controller.signal
@@ -139,9 +233,27 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
         if (Number.isNaN(code)) throw new Error('Open-Meteo 返回数据缺少 weather_code');
 
         const windSpeed = Number(data?.current?.wind_speed_10m ?? 0);
+        const sunrise = parseIsoMs(data?.daily?.sunrise?.[0]);
+        const sunset = parseIsoMs(data?.daily?.sunset?.[0]);
+        const timezone = typeof data?.timezone === 'string' ? data.timezone : null;
+        const localTime = parseLocalHm(data?.current?.time) ?? formatLocalHm(timezone);
+        const weather = mapWmoCodeToWeatherType(code);
+        const rainLevel = rainLevelFromWmo(code);
+        const snowLevel = snowLevelFromWmo(code);
+        const visibilityRaw = data?.current?.visibility;
+        const visibility =
+          visibilityRaw != null && Number.isFinite(Number(visibilityRaw)) ? Number(visibilityRaw) : null;
+        const fogLevel = weather === 'fog' ? (fogLevelFromVisibility(visibility) ?? fogLevelFromWmo(code) ?? 2) : null;
+        const hailLevel = weather === 'hail' ? (hailLevelFromWmo(code) ?? 2) : null;
+        const smogLevel = weather === 'smog' ? (smogLevelFromVisibility(visibility) ?? 2) : null;
         if (cancelled) return;
         setState({
-          weather: mapWmoCodeToWeatherType(code, windSpeed),
+          weather,
+          rainLevel,
+          snowLevel,
+          fogLevel,
+          hailLevel,
+          smogLevel,
           status: 'success',
           error: null,
           current: {
@@ -149,13 +261,28 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
             windSpeed,
             isDay: data?.current?.is_day === 1,
             latitude: lat,
-            longitude: lon
+            longitude: lon,
+            timezone,
+            localTime,
+            visibility,
+            rainLevel,
+            snowLevel,
+            fogLevel,
+            hailLevel,
+            smogLevel,
+            sunrise,
+            sunset
           }
         });
       } catch (err) {
         if (cancelled || (err instanceof DOMException && err.name === 'AbortError')) return;
         setState({
           weather: null,
+          rainLevel: null,
+          snowLevel: null,
+          fogLevel: null,
+          hailLevel: null,
+          smogLevel: null,
           status: 'error',
           error: err instanceof Error ? err.message : '天气获取失败',
           current: null
@@ -174,7 +301,17 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
       Promise.resolve().then(() => {
         if (!cancelled) {
-          setState({ weather: null, status: 'error', error: '当前环境不支持定位', current: null });
+          setState({
+            weather: null,
+            rainLevel: null,
+            snowLevel: null,
+            fogLevel: null,
+            hailLevel: null,
+            smogLevel: null,
+            status: 'error',
+            error: '当前环境不支持定位',
+            current: null
+          });
         }
       });
       return () => {
@@ -190,7 +327,17 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
       },
       (geoErr) => {
         if (cancelled) return;
-        setState({ weather: null, status: 'error', error: geoErr.message || '定位失败', current: null });
+        setState({
+          weather: null,
+          rainLevel: null,
+          snowLevel: null,
+          fogLevel: null,
+          hailLevel: null,
+          smogLevel: null,
+          status: 'error',
+          error: geoErr.message || '定位失败',
+          current: null
+        });
       },
       { timeout: 10000, maximumAge: 10 * 60 * 1000 }
     );
@@ -202,4 +349,64 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
   }, [enabled, latitude, longitude]);
 
   return state;
+};
+
+/** 拉取指定经纬度当日日出日落（Open-Meteo daily） */
+export const fetchSunTimes = async (lat: number, lon: number, signal?: AbortSignal): Promise<DayCycleTimes | null> => {
+  const params = new URLSearchParams({
+    latitude: String(lat),
+    longitude: String(lon),
+    daily: 'sunrise,sunset',
+    timezone: 'auto',
+    forecast_days: '1'
+  });
+  const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { signal });
+  if (!res.ok) return null;
+  const data = await res.json();
+  const sunrise = parseIsoMs(data?.daily?.sunrise?.[0]);
+  const sunset = parseIsoMs(data?.daily?.sunset?.[0]);
+  if (sunrise == null || sunset == null) return null;
+  return { sunrise, sunset };
+};
+
+/**
+ * 按经纬度获取当地日出日落，用于 `time` 参数判断昼夜。
+ * 未传 coords 或请求失败时不更新（调用方回退 approximateDayCycleTimes）。
+ */
+export const useSunTimes = (coords?: LiveWeatherCoords): DayCycleTimes | null => {
+  const hasCoords = isValidCoords(coords);
+  const latitude = hasCoords ? coords.latitude : null;
+  const longitude = hasCoords ? coords.longitude : null;
+  const requestKey = `${latitude},${longitude}`;
+
+  const [times, setTimes] = useState<DayCycleTimes | null>(null);
+  const [prevKey, setPrevKey] = useState(requestKey);
+
+  if (prevKey !== requestKey) {
+    setPrevKey(requestKey);
+    setTimes(null);
+  }
+
+  useEffect(() => {
+    if (latitude == null || longitude == null) return;
+
+    let cancelled = false;
+    const controller = new AbortController();
+
+    void fetchSunTimes(latitude, longitude, controller.signal)
+      .then((result) => {
+        if (!cancelled) setTimes(result);
+      })
+      .catch(() => {
+        if (!cancelled) setTimes(null);
+      });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [latitude, longitude]);
+
+  if (!hasCoords) return null;
+  return times;
 };

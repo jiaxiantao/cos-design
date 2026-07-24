@@ -1,43 +1,72 @@
 import { displaceBolt } from '../lightning';
+import { sampleWindField } from '../wind';
 import type { WeatherSceneRuntime } from './runtime';
 
 export function drawWind(scene: WeatherSceneRuntime) {
   if (scene.state.windStreaks.length === 0) return;
 
+  const streakMul = scene.windMotion.streak;
+  const vis = scene.windMotion.streakVisibility;
+  if (vis <= 0.02) return;
+
+  const t = scene.state.t;
+  // 风条主风向与降水一致：向左（负 x），再叠加风场偏角
+  const baseSign = -1;
+
   for (const streak of scene.state.windStreaks) {
-    streak.x += streak.speed;
-    streak.wave += 0.04;
-    if (streak.x - streak.length > scene.width) {
-      streak.x = -streak.length - Math.random() * scene.width * 0.3;
+    const local = sampleWindField(t + streak.phase * 18, scene.windMotion, streak.x, streak.y);
+    const intensity = local.intensity * (0.55 + 0.45 * scene.windField.intensity);
+    const angle = local.angle * 0.65 + scene.windField.angle * 0.35;
+    const ux = baseSign * Math.cos(angle);
+    const uy = Math.sin(angle);
+
+    const step = streak.speed * streakMul * intensity;
+    streak.x += step * ux;
+    streak.y += step * uy * 0.45;
+    streak.wave += 0.03 + intensity * 0.025;
+
+    // 出界后从上风侧重生
+    if (streak.x < -streak.length - 40 || streak.x > scene.width + streak.length + 40) {
+      streak.x =
+        ux < 0
+          ? scene.width + streak.length + Math.random() * scene.width * 0.25
+          : -streak.length - Math.random() * scene.width * 0.25;
       streak.y = Math.random() * scene.height;
     }
+    if (streak.y < -20) streak.y = scene.height + 10;
+    if (streak.y > scene.height + 20) streak.y = -10;
 
-    const waveY = Math.sin(streak.wave) * 8;
-    const endX = streak.x + streak.length;
+    const waveAmp = 5 + intensity * 5;
+    const waveY = Math.sin(streak.wave) * waveAmp;
+    const len = streak.length * (0.85 + intensity * 0.2);
+    const endX = streak.x + ux * len;
+    const endY = streak.y + uy * len * 0.45;
+    const alpha = streak.alpha * vis * Math.min(1.35, 0.55 + intensity * 0.55);
+
     scene.ctx.beginPath();
     scene.ctx.moveTo(streak.x, streak.y);
     scene.ctx.bezierCurveTo(
-      streak.x + streak.length * 0.3,
-      streak.y + waveY,
-      streak.x + streak.length * 0.7,
-      streak.y - waveY,
+      streak.x + ux * len * 0.3,
+      streak.y + uy * len * 0.3 * 0.45 + waveY,
+      streak.x + ux * len * 0.7,
+      streak.y + uy * len * 0.7 * 0.45 - waveY,
       endX,
-      streak.y
+      endY
     );
-    scene.ctx.strokeStyle = `rgba(235, 244, 250, ${streak.alpha})`;
-    scene.ctx.lineWidth = streak.width;
+    scene.ctx.strokeStyle = `rgba(235, 244, 250, ${alpha})`;
+    scene.ctx.lineWidth = streak.width * (0.85 + intensity * 0.2);
     scene.ctx.lineCap = 'round';
     scene.ctx.stroke();
 
-    if (streak.length > 100) {
-      const debrisX = streak.x + streak.length * 0.58;
-      const debrisY = streak.y - waveY * 0.4;
+    if (streak.length > 70 && vis > 0.45 && intensity > 0.7) {
+      const debrisX = streak.x + ux * len * 0.58;
+      const debrisY = streak.y + uy * len * 0.58 * 0.45 - waveY * 0.4;
       scene.ctx.save();
       scene.ctx.translate(debrisX, debrisY);
-      scene.ctx.rotate(streak.wave * 2);
+      scene.ctx.rotate(angle + streak.wave * 2);
       scene.ctx.beginPath();
       scene.ctx.ellipse(0, 0, 4, 1.6, 0, 0, Math.PI * 2);
-      scene.ctx.fillStyle = `rgba(91, 76, 52, ${streak.alpha * 1.6})`;
+      scene.ctx.fillStyle = `rgba(91, 76, 52, ${alpha * 1.4})`;
       scene.ctx.fill();
       scene.ctx.restore();
     }

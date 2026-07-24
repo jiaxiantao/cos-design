@@ -96,17 +96,21 @@ export const resetHailstone = (
   width: number,
   height: number,
   pool: HTMLCanvasElement[],
-  spawnAbove = true
+  spawnAbove = true,
+  sizeRange?: { min: number; max: number },
+  speedMul = 1
 ) => {
-  h.r = 1.4 + Math.pow(Math.random(), 1.35) * 3.4;
+  const minR = sizeRange?.min ?? 1.4;
+  const maxR = sizeRange?.max ?? 4.8;
+  h.r = minR + Math.pow(Math.random(), 1.35) * (maxR - minR);
   h.x = Math.random() * (width + 260) - 130 + (Math.random() - 0.5) * 40;
   h.y = spawnAbove ? -h.r - Math.random() * height * 0.55 : Math.random() * height;
-  h.vx = -1.2 - Math.random() * 4.8 + (Math.random() - 0.5) * 1.2;
-  h.vy = 5.5 + Math.random() * 11;
+  h.vx = (-1.2 - Math.random() * 4.8 + (Math.random() - 0.5) * 1.2) * speedMul;
+  h.vy = (5.5 + Math.random() * 11) * speedMul;
   h.bounces = 0;
   h.opacity = 0.45 + Math.random() * 0.55;
   h.delay = Math.floor(Math.random() * (spawnAbove ? 110 : 45));
-  h.gravity = 0.11 + Math.random() * 0.14;
+  h.gravity = (0.11 + Math.random() * 0.14) * (0.9 + speedMul * 0.1);
   h.phase = Math.random() * Math.PI * 2;
   h.gust = (Math.random() - 0.5) * 1.4;
   h.maxBounces = Math.random() < 0.62 ? 1 : 0;
@@ -116,7 +120,13 @@ export const resetHailstone = (
   h.rotationSpeed = (Math.random() - 0.5) * 0.06;
 };
 
-export const makeHailstone = (width: number, height: number, pool: HTMLCanvasElement[]): Hailstone => {
+export const makeHailstone = (
+  width: number,
+  height: number,
+  pool: HTMLCanvasElement[],
+  sizeRange?: { min: number; max: number },
+  speedMul = 1
+): Hailstone => {
   const h: Hailstone = {
     x: 0,
     y: 0,
@@ -135,6 +145,6 @@ export const makeHailstone = (width: number, height: number, pool: HTMLCanvasEle
     rotation: 0,
     rotationSpeed: 0
   };
-  resetHailstone(h, width, height, pool, Math.random() < 0.72);
+  resetHailstone(h, width, height, pool, Math.random() < 0.72, sizeRange, speedMul);
   return h;
 };

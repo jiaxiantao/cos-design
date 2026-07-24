@@ -17,14 +17,28 @@ export const componentDemos: ComponentDemoItem[] = [
     name: 'WeatherBackground',
     path: '/weatherBackground',
     title: '天气背景',
-    description: '15 种细分天气场景，支持接入 Open-Meteo 自动定位渲染真实天气。',
+    description: '多种天气场景，雨/雪/雾/冰雹/霾强度可调，支持接入 Open-Meteo 实况渲染。',
     tags: ['Canvas', '特效', 'API'],
     category: 'background' as const,
     codeExample: `import { WeatherBackground } from 'cos-design';
 
-// 手动指定天气；夜间加 night；接入 Open-Meteo 实况改用：
-// <WeatherBackground live latitude={39.9} longitude={116.4} />
-<WeatherBackground weather="thunderstorm" width={800} height={450} />`
+// 接入 Open-Meteo 实况：把 live 改为 true
+<WeatherBackground
+  weather="partlyCloudy"
+  time="14:00"
+  live={false}
+  latitude={30.2741}
+  longitude={120.1551}
+  windLevel={3}
+  rainLevel={5}
+  snowLevel={5}
+  hailLevel={2}
+  fogLevel={2}
+  smogLevel={2}
+  loading={false}
+  width={800}
+  height={450}
+/>`
   },
   {
     name: 'RippleWater',
