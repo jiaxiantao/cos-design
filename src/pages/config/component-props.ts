@@ -1308,7 +1308,49 @@ export const componentProps: ComponentPropsMap = {
       type: 'number',
       required: false,
       default: '0.5',
-      description: '雾气密度 0~1，默认 0.5；点击/触摸画面可使雾气向外散开'
+      description: '烟雾密度 0~1，默认 0.5'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: 'DEFAULT_COLOR',
+      description: '烟雾颜色，默认偏冷灰白 `#d2d4d8`'
+    },
+    {
+      name: 'backgroundColor',
+      type: 'string | [string, string, string]',
+      required: false,
+      default: 'DEFAULT_BG',
+      description: ''
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '运动速度倍率 0~3，默认 1'
+    },
+    {
+      name: 'disperseStrength',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '点击拨开力度 0~3，默认 1'
+    },
+    {
+      name: 'disperseRadius',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '点击拨开范围倍率 0~3，默认 1'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应点击/触摸驱散，默认 true'
     }
   ],
   Snowfall: [
@@ -1625,72 +1667,6 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '56',
       description: '字号'
-    }
-  ],
-  WeatherBackground: [
-    {
-      name: 'width',
-      type: 'number',
-      required: false,
-      default: '800',
-      description: ''
-    },
-    {
-      name: 'height',
-      type: 'number',
-      required: false,
-      default: '450',
-      description: ''
-    },
-    {
-      name: 'weather',
-      type: "'sunny' | 'partlyCloudy' | 'overcast' | 'lightRain' | 'moderateRain' | 'heavyRain' | 'thunderstorm' | 'fog' | 'lightSnow' | 'moderateSnow' | 'heavySnow' | 'sleet' | 'hail' | 'smog' | 'gale' | 'snow'",
-      required: false,
-      default: "'sunny'",
-      description:
-        '天气类型：sunny 大晴天 / partlyCloudy 多云 / overcast 阴天 / lightRain 小雨 / moderateRain 中雨 / heavyRain 大雨 / thunderstorm 雷阵雨 / fog 雾 / lightSnow 小雪 / moderateSnow 中雪 / heavySnow 大雪 / sleet 雨夹雪 / hail 冰雹 / smog 霾 / gale 大风'
-    },
-    {
-      name: 'night',
-      type: 'boolean',
-      required: false,
-      default: 'false',
-      description: '夜间模式：渲染深夜天空、月亮与星空；live 模式下自动按当地实际日夜覆盖此值'
-    },
-    {
-      name: 'live',
-      type: 'boolean',
-      required: false,
-      default: 'false',
-      description: '接入 Open-Meteo 实况：自动定位并按真实天气渲染，定位或请求失败时回退到 weather'
-    },
-    {
-      name: 'latitude',
-      type: 'number',
-      required: false,
-      default: '',
-      description: 'live 模式查询纬度（-90 ~ 90），与 longitude 同时配置时跳过浏览器定位'
-    },
-    {
-      name: 'longitude',
-      type: 'number',
-      required: false,
-      default: '',
-      description: 'live 模式查询经度（-180 ~ 180），与 latitude 同时配置时跳过浏览器定位'
-    },
-    {
-      name: 'onLiveWeather',
-      type: '(weather: WeatherType) => void',
-      required: false,
-      default: '',
-      description: 'live 模式解析出真实天气后回调'
-    },
-    {
-      name: 'loading',
-      type: 'boolean',
-      required: false,
-      default: 'false',
-      description: '外部受控 loading：在当前画面上叠加加载遮罩（live 模式定位/请求期间会自动显示，无需传入）'
     }
   ]
 };

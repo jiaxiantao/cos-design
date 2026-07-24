@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/ripple-water",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "RippleWater component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

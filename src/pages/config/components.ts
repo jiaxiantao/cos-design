@@ -54,7 +54,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { SmokeFog } from 'cos-design';
 
-<SmokeFog width={800} height={500} />`
+<SmokeFog width={800} height={500} density={0.5} speed={1} color="#d2d4d8" />`
   },
   {
     name: 'MatrixRain',

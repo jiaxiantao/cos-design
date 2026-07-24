@@ -35,10 +35,12 @@ export interface RippleWaterProps {
   hint?: string;
 }
 
+type RGB = [number, number, number];
+
 interface WaterConfig {
-  fromColor: string;
-  toColor: string;
-  color: string;
+  from: RGB;
+  to: RGB;
+  tint: RGB;
   waveAmplitude: number;
   waveSpeed: number;
   shimmer: number;
@@ -146,7 +148,7 @@ void main() {
 }
 `;
 
-const parseHex = (hex: string): [number, number, number] => {
+const parseHex = (hex: string): RGB => {
   const h = hex.replace('#', '');
   const full =
     h.length === 3
@@ -193,6 +195,34 @@ const createProgram = (gl: WebGLRenderingContext, vert: string, frag: string) =>
 /** 仿真网格边长：越大涟漪越细腻，但 CPU 更重 */
 const SIM = 192;
 
+const buildConfig = (props: {
+  fromColor: string;
+  toColor: string;
+  color: string;
+  waveAmplitude: number;
+  waveSpeed: number;
+  shimmer: number;
+  reflection: number;
+  rippleStrength: number;
+  rippleRadius: number;
+  damping: number;
+  spread: number;
+  interactive: boolean;
+}): WaterConfig => ({
+  from: parseHex(props.fromColor),
+  to: parseHex(props.toColor),
+  tint: parseHex(props.color),
+  waveAmplitude: props.waveAmplitude,
+  waveSpeed: props.waveSpeed,
+  shimmer: props.shimmer,
+  reflection: props.reflection,
+  rippleStrength: props.rippleStrength,
+  rippleRadius: props.rippleRadius,
+  damping: props.damping,
+  spread: props.spread,
+  interactive: props.interactive
+});
+
 const RippleWater: React.FC<RippleWaterProps> = ({
   width = 800,
   height = 500,
@@ -214,23 +244,8 @@ const RippleWater: React.FC<RippleWaterProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef(0);
   const dropRef = useRef<{ x: number; y: number; strength: number } | null>(null);
-  const configRef = useRef<WaterConfig>({
-    fromColor,
-    toColor,
-    color,
-    waveAmplitude,
-    waveSpeed,
-    shimmer,
-    reflection,
-    rippleStrength,
-    rippleRadius,
-    damping,
-    spread,
-    interactive
-  });
-
-  useEffect(() => {
-    configRef.current = {
+  const configRef = useRef<WaterConfig>(
+    buildConfig({
       fromColor,
       toColor,
       color,
@@ -243,7 +258,24 @@ const RippleWater: React.FC<RippleWaterProps> = ({
       damping,
       spread,
       interactive
-    };
+    })
+  );
+
+  useEffect(() => {
+    configRef.current = buildConfig({
+      fromColor,
+      toColor,
+      color,
+      waveAmplitude,
+      waveSpeed,
+      shimmer,
+      reflection,
+      rippleStrength,
+      rippleRadius,
+      damping,
+      spread,
+      interactive
+    });
   }, [
     fromColor,
     toColor,
@@ -273,18 +305,14 @@ const RippleWater: React.FC<RippleWaterProps> = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const onClick = (e: MouseEvent) => addRipple(e.clientX, e.clientY);
-    const onTouch = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (t) addRipple(t.clientX, t.clientY);
+    // 统一用 pointerdown，避免部分设备 touch + click 叠出双涟漪
+    const onPointer = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      addRipple(e.clientX, e.clientY);
     };
 
-    canvas.addEventListener('click', onClick);
-    canvas.addEventListener('touchstart', onTouch, { passive: true });
-    return () => {
-      canvas.removeEventListener('click', onClick);
-      canvas.removeEventListener('touchstart', onTouch);
-    };
+    canvas.addEventListener('pointerdown', onPointer);
+    return () => canvas.removeEventListener('pointerdown', onPointer);
   }, [addRipple]);
 
   useEffect(() => {
@@ -390,13 +418,50 @@ const RippleWater: React.FC<RippleWaterProps> = ({
       }
     };
 
+    const drawFrame = (timeSec: number) => {
+      const cfg = configRef.current;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, heightTex);
+      gl.uniform1i(uHeight, 0);
+      gl.uniform1f(uTime, timeSec);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform3f(uTint, cfg.tint[0], cfg.tint[1], cfg.tint[2]);
+      gl.uniform3f(uFrom, cfg.from[0], cfg.from[1], cfg.from[2]);
+      gl.uniform3f(uTo, cfg.to[0], cfg.to[1], cfg.to[2]);
+      gl.uniform2f(uSim, SIM, SIM);
+      gl.uniform1f(uWaveAmp, clamp(cfg.waveAmplitude, 0, 2));
+      gl.uniform1f(uWaveSpeed, clamp(cfg.waveSpeed, 0, 3));
+      gl.uniform1f(uShimmer, clamp(cfg.shimmer, 0, 2));
+      gl.uniform1f(uReflection, clamp(cfg.reflection, 0, 1));
+
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
+
+    uploadHeight();
+
+    const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduceMotion) {
+      drawFrame(0);
+      return () => {
+        gl.deleteTexture(heightTex);
+        gl.deleteBuffer(buf);
+        gl.deleteProgram(program);
+      };
+    }
+
     let paused = document.hidden;
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
 
     const start = performance.now();
-    uploadHeight();
 
     const tick = (now: number) => {
       frameRef.current = requestAnimationFrame(tick);
@@ -415,32 +480,7 @@ const RippleWater: React.FC<RippleWaterProps> = ({
 
       stepSimulation(cfg.damping, cfg.spread);
       uploadHeight();
-
-      const tint = parseHex(cfg.color);
-      const from = parseHex(cfg.fromColor);
-      const to = parseHex(cfg.toColor);
-
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.useProgram(program);
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.enableVertexAttribArray(aPos);
-      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, heightTex);
-      gl.uniform1i(uHeight, 0);
-      gl.uniform1f(uTime, (now - start) / 1000);
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform3f(uTint, tint[0], tint[1], tint[2]);
-      gl.uniform3f(uFrom, from[0], from[1], from[2]);
-      gl.uniform3f(uTo, to[0], to[1], to[2]);
-      gl.uniform2f(uSim, SIM, SIM);
-      gl.uniform1f(uWaveAmp, clamp(cfg.waveAmplitude, 0, 2));
-      gl.uniform1f(uWaveSpeed, clamp(cfg.waveSpeed, 0, 3));
-      gl.uniform1f(uShimmer, clamp(cfg.shimmer, 0, 2));
-      gl.uniform1f(uReflection, clamp(cfg.reflection, 0, 1));
-
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      drawFrame((now - start) / 1000);
     };
 
     frameRef.current = requestAnimationFrame(tick);
@@ -460,8 +500,14 @@ const RippleWater: React.FC<RippleWaterProps> = ({
         ref={canvasRef}
         className={styles.canvas}
         style={{ width, height, cursor: interactive ? 'pointer' : 'default' }}
+        role="img"
+        aria-label={hint || '涟漪水面'}
       />
-      {showHint ? <span className={styles.hint}>{hint}</span> : null}
+      {showHint ? (
+        <span className={styles.hint} aria-hidden>
+          {hint}
+        </span>
+      ) : null}
     </div>
   );
 };
