@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `WeatherBackground`：按当地日出日落自动昼夜；`time` / `windLevel` 可调，自然风场驱动云雨雪与风条
+- `WeatherBackground`：雨 / 雪合并为 `rain` / `snow`，新增 `rainLevel` / `snowLevel`（1~10）连续强度
+- `WeatherBackground`：雾 / 冰雹 / 霾三档强度（`fogLevel` / `hailLevel` / `smogLevel`），实况模式自动推导
+- `WeatherBackground`：Demo 支持城市选择、时刻 / 风速 / 强度滑块与 Open-Meteo 实时天气
 - @cos-design/weather-background: 3.5.3 → 3.5.4
 - cos-design: 聚合包更新至 3.5.5
 
