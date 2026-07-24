@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `SmokeFog`：更自然的底部升烟与点击拨散；新增 `color` / `backgroundColor` / `speed` / `disperseStrength` / `disperseRadius` / `interactive`
+- `RippleWater`：交互与可访问性小幅打磨（`pointerdown`、`prefers-reduced-motion` 等）
 - @cos-design/ripple-water: 3.5.3 → 3.5.4
 - @cos-design/smoke-fog: 3.5.3 → 3.5.4
 - cos-design: 聚合包更新至 3.5.4
