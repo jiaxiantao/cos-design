@@ -31,7 +31,10 @@ const CatalogPage = () => {
                 {items.map((item) => (
                   <li key={item.name}>
                     <Link to={item.path} className={styles.link}>
-                      <span className={styles.linkName}>{item.name}</span>
+                      <span className={styles.linkName}>
+                        {item.name}
+                        {item.isNew && <span className={styles.newBadge}>NEW</span>}
+                      </span>
                       <span className={styles.linkTitle}>{item.title}</span>
                     </Link>
                   </li>

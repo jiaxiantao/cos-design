@@ -88,6 +88,50 @@ export const componentProps: ComponentPropsMap = {
       description: '扫描速度（秒/次）'
     }
   ],
+  BubbleField: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '800',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '500',
+      description: ''
+    },
+    {
+      name: 'bubbleCount',
+      type: 'number',
+      required: false,
+      default: '36',
+      description: '气泡数量上限'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '上浮速度'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#7dd3fc'",
+      description: '主色'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否启用鼠标划过扰动'
+    }
+  ],
   BurnAway: [
     {
       name: 'text',
@@ -222,6 +266,57 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '每次喷射粒子数，默认 120'
+    }
+  ],
+  CountUp: [
+    {
+      name: 'value',
+      type: 'number',
+      required: true,
+      default: '',
+      description: '目标值'
+    },
+    {
+      name: 'start',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '起始值'
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      required: false,
+      default: '1400',
+      description: '动画时长（毫秒）'
+    },
+    {
+      name: 'decimals',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '小数位数'
+    },
+    {
+      name: 'prefix',
+      type: 'string',
+      required: false,
+      default: "''",
+      description: '前缀'
+    },
+    {
+      name: 'suffix',
+      type: 'string',
+      required: false,
+      default: "''",
+      description: '后缀'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#34d399'",
+      description: '主色'
     }
   ],
   Countdown: [
@@ -471,6 +566,57 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '600',
       description: '翻牌动画时长（毫秒），默认 600'
+    }
+  ],
+  GameOfLife: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '560',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '420',
+      description: ''
+    },
+    {
+      name: 'cellSize',
+      type: 'number',
+      required: false,
+      default: '14',
+      description: '单元格大小'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '120',
+      description: '演化速度（毫秒/代）'
+    },
+    {
+      name: 'density',
+      type: 'number',
+      required: false,
+      default: '0.28',
+      description: '初始存活密度 0~1'
+    },
+    {
+      name: 'aliveColor',
+      type: 'string',
+      required: false,
+      default: "'#a3e635'",
+      description: '存活颜色'
+    },
+    {
+      name: 'gridColor',
+      type: 'string',
+      required: false,
+      default: "'rgb(148 163 184 / 14%)'",
+      description: '网格线颜色'
     }
   ],
   GlitchText: [
@@ -856,6 +1002,50 @@ export const componentProps: ComponentPropsMap = {
       description: '是否闪烁'
     }
   ],
+  NetworkGraph: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '600',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '420',
+      description: ''
+    },
+    {
+      name: 'nodes',
+      type: 'NetworkGraphNode[]',
+      required: false,
+      default: 'DEFAULT_NODES',
+      description: '节点列表'
+    },
+    {
+      name: 'edges',
+      type: 'NetworkGraphEdge[]',
+      required: false,
+      default: 'DEFAULT_EDGES',
+      description: '边列表'
+    },
+    {
+      name: 'linkColor',
+      type: 'string',
+      required: false,
+      default: "'rgb(148 163 184 / 35%)'",
+      description: '连线颜色'
+    },
+    {
+      name: 'nodeRadius',
+      type: 'number',
+      required: false,
+      default: '20',
+      description: '节点半径'
+    }
+  ],
   NewtonCradle: [
     {
       name: 'ballCount',
@@ -1212,6 +1402,43 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     }
   ],
+  SandFall: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '480',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'cellSize',
+      type: 'number',
+      required: false,
+      default: '4',
+      description: '像素格大小'
+    },
+    {
+      name: 'colors',
+      type: 'string[]',
+      required: false,
+      default: 'DEFAULT_COLORS',
+      description: '沙粒颜色列表（仅支持 #RRGGBB）'
+    },
+    {
+      name: 'spawnRate',
+      type: 'number',
+      required: false,
+      default: '3',
+      description: '每帧生成粒子数'
+    }
+  ],
   ScrambleText: [
     {
       name: 'text',
@@ -1466,6 +1693,64 @@ export const componentProps: ComponentPropsMap = {
       description: '文字颜色'
     }
   ],
+  SplitText: [
+    {
+      name: 'text',
+      type: 'string',
+      required: false,
+      default: "'SPLIT TEXT'",
+      description: '显示文字'
+    },
+    {
+      name: 'animation',
+      type: "'fadeUp' | 'scale' | 'rotate' | 'blur'",
+      required: false,
+      default: "'fadeUp'",
+      description: '动画类型'
+    },
+    {
+      name: 'stagger',
+      type: 'number',
+      required: false,
+      default: '50',
+      description: '字符间隔延迟（毫秒）'
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      required: false,
+      default: '500',
+      description: '单字符动画时长（毫秒）'
+    },
+    {
+      name: 'loop',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否循环播放'
+    },
+    {
+      name: 'loopPause',
+      type: 'number',
+      required: false,
+      default: '2400',
+      description: '循环间歇（毫秒）'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '56',
+      description: '字号'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '颜色'
+    }
+  ],
   Spotlight: [
     {
       name: 'children',
@@ -1487,6 +1772,57 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'rgba(0",
       description: '遮罩颜色，默认 rgba(0,0,0,0.85)'
+    }
+  ],
+  SpringMass: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '560',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '400',
+      description: ''
+    },
+    {
+      name: 'cols',
+      type: 'number',
+      required: false,
+      default: '6',
+      description: '横向质点数量'
+    },
+    {
+      name: 'rows',
+      type: 'number',
+      required: false,
+      default: '5',
+      description: '纵向质点数量'
+    },
+    {
+      name: 'stiffness',
+      type: 'number',
+      required: false,
+      default: '0.22',
+      description: '弹簧刚度 0~1'
+    },
+    {
+      name: 'damping',
+      type: 'number',
+      required: false,
+      default: '0.9',
+      description: '速度阻尼 0~1'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#a78bfa'",
+      description: '主色'
     }
   ],
   Starfield: [
@@ -1517,6 +1853,43 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '1',
       description: '飞行速度，默认 1'
+    }
+  ],
+  TextMorph: [
+    {
+      name: 'texts',
+      type: 'string[]',
+      required: false,
+      default: 'DEFAULT_TEXTS',
+      description: '轮播文案'
+    },
+    {
+      name: 'interval',
+      type: 'number',
+      required: false,
+      default: '2200',
+      description: '切换周期（毫秒）'
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      required: false,
+      default: '680',
+      description: '单次 morph 时长（毫秒）'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '64',
+      description: '字号'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '主色'
     }
   ],
   TimelinePulse: [

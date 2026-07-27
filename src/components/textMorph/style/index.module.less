@@ -1,0 +1,38 @@
+.textMorph {
+  --morph-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 36px;
+  overflow: hidden;
+  color: var(--morph-color);
+  background:
+    radial-gradient(circle at 20% 20%, rgb(56 189 248 / 16%), transparent 28%),
+    radial-gradient(circle at 80% 25%, rgb(168 85 247 / 14%), transparent 24%),
+    linear-gradient(180deg, #020617, #0f172a);
+  border-radius: 18px;
+}
+
+.stage {
+  position: relative;
+  min-width: min(90vw, 720px);
+  min-height: 1.3em;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow:
+    0 0 20px rgb(255 255 255 / 10%),
+    0 0 42px rgb(56 189 248 / 12%);
+  will-change: transform, filter, opacity;
+}

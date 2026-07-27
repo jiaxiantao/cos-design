@@ -39,6 +39,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   ),
   Confetti: <C.Confetti auto={false} />,
   Countdown: <CountdownDemo />,
+  CountUp: <C.CountUp value={128560} duration={1800} prefix="$" />,
   CyberGrid: <C.CyberGrid />,
   CursorTrail: <C.CursorTrail />,
   DiceRoll: <C.DiceRoll />,
@@ -49,6 +50,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   FlipCounter: <FlipCounterDemo />,
   GlitchText: <C.GlitchText text="COS DESIGN" fontSize={56} />,
   GradientFlow: <C.GradientFlow text="GRADIENT FLOW" fontSize={48} />,
+  GameOfLife: <C.GameOfLife width={560} height={420} />,
   GravityBalls: <C.GravityBalls width={600} height={380} />,
   HolographicCard: <C.HolographicCard title="COS VIP" subtitle="全息会员卡 · 限量编号 #001" />,
   LiquidGlass: (
@@ -64,6 +66,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   MetaballPool: <C.MetaballPool width={560} height={360} />,
   MazeGenerator: <C.MazeGenerator width={400} height={400} />,
   MeteorRain: <C.MeteorRain />,
+  NetworkGraph: <C.NetworkGraph width={560} height={380} />,
   NeonText: <C.NeonText />,
   NewtonCradle: <C.NewtonCradle />,
   OrbitalChart: (
@@ -88,10 +91,14 @@ export const demoComponents: Record<string, React.ReactNode> = {
   ScratchCard: <C.ScratchCard />,
   SlotMachine: <C.SlotMachine />,
   SmokeFog: <C.SmokeFog />,
+  BubbleField: <C.BubbleField width={800} height={500} />,
   SolarSystem: <C.SolarSystem width={420} height={420} speed={1.2} />,
   Snowfall: <C.Snowfall mode="sakura" />,
   Speedometer: <C.Speedometer value={86} max={120} label="km/h" />,
+  SandFall: <C.SandFall width={480} height={400} />,
   SplitReveal: <C.SplitReveal text="WELCOME" color="#38bdf8" />,
+  SplitText: <C.SplitText text="SPLIT TEXT" animation="fadeUp" fontSize={56} />,
+  SpringMass: <C.SpringMass width={560} height={380} />,
   Spotlight: (
     <C.Spotlight>
       <p style={{ padding: 40, fontSize: 18 }}>移动鼠标照亮隐藏区域 ✨</p>
@@ -100,6 +107,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   Starfield: <C.Starfield />,
   TimelinePulse: <C.TimelinePulse steps={['需求', '设计', '开发', '测试', '上线']} current={2} color="#38bdf8" />,
   Turntable: <C.Turntable />,
+  TextMorph: <C.TextMorph texts={['COS DESIGN', 'FLUID WORDS', 'PIXEL TO MOTION']} fontSize={56} />,
   Typewriter: <C.Typewriter />,
   WaveButton: <C.WaveButton />,
   WaveText: <C.WaveText text="WAVE TEXT" fontSize={48} />,

@@ -134,6 +134,7 @@ const PlaygroundLayout = () => {
                             }`}
                           >
                             {item.name}
+                            {item.isNew && <span className={styles.newBadge}>NEW</span>}
                           </Link>
                         </li>
                       ))}

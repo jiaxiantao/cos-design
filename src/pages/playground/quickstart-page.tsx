@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { COMPONENT_CATEGORIES } from '../config/categories';
+import { componentDemos } from '../config/components';
 import styles from './style/quickstart-page.module.less';
 
 const INSTALL_FULL_SNIPPET = `# 安装全部组件（推荐快速试用）
@@ -103,7 +105,9 @@ const CATEGORIES = [
   { label: '交互玩具', desc: '鼠标/触摸趣味反馈', examples: 'WaveButton、Spotlight、MagneticButton' },
   { label: '游戏营销', desc: '抽奖与活动玩法', examples: 'Turntable、ScratchCard、Charge' },
   { label: '数据装饰', desc: '大屏与时间展示', examples: 'FlipCounter、Countdown、LiquidProgress' },
-  { label: '物理创意', desc: '物理模拟与视觉实验', examples: 'Fireworks、NewtonCradle、MazeGenerator' }
+  { label: '物理模拟', desc: '重力、弹簧、碰撞互动', examples: 'NewtonCradle、SandFall、SpringMass' },
+  { label: '科学算法', desc: '天文、混沌与算法可视化', examples: 'SolarSystem、GameOfLife、MazeGenerator' },
+  { label: '视觉特效', desc: '烟花、电弧等视觉实验', examples: 'Fireworks、ElectricArc、PlasmaBall' }
 ];
 
 const NAMING_ROWS = [
@@ -190,7 +194,7 @@ const QuickstartPage = () => (
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>3. 组件分类</h2>
       <p className={styles.sectionDesc}>
-        共 56 个组件，按场景分为 6 类。点击左侧导航进入演示，或
+        共 {componentDemos.length} 个组件，按场景分为 {COMPONENT_CATEGORIES.length} 类。点击左侧导航进入演示，或
         <Link to="/" className={styles.inlineLink}>
           返回目录
         </Link>

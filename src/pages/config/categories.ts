@@ -1,4 +1,12 @@
-export type ComponentCategory = 'background' | 'text' | 'interactive' | 'game' | 'data' | 'physics';
+export type ComponentCategory =
+  | 'background'
+  | 'text'
+  | 'interactive'
+  | 'game'
+  | 'data'
+  | 'physics'
+  | 'science'
+  | 'effect';
 
 export interface CategoryMeta {
   id: ComponentCategory;
@@ -40,9 +48,21 @@ export const COMPONENT_CATEGORIES: CategoryMeta[] = [
   },
   {
     id: 'physics',
-    label: '物理创意',
-    description: '物理模拟与脑洞视觉实验',
+    label: '物理模拟',
+    description: '重力、弹簧、碰撞等真实物理互动',
     accent: '#fb923c'
+  },
+  {
+    id: 'science',
+    label: '科学算法',
+    description: '天文、混沌、细胞自动机与算法可视化',
+    accent: '#22d3ee'
+  },
+  {
+    id: 'effect',
+    label: '视觉特效',
+    description: '烟花、电弧、传送门等视觉实验效果',
+    accent: '#e879f9'
   }
 ];
 

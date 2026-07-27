@@ -10,6 +10,7 @@ export interface ComponentDemoItem {
   tags: string[];
   category: ComponentCategory;
   codeExample: string;
+  isNew?: boolean;
 }
 
 export const componentDemos: ComponentDemoItem[] = [
@@ -69,6 +70,18 @@ export const componentDemos: ComponentDemoItem[] = [
     codeExample: `import { SmokeFog } from 'cos-design';
 
 <SmokeFog width={800} height={500} density={0.5} speed={1} color="#d2d4d8" />`
+  },
+  {
+    name: 'BubbleField',
+    path: '/bubbleField',
+    title: '气泡场',
+    description: '深海气泡从海底生成并上升，相近气泡自动融合，带真实水下光影。',
+    tags: ['Canvas', '交互'],
+    category: 'background' as const,
+    isNew: true,
+    codeExample: `import { BubbleField } from 'cos-design';
+
+<BubbleField width={800} height={500} bubbleCount={32} speed={1} />`
   },
   {
     name: 'MatrixRain',
@@ -245,6 +258,30 @@ export const componentDemos: ComponentDemoItem[] = [
     codeExample: `import { BarcodeScan } from 'cos-design';
 
 <BarcodeScan>SCAN ME</BarcodeScan>`
+  },
+  {
+    name: 'TextMorph',
+    path: '/textMorph',
+    title: '文字形变',
+    description: '两段文案之间柔和模糊过渡，适合 Banner 标题轮播。',
+    tags: ['CSS', '文字'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { TextMorph } from 'cos-design';
+
+<TextMorph texts={['COS DESIGN', 'TEXT MORPH', 'SMOOTH TRANSITION']} />`
+  },
+  {
+    name: 'SplitText',
+    path: '/splitText',
+    title: '拆字入场',
+    description: '文字按字母拆分动画入场，支持 fadeUp/scale/rotate/blur 四种模式。',
+    tags: ['CSS', '动画'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { SplitText } from 'cos-design';
+
+<SplitText text="HELLO" animation="fadeUp" loop />`
   },
   {
     name: 'WaveButton',
@@ -456,6 +493,18 @@ export const componentDemos: ComponentDemoItem[] = [
 <Countdown targetDate="2026-12-31T23:59:59" />`
   },
   {
+    name: 'CountUp',
+    path: '/countUp',
+    title: '数字递增',
+    description: '带缓动的数字增长动画，适合指标卡片和运营大屏。',
+    tags: ['CSS', '数据'],
+    category: 'data' as const,
+    isNew: true,
+    codeExample: `import { CountUp } from 'cos-design';
+
+<CountUp value={128560} prefix="$" duration={1800} />`
+  },
+  {
     name: 'LiquidProgress',
     path: '/liquidProgress',
     title: '液体进度环',
@@ -511,26 +560,16 @@ export const componentDemos: ComponentDemoItem[] = [
 <OrbitalChart data={[{ label: 'A', value: 40, color: '#38bdf8' }]} />`
   },
   {
-    name: 'Fireworks',
-    path: '/fireworks',
-    title: '烟花特效',
-    description: 'Canvas 烟花燃放，支持 ref 触发。',
-    tags: ['Canvas', '交互'],
-    category: 'physics' as const,
-    codeExample: `import { Fireworks } from 'cos-design';
+    name: 'NetworkGraph',
+    path: '/networkGraph',
+    title: '关系网络图',
+    description: '力导向节点关系网络，支持拖拽节点交互。',
+    tags: ['Canvas', '数据'],
+    category: 'data' as const,
+    isNew: true,
+    codeExample: `import { NetworkGraph } from 'cos-design';
 
-<Fireworks auto={false} />`
-  },
-  {
-    name: 'ReturnCity',
-    path: '/returnCity',
-    title: '回城特效',
-    description: '星空与光壁环绕的回城传送视觉。',
-    tags: ['CSS', '3D'],
-    category: 'physics' as const,
-    codeExample: `import { ReturnCity } from 'cos-design';
-
-<ReturnCity />`
+<NetworkGraph width={600} height={420} />`
   },
   {
     name: 'NewtonCradle',
@@ -555,37 +594,28 @@ export const componentDemos: ComponentDemoItem[] = [
 <GravityBalls width={600} height={400} />`
   },
   {
-    name: 'DnaHelix',
-    path: '/dnaHelix',
-    title: 'DNA 双螺旋',
-    description: '旋转的双螺旋结构。',
-    tags: ['Canvas', '3D'],
+    name: 'SandFall',
+    path: '/sandFall',
+    title: '像素沙落',
+    description: '按住鼠标在画布绘制沙粒，模拟重力下落堆积。',
+    tags: ['Canvas', '物理'],
     category: 'physics' as const,
-    codeExample: `import { DnaHelix } from 'cos-design';
+    isNew: true,
+    codeExample: `import { SandFall } from 'cos-design';
 
-<DnaHelix width={300} height={500} />`
+<SandFall width={480} height={400} cellSize={4} />`
   },
   {
-    name: 'ElectricArc',
-    path: '/electricArc',
-    title: '电弧',
-    description: '两点间随机闪电连接。',
-    tags: ['Canvas', '特效'],
+    name: 'SpringMass',
+    path: '/springMass',
+    title: '弹簧质点网格',
+    description: '二维弹簧质点网格，四角固定，拖拽中间质点观察整体回弹。',
+    tags: ['Canvas', '物理'],
     category: 'physics' as const,
-    codeExample: `import { ElectricArc } from 'cos-design';
+    isNew: true,
+    codeExample: `import { SpringMass } from 'cos-design';
 
-<ElectricArc width={400} height={200} />`
-  },
-  {
-    name: 'MazeGenerator',
-    path: '/mazeGenerator',
-    title: '迷宫生成',
-    description: '实时 DFS 生成并绘制迷宫。',
-    tags: ['Canvas', '算法'],
-    category: 'physics' as const,
-    codeExample: `import { MazeGenerator } from 'cos-design';
-
-<MazeGenerator width={400} height={400} />`
+<SpringMass width={560} height={400} cols={6} rows={5} />`
   },
   {
     name: 'DoublePendulum',
@@ -599,17 +629,6 @@ export const componentDemos: ComponentDemoItem[] = [
 <DoublePendulum width={400} height={400} />`
   },
   {
-    name: 'PlasmaBall',
-    path: '/plasmaBall',
-    title: '等离子球',
-    description: '静电球效果，鼠标吸引电弧。',
-    tags: ['Canvas', '交互'],
-    category: 'physics' as const,
-    codeExample: `import { PlasmaBall } from 'cos-design';
-
-<PlasmaBall width={320} height={320} />`
-  },
-  {
     name: 'MetaballPool',
     path: '/metaballPool',
     title: '液态融合球',
@@ -621,12 +640,34 @@ export const componentDemos: ComponentDemoItem[] = [
 <MetaballPool width={500} height={320} />`
   },
   {
+    name: 'RopeChain',
+    path: '/ropeChain',
+    title: '绳索链条',
+    description: 'Verlet 积分绳索，拖拽摆动。',
+    tags: ['Canvas', '物理'],
+    category: 'physics' as const,
+    codeExample: `import { RopeChain } from 'cos-design';
+
+<RopeChain width={400} height={400} segments={16} />`
+  },
+  {
+    name: 'DnaHelix',
+    path: '/dnaHelix',
+    title: 'DNA 双螺旋',
+    description: '旋转的双螺旋结构。',
+    tags: ['Canvas', '3D'],
+    category: 'science' as const,
+    codeExample: `import { DnaHelix } from 'cos-design';
+
+<DnaHelix width={300} height={500} />`
+  },
+  {
     name: 'SolarSystem',
     path: '/solarSystem',
     title: '太阳系',
     description: '行星公转与月球绕地，含土星环。',
     tags: ['Canvas', '天文'],
-    category: 'physics' as const,
+    category: 'science' as const,
     codeExample: `import { SolarSystem } from 'cos-design';
 
 <SolarSystem width={400} height={400} speed={1.2} />`
@@ -637,20 +678,76 @@ export const componentDemos: ComponentDemoItem[] = [
     title: '洛伦兹吸引子',
     description: '3D 混沌蝴蝶轨迹，缓慢旋转展示。',
     tags: ['Canvas', '数学'],
-    category: 'physics' as const,
+    category: 'science' as const,
     codeExample: `import { LorenzAttractor } from 'cos-design';
 
 <LorenzAttractor width={400} height={360} />`
   },
   {
-    name: 'RopeChain',
-    path: '/ropeChain',
-    title: '绳索链条',
-    description: 'Verlet 积分绳索，拖拽摆动。',
-    tags: ['Canvas', '物理'],
-    category: 'physics' as const,
-    codeExample: `import { RopeChain } from 'cos-design';
+    name: 'MazeGenerator',
+    path: '/mazeGenerator',
+    title: '迷宫生成',
+    description: '实时 DFS 生成并绘制迷宫。',
+    tags: ['Canvas', '算法'],
+    category: 'science' as const,
+    codeExample: `import { MazeGenerator } from 'cos-design';
 
-<RopeChain width={400} height={400} segments={16} />`
+<MazeGenerator width={400} height={400} />`
+  },
+  {
+    name: 'GameOfLife',
+    path: '/gameOfLife',
+    title: '生命游戏',
+    description: '经典 Conway 生命游戏，支持暂停、随机重置与点击布种。',
+    tags: ['Canvas', '算法'],
+    category: 'science' as const,
+    isNew: true,
+    codeExample: `import { GameOfLife } from 'cos-design';
+
+<GameOfLife width={560} height={420} cellSize={14} speed={120} />`
+  },
+  {
+    name: 'Fireworks',
+    path: '/fireworks',
+    title: '烟花特效',
+    description: 'Canvas 烟花燃放，支持 ref 触发。',
+    tags: ['Canvas', '交互'],
+    category: 'effect' as const,
+    codeExample: `import { Fireworks } from 'cos-design';
+
+<Fireworks auto={false} />`
+  },
+  {
+    name: 'ReturnCity',
+    path: '/returnCity',
+    title: '回城特效',
+    description: '星空与光壁环绕的回城传送视觉。',
+    tags: ['CSS', '3D'],
+    category: 'effect' as const,
+    codeExample: `import { ReturnCity } from 'cos-design';
+
+<ReturnCity />`
+  },
+  {
+    name: 'ElectricArc',
+    path: '/electricArc',
+    title: '电弧',
+    description: '两点间随机闪电连接。',
+    tags: ['Canvas', '特效'],
+    category: 'effect' as const,
+    codeExample: `import { ElectricArc } from 'cos-design';
+
+<ElectricArc width={400} height={200} />`
+  },
+  {
+    name: 'PlasmaBall',
+    path: '/plasmaBall',
+    title: '等离子球',
+    description: '静电球效果，鼠标吸引电弧。',
+    tags: ['Canvas', '交互'],
+    category: 'effect' as const,
+    codeExample: `import { PlasmaBall } from 'cos-design';
+
+<PlasmaBall width={320} height={320} />`
   }
 ];

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.0] - 2026-07-27
+
+### Changed
+
+- BubbleField: 拆分为多模块实现，优化深海背景、扰动形变、融合检测与整体渲染性能
+- 新增背景/交互类组件拆包支持：CountUp、GameOfLife、NetworkGraph、SandFall、SplitText、SpringMass、TextMorph、BubbleField
+- @cos-design/bubble-field: 3.5.5 → 3.6.0
+- @cos-design/count-up: 3.5.5 → 3.6.0
+- @cos-design/game-of-life: 3.5.5 → 3.6.0
+- @cos-design/network-graph: 3.5.5 → 3.6.0
+- @cos-design/sand-fall: 3.5.5 → 3.6.0
+- @cos-design/split-text: 3.5.5 → 3.6.0
+- @cos-design/spring-mass: 3.5.5 → 3.6.0
+- @cos-design/text-morph: 3.5.5 → 3.6.0
+- cos-design: 聚合包更新至 3.6.0
+
 ## [3.5.5] - 2026-07-24
 
 ### Changed
