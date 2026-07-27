@@ -123,6 +123,18 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/bubbleField:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/burnAway:
     dependencies:
       react:
@@ -181,6 +193,15 @@ importers:
         version: 19.2.7(react@19.2.7)
 
   packages/cos-design:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/countUp:
     dependencies:
       react:
         specifier: '>=18.0.0'
@@ -281,6 +302,18 @@ importers:
 
   packages/flipCounter:
     dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/gameOfLife:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -426,6 +459,18 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/networkGraph:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/newtonCradle:
     dependencies:
       '@cos-design/shared':
@@ -543,6 +588,18 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/sandFall:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/scrambleText:
     dependencies:
       react:
@@ -629,8 +686,29 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/splitText:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/spotlight:
     dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/springMass:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -643,6 +721,15 @@ importers:
       '@cos-design/shared':
         specifier: workspace:*
         version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/textMorph:
+    dependencies:
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
