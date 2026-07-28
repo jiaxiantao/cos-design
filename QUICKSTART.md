@@ -104,14 +104,16 @@ pnpm dev
 
 ## 组件怎么选？
 
-| 分类     | 典型用途                 | 代表组件                                     |
-| -------- | ------------------------ | -------------------------------------------- |
-| 背景动效 | 全屏氛围、粒子场景       | `MatrixRain`、`Aurora`、`Starfield`          |
-| 文字动效 | 标题、Banner、终端风文字 | `Typewriter`、`NeonText`、`ScrambleText`     |
-| 交互玩具 | 鼠标/触摸趣味反馈        | `WaveButton`、`Spotlight`、`MagneticButton`  |
-| 游戏营销 | 抽奖、庆祝、活动玩法     | `Turntable`、`ScratchCard`、`Charge`         |
-| 数据装饰 | 大屏、倒计时、进度展示   | `FlipCounter`、`Countdown`、`LiquidProgress` |
-| 物理创意 | 物理模拟、创意视觉实验   | `Fireworks`、`NewtonCradle`、`MazeGenerator` |
+| 分类     | 典型用途                 | 代表组件                                         |
+| -------- | ------------------------ | ------------------------------------------------ |
+| 背景动效 | 全屏氛围、粒子场景       | `BubbleField`、`MatrixRain`、`Aurora`            |
+| 文字动效 | 标题、Banner、终端风文字 | `Typewriter`、`SplitText`、`NeonText`            |
+| 交互玩具 | 鼠标/触摸趣味反馈        | `WaveButton`、`Spotlight`、`MagneticButton`      |
+| 游戏营销 | 抽奖、庆祝、活动玩法     | `Turntable`、`ScratchCard`、`Charge`             |
+| 数据装饰 | 大屏、倒计时、进度展示   | `CountUp`、`NetworkGraph`、`FlipCounter`         |
+| 物理模拟 | 重力、弹簧、碰撞互动     | `SpringMass`、`SandFall`、`NewtonCradle`         |
+| 科学算法 | 混沌、细胞自动机、迷宫   | `LorenzAttractor`、`GameOfLife`、`MazeGenerator` |
+| 视觉特效 | 烟花、电弧、传送门       | `Fireworks`、`ElectricArc`、`PlasmaBall`         |
 
 每个组件的 Props 与示例可在 Playground 对应页面查看。
 

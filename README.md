@@ -2,7 +2,7 @@
 
 # cos-design
 
-**56 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
+**64 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
@@ -22,14 +22,14 @@
 
 适合用在：
 
-| 场景         | 你可以用它做什么                   |
-| ------------ | ---------------------------------- |
-| 营销活动页   | 转盘抽奖、刮刮乐、红包雨、烟花庆祝 |
-| 品牌 Landing | 极光背景、霓虹标题、全息卡片       |
-| 数据大屏     | 翻牌器、仪表盘、液体进度环         |
-| 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成         |
+| 场景         | 你可以用它做什么                        |
+| ------------ | --------------------------------------- |
+| 营销活动页   | 转盘抽奖、刮刮乐、红包雨、烟花庆祝      |
+| 品牌 Landing | 极光 / 深海气泡背景、霓虹标题、全息卡片 |
+| 数据大屏     | 翻牌器、数字递增、仪表盘、关系网络图    |
+| 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成、生命游戏    |
 
-> 15 个组件太单薄，56 个刚好组成一套完整的「视觉工具箱」。
+> 从背景到物理、从文字到营销，64 个组件刚好组成一套完整的「视觉工具箱」。
 
 ---
 
@@ -84,22 +84,23 @@ export default function Page() {
 
 ---
 
-## 组件一览（56 个 · 6 大分类）
+## 组件一览（64 个 · 8 大分类）
 
 <details open>
-<summary><strong>背景动效</strong> — 10 个 · 动态场景与粒子背景</summary>
+<summary><strong>背景动效</strong> — 11 个 · 动态场景与粒子背景</summary>
 
 <br>
 
 | 组件                | 说明                                           |
 | ------------------- | ---------------------------------------------- |
 | `WeatherBackground` | 天气背景（15 种场景 · Open-Meteo 实况 · 日夜） |
-| `SmokeFog`          | 烟雾雾气飘动                                   |
+| `RippleWater`       | WebGL 水面涟漪                                 |
+| `SmokeFog`          | 烟雾雾气飘动（支持点击驱散）                   |
+| `BubbleField`       | 深海气泡上升 · 自动融合 · 鼠标扰动水流         |
 | `MatrixRain`        | 黑客帝国数字雨                                 |
 | `MeteorRain`        | 流星雨穿越                                     |
 | `ParticleNetwork`   | 粒子连线网络（支持触摸）                       |
 | `Aurora`            | 极光渐变光带                                   |
-| `RippleWater`       | 点击水波纹                                     |
 | `CyberGrid`         | 赛博透视地面                                   |
 | `Snowfall`          | 雪花 / 樱花飘落                                |
 | `Starfield`         | 3D 纵深星空                                    |
@@ -107,21 +108,23 @@ export default function Page() {
 </details>
 
 <details>
-<summary><strong>文字动效</strong> — 9 个 · 标题与 Banner 动画</summary>
+<summary><strong>文字动效</strong> — 11 个 · 标题与 Banner 动画</summary>
 
 <br>
 
-| 组件           | 说明         |
-| -------------- | ------------ |
-| `Typewriter`   | 终端打字机   |
-| `NeonText`     | 霓虹发光字   |
-| `GlitchText`   | 故障风闪烁   |
-| `ScrambleText` | 乱码解密文字 |
-| `SplitReveal`  | 字母分裂入场 |
-| `WaveText`     | 正弦波浪文字 |
-| `GradientFlow` | 流光渐变字   |
-| `BurnAway`     | 燃烧消失     |
-| `BarcodeScan`  | 扫描线覆盖   |
+| 组件           | 说明                      |
+| -------------- | ------------------------- |
+| `Typewriter`   | 终端打字机                |
+| `NeonText`     | 霓虹发光字                |
+| `GlitchText`   | 故障风闪烁                |
+| `ScrambleText` | 乱码解密文字              |
+| `SplitReveal`  | 字母分裂入场              |
+| `WaveText`     | 正弦波浪文字              |
+| `GradientFlow` | 流光渐变字                |
+| `BurnAway`     | 燃烧消失                  |
+| `BarcodeScan`  | 扫描线覆盖                |
+| `TextMorph`    | 文案柔和形变过渡          |
+| `SplitText`    | 拆字入场（fadeUp 等模式） |
 
 </details>
 
@@ -162,43 +165,68 @@ export default function Page() {
 </details>
 
 <details>
-<summary><strong>数据装饰</strong> — 8 个 · 大屏与时间展示</summary>
+<summary><strong>数据装饰</strong> — 10 个 · 大屏与时间展示</summary>
+
+<br>
+
+| 组件              | 说明             |
+| ----------------- | ---------------- |
+| `CanvasClock`     | Canvas 模拟时钟  |
+| `FlipCounter`     | 机械翻牌数字     |
+| `Countdown`       | 活动倒计时       |
+| `CountUp`         | 数字递增动画     |
+| `LiquidProgress`  | 液体进度环       |
+| `AudioVisualizer` | 音频可视化       |
+| `Speedometer`     | 速度仪表盘       |
+| `TimelinePulse`   | 时间轴脉冲       |
+| `OrbitalChart`    | 轨道占比图       |
+| `NetworkGraph`    | 力导向关系网络图 |
+
+</details>
+
+<details>
+<summary><strong>物理模拟</strong> — 7 个 · 重力、弹簧与碰撞互动</summary>
+
+<br>
+
+| 组件             | 说明         |
+| ---------------- | ------------ |
+| `NewtonCradle`   | 牛顿摆       |
+| `GravityBalls`   | 重力球池     |
+| `SandFall`       | 像素沙粒下落 |
+| `SpringMass`     | 弹簧质点网格 |
+| `DoublePendulum` | 双摆混沌轨迹 |
+| `MetaballPool`   | 液态融合球   |
+| `RopeChain`      | 绳索链条摆动 |
+
+</details>
+
+<details>
+<summary><strong>科学算法</strong> — 5 个 · 天文、混沌与算法可视化</summary>
 
 <br>
 
 | 组件              | 说明            |
 | ----------------- | --------------- |
-| `CanvasClock`     | Canvas 模拟时钟 |
-| `FlipCounter`     | 机械翻牌数字    |
-| `Countdown`       | 活动倒计时      |
-| `LiquidProgress`  | 液体进度环      |
-| `AudioVisualizer` | 音频可视化      |
-| `Speedometer`     | 速度仪表盘      |
-| `TimelinePulse`   | 时间轴脉冲      |
-| `OrbitalChart`    | 轨道占比图      |
+| `DnaHelix`        | DNA 双螺旋      |
+| `SolarSystem`     | 太阳系公转      |
+| `LorenzAttractor` | 洛伦兹吸引子    |
+| `MazeGenerator`   | 迷宫生成器      |
+| `GameOfLife`      | Conway 生命游戏 |
 
 </details>
 
 <details>
-<summary><strong>物理创意</strong> — 13 个 · 物理模拟与视觉实验</summary>
+<summary><strong>视觉特效</strong> — 4 个 · 烟花、电弧与传送门</summary>
 
 <br>
 
-| 组件              | 说明         |
-| ----------------- | ------------ |
-| `Fireworks`       | 烟花燃放     |
-| `ReturnCity`      | 回城传送特效 |
-| `NewtonCradle`    | 牛顿摆       |
-| `GravityBalls`    | 重力球池     |
-| `DnaHelix`        | DNA 双螺旋   |
-| `ElectricArc`     | 电弧闪电     |
-| `MazeGenerator`   | 迷宫生成器   |
-| `DoublePendulum`  | 双摆混沌轨迹 |
-| `PlasmaBall`      | 等离子静电球 |
-| `MetaballPool`    | 液态融合球   |
-| `SolarSystem`     | 太阳系公转   |
-| `LorenzAttractor` | 洛伦兹吸引子 |
-| `RopeChain`       | 绳索链条摆动 |
+| 组件          | 说明         |
+| ------------- | ------------ |
+| `Fireworks`   | 烟花燃放     |
+| `ReturnCity`  | 回城传送特效 |
+| `ElectricArc` | 电弧闪电     |
+| `PlasmaBall`  | 等离子静电球 |
 
 </details>
 
@@ -206,7 +234,7 @@ export default function Page() {
 
 ## 特性
 
-- **56 个组件**，覆盖背景、文字、交互、营销、数据、物理六大场景
+- **64 个组件**，覆盖背景、文字、交互、营销、数据、物理、科学、特效八大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
@@ -227,7 +255,7 @@ npm run setup          # 安装依赖（绕过 corepack 问题）
 npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-访问 **http://localhost:4000** — 按分类浏览全部 56 个组件，右侧可查看与复制示例代码。
+访问 **http://localhost:4000** — 按分类浏览全部 64 个组件，右侧可查看与复制示例代码。
 
 ---
 
