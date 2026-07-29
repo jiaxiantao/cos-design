@@ -169,18 +169,18 @@ export default function Page() {
 
 <br>
 
-| 组件              | 说明             |
-| ----------------- | ---------------- |
-| `CanvasClock`     | Canvas 模拟时钟  |
-| `FlipCounter`     | 机械翻牌数字     |
-| `Countdown`       | 活动倒计时       |
-| `CountUp`         | 数字递增动画     |
-| `LiquidProgress`  | 液体进度环       |
-| `AudioVisualizer` | 音频可视化       |
-| `Speedometer`     | 速度仪表盘       |
-| `TimelinePulse`   | 时间轴脉冲       |
-| `OrbitalChart`    | 轨道占比图       |
-| `NetworkGraph`    | 力导向关系网络图 |
+| 组件              | 说明                                    |
+| ----------------- | --------------------------------------- |
+| `CanvasClock`     | Canvas 模拟时钟                         |
+| `FlipCounter`     | 机械翻牌数字                            |
+| `Countdown`       | 活动倒计时                              |
+| `CountUp`         | 数字递增动画                            |
+| `LiquidProgress`  | 液体进度环                              |
+| `AudioVisualizer` | 音频可视化                              |
+| `Speedometer`     | 速度仪表盘                              |
+| `TimelinePulse`   | 时间轴脉冲                              |
+| `OrbitalChart`    | 轨道占比图                              |
+| `NetworkGraph`    | 力导向关系网络图（拖拽 · 悬停高亮邻接） |
 
 </details>
 

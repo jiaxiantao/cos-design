@@ -66,7 +66,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   MetaballPool: <C.MetaballPool width={560} height={360} />,
   MazeGenerator: <C.MazeGenerator width={400} height={400} />,
   MeteorRain: <C.MeteorRain />,
-  NetworkGraph: <C.NetworkGraph width={560} height={380} />,
+  NetworkGraph: <C.NetworkGraph width={640} height={420} />,
   NeonText: <C.NeonText />,
   NewtonCradle: <C.NewtonCradle />,
   OrbitalChart: (

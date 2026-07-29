@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { bindVisibilityPause } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
@@ -36,6 +36,8 @@ interface InternalNode {
   vy: number;
 }
 
+type CursorMode = 'default' | 'grab' | 'grabbing';
+
 const DEFAULT_NODES: NetworkGraphNode[] = [
   { id: 'react', label: 'React', color: '#61dafb' },
   { id: 'vue', label: 'Vue', color: '#42b883' },
@@ -57,6 +59,58 @@ const DEFAULT_EDGES: NetworkGraphEdge[] = [
   { source: 'ts', target: 'vite' }
 ];
 
+const HIT_PAD = 6;
+const FONT = 'ui-sans-serif, system-ui, -apple-system, sans-serif';
+
+const mixHex = (hex: string, withColor: string, t: number) => {
+  const parse = (c: string) => {
+    const h = c.replace('#', '');
+    const full =
+      h.length === 3
+        ? h
+            .split('')
+            .map((ch) => ch + ch)
+            .join('')
+        : h;
+    if (full.length !== 6) return [148, 163, 184] as const;
+    return [parseInt(full.slice(0, 2), 16), parseInt(full.slice(2, 4), 16), parseInt(full.slice(4, 6), 16)] as const;
+  };
+  const [ar, ag, ab] = parse(hex);
+  const [br, bg, bb] = parse(withColor);
+  const r = Math.round(ar + (br - ar) * t);
+  const g = Math.round(ag + (bg - ag) * t);
+  const b = Math.round(ab + (bb - ab) * t);
+  return `rgb(${r} ${g} ${b})`;
+};
+
+const withAlpha = (color: string, alpha: number) => {
+  if (color.startsWith('#')) {
+    const h = color.replace('#', '');
+    const full =
+      h.length === 3
+        ? h
+            .split('')
+            .map((ch) => ch + ch)
+            .join('')
+        : h;
+    if (full.length === 6) {
+      const r = parseInt(full.slice(0, 2), 16);
+      const g = parseInt(full.slice(2, 4), 16);
+      const b = parseInt(full.slice(4, 6), 16);
+      return `rgb(${r} ${g} ${b} / ${alpha})`;
+    }
+  }
+  const rgb = color.match(/rgba?\(([^)]+)\)/i);
+  if (rgb) {
+    const parts = rgb[1]
+      .split(/[,\s/]+/)
+      .filter(Boolean)
+      .map(Number);
+    if (parts.length >= 3) return `rgb(${parts[0]} ${parts[1]} ${parts[2]} / ${alpha})`;
+  }
+  return color;
+};
+
 const NetworkGraph: React.FC<NetworkGraphProps> = ({
   width = 600,
   height = 420,
@@ -67,7 +121,28 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const nodesRef = useRef<InternalNode[]>([]);
-  const dragRef = useRef<{ node: InternalNode; offsetX: number; offsetY: number } | null>(null);
+  const hoverIdRef = useRef<string | null>(null);
+  const dragRef = useRef<{
+    node: InternalNode;
+    offsetX: number;
+    offsetY: number;
+    lastX: number;
+    lastY: number;
+    vx: number;
+    vy: number;
+  } | null>(null);
+  const [cursor, setCursor] = useState<CursorMode>('default');
+  const [hintLabel, setHintLabel] = useState('拖拽节点 · 悬停查看关联');
+
+  const adjacency = useMemo(() => {
+    const map = new Map<string, Set<string>>();
+    for (const n of nodes) map.set(n.id, new Set());
+    for (const e of edges) {
+      map.get(e.source)?.add(e.target);
+      map.get(e.target)?.add(e.source);
+    }
+    return map;
+  }, [edges, nodes]);
 
   useEffect(() => {
     if (!nodes.length) {
@@ -75,22 +150,33 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
       return;
     }
 
-    nodesRef.current = nodes.map((n, i) => ({
-      id: n.id,
-      label: n.label || n.id,
-      color: n.color || '#38bdf8',
-      x: width / 2 + Math.cos((i / nodes.length) * Math.PI * 2) * 140,
-      y: height / 2 + Math.sin((i / nodes.length) * Math.PI * 2) * 120,
-      vx: 0,
-      vy: 0
-    }));
+    const prev = new Map(nodesRef.current.map((n) => [n.id, n]));
+    nodesRef.current = nodes.map((n, i) => {
+      const existing = prev.get(n.id);
+      if (existing) {
+        return {
+          ...existing,
+          label: n.label || n.id,
+          color: n.color || '#38bdf8'
+        };
+      }
+      return {
+        id: n.id,
+        label: n.label || n.id,
+        color: n.color || '#38bdf8',
+        x: width / 2 + Math.cos((i / nodes.length) * Math.PI * 2) * 140,
+        y: height / 2 + Math.sin((i / nodes.length) * Math.PI * 2) * 120,
+        vx: 0,
+        vy: 0
+      };
+    });
   }, [height, nodes, width]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     const ctx = canvas.getContext('2d');
@@ -107,6 +193,12 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
       const map = new Map<string, InternalNode>();
       nodesRef.current.forEach((n) => map.set(n.id, n));
       return map;
+    };
+
+    const isRelated = (id: string, focusId: string | null) => {
+      if (!focusId) return true;
+      if (id === focusId) return true;
+      return adjacency.get(focusId)?.has(id) ?? false;
     };
 
     const simulate = () => {
@@ -167,40 +259,178 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
       }
     };
 
-    const render = () => {
-      ctx.fillStyle = '#0f172a';
+    const drawBackground = () => {
+      const base = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.42,
+        20,
+        width * 0.5,
+        height * 0.5,
+        Math.max(width, height) * 0.72
+      );
+      base.addColorStop(0, '#1a2744');
+      base.addColorStop(0.55, '#0f172a');
+      base.addColorStop(1, '#020617');
+      ctx.fillStyle = base;
       ctx.fillRect(0, 0, width, height);
 
-      const map = nodeMap();
+      ctx.fillStyle = 'rgb(148 163 184 / 7%)';
+      const step = 28;
+      for (let x = step; x < width; x += step) {
+        for (let y = step; y < height; y += step) {
+          ctx.beginPath();
+          ctx.arc(x, y, 0.7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
 
-      ctx.lineWidth = 1.5;
-      ctx.strokeStyle = linkColor;
+      const vignette = ctx.createRadialGradient(
+        width / 2,
+        height / 2,
+        Math.min(width, height) * 0.25,
+        width / 2,
+        height / 2,
+        Math.max(width, height) * 0.7
+      );
+      vignette.addColorStop(0, 'rgb(0 0 0 / 0%)');
+      vignette.addColorStop(1, 'rgb(2 6 23 / 55%)');
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    const drawEdge = (a: InternalNode, b: InternalNode, active: boolean, dimmed: boolean) => {
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const ux = dx / dist;
+      const uy = dy / dist;
+      const pad = nodeRadius * 0.55;
+      const x1 = a.x + ux * pad;
+      const y1 = a.y + uy * pad;
+      const x2 = b.x - ux * pad;
+      const y2 = b.y - uy * pad;
+
+      const midX = (x1 + x2) / 2;
+      const midY = (y1 + y2) / 2;
+      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+
+      if (active) {
+        grad.addColorStop(0, withAlpha(a.color, 0.85));
+        grad.addColorStop(0.5, withAlpha(mixHex(a.color, b.color, 0.5), 0.55));
+        grad.addColorStop(1, withAlpha(b.color, 0.85));
+        ctx.lineWidth = 2.4;
+        ctx.shadowColor = withAlpha(mixHex(a.color, b.color, 0.5), 0.45);
+        ctx.shadowBlur = 10;
+      } else if (dimmed) {
+        grad.addColorStop(0, withAlpha(linkColor, 0.12));
+        grad.addColorStop(0.5, withAlpha(linkColor, 0.08));
+        grad.addColorStop(1, withAlpha(linkColor, 0.12));
+        ctx.lineWidth = 1;
+        ctx.shadowBlur = 0;
+      } else {
+        grad.addColorStop(0, withAlpha(linkColor, 0.15));
+        grad.addColorStop(0.5, linkColor);
+        grad.addColorStop(1, withAlpha(linkColor, 0.15));
+        ctx.lineWidth = 1.35;
+        ctx.shadowBlur = 0;
+      }
+
+      ctx.strokeStyle = grad;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.quadraticCurveTo(midX + uy * 4, midY - ux * 4, x2, y2);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    };
+
+    const drawNode = (node: InternalNode, focusId: string | null, dragging: boolean) => {
+      const related = isRelated(node.id, focusId);
+      const isFocus = focusId === node.id;
+      const isDrag = dragging && dragRef.current?.node === node;
+      const scale = isFocus || isDrag ? 1.12 : related || !focusId ? 1 : 0.94;
+      const r = nodeRadius * scale;
+      const alpha = !focusId || related ? 1 : 0.28;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, r + (isFocus || isDrag ? 10 : 6), 0, Math.PI * 2);
+      ctx.fillStyle = withAlpha(node.color, isFocus || isDrag ? 0.22 : 0.12);
+      ctx.fill();
+
+      ctx.shadowColor = withAlpha(node.color, isFocus || isDrag ? 0.75 : 0.45);
+      ctx.shadowBlur = isFocus || isDrag ? 22 : 14;
+      const body = ctx.createRadialGradient(node.x - r * 0.28, node.y - r * 0.32, r * 0.1, node.x, node.y, r);
+      body.addColorStop(0, mixHex(node.color, '#ffffff', 0.55));
+      body.addColorStop(0.55, node.color);
+      body.addColorStop(1, mixHex(node.color, '#0f172a', 0.35));
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = body;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.strokeStyle = isFocus || isDrag ? 'rgb(255 255 255 / 70%)' : 'rgb(255 255 255 / 28%)';
+      ctx.lineWidth = isFocus || isDrag ? 1.6 : 1.1;
+      ctx.stroke();
+
+      const fontSize = Math.max(10, Math.min(13, Math.round(nodeRadius * 0.58)));
+      ctx.font = `500 ${fontSize}px ${FONT}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const label = node.label;
+      const textW = ctx.measureText(label).width;
+      const padX = 8;
+      const padY = 4;
+      const boxW = textW + padX * 2;
+      const boxH = fontSize + padY * 2;
+      const boxX = node.x - boxW / 2;
+      const boxY = Math.min(height - boxH - 4, node.y + r + 8);
+
+      ctx.beginPath();
+      const rr = boxH / 2;
+      ctx.moveTo(boxX + rr, boxY);
+      ctx.arcTo(boxX + boxW, boxY, boxX + boxW, boxY + boxH, rr);
+      ctx.arcTo(boxX + boxW, boxY + boxH, boxX, boxY + boxH, rr);
+      ctx.arcTo(boxX, boxY + boxH, boxX, boxY, rr);
+      ctx.arcTo(boxX, boxY, boxX + boxW, boxY, rr);
+      ctx.closePath();
+      ctx.fillStyle = isFocus || isDrag ? 'rgb(15 23 42 / 78%)' : 'rgb(15 23 42 / 55%)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgb(255 255 255 / 10%)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillText(label, node.x, boxY + boxH / 2);
+      ctx.restore();
+    };
+
+    const render = () => {
+      drawBackground();
+      const map = nodeMap();
+      const focusId = dragRef.current?.node.id ?? hoverIdRef.current;
+      const dragging = Boolean(dragRef.current);
+
       for (const edge of edges) {
         const a = map.get(edge.source);
         const b = map.get(edge.target);
         if (!a || !b) continue;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
+        const active = Boolean(focusId && (edge.source === focusId || edge.target === focusId));
+        const dimmed = Boolean(focusId && !active);
+        drawEdge(a, b, active, dimmed);
       }
 
-      for (const node of nodesRef.current) {
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, nodeRadius, 0, Math.PI * 2);
-        ctx.fillStyle = node.color;
-        ctx.globalAlpha = 0.88;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = 'rgb(255 255 255 / 30%)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
+      const ordered = [...nodesRef.current].sort((a, b) => {
+        const aScore = a.id === focusId ? 2 : isRelated(a.id, focusId) ? 1 : 0;
+        const bScore = b.id === focusId ? 2 : isRelated(b.id, focusId) ? 1 : 0;
+        return aScore - bScore;
+      });
 
-        ctx.fillStyle = '#f8fafc';
-        ctx.font = '11px system-ui, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(node.label, node.x, Math.min(height - 8, node.y + nodeRadius + 14));
+      for (const node of ordered) {
+        drawNode(node, focusId, dragging);
       }
     };
 
@@ -216,55 +446,120 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
       cancelAnimationFrame(frameId);
       unbindVisibility();
     };
-  }, [edges, height, linkColor, nodeRadius, width]);
+  }, [adjacency, edges, height, linkColor, nodeRadius, width]);
 
   const findNode = (clientX: number, clientY: number, rect: DOMRect) => {
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-    return nodesRef.current.find((n) => (n.x - x) ** 2 + (n.y - y) ** 2 < nodeRadius ** 2) || null;
-  };
-
-  const handlePointerDown = (clientX: number, clientY: number, rect: DOMRect) => {
-    const node = findNode(clientX, clientY, rect);
-    if (node) {
-      dragRef.current = { node, offsetX: node.x - (clientX - rect.left), offsetY: node.y - (clientY - rect.top) };
+    const hitR = nodeRadius + HIT_PAD;
+    let best: InternalNode | null = null;
+    let bestDist = hitR * hitR;
+    for (const n of nodesRef.current) {
+      const d = (n.x - x) ** 2 + (n.y - y) ** 2;
+      if (d <= bestDist) {
+        bestDist = d;
+        best = n;
+      }
     }
+    return best;
   };
 
-  const handlePointerMove = (clientX: number, clientY: number, rect: DOMRect) => {
-    if (!dragRef.current) return;
-    const { node, offsetX, offsetY } = dragRef.current;
-    node.x = clientX - rect.left + offsetX;
-    node.y = clientY - rect.top + offsetY;
+  const updateHoverHint = (node: InternalNode | null) => {
+    hoverIdRef.current = node?.id ?? null;
+    setHintLabel(node ? node.label : '拖拽节点 · 悬停查看关联');
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const node = findNode(e.clientX, e.clientY, rect);
+    if (!node) return;
+
+    e.currentTarget.setPointerCapture(e.pointerId);
+    if (e.pointerType === 'touch') e.preventDefault();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    dragRef.current = {
+      node,
+      offsetX: node.x - x,
+      offsetY: node.y - y,
+      lastX: x,
+      lastY: y,
+      vx: 0,
+      vy: 0
+    };
     node.vx = 0;
     node.vy = 0;
+    updateHoverHint(node);
+    setCursor('grabbing');
   };
 
-  const handlePointerUp = () => {
-    dragRef.current = null;
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (dragRef.current) {
+      if (e.pointerType === 'touch') e.preventDefault();
+      const { node, offsetX, offsetY } = dragRef.current;
+      const nextX = Math.max(nodeRadius, Math.min(width - nodeRadius, x + offsetX));
+      const nextY = Math.max(nodeRadius, Math.min(height - nodeRadius, y + offsetY));
+      dragRef.current.vx = nextX - dragRef.current.lastX;
+      dragRef.current.vy = nextY - dragRef.current.lastY;
+      dragRef.current.lastX = nextX;
+      dragRef.current.lastY = nextY;
+      node.x = nextX;
+      node.y = nextY;
+      node.vx = 0;
+      node.vy = 0;
+      setCursor('grabbing');
+      return;
+    }
+
+    const hovered = findNode(e.clientX, e.clientY, rect);
+    updateHoverHint(hovered);
+    setCursor(hovered ? 'grab' : 'default');
   };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const drag = dragRef.current;
+    if (drag) {
+      drag.node.vx = drag.vx * 0.85;
+      drag.node.vy = drag.vy * 0.85;
+      dragRef.current = null;
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    const hovered = findNode(e.clientX, e.clientY, rect);
+    updateHoverHint(hovered);
+    setCursor(hovered ? 'grab' : 'default');
+  };
+
+  const handlePointerLeave = () => {
+    if (dragRef.current) return;
+    updateHoverHint(null);
+    setCursor('default');
+  };
+
+  const cursorClass =
+    cursor === 'grabbing' ? styles.cursorGrabbing : cursor === 'grab' ? styles.cursorGrab : styles.cursorDefault;
 
   return (
     <div className={styles.networkGraph} style={{ width, height }}>
       <canvas
         ref={canvasRef}
-        className={styles.canvas}
+        className={`${styles.canvas} ${cursorClass}`}
         style={{ width, height }}
-        onMouseDown={(e) => handlePointerDown(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect())}
-        onMouseMove={(e) => handlePointerMove(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect())}
-        onMouseUp={handlePointerUp}
-        onMouseLeave={handlePointerUp}
-        onTouchStart={(e) => {
-          const t = e.touches[0];
-          if (t) handlePointerDown(t.clientX, t.clientY, e.currentTarget.getBoundingClientRect());
-        }}
-        onTouchMove={(e) => {
-          const t = e.touches[0];
-          if (t) handlePointerMove(t.clientX, t.clientY, e.currentTarget.getBoundingClientRect());
-        }}
-        onTouchEnd={handlePointerUp}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onPointerLeave={handlePointerLeave}
       />
-      <div className={styles.hint}>拖拽节点调整布局</div>
+      <div className={styles.hint}>{hintLabel}</div>
     </div>
   );
 };

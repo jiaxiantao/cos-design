@@ -563,7 +563,7 @@ export const componentDemos: ComponentDemoItem[] = [
     name: 'NetworkGraph',
     path: '/networkGraph',
     title: '关系网络图',
-    description: '力导向节点关系网络，支持拖拽节点交互。',
+    description: '力导向关系网络：拖拽调整布局，悬停高亮邻接关联。',
     tags: ['Canvas', '数据'],
     category: 'data' as const,
     isNew: true,
