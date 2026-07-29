@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { COMPONENT_CATEGORIES, type ComponentCategory } from '../config/categories';
 import { componentDemos } from '../config/components';
 import { usePlaygroundSearch } from './search-context';
+import cosLogoUrl from '@/assets/icons/cos-logo.svg';
 import styles from './style/playground-layout.module.less';
 
 const GITHUB_URL = 'https://github.com/jiaxiantao/cos-design';
@@ -57,9 +58,7 @@ const PlaygroundLayout = () => {
     <div className={styles.shell}>
       <header className={styles.topbar}>
         <Link to="/" className={styles.brand}>
-          <span className={styles.logo} aria-hidden>
-            ✦
-          </span>
+          <img className={styles.logo} src={cosLogoUrl} alt="cos-design" />
           <span className={styles.brandText}>
             <strong>cos-design</strong>
             <small>Component Gallery</small>
