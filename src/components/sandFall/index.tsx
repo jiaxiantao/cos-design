@@ -11,6 +11,10 @@ export interface SandFallProps {
   colors?: string[];
   /** 每帧生成粒子数 */
   spawnRate?: number;
+  /** 操作提示 */
+  hint?: string;
+  /** 清空按钮文案 */
+  clearText?: string;
 }
 
 const DEFAULT_COLORS = ['#fbbf24', '#f59e0b', '#d97706', '#b45309', '#92400e'];
@@ -27,7 +31,9 @@ const SandFall: React.FC<SandFallProps> = ({
   height = 400,
   cellSize = 4,
   colors = DEFAULT_COLORS,
-  spawnRate = 3
+  spawnRate = 3,
+  hint = '按住鼠标绘制沙粒',
+  clearText = 'Clear'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cols = Math.max(1, Math.floor(width / cellSize));
@@ -177,9 +183,9 @@ const SandFall: React.FC<SandFallProps> = ({
         }}
       />
       <div className={styles.toolbar}>
-        <span className={styles.hint}>按住鼠标绘制沙粒</span>
+        <span className={styles.hint}>{hint}</span>
         <button type="button" className={styles.button} onClick={resetGrid}>
-          Clear
+          {clearText}
         </button>
       </div>
     </div>

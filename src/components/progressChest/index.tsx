@@ -9,9 +9,16 @@ export interface ProgressChestProps {
   onOpen?: () => void;
   /** 标签文字 */
   label?: string;
+  /** 宝箱开启后的标签文字 */
+  openedLabel?: string;
 }
 
-const ProgressChest: React.FC<ProgressChestProps> = ({ progress = 0, onOpen, label = '开启宝箱' }) => {
+const ProgressChest: React.FC<ProgressChestProps> = ({
+  progress = 0,
+  onOpen,
+  label = '开启宝箱',
+  openedLabel = '宝箱已开启！'
+}) => {
   const openedRef = useRef(false);
   const onOpenRef = useRef(onOpen);
   const pct = clamp(progress, 0, 100);
@@ -56,7 +63,7 @@ const ProgressChest: React.FC<ProgressChestProps> = ({ progress = 0, onOpen, lab
         </div>
       </div>
 
-      <p className={styles.label}>{isOpen ? '宝箱已开启！' : label}</p>
+      <p className={styles.label}>{isOpen ? openedLabel : label}</p>
     </div>
   );
 };

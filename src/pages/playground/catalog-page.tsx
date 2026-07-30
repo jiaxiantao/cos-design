@@ -1,27 +1,29 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { COMPONENT_CATEGORIES } from '../config/categories';
-import { componentDemos } from '../config/components';
+import { useLocalizedCategories, useLocalizedComponentDemos } from '../i18n/hooks';
 import styles from './style/catalog-page.module.less';
 
 const CatalogPage = () => {
+  const { t } = useTranslation();
+  const categories = useLocalizedCategories();
+  const componentDemos = useLocalizedComponentDemos();
+
   return (
     <div className={styles.catalog}>
       <div className={styles.hero}>
-        <h1 className={styles.title}>组件目录</h1>
-        <p className={styles.subtitle}>
-          从左侧分类选择组件，或在顶部搜索框快速定位。共 {componentDemos.length} 个视觉特效组件。
-        </p>
+        <h1 className={styles.title}>{t('catalog.title')}</h1>
+        <p className={styles.subtitle}>{t('catalog.subtitle', { value: componentDemos.length })}</p>
         <div className={styles.bannerRow}>
           <Link to="/" className={styles.homeBanner}>
-            <span className={styles.homeLabel}>项目介绍</span>
-            <span className={styles.homeText}>返回首页了解 cos-design 能做什么</span>
+            <span className={styles.homeLabel}>{t('catalog.homeLabel')}</span>
+            <span className={styles.homeText}>{t('catalog.homeText')}</span>
             <span className={styles.quickstartArrow} aria-hidden>
               →
             </span>
           </Link>
           <Link to="/quickstart" className={styles.quickstartBanner}>
-            <span className={styles.quickstartLabel}>新手上路</span>
-            <span className={styles.quickstartText}>查看快速开始 — 安装、用法与注意事项</span>
+            <span className={styles.quickstartLabel}>{t('catalog.quickstartLabel')}</span>
+            <span className={styles.quickstartText}>{t('catalog.quickstartText')}</span>
             <span className={styles.quickstartArrow} aria-hidden>
               →
             </span>
@@ -30,7 +32,7 @@ const CatalogPage = () => {
       </div>
 
       <div className={styles.grid}>
-        {COMPONENT_CATEGORIES.map((cat) => {
+        {categories.map((cat) => {
           const items = componentDemos.filter((item) => item.category === cat.id);
           return (
             <section key={cat.id} className={styles.section}>

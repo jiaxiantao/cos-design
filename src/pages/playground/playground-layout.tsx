@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { COMPONENT_CATEGORIES, type ComponentCategory } from '../config/categories';
-import { componentDemos } from '../config/components';
+import type { ComponentCategory } from '../config/categories';
+import { SUPPORTED_LOCALES, useLocale } from '../i18n';
+import { useLocalizedCategories, useLocalizedComponentDemos } from '../i18n/hooks';
 import { usePlaygroundSearch } from './search-context';
 import cosLogoUrl from '@/assets/icons/cos-logo.svg';
 import styles from './style/playground-layout.module.less';
@@ -21,22 +23,63 @@ const SearchIcon = () => (
   </svg>
 );
 
+const LanguageIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3.5 9h17M3.5 15h17M12 3c2.1 2.3 3.2 5.3 3.2 9S14.1 18.7 12 21M12 3C9.9 5.3 8.8 8.3 8.8 12S9.9 18.7 12 21" />
+  </svg>
+);
+
+const ChevronIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+    <path d="m4 6 4 4 4-4" />
+  </svg>
+);
+
 const PlaygroundLayout = () => {
   const { pathname } = useLocation();
   const { query, setQuery } = usePlaygroundSearch();
+  const { t } = useTranslation();
+  const { locale, setLocale } = useLocale();
+  const categories = useLocalizedCategories();
+  const componentDemos = useLocalizedComponentDemos();
   const [expandedCategory, setExpandedCategory] = useState<ComponentCategory | null>(null);
+  const [localeMenuOpen, setLocaleMenuOpen] = useState(false);
+  const localeMenuRef = useRef<HTMLDivElement>(null);
 
-  const currentDemo = useMemo(() => componentDemos.find((item) => item.path === pathname), [pathname]);
+  const currentDemo = useMemo(() => componentDemos.find((item) => item.path === pathname), [componentDemos, pathname]);
 
   const activeCategory = currentDemo?.category ?? expandedCategory;
 
+  useEffect(() => {
+    document.title = t('documentTitle');
+  }, [t]);
+
+  useEffect(() => {
+    if (!localeMenuOpen) return;
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!localeMenuRef.current?.contains(event.target as Node)) setLocaleMenuOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setLocaleMenuOpen(false);
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [localeMenuOpen]);
+
   const categoryCounts = useMemo(() => {
-    const counts = Object.fromEntries(COMPONENT_CATEGORIES.map((c) => [c.id, 0])) as Record<ComponentCategory, number>;
+    const counts = Object.fromEntries(categories.map((c) => [c.id, 0])) as Record<ComponentCategory, number>;
     componentDemos.forEach((item) => {
       counts[item.category] += 1;
     });
     return counts;
-  }, []);
+  }, [categories, componentDemos]);
 
   const filteredDemos = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -44,11 +87,11 @@ const PlaygroundLayout = () => {
     return componentDemos.filter(
       (item) =>
         item.name.toLowerCase().includes(q) ||
-        item.title.includes(q) ||
-        item.description.includes(q) ||
+        item.title.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
         item.tags.some((tag) => tag.toLowerCase().includes(q))
     );
-  }, [query]);
+  }, [componentDemos, query]);
 
   const handleCategoryClick = (id: ComponentCategory) => {
     setExpandedCategory((prev) => (prev === id ? null : id));
@@ -61,7 +104,7 @@ const PlaygroundLayout = () => {
           <img className={styles.logo} src={cosLogoUrl} alt="cos-design" />
           <span className={styles.brandText}>
             <strong>cos-design</strong>
-            <small>视觉特效组件库</small>
+            <small>{t('layout.brandTagline')}</small>
           </span>
         </Link>
 
@@ -72,21 +115,62 @@ const PlaygroundLayout = () => {
           <input
             type="search"
             className={styles.search}
-            placeholder="搜索组件…"
+            placeholder={t('layout.searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
 
         <div className={styles.stats}>
-          <span className={styles.statBadge}>{componentDemos.length} 组件</span>
-          <span className={styles.statBadge}>{COMPONENT_CATEGORIES.length} 分类</span>
+          <span className={styles.statBadge}>{t('layout.componentCount', { value: componentDemos.length })}</span>
+          <span className={styles.statBadge}>{t('layout.categoryCount', { value: categories.length })}</span>
+          <div ref={localeMenuRef} className={styles.localeSwitch}>
+            <button
+              type="button"
+              className={`${styles.localeTrigger} ${localeMenuOpen ? styles.localeTriggerOpen : ''}`}
+              onClick={() => setLocaleMenuOpen((open) => !open)}
+              aria-label={t('language.label')}
+              aria-haspopup="listbox"
+              aria-expanded={localeMenuOpen}
+            >
+              <span className={styles.localeIcon}>
+                <LanguageIcon />
+              </span>
+              <span className={styles.localeLabel}>{t(`language.${locale}`)}</span>
+              <span className={styles.localeChevron}>
+                <ChevronIcon />
+              </span>
+            </button>
+            {localeMenuOpen && (
+              <div className={styles.localeMenu} role="listbox" aria-label={t('language.label')}>
+                {SUPPORTED_LOCALES.map((value) => {
+                  const selected = value === locale;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      role="option"
+                      aria-selected={selected}
+                      className={`${styles.localeOption} ${selected ? styles.localeOptionSelected : ''}`}
+                      onClick={() => {
+                        setLocale(value);
+                        setLocaleMenuOpen(false);
+                      }}
+                    >
+                      <span>{t(`language.${value}`)}</span>
+                      {selected && <span className={styles.localeCheck}>✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
           <a
             className={styles.githubLink}
             href={GITHUB_URL}
             target="_blank"
             rel="noreferrer"
-            aria-label="在 GitHub 查看源码"
+            aria-label={t('layout.githubAriaLabel')}
             title="GitHub"
           >
             <GitHubIcon />
@@ -96,26 +180,26 @@ const PlaygroundLayout = () => {
 
       <div className={styles.body}>
         <aside className={styles.sidebar}>
-          <p className={styles.sidebarTitle}>分类导航</p>
+          <p className={styles.sidebarTitle}>{t('layout.sidebarTitle')}</p>
           <nav className={styles.categoryNav}>
             <div className={styles.navLinks}>
               <Link to="/" className={`${styles.navLink} ${pathname === '/' ? styles.navLinkActive : ''}`}>
-                首页介绍
+                {t('layout.navHome')}
               </Link>
               <Link
                 to="/catalog"
                 className={`${styles.navLink} ${pathname === '/catalog' ? styles.navLinkActive : ''}`}
               >
-                组件目录
+                {t('layout.navCatalog')}
               </Link>
               <Link
                 to="/quickstart"
                 className={`${styles.navLink} ${pathname === '/quickstart' ? styles.navLinkActive : ''}`}
               >
-                快速开始
+                {t('layout.navQuickstart')}
               </Link>
             </div>
-            {COMPONENT_CATEGORIES.map((cat) => {
+            {categories.map((cat) => {
               const items = filteredDemos.filter((item) => item.category === cat.id);
               const isActiveCat = activeCategory === cat.id;
               const isExpanded = isActiveCat || expandedCategory === cat.id || query.length > 0;

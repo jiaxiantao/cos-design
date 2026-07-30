@@ -6,6 +6,8 @@ export interface ScratchCardProps {
   coverColor?: string;
   /** 奖品文字 */
   prize?: string;
+  /** 涂层上的提示文案 */
+  coverText?: string;
   /** 刮开完成回调 */
   onReveal?: () => void;
   width?: number;
@@ -15,6 +17,7 @@ export interface ScratchCardProps {
 const ScratchCard: React.FC<ScratchCardProps> = ({
   coverColor = '#94a3b8',
   prize = '🎉 恭喜中奖！',
+  coverText = '刮开涂层',
   onReveal,
   width = 300,
   height = 180
@@ -38,9 +41,9 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
       ctx.fillStyle = 'rgb(255 255 255 / 30%)';
       ctx.font = 'bold 16px system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('刮开涂层', width / 2, height / 2);
+      ctx.fillText(coverText, width / 2, height / 2);
     },
-    [coverColor, height, width]
+    [coverColor, coverText, height, width]
   );
 
   const checkReveal = useCallback((canvas: HTMLCanvasElement) => {

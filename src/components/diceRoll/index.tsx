@@ -6,6 +6,12 @@ export interface DiceRollProps {
   onRoll?: (value: number) => void;
   /** 骰子面数，默认 6 */
   sides?: 6;
+  /** 掷骰按钮文案 */
+  rollText?: string;
+  /** 掷骰进行中的文案 */
+  rollingText?: string;
+  /** 点数结果前缀 */
+  resultPrefix?: string;
 }
 
 const FACE_ROTATIONS: Record<number, { x: number; y: number }> = {
@@ -17,7 +23,13 @@ const FACE_ROTATIONS: Record<number, { x: number; y: number }> = {
   6: { x: 90, y: 0 }
 };
 
-const DiceRoll: React.FC<DiceRollProps> = ({ onRoll, sides = 6 }) => {
+const DiceRoll: React.FC<DiceRollProps> = ({
+  onRoll,
+  sides = 6,
+  rollText = '掷骰子',
+  rollingText = '掷骰中...',
+  resultPrefix = '点数:'
+}) => {
   const [rolling, setRolling] = useState(false);
   const [value, setValue] = useState(1);
   const [rotation, setRotation] = useState({ x: 0, y: 0, z: 0 });
@@ -111,9 +123,13 @@ const DiceRoll: React.FC<DiceRollProps> = ({ onRoll, sides = 6 }) => {
         </div>
       </div>
       <button type="button" className={styles.rollBtn} onClick={handleRoll} disabled={rolling}>
-        {rolling ? '掷骰中...' : '掷骰子'}
+        {rolling ? rollingText : rollText}
       </button>
-      {!rolling && <p className={styles.result}>点数: {value}</p>}
+      {!rolling && (
+        <p className={styles.result}>
+          {resultPrefix} {value}
+        </p>
+      )}
     </div>
   );
 };

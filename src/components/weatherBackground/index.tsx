@@ -27,7 +27,9 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
   fogLevel = DEFAULT_FOG_LEVEL,
   smogLevel = DEFAULT_SMOG_LEVEL,
   onLiveWeather,
-  loading = false
+  loading = false,
+  ariaLabel,
+  loadingText = '天气加载中…'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hasCoords = latitude != null && longitude != null;
@@ -121,12 +123,12 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
         className={styles.canvas}
         style={{ width, height }}
         role="img"
-        aria-label={`天气背景：${activeWeather}${activeNight ? '（夜间）' : ''}，${windMotion.level}级风`}
+        aria-label={ariaLabel ?? `天气背景：${activeWeather}${activeNight ? '（夜间）' : ''}，${windMotion.level}级风`}
       />
       {showLoading && (
         <div className={styles.loadingOverlay} role="status" aria-live="polite">
           <div className={styles.loadingSpinner} aria-hidden />
-          <span>天气加载中…</span>
+          <span>{loadingText}</span>
         </div>
       )}
     </div>

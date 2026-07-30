@@ -9,6 +9,8 @@ export interface ConfettiProps {
   auto?: boolean;
   /** 每次喷射粒子数，默认 120 */
   particleCount?: number;
+  /** 画布操作提示 */
+  hint?: string;
 }
 
 export interface ConfettiHandle {
@@ -58,7 +60,7 @@ const createParticles = (width: number, height: number, count: number): Particle
 };
 
 const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
-  ({ width = 800, height = 400, auto = true, particleCount = 120 }, ref) => {
+  ({ width = 800, height = 400, auto = true, particleCount = 120, hint = '点击画布再次喷射' }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const particlesRef = useRef<Particle[]>([]);
     const frameRef = useRef(0);
@@ -129,7 +131,7 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
     return (
       <div className={styles.confetti} style={{ width, height }}>
         <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onClick={burst} />
-        <p className={styles.hint}>点击画布再次喷射</p>
+        <p className={styles.hint}>{hint}</p>
       </div>
     );
   }

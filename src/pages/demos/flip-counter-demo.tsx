@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlipCounter } from '@/components';
 import styles from './style/index.module.less';
 
 const FlipCounterDemo = () => {
+  const { t } = useTranslation();
   const [value, setValue] = useState(1024);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const FlipCounterDemo = () => {
   return (
     <div className={styles.wrap}>
       <FlipCounter value={value} digits={5} color="#38bdf8" />
-      <p className={styles.hint}>数值每 2 秒自动递增</p>
+      <p className={styles.hint}>{t('demos.flipCounterHint')}</p>
     </div>
   );
 };

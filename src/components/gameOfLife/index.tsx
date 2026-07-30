@@ -15,6 +15,14 @@ export interface GameOfLifeProps {
   aliveColor?: string;
   /** 网格线颜色 */
   gridColor?: string;
+  /** 控制栏文案 */
+  labels?: Partial<{
+    generation: string;
+    alive: string;
+    pause: string;
+    play: string;
+    randomize: string;
+  }>;
 }
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -58,7 +66,8 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({
   speed = 120,
   density = 0.28,
   aliveColor = '#a3e635',
-  gridColor = 'rgb(148 163 184 / 14%)'
+  gridColor = 'rgb(148 163 184 / 14%)',
+  labels
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rows = Math.max(6, Math.floor(height / cellSize));
@@ -191,15 +200,19 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({
       />
       <div className={styles.toolbar}>
         <div className={styles.meta}>
-          <span>Generation {generation}</span>
-          <span>{liveCells} alive</span>
+          <span>
+            {labels?.generation ?? 'Generation'} {generation}
+          </span>
+          <span>
+            {liveCells} {labels?.alive ?? 'alive'}
+          </span>
         </div>
         <div className={styles.actions}>
           <button type="button" className={styles.button} onClick={() => setRunning((value) => !value)}>
-            {running ? 'Pause' : 'Play'}
+            {running ? (labels?.pause ?? 'Pause') : (labels?.play ?? 'Play')}
           </button>
           <button type="button" className={styles.button} onClick={reset}>
-            Randomize
+            {labels?.randomize ?? 'Randomize'}
           </button>
         </div>
       </div>

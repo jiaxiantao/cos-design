@@ -1038,6 +1038,7 @@ import { Confetti } from 'cos-design';
 - `height`: number (optional)
 - `auto`: boolean (optional) — 挂载后自动播放，默认 true
 - `particleCount`: number (optional) — 每次喷射粒子数，默认 120
+- `hint`: string (optional) — 画布操作提示
 
 ### Charge
 
@@ -1275,6 +1276,7 @@ import { Countdown } from 'cos-design';
 - `targetDate`: Date | string | number (required) — 目标时间（Date、时间戳或 ISO 字符串）
 - `onEnd`: () => void (optional) — 倒计时结束回调
 - `showLabels`: boolean (optional, default `true`) — 是否显示单位标签，默认 true
+- `color`: string (optional) — 单位标签，可用于国际化
 
 ### CountUp
 
@@ -1742,6 +1744,9 @@ import { GameOfLife } from 'cos-design';
 - `cellSize`: number (optional, default `14`) — 单元格大小
 - `speed`: number (optional, default `120`) — 演化速度（毫秒/代）
 - `density`: number (optional, default `0.28`) — 初始存活密度 0~1
+- `aliveColor`: string (optional) — 控制栏文案
+- `alive`: string (required)
+- `pause`: string (required)
 
 ### Fireworks
 
@@ -1766,6 +1771,7 @@ import { Fireworks } from 'cos-design';
 - `width`: number (optional)
 - `height`: number (optional)
 - `auto`: boolean (optional) — 是否自动燃放，默认 true
+- `hint`: string (optional) — 画布操作提示
 
 ### ReturnCity
 

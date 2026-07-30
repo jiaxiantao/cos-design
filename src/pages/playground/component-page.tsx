@@ -1,16 +1,11 @@
 import type { CSSProperties } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { getCategoryMeta } from '../config/categories';
-import { componentDemos } from '../config/components';
 import { demoComponents } from '../config/demo-components';
 import BackgroundDemoContent from './background-demo-content';
-import {
-  BACKGROUND_DEMO_HEADLINES,
-  BACKGROUND_DEMO_SUBTITLES,
-  DEFAULT_BACKGROUND_HEADLINE,
-  DEFAULT_BACKGROUND_SUBTITLE
-} from './background-demo-headlines';
+import FillStage from './fill-stage';
+import { useBackgroundDemoCopy, useLocalizedCategories, useLocalizedComponentDemos } from '../i18n/hooks';
 import LiveDemoPlayground from './live-demo';
 import PropsTable from './props-table';
 import styles from './style/component-page.module.less';
@@ -24,6 +19,9 @@ const toScopedPackageName = (path: string) => {
 
 const ComponentPage = () => {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
+  const categories = useLocalizedCategories();
+  const componentDemos = useLocalizedComponentDemos();
   const [copied, setCopied] = useState(false);
   const [installCopied, setInstallCopied] = useState(false);
   const [editSession, setEditSession] = useState<{ path: string; code: string } | null>(null);
@@ -37,14 +35,15 @@ const ComponentPage = () => {
   const scopedPackage = current ? toScopedPackageName(current.path) : '';
   const installCmd = scopedPackage ? `pnpm add ${scopedPackage}` : '';
   const isBackground = current?.category === 'background';
-  /** Weather 在自家 canvas 舞台内挂载 Demo Content，避免遮挡控制面板 */
-  const showPageDemoContent = isBackground && current?.name !== 'WeatherBackground';
-  const demoHeadline = current
-    ? (BACKGROUND_DEMO_HEADLINES[current.name] ?? DEFAULT_BACKGROUND_HEADLINE)
-    : DEFAULT_BACKGROUND_HEADLINE;
-  const demoSubtitle = current
-    ? (BACKGROUND_DEMO_SUBTITLES[current.name] ?? DEFAULT_BACKGROUND_SUBTITLE)
-    : DEFAULT_BACKGROUND_SUBTITLE;
+  /**
+   * 静态预览：Weather 在自家 canvas 舞台内挂载 Demo Content，避免遮挡控制面板。
+   * 编辑代码：示例只渲染 WeatherBackground 本体，需由页面叠加 Demo Content。
+   * 所有背景组件（含 Weather）静态预览都去 padding，让画布铺满预览框。
+   */
+  const showStaticDemoContent = isBackground && current?.name !== 'WeatherBackground';
+  const showLiveDemoContent = isBackground;
+  const fillStaticPreview = isBackground;
+  const demoCopy = useBackgroundDemoCopy(current?.name ?? '');
 
   const showCode = editSession?.path === pathname;
   const editorCode = showCode ? editSession.code : (current?.codeExample ?? '');
@@ -54,7 +53,7 @@ const ComponentPage = () => {
     const sameCategory = componentDemos.filter((item) => item.category === current.category);
     const idx = sameCategory.findIndex((item) => item.path === pathname);
     return sameCategory[idx + 1] ?? null;
-  }, [current, pathname]);
+  }, [componentDemos, current, pathname]);
 
   useEffect(
     () => () => {
@@ -76,7 +75,7 @@ const ComponentPage = () => {
     return <Navigate to="/catalog" replace />;
   }
 
-  const categoryMeta = getCategoryMeta(current.category);
+  const categoryMeta = categories.find((category) => category.id === current.category)!;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(editorCode);
@@ -111,13 +110,13 @@ const ComponentPage = () => {
         <header className={styles.header}>
           <div className={styles.headerTop}>
             <Link to="/catalog" className={styles.back}>
-              ← 返回目录
+              {t('component.backToCatalog')}
             </Link>
             <span className={styles.categoryTag} style={{ '--tag-color': categoryMeta.accent } as CSSProperties}>
               {categoryMeta.label}
             </span>
             <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>
-              {showCode ? '关闭编辑' : '编辑代码'}
+              {showCode ? t('component.closeEditor') : t('component.editCode')}
             </button>
           </div>
           <h1 className={styles.name}>{current.name}</h1>
@@ -125,7 +124,7 @@ const ComponentPage = () => {
           <div className={styles.installRow}>
             <code className={styles.installCmd}>{installCmd}</code>
             <button type="button" className={styles.installCopyBtn} onClick={handleCopyInstall}>
-              {installCopied ? '已复制' : '复制安装'}
+              {installCopied ? t('component.copied') : t('component.copyInstall')}
             </button>
           </div>
         </header>
@@ -139,13 +138,21 @@ const ComponentPage = () => {
             onReset={handleReset}
             editorRef={editorRef}
             demoContent={
-              showPageDemoContent ? <BackgroundDemoContent headline={demoHeadline} subtitle={demoSubtitle} /> : null
+              showLiveDemoContent ? (
+                <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
+              ) : null
             }
           />
         ) : (
-          <div className={`${styles.preview} ${showPageDemoContent ? styles.previewBackground : ''}`}>
-            {demoComponents[current.name] ?? <p>演示暂未配置</p>}
-            {showPageDemoContent ? <BackgroundDemoContent headline={demoHeadline} subtitle={demoSubtitle} /> : null}
+          <div className={`${styles.preview} ${fillStaticPreview ? styles.previewBackground : ''}`}>
+            {showStaticDemoContent ? (
+              <FillStage>{demoComponents[current.name]}</FillStage>
+            ) : (
+              (demoComponents[current.name] ?? <p>{t('component.demoNotConfigured')}</p>)
+            )}
+            {showStaticDemoContent ? (
+              <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
+            ) : null}
           </div>
         )}
 

@@ -15,6 +15,8 @@ export interface SpringMassProps {
   damping?: number;
   /** 主色 */
   color?: string;
+  /** 操作提示 */
+  hint?: string;
 }
 
 interface MassNode {
@@ -84,7 +86,8 @@ const SpringMass: React.FC<SpringMassProps> = ({
   rows = 5,
   stiffness = 0.22,
   damping = 0.9,
-  color = '#a78bfa'
+  color = '#a78bfa',
+  hint = '拖拽网格质点，观察弹簧回弹'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const systemRef = useRef(createSystem(width, height, cols, rows));
@@ -292,7 +295,7 @@ const SpringMass: React.FC<SpringMassProps> = ({
         }}
         onTouchEnd={handleUp}
       />
-      <div className={styles.hint}>拖拽网格质点，观察弹簧回弹</div>
+      <div className={styles.hint}>{hint}</div>
     </div>
   );
 };

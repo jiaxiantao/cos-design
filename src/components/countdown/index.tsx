@@ -10,6 +10,12 @@ export interface CountdownProps {
   showLabels?: boolean;
   /** 主色 */
   color?: string;
+  /** 单位标签，可用于国际化 */
+  labels?: Partial<Record<keyof Omit<TimeLeft, 'total'>, string>>;
+  /** 目标时间无效时的提示 */
+  invalidText?: string;
+  /** 倒计时结束提示 */
+  endedText?: string;
 }
 
 interface TimeLeft {
@@ -38,14 +44,29 @@ const calcTimeLeft = (targetMs: number): TimeLeft => {
   };
 };
 
-const UNITS: { key: keyof Omit<TimeLeft, 'total'>; label: string }[] = [
-  { key: 'days', label: '天' },
-  { key: 'hours', label: '时' },
-  { key: 'minutes', label: '分' },
-  { key: 'seconds', label: '秒' }
+const DEFAULT_LABELS: Record<keyof Omit<TimeLeft, 'total'>, string> = {
+  days: '天',
+  hours: '时',
+  minutes: '分',
+  seconds: '秒'
+};
+
+const UNITS: { key: keyof Omit<TimeLeft, 'total'> }[] = [
+  { key: 'days' },
+  { key: 'hours' },
+  { key: 'minutes' },
+  { key: 'seconds' }
 ];
 
-const Countdown: React.FC<CountdownProps> = ({ targetDate, onEnd, showLabels = true, color = '#f472b6' }) => {
+const Countdown: React.FC<CountdownProps> = ({
+  targetDate,
+  onEnd,
+  showLabels = true,
+  color = '#f472b6',
+  labels,
+  invalidText = '无效的目标时间',
+  endedText = '时间到！'
+}) => {
   const targetMs = useMemo(() => parseTarget(targetDate), [targetDate]);
   const isValid = !Number.isNaN(targetMs);
   const [, setTick] = useState(0);
@@ -82,20 +103,20 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate, onEnd, showLabels = t
   if (!isValid) {
     return (
       <div className={styles.countdown}>
-        <p className={styles.invalid}>无效的目标时间</p>
+        <p className={styles.invalid}>{invalidText}</p>
       </div>
     );
   }
 
   return (
     <div className={styles.countdown} style={{ '--countdown-color': color } as React.CSSProperties}>
-      {UNITS.map(({ key, label }) => (
+      {UNITS.map(({ key }) => (
         <div key={key} className={styles.unit}>
           <div className={styles.value}>{String(timeLeft[key]).padStart(2, '0')}</div>
-          {showLabels && <span className={styles.label}>{label}</span>}
+          {showLabels && <span className={styles.label}>{labels?.[key] ?? DEFAULT_LABELS[key]}</span>}
         </div>
       ))}
-      {timeLeft.total <= 0 && <p className={styles.ended}>时间到！</p>}
+      {timeLeft.total <= 0 && <p className={styles.ended}>{endedText}</p>}
     </div>
   );
 };

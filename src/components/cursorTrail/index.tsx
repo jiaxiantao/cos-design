@@ -9,6 +9,8 @@ export interface CursorTrailProps {
   length?: number;
   width?: number;
   height?: number;
+  /** 操作提示 */
+  hint?: string;
 }
 
 interface TrailPoint {
@@ -17,7 +19,13 @@ interface TrailPoint {
   life: number;
 }
 
-const CursorTrail: React.FC<CursorTrailProps> = ({ color = '#38bdf8', length = 20, width = 800, height = 400 }) => {
+const CursorTrail: React.FC<CursorTrailProps> = ({
+  color = '#38bdf8',
+  length = 20,
+  width = 800,
+  height = 400,
+  hint = '移动鼠标查看粒子轨迹'
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const trailRef = useRef<TrailPoint[]>([]);
   const mouseRef = useRef({ x: width / 2, y: height / 2 });
@@ -83,7 +91,7 @@ const CursorTrail: React.FC<CursorTrailProps> = ({ color = '#38bdf8', length = 2
   return (
     <div className={styles.cursorTrail} style={{ width, height }}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onMouseMove={handleMove} />
-      <p className={styles.hint}>移动鼠标查看粒子轨迹</p>
+      <p className={styles.hint}>{hint}</p>
     </div>
   );
 };

@@ -13,6 +13,8 @@ export interface ParticleNetworkProps {
   repelRadius?: number;
   /** 粒子颜色 */
   color?: string;
+  /** 操作提示 */
+  hint?: string;
 }
 
 interface Particle {
@@ -29,7 +31,8 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
   particleCount = 60,
   linkDistance = 120,
   repelRadius = 150,
-  color = '#38bdf8'
+  color = '#38bdf8',
+  hint = '移动鼠标或手指与粒子互动'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
@@ -160,7 +163,7 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={resetPointer}
       />
-      <p className={styles.hint}>移动鼠标或手指与粒子互动</p>
+      <p className={styles.hint}>{hint}</p>
     </div>
   );
 };

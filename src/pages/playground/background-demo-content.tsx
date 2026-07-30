@@ -1,6 +1,6 @@
 import cosLogo from '@/assets/icons/cos-logo-champagne.svg';
 import { useState } from 'react';
-import { DEFAULT_BACKGROUND_HEADLINE } from './background-demo-headlines';
+import { useTranslation } from 'react-i18next';
 import styles from './style/background-demo-content.module.less';
 
 export interface BackgroundDemoContentProps {
@@ -10,8 +10,10 @@ export interface BackgroundDemoContentProps {
   subtitle?: string;
 }
 
-const BackgroundDemoContent = ({ headline = DEFAULT_BACKGROUND_HEADLINE }: BackgroundDemoContentProps) => {
+const BackgroundDemoContent = ({ headline }: BackgroundDemoContentProps) => {
+  const { t } = useTranslation();
   const [showContent, setShowContent] = useState(true);
+  const resolvedHeadline = headline ?? t('backgroundDemo.defaultHeadline');
 
   return (
     <div className={styles.root}>
@@ -21,11 +23,11 @@ const BackgroundDemoContent = ({ headline = DEFAULT_BACKGROUND_HEADLINE }: Backg
           className={styles.switchTrack}
           role="switch"
           aria-checked={showContent}
-          aria-label="示例文案"
+          aria-label={t('backgroundDemo.switchLabel')}
           data-checked={showContent}
           onClick={() => setShowContent((v) => !v)}
         >
-          <span className={styles.switchLabel}>示例文案</span>
+          <span className={styles.switchLabel}>{t('backgroundDemo.switchLabel')}</span>
           <span className={styles.switchToggle}>
             <span className={styles.switchKnob} />
           </span>
@@ -41,12 +43,12 @@ const BackgroundDemoContent = ({ headline = DEFAULT_BACKGROUND_HEADLINE }: Backg
                 <span className={styles.brandName}>COS Design</span>
               </div>
               <div className={styles.navLinks}>
-                {['组件', '文档'].map((item) => (
-                  <span key={item} className={styles.navLink}>
-                    {item}
+                {['navComponents', 'navDocs'].map((key) => (
+                  <span key={key} className={styles.navLink}>
+                    {t(`backgroundDemo.${key}`)}
                   </span>
                 ))}
-                <span className={styles.signUp}>开始使用</span>
+                <span className={styles.signUp}>{t('backgroundDemo.signUp')}</span>
               </div>
               <span className={styles.menuIcon} aria-hidden>
                 ☰
@@ -59,12 +61,12 @@ const BackgroundDemoContent = ({ headline = DEFAULT_BACKGROUND_HEADLINE }: Backg
               <span className={styles.tagAccent} aria-hidden />
               <span className={styles.tagLabel}>NEW</span>
               <span className={styles.tagDivider} aria-hidden />
-              <span className={styles.tagText}>背景动效已上线</span>
+              <span className={styles.tagText}>{t('backgroundDemo.tagText')}</span>
             </div>
-            <h2 className={styles.headline}>{headline}</h2>
+            <h2 className={styles.headline}>{resolvedHeadline}</h2>
             <div className={styles.actions}>
-              <span className={styles.primaryBtn}>立即体验</span>
-              <span className={styles.secondaryBtn}>了解更多</span>
+              <span className={styles.primaryBtn}>{t('backgroundDemo.primaryCta')}</span>
+              <span className={styles.secondaryBtn}>{t('backgroundDemo.secondaryCta')}</span>
             </div>
           </div>
         </>

@@ -61,6 +61,10 @@ export interface WeatherBackgroundProps {
   onLiveWeather?: (weather: WeatherType) => void;
   /** 外部受控 loading：在当前画面上叠加加载遮罩（live 模式定位/请求期间会自动显示，无需传入） */
   loading?: boolean;
+  /** 画布无障碍标签；不传时使用默认中文描述 */
+  ariaLabel?: string;
+  /** 加载状态文案 */
+  loadingText?: string;
 }
 
 export interface WeatherConfig {

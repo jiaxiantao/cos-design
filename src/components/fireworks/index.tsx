@@ -7,6 +7,8 @@ export interface FireworksProps {
   height?: number;
   /** 是否自动燃放，默认 true */
   auto?: boolean;
+  /** 画布操作提示 */
+  hint?: string;
 }
 
 export interface FireworksHandle {
@@ -58,7 +60,8 @@ const createExplosion = (x: number, y: number, color: string): Particle[] => {
   });
 };
 
-const Fireworks = forwardRef<FireworksHandle, FireworksProps>(({ width = 800, height = 500, auto = true }, ref) => {
+const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
+  const { width = 800, height = 500, auto = true, hint = '点击画布燃放烟花' } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rocketsRef = useRef<Rocket[]>([]);
   const frameRef = useRef(0);
@@ -168,7 +171,7 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>(({ width = 800, he
   return (
     <div className={styles.fireworks} style={{ width, height }}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onClick={handleClick} />
-      <p className={styles.hint}>点击画布燃放烟花</p>
+      <p className={styles.hint}>{hint}</p>
     </div>
   );
 });

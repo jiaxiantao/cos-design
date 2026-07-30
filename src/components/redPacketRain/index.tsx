@@ -7,6 +7,12 @@ export interface RedPacketRainProps {
   duration?: number;
   /** 抢到红包回调 */
   onGrab?: (amount: number) => void;
+  /** 已抢金额标签 */
+  grabbedLabel?: string;
+  /** 红包雨结束提示 */
+  endedText?: string;
+  /** 操作提示 */
+  hint?: string;
 }
 
 interface Packet {
@@ -19,7 +25,13 @@ interface Packet {
   grabbed: boolean;
 }
 
-const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab }) => {
+const RedPacketRain: React.FC<RedPacketRainProps> = ({
+  duration = 10000,
+  onGrab,
+  grabbedLabel = '已抢:',
+  endedText = '红包雨结束',
+  hint = '点击红包抢夺'
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const packetsRef = useRef<Packet[]>([]);
   const frameRef = useRef(0);
@@ -147,10 +159,12 @@ const RedPacketRain: React.FC<RedPacketRainProps> = ({ duration = 10000, onGrab 
     <div className={styles.redPacketRain}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onClick={handleClick} />
       <div className={styles.hud}>
-        <span>已抢: ¥{grabbed}</span>
-        {!active && <span className={styles.end}>红包雨结束</span>}
+        <span>
+          {grabbedLabel} ¥{grabbed}
+        </span>
+        {!active && <span className={styles.end}>{endedText}</span>}
       </div>
-      <p className={styles.hint}>点击红包抢夺</p>
+      <p className={styles.hint}>{hint}</p>
     </div>
   );
 };

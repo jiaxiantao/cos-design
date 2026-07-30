@@ -211,6 +211,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '燃烧完成回调'
+    },
+    {
+      name: 'completedText',
+      type: 'string',
+      required: false,
+      default: "'Gone.'",
+      description: '燃烧完成提示'
     }
   ],
   CanvasClock: [
@@ -368,6 +375,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '每次喷射粒子数，默认 120'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '画布操作提示'
     }
   ],
   CountUp: [
@@ -449,6 +463,27 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#f472b6'",
       description: '主色'
+    },
+    {
+      name: 'labels',
+      type: "Partial<Record<keyof Omit<TimeLeft, 'total'>, string>>",
+      required: false,
+      default: '',
+      description: '单位标签，可用于国际化'
+    },
+    {
+      name: 'invalidText',
+      type: 'string',
+      required: false,
+      default: "'无效的目标时间'",
+      description: '目标时间无效时的提示'
+    },
+    {
+      name: 'endedText',
+      type: 'string',
+      required: false,
+      default: "'时间到！'",
+      description: '倒计时结束提示'
     }
   ],
   CursorTrail: [
@@ -479,6 +514,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '400',
       description: ''
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'移动鼠标查看粒子轨迹'",
+      description: '操作提示'
     }
   ],
   CurvedLoop: [
@@ -576,6 +618,27 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '6',
       description: '骰子面数，默认 6'
+    },
+    {
+      name: 'rollText',
+      type: 'string',
+      required: false,
+      default: "'掷骰子'",
+      description: '掷骰按钮文案'
+    },
+    {
+      name: 'rollingText',
+      type: 'string',
+      required: false,
+      default: "'掷骰中...'",
+      description: '掷骰进行中的文案'
+    },
+    {
+      name: 'resultPrefix',
+      type: 'string',
+      required: false,
+      default: "'点数:'",
+      description: '点数结果前缀'
     }
   ],
   DnaHelix: [
@@ -689,6 +752,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '是否自动燃放，默认 true'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '画布操作提示'
     }
   ],
   FlipCounter: [
@@ -828,6 +898,41 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'rgb(148 163 184 / 14%)'",
       description: '网格线颜色'
+    },
+    {
+      name: 'generation',
+      type: 'string',
+      required: true,
+      default: '',
+      description: '控制栏文案'
+    },
+    {
+      name: 'alive',
+      type: 'string',
+      required: true,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'pause',
+      type: 'string',
+      required: true,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'play',
+      type: 'string',
+      required: true,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'randomize',
+      type: 'string',
+      required: true,
+      default: '',
+      description: ''
     }
   ],
   GlitchText: [
@@ -1255,6 +1360,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '20',
       description: '节点半径'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'拖拽节点 · 悬停查看关联'",
+      description: '未悬停节点时的操作提示'
     }
   ],
   NewtonCradle: [
@@ -1345,6 +1457,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#38bdf8'",
       description: '粒子颜色'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'移动鼠标或手指与粒子互动'",
+      description: '操作提示'
     }
   ],
   PlasmaBall: [
@@ -1398,6 +1517,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'开启宝箱'",
       description: '标签文字'
+    },
+    {
+      name: 'openedLabel',
+      type: 'string',
+      required: false,
+      default: "'宝箱已开启！'",
+      description: '宝箱开启后的标签文字'
     }
   ],
   RadarScan: [
@@ -1437,6 +1563,27 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '抢到红包回调'
+    },
+    {
+      name: 'grabbedLabel',
+      type: 'string',
+      required: false,
+      default: "'已抢:'",
+      description: '已抢金额标签'
+    },
+    {
+      name: 'endedText',
+      type: 'string',
+      required: false,
+      default: "'红包雨结束'",
+      description: '红包雨结束提示'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'点击红包抢夺'",
+      description: '操作提示'
     }
   ],
   ReturnCity: [
@@ -1699,6 +1846,20 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '3',
       description: '每帧生成粒子数'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'按住鼠标绘制沙粒'",
+      description: '操作提示'
+    },
+    {
+      name: 'clearText',
+      type: 'string',
+      required: false,
+      default: "'Clear'",
+      description: '清空按钮文案'
     }
   ],
   ScrambleText: [
@@ -1738,6 +1899,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'🎉 恭喜中奖！'",
       description: '奖品文字'
+    },
+    {
+      name: 'coverText',
+      type: 'string',
+      required: false,
+      default: "'刮开涂层'",
+      description: '涂层上的提示文案'
     },
     {
       name: 'onReveal',
@@ -1819,6 +1987,34 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '旋转结束回调'
+    },
+    {
+      name: 'startText',
+      type: 'string',
+      required: false,
+      default: "'开始'",
+      description: '开始按钮文案'
+    },
+    {
+      name: 'spinningText',
+      type: 'string',
+      required: false,
+      default: "'旋转中...'",
+      description: '旋转中的按钮文案'
+    },
+    {
+      name: 'jackpotText',
+      type: 'string',
+      required: false,
+      default: "'🎰 大奖！'",
+      description: '中奖提示'
+    },
+    {
+      name: 'resultPrefix',
+      type: 'string',
+      required: false,
+      default: "'结果:'",
+      description: '普通结果前缀'
     }
   ],
   SmokeFog: [
@@ -1884,6 +2080,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: 'true',
       description: '是否响应点击/触摸驱散，默认 true'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '画布无障碍标签'
     }
   ],
   Snowfall: [
@@ -2129,6 +2332,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#a78bfa'",
       description: '主色'
+    },
+    {
+      name: 'hint',
+      type: 'string',
+      required: false,
+      default: "'拖拽网格质点，观察弹簧回弹'",
+      description: '操作提示'
     }
   ],
   Starfield: [
@@ -2330,6 +2540,20 @@ export const componentProps: ComponentPropsMap = {
       description: '抽奖按钮文案'
     },
     {
+      name: 'spinningText',
+      type: 'string',
+      required: false,
+      default: "'抽奖中...'",
+      description: '抽奖进行中的按钮文案'
+    },
+    {
+      name: 'resultPrefix',
+      type: 'string',
+      required: false,
+      default: "'恭喜获得：'",
+      description: '中奖结果前缀'
+    },
+    {
       name: 'onSpinEnd',
       type: '(prize: TurntablePrize, index: number) => void',
       required: false,
@@ -2529,6 +2753,20 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: 'false',
       description: '外部受控 loading：在当前画面上叠加加载遮罩（live 模式定位/请求期间会自动显示，无需传入）'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '画布无障碍标签；不传时使用默认中文描述'
+    },
+    {
+      name: 'loadingText',
+      type: 'string',
+      required: false,
+      default: "'天气加载中…'",
+      description: '加载状态文案'
     }
   ]
 };

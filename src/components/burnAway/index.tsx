@@ -8,9 +8,11 @@ export interface BurnAwayProps {
   fontSize?: number;
   /** 燃烧完成回调 */
   onComplete?: () => void;
+  /** 燃烧完成提示 */
+  completedText?: string;
 }
 
-const BurnAway: React.FC<BurnAwayProps> = ({ text = 'BURN', fontSize = 64, onComplete }) => {
+const BurnAway: React.FC<BurnAwayProps> = ({ text = 'BURN', fontSize = 64, onComplete, completedText = 'Gone.' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [burning, setBurning] = useState(false);
@@ -164,7 +166,7 @@ const BurnAway: React.FC<BurnAwayProps> = ({ text = 'BURN', fontSize = 64, onCom
           Ignite
         </button>
       )}
-      {done && <p className={styles.hint}>Gone.</p>}
+      {done && <p className={styles.hint}>{completedText}</p>}
     </div>
   );
 };

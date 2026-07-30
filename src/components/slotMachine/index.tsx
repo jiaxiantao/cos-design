@@ -6,13 +6,28 @@ export interface SlotMachineProps {
   symbols?: string[];
   /** 旋转结束回调 */
   onSpinEnd?: (results: string[]) => void;
+  /** 开始按钮文案 */
+  startText?: string;
+  /** 旋转中的按钮文案 */
+  spinningText?: string;
+  /** 中奖提示 */
+  jackpotText?: string;
+  /** 普通结果前缀 */
+  resultPrefix?: string;
 }
 
 const DEFAULT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '⭐', '7️⃣'];
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-const SlotMachine: React.FC<SlotMachineProps> = ({ symbols = DEFAULT_SYMBOLS, onSpinEnd }) => {
+const SlotMachine: React.FC<SlotMachineProps> = ({
+  symbols = DEFAULT_SYMBOLS,
+  onSpinEnd,
+  startText = '开始',
+  spinningText = '旋转中...',
+  jackpotText = '🎰 大奖！',
+  resultPrefix = '结果:'
+}) => {
   const [spinning, setSpinning] = useState(false);
   const [offsets, setOffsets] = useState([0, 0, 0]);
   const [results, setResults] = useState<string[]>([]);
@@ -103,11 +118,13 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ symbols = DEFAULT_SYMBOLS, on
         ))}
       </div>
       <button type="button" className={styles.spinBtn} onClick={handleSpin} disabled={spinning}>
-        {spinning ? '旋转中...' : '开始'}
+        {spinning ? spinningText : startText}
       </button>
       {results.length > 0 && !spinning && (
         <p className={styles.result}>
-          {results[0] === results[1] && results[1] === results[2] ? '🎰 大奖！' : `结果: ${results.join(' ')}`}
+          {results[0] === results[1] && results[1] === results[2]
+            ? jackpotText
+            : `${resultPrefix} ${results.join(' ')}`}
         </p>
       )}
     </div>

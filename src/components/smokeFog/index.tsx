@@ -19,6 +19,8 @@ export interface SmokeFogProps {
   disperseRadius?: number;
   /** 是否响应点击/触摸驱散，默认 true */
   interactive?: boolean;
+  /** 画布无障碍标签 */
+  ariaLabel?: string;
 }
 
 interface SmokePuff {
@@ -256,7 +258,8 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
   speed = 1,
   disperseStrength = 1,
   disperseRadius = 1,
-  interactive = true
+  interactive = true,
+  ariaLabel
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const puffsRef = useRef<SmokePuff[]>([]);
@@ -552,7 +555,7 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
         className={styles.canvas}
         style={{ width, height, cursor: interactive ? 'pointer' : 'default' }}
         role="img"
-        aria-label={interactive ? '烟雾背景，点击可驱散' : '烟雾背景'}
+        aria-label={ariaLabel ?? (interactive ? '烟雾背景，点击可驱散' : '烟雾背景')}
       />
     </div>
   );

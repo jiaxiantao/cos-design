@@ -176,5 +176,6 @@ _Use when: fireworks, electric arcs, plasma balls, teleport/return-city style VF
 
 ## Detailed reference
 
-See https://github.com/jiaxiantao/cos-design/blob/master/docs/ai.md for per-component install/import/examples/props.
+- https://jiaxiantao.github.io/cos-design/llms-full.txt (full per-component guide on site)
+- https://github.com/jiaxiantao/cos-design/blob/master/docs/ai.md
 

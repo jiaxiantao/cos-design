@@ -1,11 +1,14 @@
 import * as CosDesign from '@/components';
 import React, { useMemo, type ReactNode, type RefObject } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LiveError, LivePreview, LiveProvider } from 'react-live';
+import FillStage from './fill-stage';
 import styles from './style/live-demo.module.less';
 
 const liveScope = {
   React,
   ...CosDesign,
+  FillStage,
   useState: React.useState,
   useEffect: React.useEffect,
   useRef: React.useRef,
@@ -22,17 +25,22 @@ const stripImports = (source: string) =>
     .trim();
 
 /** 将用户编辑的示例代码转为 react-live 可执行格式 */
-export const toLiveCode = (source: string): string => {
+export const toLiveCode = (source: string, options?: { fillContainer?: boolean }): string => {
   const body = stripImports(source);
   if (!body) return 'render(<div />);';
 
   const needsRenderCall = /^\s*(const|let|function)\s/.test(body) || /\n\s*(const|let|function)\s/.test(body);
+  const wrap = (jsx: string) => (options?.fillContainer ? `<FillStage>\n      ${jsx}\n    </FillStage>` : jsx);
 
   if (needsRenderCall) {
+    // 含独立语句时由示例自行 return；背景铺满在下方用 FillStage 包一层预览根节点
+    if (options?.fillContainer) {
+      return `function LiveDemo() {\n${body}\n}\n\nrender(<FillStage><LiveDemo /></FillStage>);`;
+    }
     return `function LiveDemo() {\n${body}\n}\n\nrender(<LiveDemo />);`;
   }
 
-  return `function LiveDemo() {\n  return (\n    ${body}\n  );\n}\n\nrender(<LiveDemo />);`;
+  return `function LiveDemo() {\n  return (\n    ${wrap(body)}\n  );\n}\n\nrender(<LiveDemo />);`;
 };
 
 interface LiveDemoPlaygroundProps {
@@ -55,13 +63,18 @@ const LiveDemoPlayground = ({
   editorRef,
   demoContent
 }: LiveDemoPlaygroundProps) => {
-  const liveCode = useMemo(() => toLiveCode(editorCode), [editorCode]);
+  const { t } = useTranslation();
+  const fillContainer = Boolean(demoContent);
+  const liveCode = useMemo(() => toLiveCode(editorCode, { fillContainer }), [editorCode, fillContainer]);
 
   return (
     <>
       <LiveProvider code={liveCode} scope={liveScope} noInline language="tsx">
-        <div className={`${styles.livePreview} ${demoContent ? styles.livePreviewBackground : ''}`}>
-          <LivePreview />
+        {/* liveStage 只包 LivePreview，避免把绝对定位的 Demo Content 也改成 relative 而挤到下方 */}
+        <div className={`${styles.livePreview} ${fillContainer ? styles.livePreviewBackground : ''}`}>
+          <div className={styles.liveStage}>
+            <LivePreview />
+          </div>
           {demoContent}
         </div>
         <LiveError className={styles.liveError} />
@@ -69,13 +82,13 @@ const LiveDemoPlayground = ({
 
       <div ref={editorRef} className={styles.codeSection}>
         <div className={styles.codeHeader}>
-          <span>编辑代码 · 实时预览</span>
+          <span>{t('liveDemo.editorTitle')}</span>
           <div className={styles.codeActions}>
             <button type="button" className={styles.actionBtn} onClick={onReset}>
-              重置
+              {t('liveDemo.reset')}
             </button>
             <button type="button" className={styles.actionBtn} onClick={onCopy}>
-              {copied ? '已复制' : '复制'}
+              {copied ? t('liveDemo.copied') : t('liveDemo.copy')}
             </button>
           </div>
         </div>
@@ -85,7 +98,7 @@ const LiveDemoPlayground = ({
           onChange={(e) => onEditorCodeChange(e.target.value)}
           spellCheck={false}
         />
-        <p className={styles.hint}>组件已注入作用域，可直接写 JSX；修改后预览区立即更新。</p>
+        <p className={styles.hint}>{t('liveDemo.hint')}</p>
       </div>
     </>
   );

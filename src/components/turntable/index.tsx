@@ -17,6 +17,10 @@ export interface TurntableProps {
   spinRounds?: number;
   /** 抽奖按钮文案 */
   buttonText?: string;
+  /** 抽奖进行中的按钮文案 */
+  spinningText?: string;
+  /** 中奖结果前缀 */
+  resultPrefix?: string;
   /** 旋转结束回调 */
   onSpinEnd?: (prize: TurntablePrize, index: number) => void;
 }
@@ -40,6 +44,8 @@ const Turntable: React.FC<TurntableProps> = ({
   spinDuration = 4000,
   spinRounds = 5,
   buttonText = '开始抽奖',
+  spinningText = '抽奖中...',
+  resultPrefix = '恭喜获得：',
   onSpinEnd
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -219,13 +225,14 @@ const Turntable: React.FC<TurntableProps> = ({
         <div className={styles.pointer} />
         <canvas ref={canvasRef} className={styles.canvas} style={{ width: canvasSize, height: canvasSize }} />
         <button type="button" className={styles.spinBtn} onClick={handleSpin} disabled={spinning}>
-          {spinning ? '抽奖中...' : buttonText}
+          {spinning ? spinningText : buttonText}
         </button>
       </div>
 
       {result && !spinning && (
         <p className={styles.result}>
-          恭喜获得：<strong>{result.label}</strong>
+          {resultPrefix}
+          <strong>{result.label}</strong>
         </p>
       )}
     </div>

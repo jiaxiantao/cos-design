@@ -24,6 +24,8 @@ export interface NetworkGraphProps {
   linkColor?: string;
   /** 节点半径 */
   nodeRadius?: number;
+  /** 未悬停节点时的操作提示 */
+  hint?: string;
 }
 
 interface InternalNode {
@@ -117,7 +119,8 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
   nodes = DEFAULT_NODES,
   edges = DEFAULT_EDGES,
   linkColor = 'rgb(148 163 184 / 35%)',
-  nodeRadius = 20
+  nodeRadius = 20,
+  hint = '拖拽节点 · 悬停查看关联'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const nodesRef = useRef<InternalNode[]>([]);
@@ -132,7 +135,11 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
     vy: number;
   } | null>(null);
   const [cursor, setCursor] = useState<CursorMode>('default');
-  const [hintLabel, setHintLabel] = useState('拖拽节点 · 悬停查看关联');
+  const [hintLabel, setHintLabel] = useState(hint);
+
+  useEffect(() => {
+    if (!hoverIdRef.current) setHintLabel(hint);
+  }, [hint]);
 
   const adjacency = useMemo(() => {
     const map = new Map<string, Set<string>>();
@@ -466,7 +473,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({
 
   const updateHoverHint = (node: InternalNode | null) => {
     hoverIdRef.current = node?.id ?? null;
-    setHintLabel(node ? node.label : '拖拽节点 · 悬停查看关联');
+    setHintLabel(node ? node.label : hint);
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {

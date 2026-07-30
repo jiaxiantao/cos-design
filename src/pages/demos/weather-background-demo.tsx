@@ -2,12 +2,13 @@ import {
   WeatherBackground,
   useLiveWeather,
   kmhToWindLevel,
+  clampFogLevel,
+  clampHailLevel,
+  clampPrecipLevel,
+  clampSmogLevel,
   formatLocalHm,
-  formatFogLevel,
-  formatHailLevel,
-  formatPrecipLevel,
-  formatSmogLevel,
   normalizeWeatherType,
+  precipBand,
   supportsFogLevel,
   supportsHailLevel,
   supportsRainLevel,
@@ -16,55 +17,38 @@ import {
   type WeatherType
 } from '@/components';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useBackgroundDemoCopy } from '../i18n/hooks';
 import BackgroundDemoContent from '../playground/background-demo-content';
-import { BACKGROUND_DEMO_HEADLINES, BACKGROUND_DEMO_SUBTITLES } from '../playground/background-demo-headlines';
+import FillStage from '../playground/fill-stage';
+import styles from './style/weather-background-demo.module.less';
 
-const WEATHER_OPTIONS: { value: WeatherType; label: string }[] = [
-  { value: 'sunny', label: '☀️ 大晴天' },
-  { value: 'partlyCloudy', label: '⛅ 多云' },
-  { value: 'overcast', label: '☁️ 阴天' },
-  { value: 'rain', label: '🌧️ 雨天' },
-  { value: 'thunderstorm', label: '🌩️ 雷阵雨' },
-  { value: 'snow', label: '❄️ 雪天' },
-  { value: 'sleet', label: '🌧️❄️ 雨夹雪' },
-  { value: 'hail', label: '🧊 冰雹' },
-  { value: 'fog', label: '🌫️ 雾' },
-  { value: 'smog', label: '😷 霾' }
+const WEATHER_OPTIONS: WeatherType[] = [
+  'sunny',
+  'partlyCloudy',
+  'overcast',
+  'rain',
+  'thunderstorm',
+  'snow',
+  'sleet',
+  'hail',
+  'fog',
+  'smog'
 ];
 
-const WEATHER_LABELS: Partial<Record<WeatherType, string>> = Object.fromEntries(
-  WEATHER_OPTIONS.map((o) => [o.value, o.label])
-);
-
-const CITY_OPTIONS: { label: string; coords: { latitude: number; longitude: number } }[] = [
-  { label: '北京', coords: { latitude: 39.9042, longitude: 116.4074 } },
-  { label: '上海', coords: { latitude: 31.2304, longitude: 121.4737 } },
-  { label: '广州', coords: { latitude: 23.1291, longitude: 113.2644 } },
-  { label: '杭州', coords: { latitude: 30.2741, longitude: 120.1551 } },
-  { label: '成都', coords: { latitude: 30.5728, longitude: 104.0668 } },
-  { label: '哈尔滨', coords: { latitude: 45.8038, longitude: 126.535 } },
-  { label: '拉萨', coords: { latitude: 29.6525, longitude: 91.1721 } },
-  { label: '东京', coords: { latitude: 35.6762, longitude: 139.6503 } },
-  { label: '伦敦', coords: { latitude: 51.5074, longitude: -0.1278 } },
-  { label: '纽约', coords: { latitude: 40.7128, longitude: -74.006 } },
-  { label: '悉尼', coords: { latitude: -33.8688, longitude: 151.2093 } }
+const CITY_OPTIONS: { id: string; coords: { latitude: number; longitude: number } }[] = [
+  { id: 'beijing', coords: { latitude: 39.9042, longitude: 116.4074 } },
+  { id: 'shanghai', coords: { latitude: 31.2304, longitude: 121.4737 } },
+  { id: 'guangzhou', coords: { latitude: 23.1291, longitude: 113.2644 } },
+  { id: 'hangzhou', coords: { latitude: 30.2741, longitude: 120.1551 } },
+  { id: 'chengdu', coords: { latitude: 30.5728, longitude: 104.0668 } },
+  { id: 'harbin', coords: { latitude: 45.8038, longitude: 126.535 } },
+  { id: 'lhasa', coords: { latitude: 29.6525, longitude: 91.1721 } },
+  { id: 'tokyo', coords: { latitude: 35.6762, longitude: 139.6503 } },
+  { id: 'london', coords: { latitude: 51.5074, longitude: -0.1278 } },
+  { id: 'newYork', coords: { latitude: 40.7128, longitude: -74.006 } },
+  { id: 'sydney', coords: { latitude: -33.8688, longitude: 151.2093 } }
 ];
-
-const WIND_LEVEL_LABELS = [
-  '无风',
-  '软风',
-  '轻风',
-  '微风',
-  '和风',
-  '清劲风',
-  '强风',
-  '疾风',
-  '大风',
-  '烈风',
-  '狂风',
-  '暴风',
-  '飓风'
-] as const;
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
@@ -126,6 +110,7 @@ const rangeStyle: React.CSSProperties = {
 };
 
 const WeatherBackgroundDemo = () => {
+  const { t } = useTranslation();
   const [weather, setWeather] = useState<WeatherType>('partlyCloudy');
   const [sceneTime, setSceneTime] = useState('14:00');
   const [windLevel, setWindLevel] = useState(3);
@@ -140,6 +125,8 @@ const WeatherBackgroundDemo = () => {
   /** 实况时钟刷新计数，驱动当地时刻滑块走动 */
   const [liveClockTick, setLiveClockTick] = useState(0);
   const city = CITY_OPTIONS[cityIndex];
+  const cityLabel = t(`demos.weather.cities.${city.id}`);
+  const backgroundCopy = useBackgroundDemoCopy('WeatherBackground');
   const liveState = useLiveWeather(liveEnabled, liveEnabled ? city.coords : undefined);
 
   const activeWeather = normalizeWeatherType(liveEnabled && liveState.weather ? liveState.weather : weather);
@@ -163,6 +150,28 @@ const WeatherBackgroundDemo = () => {
   const showFogSlider = supportsFogLevel(activeWeather);
   const showSmogSlider = supportsSmogLevel(activeWeather);
 
+  const weatherLabel = (type: WeatherType) => t(`demos.weather.options.${type}`, { defaultValue: type });
+
+  /** 档位文案统一为 `档位 · 名称`，名称按当前语言取词表 */
+  const levelLabel = (kind: 'rain' | 'snow' | 'hail' | 'fog' | 'smog', level: number) => {
+    const names = t(`demos.weather.levels.${kind}`, { returnObjects: true }) as string[];
+    const value =
+      kind === 'rain' || kind === 'snow'
+        ? clampPrecipLevel(level)
+        : kind === 'hail'
+          ? clampHailLevel(level)
+          : kind === 'fog'
+            ? clampFogLevel(level)
+            : clampSmogLevel(level);
+    const index = kind === 'rain' || kind === 'snow' ? precipBand(level) - 1 : value - 1;
+    return t('demos.weather.levels.format', { level: value, label: names[index] });
+  };
+
+  const windText = (level: number) => {
+    const names = t('demos.weather.windLevels', { returnObjects: true }) as string[];
+    return t('demos.weather.windValue', { level, name: names[level] });
+  };
+
   useEffect(() => {
     if (!liveEnabled) return;
     const id = window.setInterval(() => setLiveClockTick((n) => n + 1), 15_000);
@@ -173,72 +182,128 @@ const WeatherBackgroundDemo = () => {
     if (!liveEnabled) return null;
     switch (liveState.status) {
       case 'locating':
-        return '正在获取定位…（需授权）';
+        return t('demos.weather.statusLocating');
       case 'fetching':
-        return `正在请求 ${city.label} 实况…`;
+        return t('demos.weather.statusFetching', { city: cityLabel });
       case 'success': {
         const c = liveState.current;
         const hm = liveClockHm ?? c?.localTime;
-        const precip =
+        const extra =
           liveState.rainLevel != null
-            ? ` · ${formatPrecipLevel(liveState.rainLevel, 'rain')}`
+            ? ` · ${levelLabel('rain', liveState.rainLevel)}`
             : liveState.snowLevel != null
-              ? ` · ${formatPrecipLevel(liveState.snowLevel, 'snow')}`
+              ? ` · ${levelLabel('snow', liveState.snowLevel)}`
               : liveState.hailLevel != null
-                ? ` · ${formatHailLevel(liveState.hailLevel)}`
+                ? ` · ${levelLabel('hail', liveState.hailLevel)}`
                 : liveState.fogLevel != null
-                  ? ` · ${formatFogLevel(liveState.fogLevel)}`
+                  ? ` · ${levelLabel('fog', liveState.fogLevel)}`
                   : liveState.smogLevel != null
-                    ? ` · ${formatSmogLevel(liveState.smogLevel)}`
+                    ? ` · ${levelLabel('smog', liveState.smogLevel)}`
                     : '';
-        return `${city.label}实况：${WEATHER_LABELS[liveState.weather!] ?? liveState.weather} · ${hm ? `时刻 ${hm}` : c?.isDay ? '☀️ 白天' : '🌙 夜晚'} · ${kmhToWindLevel(c?.windSpeed ?? 0)}级风（${c?.windSpeed} km/h）${precip} · WMO ${c?.weatherCode}`;
+        return t('demos.weather.statusSuccess', {
+          city: cityLabel,
+          weather: weatherLabel(liveState.weather!),
+          time: hm
+            ? t('demos.weather.statusTime', { time: hm })
+            : c?.isDay
+              ? t('demos.weather.statusDay')
+              : t('demos.weather.statusNight'),
+          wind: kmhToWindLevel(c?.windSpeed ?? 0),
+          speed: c?.windSpeed,
+          extra,
+          code: c?.weatherCode
+        });
       }
       case 'error':
-        return `获取失败：${liveState.error}，已回退手动选择`;
+        return t('demos.weather.statusError', { error: liveState.error });
       default:
         return null;
     }
   })();
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
+    <div className={styles.root}>
+      <div className={styles.stage}>
+        <FillStage
+          overlay={<BackgroundDemoContent headline={backgroundCopy.headline} subtitle={backgroundCopy.subtitle} />}
+        >
+          <WeatherBackground
+            weather={activeWeather}
+            time={sceneTime}
+            windLevel={windLevel}
+            rainLevel={rainLevel}
+            snowLevel={snowLevel}
+            hailLevel={hailLevel}
+            fogLevel={fogLevel}
+            smogLevel={smogLevel}
+            latitude={city.coords.latitude}
+            longitude={city.coords.longitude}
+            live={liveEnabled}
+            loading={liveLoading}
+            ariaLabel={t('demos.weather.canvasAria', {
+              weather: weatherLabel(activeWeather),
+              wind: displayWindLevel
+            })}
+            loadingText={t('demos.weather.loading')}
+          />
+        </FillStage>
+      </div>
+
+      {liveStatusText && <p className={styles.meta}>{liveStatusText}</p>}
+      {!liveEnabled && (
+        <p className={styles.meta}>
+          {t('demos.weather.summary', {
+            city: cityLabel,
+            time: sceneTime,
+            wind: windText(windLevel),
+            extra: [
+              showRainSlider ? ` · ${levelLabel('rain', rainLevel)}` : '',
+              showSnowSlider ? ` · ${levelLabel('snow', snowLevel)}` : '',
+              showHailSlider ? ` · ${levelLabel('hail', hailLevel)}` : '',
+              showFogSlider ? ` · ${levelLabel('fog', fogLevel)}` : '',
+              showSmogSlider ? ` · ${levelLabel('smog', smogLevel)}` : ''
+            ].join('')
+          })}
+        </p>
+      )}
+
+      <div className={styles.toolbar}>
         <button
           type="button"
           onClick={() => setLiveEnabled((v) => !v)}
           style={buttonStyle(liveEnabled)}
-          title={liveEnabled ? '关闭实时天气，恢复手动调节' : `按当前城市（${city.label}）开启实时天气`}
+          title={
+            liveEnabled
+              ? t('demos.weather.liveToggleOffTitle')
+              : t('demos.weather.liveToggleOnTitle', { city: cityLabel })
+          }
         >
-          📍 实时天气（Open-Meteo）
+          {t('demos.weather.liveToggle')}
         </button>
         {WEATHER_OPTIONS.map((option) => (
           <button
-            key={option.value}
+            key={option}
             type="button"
             onClick={() => {
               setLiveEnabled(false);
-              setWeather(option.value);
+              setWeather(option);
             }}
-            style={buttonStyle(!liveEnabled && weather === option.value)}
+            style={buttonStyle(!liveEnabled && weather === option)}
           >
-            {option.label}
+            {weatherLabel(option)}
           </button>
         ))}
       </div>
 
       <div
+        className={styles.sliders}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 8,
-          width: '100%',
-          maxWidth: 720,
           opacity: liveEnabled ? 0.85 : 1,
           pointerEvents: liveEnabled ? 'none' : 'auto'
         }}
       >
         <label style={sliderRowStyle}>
-          <span style={sliderLabelStyle}>🕐 时刻</span>
+          <span style={sliderLabelStyle}>{t('demos.weather.timeLabel')}</span>
           <input
             type="range"
             min={0}
@@ -247,13 +312,13 @@ const WeatherBackgroundDemo = () => {
             value={timeMinutes}
             onChange={(e) => setSceneTime(minutesToTime(Number(e.target.value)))}
             style={rangeStyle}
-            aria-label="调节场景时刻"
+            aria-label={t('demos.weather.timeAria')}
             disabled={liveEnabled}
           />
           <span style={sliderValueStyle}>{displayTime}</span>
         </label>
         <label style={sliderRowStyle}>
-          <span style={sliderLabelStyle}>💨 风速</span>
+          <span style={sliderLabelStyle}>{t('demos.weather.windLabel')}</span>
           <input
             type="range"
             min={0}
@@ -262,16 +327,14 @@ const WeatherBackgroundDemo = () => {
             value={displayWindLevel}
             onChange={(e) => setWindLevel(Number(e.target.value))}
             style={rangeStyle}
-            aria-label="调节蒲福风级"
+            aria-label={t('demos.weather.windAria')}
             disabled={liveEnabled}
           />
-          <span style={sliderValueStyle}>
-            {displayWindLevel}级 {WIND_LEVEL_LABELS[displayWindLevel]}
-          </span>
+          <span style={sliderValueStyle}>{windText(displayWindLevel)}</span>
         </label>
         {showRainSlider && (
           <label style={sliderRowStyle}>
-            <span style={sliderLabelStyle}>🌧️ 雨量</span>
+            <span style={sliderLabelStyle}>{t('demos.weather.rainLabel')}</span>
             <input
               type="range"
               min={1}
@@ -280,15 +343,15 @@ const WeatherBackgroundDemo = () => {
               value={displayRainLevel}
               onChange={(e) => setRainLevel(Number(e.target.value))}
               style={rangeStyle}
-              aria-label="调节雨量"
+              aria-label={t('demos.weather.rainAria')}
               disabled={liveEnabled}
             />
-            <span style={sliderValueStyle}>{formatPrecipLevel(displayRainLevel, 'rain')}</span>
+            <span style={sliderValueStyle}>{levelLabel('rain', displayRainLevel)}</span>
           </label>
         )}
         {showSnowSlider && (
           <label style={sliderRowStyle}>
-            <span style={sliderLabelStyle}>❄️ 雪量</span>
+            <span style={sliderLabelStyle}>{t('demos.weather.snowLabel')}</span>
             <input
               type="range"
               min={1}
@@ -297,15 +360,15 @@ const WeatherBackgroundDemo = () => {
               value={displaySnowLevel}
               onChange={(e) => setSnowLevel(Number(e.target.value))}
               style={rangeStyle}
-              aria-label="调节雪量"
+              aria-label={t('demos.weather.snowAria')}
               disabled={liveEnabled}
             />
-            <span style={sliderValueStyle}>{formatPrecipLevel(displaySnowLevel, 'snow')}</span>
+            <span style={sliderValueStyle}>{levelLabel('snow', displaySnowLevel)}</span>
           </label>
         )}
         {showHailSlider && (
           <label style={sliderRowStyle}>
-            <span style={sliderLabelStyle}>🧊 雹强</span>
+            <span style={sliderLabelStyle}>{t('demos.weather.hailLabel')}</span>
             <input
               type="range"
               min={1}
@@ -314,15 +377,15 @@ const WeatherBackgroundDemo = () => {
               value={displayHailLevel}
               onChange={(e) => setHailLevel(Number(e.target.value))}
               style={rangeStyle}
-              aria-label="调节冰雹强度"
+              aria-label={t('demos.weather.hailAria')}
               disabled={liveEnabled}
             />
-            <span style={sliderValueStyle}>{formatHailLevel(displayHailLevel)}</span>
+            <span style={sliderValueStyle}>{levelLabel('hail', displayHailLevel)}</span>
           </label>
         )}
         {showFogSlider && (
           <label style={sliderRowStyle}>
-            <span style={sliderLabelStyle}>🌫️ 雾浓</span>
+            <span style={sliderLabelStyle}>{t('demos.weather.fogLabel')}</span>
             <input
               type="range"
               min={1}
@@ -331,15 +394,15 @@ const WeatherBackgroundDemo = () => {
               value={displayFogLevel}
               onChange={(e) => setFogLevel(Number(e.target.value))}
               style={rangeStyle}
-              aria-label="调节雾浓度"
+              aria-label={t('demos.weather.fogAria')}
               disabled={liveEnabled}
             />
-            <span style={sliderValueStyle}>{formatFogLevel(displayFogLevel)}</span>
+            <span style={sliderValueStyle}>{levelLabel('fog', displayFogLevel)}</span>
           </label>
         )}
         {showSmogSlider && (
           <label style={sliderRowStyle}>
-            <span style={sliderLabelStyle}>😷 霾强</span>
+            <span style={sliderLabelStyle}>{t('demos.weather.smogLabel')}</span>
             <input
               type="range"
               min={1}
@@ -348,64 +411,26 @@ const WeatherBackgroundDemo = () => {
               value={displaySmogLevel}
               onChange={(e) => setSmogLevel(Number(e.target.value))}
               style={rangeStyle}
-              aria-label="调节霾强度"
+              aria-label={t('demos.weather.smogAria')}
               disabled={liveEnabled}
             />
-            <span style={sliderValueStyle}>{formatSmogLevel(displaySmogLevel)}</span>
+            <span style={sliderValueStyle}>{levelLabel('smog', displaySmogLevel)}</span>
           </label>
         )}
-        {liveEnabled && (
-          <p style={{ margin: 0, color: '#8b92a8', fontSize: 12 }}>
-            已开启实时天气：滑块显示 {city.label}{' '}
-            当地时刻、风速与强度参数（只读）。关闭「实时天气」或选择上方天气类型后可手动调节。
-          </p>
-        )}
+        {liveEnabled && <p className={styles.hint}>{t('demos.weather.liveHint', { city: cityLabel })}</p>}
       </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
+      <div className={styles.toolbar}>
         {CITY_OPTIONS.map((option, index) => (
           <button
-            key={option.label}
+            key={option.id}
             type="button"
             onClick={() => setCityIndex(index)}
             style={buttonStyle(cityIndex === index)}
           >
-            {option.label}
+            {t(`demos.weather.cities.${option.id}`)}
           </button>
         ))}
-      </div>
-      {liveStatusText && <p style={{ margin: 0, color: '#8b92a8', fontSize: 13 }}>{liveStatusText}</p>}
-      {!liveEnabled && (
-        <p style={{ margin: 0, color: '#8b92a8', fontSize: 13 }}>
-          {city.label} · 时刻 {sceneTime} · {windLevel}级{WIND_LEVEL_LABELS[windLevel]}
-          {showRainSlider ? ` · ${formatPrecipLevel(rainLevel, 'rain')}` : ''}
-          {showSnowSlider ? ` · ${formatPrecipLevel(snowLevel, 'snow')}` : ''}
-          {showHailSlider ? ` · ${formatHailLevel(hailLevel)}` : ''}
-          {showFogSlider ? ` · ${formatFogLevel(fogLevel)}` : ''}
-          {showSmogSlider ? ` · ${formatSmogLevel(smogLevel)}` : ''} · 昼夜按当地日出日落自动判定
-        </p>
-      )}
-      <div style={{ position: 'relative', width: 720, maxWidth: '100%', overflow: 'hidden', borderRadius: 12 }}>
-        <WeatherBackground
-          weather={activeWeather}
-          time={sceneTime}
-          windLevel={windLevel}
-          rainLevel={rainLevel}
-          snowLevel={snowLevel}
-          hailLevel={hailLevel}
-          fogLevel={fogLevel}
-          smogLevel={smogLevel}
-          latitude={city.coords.latitude}
-          longitude={city.coords.longitude}
-          live={liveEnabled}
-          loading={liveLoading}
-          width={720}
-          height={400}
-        />
-        <BackgroundDemoContent
-          headline={BACKGROUND_DEMO_HEADLINES.WeatherBackground}
-          subtitle={BACKGROUND_DEMO_SUBTITLES.WeatherBackground}
-        />
       </div>
     </div>
   );
