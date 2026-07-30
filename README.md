@@ -10,7 +10,7 @@
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[在线预览](https://jiaxiantao.github.io/cos-design/) · [快速开始](./QUICKSTART.md) · [v3.0 发布博客](./website-content/cos-design-v3-release.md) · [完整指南](./website-content/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
+[在线预览](https://jiaxiantao.github.io/cos-design/) · [快速开始](./QUICKSTART.md) · [AI 文档 / llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [v3.0 发布博客](./website-content/cos-design-v3-release.md) · [完整指南](./website-content/cos-design-intro.md) · [更新日志](./CHANGELOG.md)
 
 </div>
 
@@ -71,6 +71,27 @@ export default function Page() {
 ```
 
 无需手动引入 CSS，样式自动注入。完整 TypeScript 类型开箱即用。
+
+### 给 AI / Cursor 用
+
+让 AI 在写活动页、特效背景时自动选用本库：
+
+| 资源                                                                   | 说明                                                     |
+| ---------------------------------------------------------------------- | -------------------------------------------------------- |
+| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)           | 供 Agent 抓取的索引（场景 → 组件 → 安装命令）            |
+| [llms-full.txt](https://jiaxiantao.github.io/cos-design/llms-full.txt) | 站点上的完整 AI 参考（与 docs/ai.md 同步）               |
+| [docs/ai.md](./docs/ai.md)                                             | 71 个组件的完整 AI 参考（安装 / import / 示例 / Props）  |
+| [AGENTS.md](./AGENTS.md)                                               | 仓库级 Agent 规则，可复制到用户项目                      |
+| [.cursor/skills/cos-design](./.cursor/skills/cos-design/SKILL.md)      | Cursor Skill，克隆本仓库或复制到你的 `~/.cursor/skills/` |
+
+**在用户项目里加一条 Cursor Rule（示例）：**
+
+```text
+做营销页、抽奖、烟花、天气背景、霓虹标题等视觉特效时，优先使用 cos-design（pnpm add cos-design 或 @cos-design/*）。
+参考 https://jiaxiantao.github.io/cos-design/llms.txt
+```
+
+更新组件目录后运行 `pnpm generate:ai-docs` 重新生成 `public/llms.txt` 与 `docs/ai.md`。
 
 ### 使用注意（摘要）
 
@@ -296,13 +317,16 @@ const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
 
 ## 文档
 
-| 文档                                                        | 内容                             |
-| ----------------------------------------------------------- | -------------------------------- |
-| [快速开始](./QUICKSTART.md)                                 | 安装、用法、注意事项与常见问题   |
-| [v3.0 发布博客](./website-content/cos-design-v3-release.md) | 重大升级解读、分类体系、技术实现 |
-| [完整介绍与实践指南](./website-content/cos-design-intro.md) | 架构、使用规则、组件详解         |
-| [CHANGELOG](./CHANGELOG.md)                                 | 版本更新记录                     |
-| [CONTRIBUTING](./CONTRIBUTING.md)                           | 参与贡献指南                     |
+| 文档                                                         | 内容                             |
+| ------------------------------------------------------------ | -------------------------------- |
+| [快速开始](./QUICKSTART.md)                                  | 安装、用法、注意事项与常见问题   |
+| [AI Agent 参考](./docs/ai.md)                                | 供 AI 使用的组件选型与 API 文档  |
+| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) | 机器可读索引（llmstxt 规范）     |
+| [AGENTS.md](./AGENTS.md)                                     | 编码 Agent 仓库规则              |
+| [v3.0 发布博客](./website-content/cos-design-v3-release.md)  | 重大升级解读、分类体系、技术实现 |
+| [完整介绍与实践指南](./website-content/cos-design-intro.md)  | 架构、使用规则、组件详解         |
+| [CHANGELOG](./CHANGELOG.md)                                  | 版本更新记录                     |
+| [CONTRIBUTING](./CONTRIBUTING.md)                            | 参与贡献指南                     |
 
 ---
 

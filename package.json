@@ -9,8 +9,16 @@
     "cos-design",
     "react",
     "component-library",
-    "vite",
-    "typescript"
+    "visual-effects",
+    "canvas",
+    "animation",
+    "fireworks",
+    "scratch-card",
+    "lottery",
+    "marketing-page",
+    "landing-page",
+    "typescript",
+    "vite"
   ],
   "homepage": "https://jiaxiantao.github.io/cos-design/",
   "bugs": {
@@ -36,7 +44,8 @@
     "build:demo": "vite build",
     "prebuild:pages": "pnpm sync:logo",
     "build:pages": "vite build --mode pages",
-    "extract-props": "node scripts/extract-component-props.mjs",
+    "extract-props": "node scripts/extract-component-props.mjs && node scripts/generate-ai-docs.mjs",
+    "generate:ai-docs": "node scripts/generate-ai-docs.mjs",
     "preview": "vite preview",
     "pub": "pnpm build && pnpm --filter \"./packages/**\" publish --access public --no-git-checks",
     "prepare": "husky",

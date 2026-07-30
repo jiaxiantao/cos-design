@@ -16,6 +16,23 @@ import {
   toExportName
 } from './component-packages.mjs';
 
+const AI_KEYWORDS = [
+  'cos',
+  'cos-design',
+  'react',
+  'component-library',
+  'visual-effects',
+  'canvas',
+  'animation',
+  'fireworks',
+  'scratch-card',
+  'lottery',
+  'marketing-page',
+  'landing-page',
+  'typescript',
+  'vite'
+];
+
 function writeJson(path, data) {
   writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
 }
@@ -163,7 +180,7 @@ function createUmbrellaPackage() {
     },
     files: ['dist', 'LICENSE', 'README.md', 'CHANGELOG.md'],
     sideEffects: ['**/*.css', '**/*.less'],
-    keywords: ['cos', 'cos-design', 'react', 'component-library', 'vite', 'typescript'],
+    keywords: AI_KEYWORDS,
     homepage: 'https://jiaxiantao.github.io/cos-design/',
     bugs: {
       url: 'https://github.com/jiaxiantao/cos-design/issues'
