@@ -1,5 +1,5 @@
+import cosLogo from '@/assets/icons/cos-logo-champagne.svg';
 import { useState } from 'react';
-import cosLogo from '@/assets/icons/cos-logo-light.svg';
 import { DEFAULT_BACKGROUND_HEADLINE } from './background-demo-headlines';
 import styles from './style/background-demo-content.module.less';
 

@@ -5,21 +5,21 @@
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <title>cos-design logo</title>
+  <title>cos-design logo (champagne)</title>
 
   <defs>
     <linearGradient id="cosGrad" x1="140" y1="120" x2="900" y2="920" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FFFFFF" />
-      <stop offset="0.18" stop-color="#FFE8FF" />
-      <stop offset="0.48" stop-color="#D8B4FE" />
-      <stop offset="0.78" stop-color="#9333EA" />
-      <stop offset="1" stop-color="#581C87" />
+      <stop offset="0" stop-color="#F7F3EC" />
+      <stop offset="0.18" stop-color="#EFE6D8" />
+      <stop offset="0.48" stop-color="#D4C0A8" />
+      <stop offset="0.78" stop-color="#C9B29A" />
+      <stop offset="1" stop-color="#8A7358" />
     </linearGradient>
 
     <linearGradient id="cosGrad2" x1="820" y1="140" x2="220" y2="900" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="1" />
-      <stop offset="0.32" stop-color="#FDF4FF" stop-opacity="0.92" />
-      <stop offset="1" stop-color="#C084FC" stop-opacity="0.18" />
+      <stop offset="0" stop-color="#F7F3EC" stop-opacity="1" />
+      <stop offset="0.32" stop-color="#F7F3EC" stop-opacity="0.92" />
+      <stop offset="1" stop-color="#D8C4AA" stop-opacity="0.18" />
     </linearGradient>
 
     <filter id="alphaFromLuma" x="0" y="0" width="1024" height="1024" color-interpolation-filters="sRGB">
