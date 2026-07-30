@@ -20,11 +20,24 @@ export interface RotatingTextProps {
 
 const DEFAULT_TEXTS = ['React', 'Motion', 'Design', 'COS'];
 
+interface GraphemeSegment {
+  segment: string;
+}
+
+interface GraphemeSegmenter {
+  segment(input: string): Iterable<GraphemeSegment>;
+}
+
 const splitChars = (text: string): string[] => {
-  if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
-    const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
-    return Array.from(segmenter.segment(text), (s) => s.segment);
+  const IntlWithSegmenter = Intl as typeof Intl & {
+    Segmenter?: new (locale: string, options: { granularity: 'grapheme' }) => GraphemeSegmenter;
+  };
+
+  if (IntlWithSegmenter.Segmenter) {
+    const segmenter = new IntlWithSegmenter.Segmenter('en', { granularity: 'grapheme' });
+    return Array.from(segmenter.segment(text), (segment) => segment.segment);
   }
+
   return Array.from(text);
 };
 

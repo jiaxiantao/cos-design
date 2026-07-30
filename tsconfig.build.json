@@ -10,8 +10,6 @@
     "jsx": "react-jsx",
     "strict": true,
     "declaration": true,
-    "declarationDir": "dist",
-    "emitDeclarationOnly": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
