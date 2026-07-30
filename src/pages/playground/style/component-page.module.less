@@ -123,6 +123,17 @@
   overflow: auto;
 }
 
+.previewBackground {
+  min-height: 480px;
+  padding: 0;
+  overflow: hidden;
+
+  > :first-child {
+    width: 100%;
+    min-height: 480px;
+  }
+}
+
 .codeSection {
   margin: 20px 20px 0;
   border: 1px solid rgb(255 255 255 / 8%);
@@ -200,5 +211,14 @@
     min-height: 320px;
     margin: 0 12px;
     padding: 16px;
+  }
+
+  .previewBackground {
+    min-height: 360px;
+    padding: 0;
+
+    > :first-child {
+      min-height: 360px;
+    }
   }
 }

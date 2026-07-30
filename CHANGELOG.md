@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.0] - 2026-07-30
+
+### Added
+
+- 文字动效新增 7 个零依赖组件：ShinyText、BlurText、CircularText、TrueFocus、FuzzyText、CurvedLoop、RotatingText
+- 背景动效 Playground 支持可开关的「示例文案」叠加层（中文 Demo Content）
+
+### Changed
+
+- BubbleField：移除底部提示文案，避免遮挡预览与示例文案开关
+- 文字动效目录更新为 18 个组件；组件总数 71
+- @cos-design/shiny-text: 新增 3.7.0
+- @cos-design/blur-text: 新增 3.7.0
+- @cos-design/circular-text: 新增 3.7.0
+- @cos-design/true-focus: 新增 3.7.0
+- @cos-design/fuzzy-text: 新增 3.7.0
+- @cos-design/curved-loop: 新增 3.7.0
+- @cos-design/rotating-text: 新增 3.7.0
+- @cos-design/bubble-field: 3.6.0 → 3.7.0
+- cos-design: 聚合包更新至 3.7.0
+
 ## [3.6.0] - 2026-07-27
 
 ### Changed
