@@ -195,8 +195,8 @@ const QuickstartPage = () => (
       <h2 className={styles.sectionTitle}>3. 组件分类</h2>
       <p className={styles.sectionDesc}>
         共 {componentDemos.length} 个组件，按场景分为 {COMPONENT_CATEGORIES.length} 类。点击左侧导航进入演示，或
-        <Link to="/" className={styles.inlineLink}>
-          返回目录
+        <Link to="/catalog" className={styles.inlineLink}>
+          打开组件目录
         </Link>
         浏览全部。
       </p>

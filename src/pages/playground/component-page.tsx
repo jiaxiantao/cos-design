@@ -57,7 +57,7 @@ const ComponentPage = () => {
   }, [showCode, pathname]);
 
   if (!current) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/catalog" replace />;
   }
 
   const categoryMeta = getCategoryMeta(current.category);
@@ -94,7 +94,7 @@ const ComponentPage = () => {
       <article className={styles.card}>
         <header className={styles.header}>
           <div className={styles.headerTop}>
-            <Link to="/" className={styles.back}>
+            <Link to="/catalog" className={styles.back}>
               ← 返回目录
             </Link>
             <span className={styles.categoryTag} style={{ '--tag-color': categoryMeta.accent } as CSSProperties}>

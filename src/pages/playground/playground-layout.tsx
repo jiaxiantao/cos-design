@@ -28,7 +28,7 @@ const PlaygroundLayout = () => {
 
   const currentDemo = useMemo(() => componentDemos.find((item) => item.path === pathname), [pathname]);
 
-  const activeCategory = currentDemo?.category ?? expandedCategory ?? 'background';
+  const activeCategory = currentDemo?.category ?? expandedCategory;
 
   const categoryCounts = useMemo(() => {
     const counts = Object.fromEntries(COMPONENT_CATEGORIES.map((c) => [c.id, 0])) as Record<ComponentCategory, number>;
@@ -61,7 +61,7 @@ const PlaygroundLayout = () => {
           <img className={styles.logo} src={cosLogoUrl} alt="cos-design" />
           <span className={styles.brandText}>
             <strong>cos-design</strong>
-            <small>Component Gallery</small>
+            <small>视觉特效组件库</small>
           </span>
         </Link>
 
@@ -98,12 +98,23 @@ const PlaygroundLayout = () => {
         <aside className={styles.sidebar}>
           <p className={styles.sidebarTitle}>分类导航</p>
           <nav className={styles.categoryNav}>
-            <Link
-              to="/quickstart"
-              className={`${styles.quickstartLink} ${pathname === '/quickstart' ? styles.quickstartLinkActive : ''}`}
-            >
-              快速开始
-            </Link>
+            <div className={styles.navLinks}>
+              <Link to="/" className={`${styles.navLink} ${pathname === '/' ? styles.navLinkActive : ''}`}>
+                首页介绍
+              </Link>
+              <Link
+                to="/catalog"
+                className={`${styles.navLink} ${pathname === '/catalog' ? styles.navLinkActive : ''}`}
+              >
+                组件目录
+              </Link>
+              <Link
+                to="/quickstart"
+                className={`${styles.navLink} ${pathname === '/quickstart' ? styles.navLinkActive : ''}`}
+              >
+                快速开始
+              </Link>
+            </div>
             {COMPONENT_CATEGORIES.map((cat) => {
               const items = filteredDemos.filter((item) => item.category === cat.id);
               const isActiveCat = activeCategory === cat.id;

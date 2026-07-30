@@ -187,28 +187,39 @@
   gap: 4px;
 }
 
-.quickstartLink {
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.navLink {
   display: block;
-  margin-bottom: 8px;
-  padding: 10px 12px;
+  padding: 9px 12px;
   border-radius: 10px;
-  border: 1px solid rgb(139 92 246 / 25%);
-  background: rgb(139 92 246 / 10%);
-  color: #c4b5fd;
-  font-size: 14px;
-  font-weight: 600;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
   text-decoration: none;
-  text-align: center;
-  transition: background 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
 
   &:hover {
-    background: rgb(139 92 246 / 18%);
+    background: rgb(255 255 255 / 4%);
+    color: var(--text);
   }
 }
 
-.quickstartLinkActive {
-  background: rgb(139 92 246 / 22%);
-  border-color: rgb(139 92 246 / 45%);
+.navLinkActive {
+  border-color: rgb(139 92 246 / 35%);
+  background: rgb(139 92 246 / 16%);
   color: #ddd6fe;
 }
 
