@@ -1,5 +1,5 @@
 import * as CosDesign from '@/components';
-import React, { useMemo, type RefObject } from 'react';
+import React, { useMemo, type ReactNode, type RefObject } from 'react';
 import { LiveError, LivePreview, LiveProvider } from 'react-live';
 import styles from './style/live-demo.module.less';
 
@@ -42,6 +42,8 @@ interface LiveDemoPlaygroundProps {
   copied: boolean;
   onReset: () => void;
   editorRef?: RefObject<HTMLDivElement | null>;
+  /** 背景动效预览叠加层（Demo Content） */
+  demoContent?: ReactNode;
 }
 
 const LiveDemoPlayground = ({
@@ -50,15 +52,17 @@ const LiveDemoPlayground = ({
   onCopy,
   copied,
   onReset,
-  editorRef
+  editorRef,
+  demoContent
 }: LiveDemoPlaygroundProps) => {
   const liveCode = useMemo(() => toLiveCode(editorCode), [editorCode]);
 
   return (
     <>
       <LiveProvider code={liveCode} scope={liveScope} noInline language="tsx">
-        <div className={styles.livePreview}>
+        <div className={`${styles.livePreview} ${demoContent ? styles.livePreviewBackground : ''}`}>
           <LivePreview />
+          {demoContent}
         </div>
         <LiveError className={styles.liveError} />
       </LiveProvider>

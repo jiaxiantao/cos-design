@@ -16,6 +16,8 @@ import {
   type WeatherType
 } from '@/components';
 import { useEffect, useState } from 'react';
+import BackgroundDemoContent from '../playground/background-demo-content';
+import { BACKGROUND_DEMO_HEADLINES, BACKGROUND_DEMO_SUBTITLES } from '../playground/background-demo-headlines';
 
 const WEATHER_OPTIONS: { value: WeatherType; label: string }[] = [
   { value: 'sunny', label: '☀️ 大晴天' },
@@ -383,22 +385,28 @@ const WeatherBackgroundDemo = () => {
           {showSmogSlider ? ` · ${formatSmogLevel(smogLevel)}` : ''} · 昼夜按当地日出日落自动判定
         </p>
       )}
-      <WeatherBackground
-        weather={activeWeather}
-        time={sceneTime}
-        windLevel={windLevel}
-        rainLevel={rainLevel}
-        snowLevel={snowLevel}
-        hailLevel={hailLevel}
-        fogLevel={fogLevel}
-        smogLevel={smogLevel}
-        latitude={city.coords.latitude}
-        longitude={city.coords.longitude}
-        live={liveEnabled}
-        loading={liveLoading}
-        width={720}
-        height={400}
-      />
+      <div style={{ position: 'relative', width: 720, maxWidth: '100%', overflow: 'hidden', borderRadius: 12 }}>
+        <WeatherBackground
+          weather={activeWeather}
+          time={sceneTime}
+          windLevel={windLevel}
+          rainLevel={rainLevel}
+          snowLevel={snowLevel}
+          hailLevel={hailLevel}
+          fogLevel={fogLevel}
+          smogLevel={smogLevel}
+          latitude={city.coords.latitude}
+          longitude={city.coords.longitude}
+          live={liveEnabled}
+          loading={liveLoading}
+          width={720}
+          height={400}
+        />
+        <BackgroundDemoContent
+          headline={BACKGROUND_DEMO_HEADLINES.WeatherBackground}
+          subtitle={BACKGROUND_DEMO_SUBTITLES.WeatherBackground}
+        />
+      </div>
     </div>
   );
 };

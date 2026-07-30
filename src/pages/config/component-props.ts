@@ -88,6 +88,64 @@ export const componentProps: ComponentPropsMap = {
       description: '扫描速度（秒/次）'
     }
   ],
+  BlurText: [
+    {
+      name: 'text',
+      type: 'string',
+      required: false,
+      default: "'BLUR TEXT'",
+      description: '显示文字'
+    },
+    {
+      name: 'animateBy',
+      type: "'words' | 'letters'",
+      required: false,
+      default: "'words'",
+      description: '按词或按字拆分'
+    },
+    {
+      name: 'direction',
+      type: "'top' | 'bottom'",
+      required: false,
+      default: "'top'",
+      description: '入场方向'
+    },
+    {
+      name: 'stagger',
+      type: 'number',
+      required: false,
+      default: '120',
+      description: '相邻单元延迟（毫秒）'
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      required: false,
+      default: '500',
+      description: '单单元动画时长（毫秒）'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '56',
+      description: '字号'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '颜色'
+    },
+    {
+      name: 'onAnimationComplete',
+      type: '() => void',
+      required: false,
+      default: '',
+      description: '动画完成后回调'
+    }
+  ],
   BubbleField: [
     {
       name: 'width',
@@ -122,7 +180,7 @@ export const componentProps: ComponentPropsMap = {
       type: 'string',
       required: false,
       default: "'#7dd3fc'",
-      description: '主色'
+      description: '水体主色'
     },
     {
       name: 'interactive',
@@ -213,6 +271,50 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '0.01',
       description: '每次增量，默认 0.01'
+    }
+  ],
+  CircularText: [
+    {
+      name: 'text',
+      type: 'string',
+      required: false,
+      default: "'COS DESIGN • REACT BITS • '",
+      description: '环绕文字'
+    },
+    {
+      name: 'spinDuration',
+      type: 'number',
+      required: false,
+      default: '20',
+      description: '一圈旋转时长（秒）'
+    },
+    {
+      name: 'onHover',
+      type: "'slowDown' | 'speedUp' | 'pause' | 'goBonkers'",
+      required: false,
+      default: "'speedUp'",
+      description: '悬停行为'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '22',
+      description: '字号'
+    },
+    {
+      name: 'radius',
+      type: 'number',
+      required: false,
+      default: '90',
+      description: '圆环半径（像素）'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '文字颜色'
     }
   ],
   ClickSpark: [
@@ -377,6 +479,57 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '400',
       description: ''
+    }
+  ],
+  CurvedLoop: [
+    {
+      name: 'text',
+      type: 'string',
+      required: false,
+      default: "'COS DESIGN ✦ CURVED LOOP ✦ '",
+      description: '跑马灯文案'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '2',
+      description: '滚动速度（像素/帧）'
+    },
+    {
+      name: 'curveAmount',
+      type: 'number',
+      required: false,
+      default: '80',
+      description: '曲线幅度'
+    },
+    {
+      name: 'direction',
+      type: "'left' | 'right'",
+      required: false,
+      default: "'left'",
+      description: '初始方向'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否可拖拽'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '文字颜色'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '56',
+      description: '字号（相对 SVG）'
     }
   ],
   CyberGrid: [
@@ -566,6 +719,64 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '600',
       description: '翻牌动画时长（毫秒），默认 600'
+    }
+  ],
+  FuzzyText: [
+    {
+      name: 'text',
+      type: 'string',
+      required: false,
+      default: "'FUZZY'",
+      description: '显示文字'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '72',
+      description: '字号'
+    },
+    {
+      name: 'fontWeight',
+      type: 'number',
+      required: false,
+      default: '900',
+      description: '字重'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '颜色'
+    },
+    {
+      name: 'baseIntensity',
+      type: 'number',
+      required: false,
+      default: '0.18',
+      description: '基础抖动强度 0~1'
+    },
+    {
+      name: 'hoverIntensity',
+      type: 'number',
+      required: false,
+      default: '0.5',
+      description: '悬停抖动强度 0~1'
+    },
+    {
+      name: 'enableHover',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否启用悬停增强'
+    },
+    {
+      name: 'fuzzRange',
+      type: 'number',
+      required: false,
+      default: '30',
+      description: '抖动像素范围'
     }
   ],
   GameOfLife: [
@@ -1402,6 +1613,57 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     }
   ],
+  RotatingText: [
+    {
+      name: 'texts',
+      type: 'string[]',
+      required: false,
+      default: 'DEFAULT_TEXTS',
+      description: '轮播文案列表'
+    },
+    {
+      name: 'interval',
+      type: 'number',
+      required: false,
+      default: '2200',
+      description: '切换间隔（毫秒）'
+    },
+    {
+      name: 'stagger',
+      type: 'number',
+      required: false,
+      default: '40',
+      description: '字符错峰延迟（毫秒）'
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      required: false,
+      default: '420',
+      description: '单字符动画时长（毫秒）'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '56',
+      description: '字号'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#0f172a'",
+      description: '颜色'
+    },
+    {
+      name: 'highlightColor',
+      type: 'string',
+      required: false,
+      default: "'#38bdf8'",
+      description: '高亮背景色'
+    }
+  ],
   SandFall: [
     {
       name: 'width',
@@ -1497,6 +1759,50 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '180',
       description: ''
+    }
+  ],
+  ShinyText: [
+    {
+      name: 'text',
+      type: 'string',
+      required: false,
+      default: "'SHINY TEXT'",
+      description: '显示文字'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '2',
+      description: '扫光周期（秒）'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#94a3b8'",
+      description: '文字底色'
+    },
+    {
+      name: 'shineColor',
+      type: 'string',
+      required: false,
+      default: "'#ffffff'",
+      description: '高光色'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '64',
+      description: '字号'
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '是否暂停动画'
     }
   ],
   SlotMachine: [
@@ -1913,6 +2219,78 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'#22d3ee'",
       description: ''
+    }
+  ],
+  TrueFocus: [
+    {
+      name: 'sentence',
+      type: 'string',
+      required: false,
+      default: "'True Focus'",
+      description: '句子文案'
+    },
+    {
+      name: 'separator',
+      type: 'string',
+      required: false,
+      default: "' '",
+      description: '分词分隔符'
+    },
+    {
+      name: 'manualMode',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '是否仅 hover 聚焦'
+    },
+    {
+      name: 'blurAmount',
+      type: 'number',
+      required: false,
+      default: '5',
+      description: '非聚焦词模糊强度（px）'
+    },
+    {
+      name: 'borderColor',
+      type: 'string',
+      required: false,
+      default: "'#22c55e'",
+      description: '焦点框颜色'
+    },
+    {
+      name: 'glowColor',
+      type: 'string',
+      required: false,
+      default: "'rgb(34 197 94 / 60%)'",
+      description: '焦点光晕颜色'
+    },
+    {
+      name: 'animationDuration',
+      type: 'number',
+      required: false,
+      default: '0.5',
+      description: '切换动画时长（秒）'
+    },
+    {
+      name: 'pauseBetweenAnimations',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '自动切换间歇（秒）'
+    },
+    {
+      name: 'fontSize',
+      type: 'number',
+      required: false,
+      default: '48',
+      description: '字号'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      required: false,
+      default: "'#f8fafc'",
+      description: '文字颜色'
     }
   ],
   Turntable: [

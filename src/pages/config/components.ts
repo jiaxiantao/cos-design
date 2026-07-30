@@ -284,6 +284,90 @@ export const componentDemos: ComponentDemoItem[] = [
 <SplitText text="HELLO" animation="fadeUp" loop />`
   },
   {
+    name: 'ShinyText',
+    path: '/shinyText',
+    title: '金属扫光',
+    description: '高光沿文字表面扫过，呈现金属质感流光。',
+    tags: ['CSS', '文字'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { ShinyText } from 'cos-design';
+
+<ShinyText text="SHINY TEXT" speed={2} />`
+  },
+  {
+    name: 'BlurText',
+    path: '/blurText',
+    title: '模糊入场',
+    description: '文字从模糊到清晰逐词/逐字显现，进入视口时触发。',
+    tags: ['CSS', '动画'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { BlurText } from 'cos-design';
+
+<BlurText text="BLUR INTO FOCUS" animateBy="words" />`
+  },
+  {
+    name: 'CircularText',
+    path: '/circularText',
+    title: '环形文字',
+    description: '字符排布成圆环并持续旋转，悬停可加速/减速/暂停。',
+    tags: ['CSS', '交互'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { CircularText } from 'cos-design';
+
+<CircularText text="COS DESIGN • REACT BITS • " spinDuration={18} />`
+  },
+  {
+    name: 'TrueFocus',
+    path: '/trueFocus',
+    title: '焦点聚焦',
+    description: '词级轮流清晰聚焦，其余模糊，带四角焦点框。',
+    tags: ['CSS', '动画'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { TrueFocus } from 'cos-design';
+
+<TrueFocus sentence="True Focus Mode" />`
+  },
+  {
+    name: 'FuzzyText',
+    path: '/fuzzyText',
+    title: '抖动模糊',
+    description: 'Canvas 逐行抖动绘制文字，悬停时抖动增强。',
+    tags: ['Canvas', '文字'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { FuzzyText } from 'cos-design';
+
+<FuzzyText text="FUZZY" fontSize={72} />`
+  },
+  {
+    name: 'CurvedLoop',
+    path: '/curvedLoop',
+    title: '曲线跑马灯',
+    description: '文字沿 SVG 曲线循环滚动，支持拖拽改变方向。',
+    tags: ['SVG', '动画'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { CurvedLoop } from 'cos-design';
+
+<CurvedLoop text="COS DESIGN ✦ CURVED LOOP ✦ " speed={2} />`
+  },
+  {
+    name: 'RotatingText',
+    path: '/rotatingText',
+    title: '轮播翻转',
+    description: '多文案轮播，字符错峰滑入滑出，适合标题关键词切换。',
+    tags: ['CSS', '文字'],
+    category: 'text' as const,
+    isNew: true,
+    codeExample: `import { RotatingText } from 'cos-design';
+
+<RotatingText texts={['React', 'Motion', 'Design']} />`
+  },
+  {
     name: 'WaveButton',
     path: '/waveButton',
     title: '波纹按钮',

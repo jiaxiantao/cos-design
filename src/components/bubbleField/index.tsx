@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { bindVisibilityPause } from '@cos-design/shared';
 import { createPointerState, FRAME_MS, MAX_DPR } from './constants';
 import { drawDynamicBackground, drawStaticBackground, createSnowSprite } from './background';
@@ -281,12 +281,9 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
     };
   }, [height, width]);
 
-  const hint = useMemo(() => (interactive ? '海底气泡上升 · 划过扰动水流' : '海底气泡上升'), [interactive]);
-
   return (
     <div className={styles.bubbleField} style={{ width, height }}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
-      <div className={styles.hint}>{hint}</div>
     </div>
   );
 };

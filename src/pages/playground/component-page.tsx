@@ -4,6 +4,13 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { getCategoryMeta } from '../config/categories';
 import { componentDemos } from '../config/components';
 import { demoComponents } from '../config/demo-components';
+import BackgroundDemoContent from './background-demo-content';
+import {
+  BACKGROUND_DEMO_HEADLINES,
+  BACKGROUND_DEMO_SUBTITLES,
+  DEFAULT_BACKGROUND_HEADLINE,
+  DEFAULT_BACKGROUND_SUBTITLE
+} from './background-demo-headlines';
 import LiveDemoPlayground from './live-demo';
 import PropsTable from './props-table';
 import styles from './style/component-page.module.less';
@@ -29,6 +36,15 @@ const ComponentPage = () => {
   const current = componentDemos[currentIndex];
   const scopedPackage = current ? toScopedPackageName(current.path) : '';
   const installCmd = scopedPackage ? `pnpm add ${scopedPackage}` : '';
+  const isBackground = current?.category === 'background';
+  /** Weather 在自家 canvas 舞台内挂载 Demo Content，避免遮挡控制面板 */
+  const showPageDemoContent = isBackground && current?.name !== 'WeatherBackground';
+  const demoHeadline = current
+    ? (BACKGROUND_DEMO_HEADLINES[current.name] ?? DEFAULT_BACKGROUND_HEADLINE)
+    : DEFAULT_BACKGROUND_HEADLINE;
+  const demoSubtitle = current
+    ? (BACKGROUND_DEMO_SUBTITLES[current.name] ?? DEFAULT_BACKGROUND_SUBTITLE)
+    : DEFAULT_BACKGROUND_SUBTITLE;
 
   const showCode = editSession?.path === pathname;
   const editorCode = showCode ? editSession.code : (current?.codeExample ?? '');
@@ -122,9 +138,15 @@ const ComponentPage = () => {
             copied={copied}
             onReset={handleReset}
             editorRef={editorRef}
+            demoContent={
+              showPageDemoContent ? <BackgroundDemoContent headline={demoHeadline} subtitle={demoSubtitle} /> : null
+            }
           />
         ) : (
-          <div className={styles.preview}>{demoComponents[current.name] ?? <p>演示暂未配置</p>}</div>
+          <div className={`${styles.preview} ${showPageDemoContent ? styles.previewBackground : ''}`}>
+            {demoComponents[current.name] ?? <p>演示暂未配置</p>}
+            {showPageDemoContent ? <BackgroundDemoContent headline={demoHeadline} subtitle={demoSubtitle} /> : null}
+          </div>
         )}
 
         <PropsTable componentName={current.name} />

@@ -2,7 +2,7 @@
 
 # cos-design
 
-**64 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
+**71 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
@@ -29,7 +29,7 @@
 | 数据大屏     | 翻牌器、数字递增、仪表盘、关系网络图    |
 | 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成、生命游戏    |
 
-> 从背景到物理、从文字到营销，64 个组件刚好组成一套完整的「视觉工具箱」。
+> 从背景到物理、从文字到营销，71 个组件刚好组成一套完整的「视觉工具箱」。
 
 ---
 
@@ -84,7 +84,7 @@ export default function Page() {
 
 ---
 
-## 组件一览（64 个 · 8 大分类）
+## 组件一览（71 个 · 8 大分类）
 
 <details open>
 <summary><strong>背景动效</strong> — 11 个 · 动态场景与粒子背景</summary>
@@ -108,7 +108,7 @@ export default function Page() {
 </details>
 
 <details>
-<summary><strong>文字动效</strong> — 11 个 · 标题与 Banner 动画</summary>
+<summary><strong>文字动效</strong> — 18 个 · 标题与 Banner 动画</summary>
 
 <br>
 
@@ -125,6 +125,13 @@ export default function Page() {
 | `BarcodeScan`  | 扫描线覆盖                |
 | `TextMorph`    | 文案柔和形变过渡          |
 | `SplitText`    | 拆字入场（fadeUp 等模式） |
+| `ShinyText`    | 金属扫光文字              |
+| `BlurText`     | 模糊到清晰入场            |
+| `CircularText` | 环形旋转文字              |
+| `TrueFocus`    | 词级焦点聚焦              |
+| `FuzzyText`    | Canvas 抖动模糊字         |
+| `CurvedLoop`   | 曲线跑马灯                |
+| `RotatingText` | 多文案字符翻转轮播        |
 
 </details>
 
@@ -234,7 +241,7 @@ export default function Page() {
 
 ## 特性
 
-- **64 个组件**，覆盖背景、文字、交互、营销、数据、物理、科学、特效八大场景
+- **71 个组件**，覆盖背景、文字、交互、营销、数据、物理、科学、特效八大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
@@ -255,7 +262,7 @@ npm run setup          # 安装依赖（绕过 corepack 问题）
 npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-访问 **http://localhost:4000** — 按分类浏览全部 64 个组件，右侧可查看与复制示例代码。
+访问 **http://localhost:4000** — 按分类浏览全部 71 个组件，右侧可查看与复制示例代码。
 
 ---
 

@@ -1,0 +1,72 @@
+.blurText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 30%, rgb(56 189 248 / 10%), transparent 32%),
+    linear-gradient(180deg, #0a0a0a, #0f172a);
+  border-radius: 18px;
+}
+
+.text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  color: var(--blur-color, #f8fafc);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.unit {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+  animation-duration: var(--blur-duration, 500ms);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.idle {
+  opacity: 0;
+  filter: blur(12px);
+}
+
+.top.enter {
+  animation-name: blurFromTop;
+}
+
+.bottom.enter {
+  animation-name: blurFromBottom;
+}
+
+@keyframes blurFromTop {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(-36px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes blurFromBottom {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(36px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
