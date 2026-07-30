@@ -41,8 +41,8 @@ const HomePage = () => {
         <p className={styles.eyebrow}>React Visual Effect Library</p>
         <h1 className={styles.title}>为页面加上记忆点</h1>
         <p className={styles.subtitle}>
-          <strong>cos-design</strong> 是面向视觉表达的 React 组件库——不是 Ant Design
-          的替代品，而是给活动页、品牌页与创意展示加氛围、加趣味的「特效层」。
+          <strong>cos-design</strong> 是面向视觉表达的 React
+          组件库——专注特效与氛围，给活动页、品牌页与创意展示加趣味与记忆点。
         </p>
 
         <div className={styles.heroActions}>

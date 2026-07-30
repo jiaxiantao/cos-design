@@ -48,7 +48,7 @@ npm 包：[npmjs.com/package/cos-design](https://www.npmjs.com/package/cos-desig
 - 对首屏极度敏感、完全不需要视觉特效的页面
 - 需要完全无动画、极致静态稳定输出的纯文档站
 
-换句话说，**cos-design 不是 Ant Design / MUI 的替代品**。它更像是对现有业务系统的一层“视觉强化插件”，用来增加品牌感、趣味性和展示效果。
+换句话说，**cos-design 不是通用业务 UI 组件库的替代品**。它更像是对现有业务系统的一层“视觉强化插件”，用来增加品牌感、趣味性和展示效果。
 
 ---
 
