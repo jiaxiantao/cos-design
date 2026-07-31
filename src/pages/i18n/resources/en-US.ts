@@ -372,6 +372,8 @@ cd cos-design && npm run setup && pnpm dev
         { title: 'Lake Reflection', description: 'The sky held whole in still water' },
         { title: 'Misty Horizon', description: 'The road still has farther to go' }
       ],
+      photoClotheslineAria: 'Travel photos on a clothesline',
+      photoClotheslineHint: 'Grab a photo and fling it any direction · Drag the empty space to browse',
       redPacketGrabbed: 'Collected:',
       redPacketEnded: 'Red packet rain ended',
       redPacketHint: 'Click red packets to collect them',

@@ -1,7 +1,7 @@
 # cos-design
 
 > React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.7.0 · 72 components · MIT
+> Version 3.7.1 · 73 components · MIT
 
 ## When to use (for AI agents)
 
@@ -106,11 +106,12 @@ _Use when: headlines, banners, hero titles, terminal-style text, brand typograph
 
 _Use when: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI_
 
+- **PhotoAlbum** — 真实翻页相册: 摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。 · `@cos-design/photo-album` · [demo](https://jiaxiantao.github.io/cos-design/#/photoAlbum)
+- **PhotoClothesline** — 晾绳照片墙: 照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。 · `@cos-design/photo-clothesline` · [demo](https://jiaxiantao.github.io/cos-design/#/photoClothesline)
 - **WaveButton** — 波纹按钮: 带水波扩散动画的交互按钮。 · `@cos-design/wave-button` · [demo](https://jiaxiantao.github.io/cos-design/#/waveButton)
 - **Spotlight** — 手电筒: 暗层中鼠标位置挖洞照亮。 · `@cos-design/spotlight` · [demo](https://jiaxiantao.github.io/cos-design/#/spotlight)
 - **MagneticButton** — 磁吸按钮: 按钮随鼠标靠近磁吸偏移。 · `@cos-design/magnetic-button` · [demo](https://jiaxiantao.github.io/cos-design/#/magneticButton)
 - **HolographicCard** — 全息卡片: 倾斜时彩虹反光的 3D 卡片。 · `@cos-design/holographic-card` · [demo](https://jiaxiantao.github.io/cos-design/#/holographicCard)
-- **PhotoAlbum** — 真实翻页相册: 摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。 · `@cos-design/photo-album` · [demo](https://jiaxiantao.github.io/cos-design/#/photoAlbum)
 - **ClickSpark** — 点击火花: 点击处迸出轻量粒子火花。 · `@cos-design/click-spark` · [demo](https://jiaxiantao.github.io/cos-design/#/clickSpark)
 - **CursorTrail** — 光标拖尾: 鼠标后跟随粒子光点拖尾。 · `@cos-design/cursor-trail` · [demo](https://jiaxiantao.github.io/cos-design/#/cursorTrail)
 - **LiquidGlass** — 液态玻璃: Apple 风毛玻璃面板效果。 · `@cos-design/liquid-glass` · [demo](https://jiaxiantao.github.io/cos-design/#/liquidGlass)

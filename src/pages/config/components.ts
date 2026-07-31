@@ -415,6 +415,49 @@ return (
 );`
   },
   {
+    name: 'PhotoClothesline',
+    path: '/photoClothesline',
+    title: '晾绳照片墙',
+    description:
+      '照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。',
+    tags: ['CSS', '物理', '交互'],
+    category: 'interactive' as const,
+    isNew: true,
+    codeExample: `import { PhotoClothesline } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85', title: '在路上', alt: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=85', title: '山谷晨光', alt: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85', title: '湖畔', alt: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=85', title: '林间漫步', alt: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85', title: '日落时分', alt: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=85', title: '山脊之上', alt: '山脊之上' },
+  { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85', title: '海边午后', alt: '海边午后' },
+  { src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85', title: '雪峰星夜', alt: '雪峰星夜' }
+];
+
+return (
+  <PhotoClothesline
+    photos={photos}
+    height={480}
+    photoWidth={150}
+    photoHeight={200}
+    photoGap={46}
+    ropeTop={66}
+    ropeSag={26}
+    bandLength={34}
+    bandWidth={5}
+    maxPull={110}
+    stiffness={1}
+    damping={0.16}
+    tension={0.35}
+    tilt={5}
+    showCaption
+    ariaLabel="晾绳照片墙"
+  />
+);`
+  },
+  {
     name: 'WaveButton',
     path: '/waveButton',
     title: '波纹按钮',

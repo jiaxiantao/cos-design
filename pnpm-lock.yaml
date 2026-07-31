@@ -562,6 +562,15 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/photoClothesline:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/plasmaBall:
     dependencies:
       '@cos-design/shared':
