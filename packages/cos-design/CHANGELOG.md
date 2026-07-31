@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.1] - 2026-07-31
+
+### Added
+
+- 新增 `PhotoAlbum` 真实翻页相册：CSS 3D 摊开式翻页、铁丝圈装订、飞页与自适应铁圈数量
+- Playground Props 表支持自定义类型说明
+- `@cos-design/photo-album`: 新增 3.7.1
+- cos-design: 聚合包更新至 3.7.1
+
 ## [3.7.0] - 2026-07-30
 
 ### Added

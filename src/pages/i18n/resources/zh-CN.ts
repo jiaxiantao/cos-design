@@ -213,7 +213,10 @@ cd cos-design && npm run setup && pnpm dev
     colDescription: '说明',
     requiredYes: '是',
     requiredNo: '否',
-    empty: '—'
+    empty: '—',
+    typesTitle: '自定义类型',
+    typesCount: '{{value}} 个',
+    typesDesc: '以下为 Props 中引用的 TypeScript 自定义类型及其字段说明。'
   },
   backgroundDemo: {
     switchLabel: '示例文案',
@@ -323,6 +326,28 @@ cd cos-design && npm run setup && pnpm dev
       },
       networkGraphHint: '拖拽节点 · 悬停查看关联',
       particleNetworkHint: '移动鼠标或手指与粒子互动',
+      photoAlbumAria: '旅行照片相册',
+      photoAlbumLabels: {
+        previous: '上一张照片',
+        next: '下一张照片',
+        empty: '暂无照片',
+        flyleafTitle: '旅行相册',
+        flyleafSubtitle: '把远方装进这一页',
+        flyleafEndTitle: '完',
+        flyleafEndSubtitle: '故事暂告一段落'
+      },
+      photoAlbumPhotos: [
+        { title: '在路上', description: '把远方装进相册' },
+        { title: '山谷晨光', description: '风从群山之间吹来' },
+        { title: '湖畔', description: '安静得只听见水声' },
+        { title: '林间漫步', description: '盛夏留下的绿色记忆' },
+        { title: '日落时分', description: '旅程在余晖中继续' },
+        { title: '山脊之上', description: '云海在脚下翻涌' },
+        { title: '海边午后', description: '浪花一遍遍靠近' },
+        { title: '雪峰星夜', description: '银河落进沉默的山' },
+        { title: '静湖倒影', description: '天空被完整地接住' },
+        { title: '远山薄雾', description: '旅途尚未到尽头' }
+      ],
       redPacketGrabbed: '已抢:',
       redPacketEnded: '红包雨结束',
       redPacketHint: '点击红包抢夺',

@@ -368,6 +368,53 @@ export const componentDemos: ComponentDemoItem[] = [
 <RotatingText texts={['React', 'Motion', 'Design']} />`
   },
   {
+    name: 'PhotoAlbum',
+    path: '/photoAlbum',
+    title: '真实翻页相册',
+    description: '摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。',
+    tags: ['CSS', '3D', '交互'],
+    category: 'interactive' as const,
+    isNew: true,
+    codeExample: `import { PhotoAlbum } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85', title: '在路上', description: '把远方装进相册', alt: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=85', title: '山谷晨光', description: '风从群山之间吹来', alt: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85', title: '湖畔', description: '安静得只听见水声', alt: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆', alt: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85', title: '日落时分', description: '旅程在余晖中继续', alt: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85', title: '山脊之上', description: '云海在脚下翻涌', alt: '山脊之上' },
+  { src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85', title: '海边午后', description: '浪花一遍遍靠近', alt: '海边午后' },
+  { src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=85', title: '雪峰星夜', description: '银河落进沉默的山', alt: '雪峰星夜' },
+  { src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=85', title: '静湖倒影', description: '天空被完整地接住', alt: '静湖倒影' },
+  { src: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=85', title: '远山薄雾', description: '旅途尚未到尽头', alt: '远山薄雾' }
+];
+
+return (
+  <PhotoAlbum
+    photos={photos}
+    width={780}
+    height={475}
+    initialIndex={0}
+    pageTurnDuration={760}
+    objectFit="cover"
+    showPageNumber
+    pageColor="#f2ead8"
+    coverColor="#4a3025"
+    ariaLabel="旅行照片相册"
+    labels={{
+      previous: '上一张照片',
+      next: '下一张照片',
+      empty: '暂无照片',
+      flyleafTitle: '旅行相册',
+      flyleafSubtitle: '把远方装进这一页',
+      flyleafEndTitle: '完',
+      flyleafEndSubtitle: '故事暂告一段落'
+    }}
+  />
+);`
+  },
+  {
     name: 'WaveButton',
     path: '/waveButton',
     title: '波纹按钮',

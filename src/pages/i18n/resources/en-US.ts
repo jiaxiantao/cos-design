@@ -237,7 +237,10 @@ cd cos-design && npm run setup && pnpm dev
     colDescription: 'Description',
     requiredYes: 'Yes',
     requiredNo: 'No',
-    empty: '—'
+    empty: '—',
+    typesTitle: 'Custom types',
+    typesCount: '{{value}}',
+    typesDesc: 'TypeScript interfaces referenced by the props above, with their fields.'
   },
   backgroundDemo: {
     switchLabel: 'Sample content',
@@ -347,6 +350,28 @@ cd cos-design && npm run setup && pnpm dev
       },
       networkGraphHint: 'Drag nodes · Hover to view connections',
       particleNetworkHint: 'Move the pointer or touch to interact with particles',
+      photoAlbumAria: 'Travel photo album',
+      photoAlbumLabels: {
+        previous: 'Previous photo',
+        next: 'Next photo',
+        empty: 'No photos',
+        flyleafTitle: 'Photo Album',
+        flyleafSubtitle: 'Keeping distant places close',
+        flyleafEndTitle: 'The End',
+        flyleafEndSubtitle: 'Thank you for browsing'
+      },
+      photoAlbumPhotos: [
+        { title: 'On the Road', description: 'Keeping distant places close' },
+        { title: 'Morning Valley', description: 'Wind moving between the mountains' },
+        { title: 'By the Lake', description: 'Still enough to hear the water' },
+        { title: 'Forest Walk', description: 'A green memory from midsummer' },
+        { title: 'At Sunset', description: 'The journey continues in the afterglow' },
+        { title: 'Above the Ridge', description: 'A sea of clouds rolling below' },
+        { title: 'Afternoon Shore', description: 'Waves returning again and again' },
+        { title: 'Snow Peak Night', description: 'The Milky Way over quiet mountains' },
+        { title: 'Lake Reflection', description: 'The sky held whole in still water' },
+        { title: 'Misty Horizon', description: 'The road still has farther to go' }
+      ],
       redPacketGrabbed: 'Collected:',
       redPacketEnded: 'Red packet rain ended',
       redPacketHint: 'Click red packets to collect them',
