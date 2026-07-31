@@ -1,7 +1,7 @@
 {
-  "name": "cos-design",
+  "name": "@cos-design/photo-clothesline",
   "version": "3.7.2",
-  "description": "A React component library built with Vite",
+  "description": "PhotoClothesline component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -20,29 +20,17 @@
   },
   "files": [
     "dist",
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md"
+    "LICENSE"
   ],
   "sideEffects": [
     "**/*.css",
     "**/*.less"
   ],
   "keywords": [
-    "cos",
     "cos-design",
     "react",
-    "component-library",
-    "visual-effects",
-    "canvas",
-    "animation",
-    "fireworks",
-    "scratch-card",
-    "lottery",
-    "marketing-page",
-    "landing-page",
-    "typescript",
-    "vite"
+    "photoClothesline",
+    "PhotoClothesline"
   ],
   "homepage": "https://jiaxiantao.github.io/cos-design/",
   "bugs": {
@@ -51,7 +39,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jiaxiantao/cos-design.git",
-    "directory": "packages/cos-design"
+    "directory": "packages/photoClothesline"
   },
   "author": "jiaxiantao <jiaxiantao@souche.com>",
   "license": "MIT",

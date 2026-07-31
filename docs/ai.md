@@ -9,8 +9,8 @@
 | Name           | cos-design                 |
 | npm (umbrella) | cos-design                 |
 | npm (scoped)   | @cos-design/\*             |
-| Version        | 3.7.0                      |
-| Components     | 72                         |
+| Version        | 3.7.1                      |
+| Components     | 73                         |
 | Stack          | React 19, TypeScript, Vite |
 | License        | MIT                        |
 
@@ -829,95 +829,6 @@ import { RotatingText } from 'cos-design';
 - `duration`: number (optional, default `420`) — 单字符动画时长（毫秒）
 - `fontSize`: number (optional, default `56`) — 字号
 
-### WaveButton
-
-- **Category**: Interactive toys (交互玩具)
-- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
-- **Title**: 波纹按钮
-- **Description**: 带水波扩散动画的交互按钮。
-- **Install**: `pnpm add @cos-design/wave-button`
-- **Import**: `import { WaveButton } from '@cos-design/wave-button';`
-- **Playground**: https://jiaxiantao.github.io/cos-design/#/waveButton
-
-**Example**
-
-```tsx
-import { WaveButton } from 'cos-design';
-
-<WaveButton text="点我" />;
-```
-
-**Props**
-
-- `text`: string (optional) — 继承 onClick、disabled、type、aria-\* 等（children 由 text 代替）
-
-### Spotlight
-
-- **Category**: Interactive toys (交互玩具)
-- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
-- **Title**: 手电筒
-- **Description**: 暗层中鼠标位置挖洞照亮。
-- **Install**: `pnpm add @cos-design/spotlight`
-- **Import**: `import { Spotlight } from '@cos-design/spotlight';`
-- **Playground**: https://jiaxiantao.github.io/cos-design/#/spotlight
-
-**Example**
-
-```tsx
-import { Spotlight } from 'cos-design';
-
-<Spotlight>隐藏内容</Spotlight>;
-```
-
-**Props**
-
-- `children`: React.ReactNode (optional)
-- `radius`: number (optional, default `120`) — 聚光半径，默认 120
-
-### MagneticButton
-
-- **Category**: Interactive toys (交互玩具)
-- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
-- **Title**: 磁吸按钮
-- **Description**: 按钮随鼠标靠近磁吸偏移。
-- **Install**: `pnpm add @cos-design/magnetic-button`
-- **Import**: `import { MagneticButton } from '@cos-design/magnetic-button';`
-- **Playground**: https://jiaxiantao.github.io/cos-design/#/magneticButton
-
-**Example**
-
-```tsx
-import { MagneticButton } from 'cos-design';
-
-<MagneticButton>磁吸我</MagneticButton>;
-```
-
-**Props**
-
-- `children`: React.ReactNode (optional, default `0.4`) — 磁力强度 0–1，默认 0.4
-
-### HolographicCard
-
-- **Category**: Interactive toys (交互玩具)
-- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
-- **Title**: 全息卡片
-- **Description**: 倾斜时彩虹反光的 3D 卡片。
-- **Install**: `pnpm add @cos-design/holographic-card`
-- **Import**: `import { HolographicCard } from '@cos-design/holographic-card';`
-- **Playground**: https://jiaxiantao.github.io/cos-design/#/holographicCard
-
-**Example**
-
-```tsx
-import { HolographicCard } from 'cos-design';
-
-<HolographicCard title="VIP" subtitle="全息会员卡" />;
-```
-
-**Props**
-
-- `title`: string (optional)
-
 ### PhotoAlbum
 
 - **Category**: Interactive toys (交互玩具)
@@ -1027,6 +938,182 @@ return (
 - `alt`: string (optional) — 图片替代文本
 - `title`: string (optional) — 照片标题
 - `description`: string (optional) — 照片说明
+
+### PhotoClothesline
+
+- **Category**: Interactive toys (交互玩具)
+- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Title**: 晾绳照片墙
+- **Description**: 照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。
+- **Install**: `pnpm add @cos-design/photo-clothesline`
+- **Import**: `import { PhotoClothesline } from '@cos-design/photo-clothesline';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoClothesline
+
+**Example**
+
+```tsx
+import { PhotoClothesline } from 'cos-design';
+
+const photos = [
+  {
+    src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85',
+    title: '在路上',
+    alt: '在路上'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=85',
+    title: '山谷晨光',
+    alt: '山谷晨光'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85',
+    title: '湖畔',
+    alt: '湖畔'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=85',
+    title: '林间漫步',
+    alt: '林间漫步'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85',
+    title: '日落时分',
+    alt: '日落时分'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=85',
+    title: '山脊之上',
+    alt: '山脊之上'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85',
+    title: '海边午后',
+    alt: '海边午后'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85',
+    title: '雪峰星夜',
+    alt: '雪峰星夜'
+  }
+];
+
+return (
+  <PhotoClothesline
+    photos={photos}
+    height={480}
+    photoWidth={150}
+    photoHeight={200}
+    photoGap={46}
+    ropeTop={66}
+    ropeSag={26}
+    bandLength={34}
+    bandWidth={5}
+    maxPull={110}
+    stiffness={1}
+    damping={0.16}
+    tension={0.35}
+    tilt={5}
+    showCaption
+    ariaLabel="晾绳照片墙"
+  />
+);
+```
+
+**Props**
+
+- `PhotoClotheslineItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### WaveButton
+
+- **Category**: Interactive toys (交互玩具)
+- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Title**: 波纹按钮
+- **Description**: 带水波扩散动画的交互按钮。
+- **Install**: `pnpm add @cos-design/wave-button`
+- **Import**: `import { WaveButton } from '@cos-design/wave-button';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/waveButton
+
+**Example**
+
+```tsx
+import { WaveButton } from 'cos-design';
+
+<WaveButton text="点我" />;
+```
+
+**Props**
+
+- `text`: string (optional) — 继承 onClick、disabled、type、aria-\* 等（children 由 text 代替）
+
+### Spotlight
+
+- **Category**: Interactive toys (交互玩具)
+- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Title**: 手电筒
+- **Description**: 暗层中鼠标位置挖洞照亮。
+- **Install**: `pnpm add @cos-design/spotlight`
+- **Import**: `import { Spotlight } from '@cos-design/spotlight';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/spotlight
+
+**Example**
+
+```tsx
+import { Spotlight } from 'cos-design';
+
+<Spotlight>隐藏内容</Spotlight>;
+```
+
+**Props**
+
+- `children`: React.ReactNode (optional)
+- `radius`: number (optional, default `120`) — 聚光半径，默认 120
+
+### MagneticButton
+
+- **Category**: Interactive toys (交互玩具)
+- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Title**: 磁吸按钮
+- **Description**: 按钮随鼠标靠近磁吸偏移。
+- **Install**: `pnpm add @cos-design/magnetic-button`
+- **Import**: `import { MagneticButton } from '@cos-design/magnetic-button';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/magneticButton
+
+**Example**
+
+```tsx
+import { MagneticButton } from 'cos-design';
+
+<MagneticButton>磁吸我</MagneticButton>;
+```
+
+**Props**
+
+- `children`: React.ReactNode (optional, default `0.4`) — 磁力强度 0–1，默认 0.4
+
+### HolographicCard
+
+- **Category**: Interactive toys (交互玩具)
+- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Title**: 全息卡片
+- **Description**: 倾斜时彩虹反光的 3D 卡片。
+- **Install**: `pnpm add @cos-design/holographic-card`
+- **Import**: `import { HolographicCard } from '@cos-design/holographic-card';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/holographicCard
+
+**Example**
+
+```tsx
+import { HolographicCard } from 'cos-design';
+
+<HolographicCard title="VIP" subtitle="全息会员卡" />;
+```
+
+**Props**
+
+- `title`: string (optional)
 
 ### ClickSpark
 

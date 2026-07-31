@@ -79,6 +79,8 @@ export type { OrbitalChartItem, OrbitalChartProps } from './orbitalChart';
 export { default as ParticleNetwork } from './particleNetwork';
 export { default as PhotoAlbum } from './photoAlbum';
 export type { PhotoAlbumItem, PhotoAlbumLabels, PhotoAlbumProps } from './photoAlbum';
+export { default as PhotoClothesline } from './photoClothesline';
+export type { PhotoClotheslineItem, PhotoClotheslineProps } from './photoClothesline';
 export { default as PlasmaBall } from './plasmaBall';
 export type { PlasmaBallProps } from './plasmaBall';
 export { default as SmokeFog } from './smokeFog';

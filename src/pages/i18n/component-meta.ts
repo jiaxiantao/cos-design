@@ -189,6 +189,12 @@ export const componentMetaEn = {
     description: 'An open 3D album with paper, spine and dynamic shadows; click either page to browse naturally.',
     tags: ['CSS', '3D', 'Interactive']
   },
+  PhotoClothesline: {
+    title: 'Photo Clothesline',
+    description:
+      'Photos hanging from lanyards on a rope — grab one and fling it in any direction, the band bends along and swings it back on release; drag the empty space to browse.',
+    tags: ['CSS', 'Physics', 'Interactive']
+  },
   ClickSpark: {
     title: 'Click Spark',
     description: 'Lightweight particle sparks burst at the click point.',

@@ -5,12 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.2] - 2026-07-31
+
+### Added
+
+- 新增 `PhotoClothesline` 晾衣绳照片墙：每张相纸挂在独立的 verlet 吊带上，可抓住任意方向甩动并自由摆回，空白处左右拖动浏览更多
+- 主绳按夹点联动下沉，拽下一张照片会顺着绳子牵动左右邻居
+
+### Changed
+
+- @cos-design/photo-clothesline: 新增 3.7.2
+- cos-design: 聚合包更新至 3.7.2
+
 ## [3.7.1] - 2026-07-31
 
 ### Added
 
 - 新增 `PhotoAlbum` 真实翻页相册：CSS 3D 摊开式翻页、铁丝圈装订、飞页与自适应铁圈数量
-- Playground Props 表支持自定义类型说明
+- Playground Props 表支持自定义类型说明（`componentRelatedTypes`）
 - `@cos-design/photo-album`: 新增 3.7.1
 - cos-design: 聚合包更新至 3.7.1
 

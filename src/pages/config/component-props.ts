@@ -1572,6 +1572,197 @@ export const componentProps: ComponentPropsMap = {
       description: '自定义样式'
     }
   ],
+  PhotoClothesline: [
+    {
+      name: 'photos',
+      type: 'PhotoClotheslineItem[]',
+      required: true,
+      default: '',
+      description: '晾绳上的照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: "'100%'",
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '480',
+      description: '组件高度'
+    },
+    {
+      name: 'photoWidth',
+      type: 'number',
+      required: false,
+      default: '150',
+      description: '单张照片宽度（px）'
+    },
+    {
+      name: 'photoHeight',
+      type: 'number',
+      required: false,
+      default: '200',
+      description: '单张照片高度（px）'
+    },
+    {
+      name: 'photoGap',
+      type: 'number',
+      required: false,
+      default: '46',
+      description: '照片间距（px）'
+    },
+    {
+      name: 'ropeTop',
+      type: 'number',
+      required: false,
+      default: '66',
+      description: '绳索悬挂高度（px，距顶部）'
+    },
+    {
+      name: 'ropeSag',
+      type: 'number',
+      required: false,
+      default: '26',
+      description: '绳索整体垂度（px）'
+    },
+    {
+      name: 'bandLength',
+      type: 'number',
+      required: false,
+      default: '34',
+      description: '照片吊带长度（px），越长摆动幅度越大、周期越慢'
+    },
+    {
+      name: 'bandWidth',
+      type: 'number',
+      required: false,
+      default: '5',
+      description: '吊带宽度（px）'
+    },
+    {
+      name: 'maxPull',
+      type: 'number',
+      required: false,
+      default: '110',
+      description: '照片被拖离静止位的最大距离（px），越小吊带越快绷紧'
+    },
+    {
+      name: 'stiffness',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '主绳刚度 0.1~2，越大被拽下后弹回越快'
+    },
+    {
+      name: 'damping',
+      type: 'number',
+      required: false,
+      default: '0.16',
+      description: '阻尼比 0~1，越小摆动越久'
+    },
+    {
+      name: 'tension',
+      type: 'number',
+      required: false,
+      default: '0.35',
+      description: '相邻照片之间的绳索牵连强度 0~1'
+    },
+    {
+      name: 'tilt',
+      type: 'number',
+      required: false,
+      default: '5',
+      description: '照片随机倾角幅度（度）'
+    },
+    {
+      name: 'ropeColor',
+      type: 'string',
+      required: false,
+      default: "'#8d7a5c'",
+      description: '主绳颜色'
+    },
+    {
+      name: 'bandColor',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '吊带颜色，默认跟随 ropeColor'
+    },
+    {
+      name: 'pinColor',
+      type: 'string',
+      required: false,
+      default: "'#d8a761'",
+      description: '木夹子颜色'
+    },
+    {
+      name: 'frameColor',
+      type: 'string',
+      required: false,
+      default: "'#fffdf7'",
+      description: '相纸边框颜色'
+    },
+    {
+      name: 'background',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '背景（任意 CSS background 值）'
+    },
+    {
+      name: 'objectFit',
+      type: "CSSProperties['objectFit']",
+      required: false,
+      default: "'cover'",
+      description: '照片填充方式'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示照片标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始居中显示的照片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoClotheslineItem) => void',
+      required: false,
+      default: '',
+      description: '点击照片回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'Photo clothesline'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
   PlasmaBall: [
     {
       name: 'width',
@@ -3038,6 +3229,41 @@ export const componentRelatedTypes: ComponentTypesMap = {
           required: false,
           default: '',
           description: '尾页飞页副标题'
+        }
+      ]
+    }
+  ],
+  PhotoClothesline: [
+    {
+      name: 'PhotoClotheslineItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
         }
       ]
     }

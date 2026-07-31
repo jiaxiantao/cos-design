@@ -348,6 +348,8 @@ cd cos-design && npm run setup && pnpm dev
         { title: '静湖倒影', description: '天空被完整地接住' },
         { title: '远山薄雾', description: '旅途尚未到尽头' }
       ],
+      photoClotheslineAria: '晾绳旅行照片墙',
+      photoClotheslineHint: '抓住照片往任意方向甩 · 空白处左右拖动浏览更多',
       redPacketGrabbed: '已抢:',
       redPacketEnded: '红包雨结束',
       redPacketHint: '点击红包抢夺',
