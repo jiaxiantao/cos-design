@@ -5,7 +5,7 @@
   padding: 24px;
   border-radius: 16px;
   background: radial-gradient(ellipse at center, #1a1d2e 0%, #0e1018 100%);
-  overflow: auto;
+  overflow: hidden;
 }
 
 .liveStage {
@@ -15,6 +15,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* react-live 的预览根节点需撑满，否则子组件 width:100% / max-width:100% 会按 0 宽计算 */
+  > * {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
 }
 
 .livePreviewBackground {

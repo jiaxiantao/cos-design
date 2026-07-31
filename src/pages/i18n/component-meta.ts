@@ -184,6 +184,11 @@ export const componentMetaEn = {
     description: '3D card with rainbow reflections when tilted.',
     tags: ['CSS', '3D']
   },
+  PhotoAlbum: {
+    title: 'Realistic Photo Album',
+    description: 'An open 3D album with paper, spine and dynamic shadows; click either page to browse naturally.',
+    tags: ['CSS', '3D', 'Interactive']
+  },
   ClickSpark: {
     title: 'Click Spark',
     description: 'Lightweight particle sparks burst at the click point.',
@@ -390,7 +395,35 @@ const CODE_EXAMPLE_EN: Record<string, string> = {
   '<LiquidGlass>毛玻璃内容</LiquidGlass>': '<LiquidGlass>Frosted glass content</LiquidGlass>',
   "label: '一等奖'": "label: 'First prize'",
   'prize="🎉 恭喜中奖！"': 'prize="🎉 You won!"',
-  "['设计','开发','测试','上线']": "['Design','Build','Test','Launch']"
+  "['设计','开发','测试','上线']": "['Design','Build','Test','Launch']",
+  "title: '在路上', description: '把远方装进相册', alt: '在路上'":
+    "title: 'On the Road', description: 'Keeping distant places close', alt: 'On the Road'",
+  "title: '山谷晨光', description: '风从群山之间吹来', alt: '山谷晨光'":
+    "title: 'Morning Valley', description: 'Wind moving between the mountains', alt: 'Morning Valley'",
+  "title: '湖畔', description: '安静得只听见水声', alt: '湖畔'":
+    "title: 'By the Lake', description: 'Still enough to hear the water', alt: 'By the Lake'",
+  "title: '林间漫步', description: '盛夏留下的绿色记忆', alt: '林间漫步'":
+    "title: 'Forest Walk', description: 'A green memory from midsummer', alt: 'Forest Walk'",
+  "title: '日落时分', description: '旅程在余晖中继续', alt: '日落时分'":
+    "title: 'At Sunset', description: 'The journey continues in the afterglow', alt: 'At Sunset'",
+  "title: '山脊之上', description: '云海在脚下翻涌', alt: '山脊之上'":
+    "title: 'Above the Ridge', description: 'A sea of clouds rolling below', alt: 'Above the Ridge'",
+  "title: '海边午后', description: '浪花一遍遍靠近', alt: '海边午后'":
+    "title: 'Afternoon Shore', description: 'Waves returning again and again', alt: 'Afternoon Shore'",
+  "title: '雪峰星夜', description: '银河落进沉默的山', alt: '雪峰星夜'":
+    "title: 'Snow Peak Night', description: 'The Milky Way over quiet mountains', alt: 'Snow Peak Night'",
+  "title: '静湖倒影', description: '天空被完整地接住', alt: '静湖倒影'":
+    "title: 'Lake Reflection', description: 'The sky held whole in still water', alt: 'Lake Reflection'",
+  "title: '远山薄雾', description: '旅途尚未到尽头', alt: '远山薄雾'":
+    "title: 'Misty Horizon', description: 'The road still has farther to go', alt: 'Misty Horizon'",
+  'ariaLabel="旅行照片相册"': 'ariaLabel="Travel photo album"',
+  "previous: '上一张照片'": "previous: 'Previous photo'",
+  "next: '下一张照片'": "next: 'Next photo'",
+  "empty: '暂无照片'": "empty: 'No photos'",
+  "flyleafTitle: '旅行相册'": "flyleafTitle: 'Photo Album'",
+  "flyleafSubtitle: '把远方装进这一页'": "flyleafSubtitle: 'Keeping distant places close'",
+  "flyleafEndTitle: '完'": "flyleafEndTitle: 'The End'",
+  "flyleafEndSubtitle: '故事暂告一段落'": "flyleafEndSubtitle: 'Thank you for browsing'"
 };
 
 const CODE_EXAMPLE_PROPS_EN: Partial<Record<ComponentMetaName, string[]>> = {

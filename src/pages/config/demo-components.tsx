@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import ChargeDemo from '../demos/charge-demo';
 import FireworksDemo from '../demos/fireworks-demo';
 import FlipCounterDemo from '../demos/flip-counter-demo';
+import PhotoAlbumDemo from '../demos/photo-album-demo';
 import WeatherBackgroundDemo from '../demos/weather-background-demo';
 
 /** 演示内的行内文案，按 i18n key 渲染 */
@@ -239,6 +240,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
     />
   ),
   ParticleNetwork: <LocalizedComponentDemo name="ParticleNetwork" />,
+  PhotoAlbum: <PhotoAlbumDemo />,
   PlasmaBall: <C.PlasmaBall width={360} height={360} />,
   ProgressChest: <ProgressChestDemo />,
   RadarScan: <C.RadarScan size={280} />,

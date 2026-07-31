@@ -77,6 +77,8 @@ export type { NeonTextProps } from './neonText';
 export { default as OrbitalChart } from './orbitalChart';
 export type { OrbitalChartItem, OrbitalChartProps } from './orbitalChart';
 export { default as ParticleNetwork } from './particleNetwork';
+export { default as PhotoAlbum } from './photoAlbum';
+export type { PhotoAlbumItem, PhotoAlbumLabels, PhotoAlbumProps } from './photoAlbum';
 export { default as PlasmaBall } from './plasmaBall';
 export type { PlasmaBallProps } from './plasmaBall';
 export { default as SmokeFog } from './smokeFog';

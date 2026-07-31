@@ -5,6 +5,7 @@
  * 支持：
  * - Props 写在 index.tsx
  * - Props 写在同目录 types.ts（如 WeatherBackground）
+ * - Props 引用的自定义 interface（如 PhotoAlbumItem）一并输出到 componentRelatedTypes
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -28,15 +29,10 @@ const parseTypeAliases = (content) => {
   return aliases;
 };
 
-const parsePropsInterface = (content) => {
-  const ifaceMatch = content.match(/export interface (\w+Props)(?:\s+extends\s+[^{]+)?\s*\{([\s\S]*?)\n\}/);
-  if (!ifaceMatch) return null;
-
-  const componentName = ifaceMatch[1].replace(/Props$/, '');
-  const body = ifaceMatch[2];
-  const props = [];
+/** 解析 interface 字段（含单行 JSDoc） */
+const parseInterfaceFields = (body) => {
+  const fields = [];
   const lines = body.split('\n');
-
   let pendingDoc = '';
   for (const line of lines) {
     const docMatch = line.match(/^\s*\/\*\*\s*(.+?)\s*\*\/\s*$/);
@@ -49,7 +45,7 @@ const parsePropsInterface = (content) => {
     if (!propMatch) continue;
 
     const [, name, optional, type] = propMatch;
-    props.push({
+    fields.push({
       name,
       type: type.trim(),
       required: !optional,
@@ -58,8 +54,40 @@ const parsePropsInterface = (content) => {
     });
     pendingDoc = '';
   }
+  return fields;
+};
 
+const parsePropsInterface = (content) => {
+  const ifaceMatch = content.match(/export interface (\w+Props)(?:\s+extends\s+[^{]+)?\s*\{([\s\S]*?)\n\}/);
+  if (!ifaceMatch) return null;
+
+  const componentName = ifaceMatch[1].replace(/Props$/, '');
+  const props = parseInterfaceFields(ifaceMatch[2]);
   return { componentName, props };
+};
+
+/** 解析文件内除 *Props 外的导出 interface，供自定义类型说明使用 */
+const parseExportedInterfaces = (content) => {
+  const interfaces = {};
+  const re = /export interface (\w+)(?:\s+extends\s+[^{]+)?\s*\{([\s\S]*?)\n\}/g;
+  let m;
+  while ((m = re.exec(content))) {
+    const name = m[1];
+    if (name.endsWith('Props')) continue;
+    interfaces[name] = parseInterfaceFields(m[2]);
+  }
+  return interfaces;
+};
+
+/** 收集 Props 类型字符串里引用到的自定义 interface */
+const collectRelatedTypes = (props, allInterfaces) => {
+  const related = [];
+  for (const [typeName, fields] of Object.entries(allInterfaces)) {
+    if (!fields.length) continue;
+    const used = props.some((prop) => new RegExp(`\\b${typeName}\\b`).test(prop.type));
+    if (used) related.push({ name: typeName, fields });
+  }
+  return related.sort((a, b) => a.name.localeCompare(b.name));
 };
 
 const applyDefaults = (props, destructureBody) => {
@@ -110,7 +138,13 @@ const extractComponentProps = (dirPath) => {
   }
   applyAliases(props, indexContent, typesContent);
 
-  return { componentName, props };
+  const allInterfaces = {
+    ...parseExportedInterfaces(indexContent),
+    ...parseExportedInterfaces(typesContent)
+  };
+  const relatedTypes = collectRelatedTypes(props, allInterfaces);
+
+  return { componentName, props, relatedTypes };
 };
 
 const dirs = fs
@@ -118,10 +152,15 @@ const dirs = fs
   .filter((d) => d.isDirectory() && d.name !== '_shared');
 
 const result = {};
+const relatedResult = {};
 
 for (const dir of dirs) {
   const extracted = extractComponentProps(path.join(componentsDir, dir.name));
-  if (extracted) result[extracted.componentName] = extracted.props;
+  if (!extracted) continue;
+  result[extracted.componentName] = extracted.props;
+  if (extracted.relatedTypes.length) {
+    relatedResult[extracted.componentName] = extracted.relatedTypes;
+  }
 }
 
 if (result.WaveButton) {
@@ -145,10 +184,23 @@ export interface ComponentPropDoc {
   description: string;
 }
 
+export interface ComponentTypeDoc {
+  name: string;
+  fields: ComponentPropDoc[];
+}
+
 export type ComponentPropsMap = Record<string, ComponentPropDoc[]>;
+export type ComponentTypesMap = Record<string, ComponentTypeDoc[]>;
 
 export const componentProps: ComponentPropsMap = `;
 
-fs.writeFileSync(outFile, `${header}${JSON.stringify(result, null, 2)};\n`);
+const footer = `;
+
+export const componentRelatedTypes: ComponentTypesMap = ${JSON.stringify(relatedResult, null, 2)};
+`;
+
+fs.writeFileSync(outFile, `${header}${JSON.stringify(result, null, 2)}${footer}\n`);
 execFileSync('npx', ['--yes', 'prettier', '--write', outFile], { cwd: root, stdio: 'ignore' });
-console.log(`Wrote ${Object.keys(result).length} components to ${path.relative(root, outFile)}`);
+console.log(
+  `Wrote ${Object.keys(result).length} components (${Object.keys(relatedResult).length} with related types) to ${path.relative(root, outFile)}`
+);

@@ -9,7 +9,13 @@ export interface ComponentPropDoc {
   description: string;
 }
 
+export interface ComponentTypeDoc {
+  name: string;
+  fields: ComponentPropDoc[];
+}
+
 export type ComponentPropsMap = Record<string, ComponentPropDoc[]>;
+export type ComponentTypesMap = Record<string, ComponentTypeDoc[]>;
 
 export const componentProps: ComponentPropsMap = {
   AudioVisualizer: [
@@ -736,28 +742,28 @@ export const componentProps: ComponentPropsMap = {
       name: 'width',
       type: 'number',
       required: false,
-      default: '',
+      default: '800',
       description: ''
     },
     {
       name: 'height',
       type: 'number',
       required: false,
-      default: '',
+      default: '500',
       description: ''
     },
     {
       name: 'auto',
       type: 'boolean',
       required: false,
-      default: '',
+      default: 'true',
       description: '是否自动燃放，默认 true'
     },
     {
       name: 'hint',
       type: 'string',
       required: false,
-      default: '',
+      default: "'点击画布燃放烟花'",
       description: '画布操作提示'
     }
   ],
@@ -1464,6 +1470,106 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'移动鼠标或手指与粒子互动'",
       description: '操作提示'
+    }
+  ],
+  PhotoAlbum: [
+    {
+      name: 'photos',
+      type: 'PhotoAlbumItem[]',
+      required: true,
+      default: '',
+      description: '相册照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: '920',
+      description: '相册宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '560',
+      description: '相册高度'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始右页照片索引（摊开为左 index-1 / 右 index；每次翻页翻过一叶两面）'
+    },
+    {
+      name: 'pageTurnDuration',
+      type: 'number',
+      required: false,
+      default: '760',
+      description: '单次翻页动画时长（毫秒）'
+    },
+    {
+      name: 'objectFit',
+      type: "CSSProperties['objectFit']",
+      required: false,
+      default: "'cover'",
+      description: '照片填充方式'
+    },
+    {
+      name: 'showPageNumber',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示页码'
+    },
+    {
+      name: 'pageColor',
+      type: 'string',
+      required: false,
+      default: "'#f2ead8'",
+      description: '相纸颜色'
+    },
+    {
+      name: 'coverColor',
+      type: 'string',
+      required: false,
+      default: "'#4a3025'",
+      description: '封皮颜色'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'Photo album'",
+      description: '相册无障碍名称'
+    },
+    {
+      name: 'labels',
+      type: 'PhotoAlbumLabels',
+      required: false,
+      default: '',
+      description: '内置文案'
+    },
+    {
+      name: 'onPageChange',
+      type: '(index: number, photo: PhotoAlbumItem) => void',
+      required: false,
+      default: '',
+      description: '当前照片变化回调'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
     }
   ],
   PlasmaBall: [
@@ -2767,6 +2873,194 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'天气加载中…'",
       description: '加载状态文案'
+    }
+  ]
+};
+
+export const componentRelatedTypes: ComponentTypesMap = {
+  NetworkGraph: [
+    {
+      name: 'NetworkGraphEdge',
+      fields: [
+        {
+          name: 'source',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'target',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        }
+      ]
+    },
+    {
+      name: 'NetworkGraphNode',
+      fields: [
+        {
+          name: 'id',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'label',
+          type: 'string',
+          required: false,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'color',
+          type: 'string',
+          required: false,
+          default: '',
+          description: ''
+        }
+      ]
+    }
+  ],
+  OrbitalChart: [
+    {
+      name: 'OrbitalChartItem',
+      fields: [
+        {
+          name: 'label',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'value',
+          type: 'number',
+          required: true,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'color',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        }
+      ]
+    }
+  ],
+  PhotoAlbum: [
+    {
+      name: 'PhotoAlbumItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    },
+    {
+      name: 'PhotoAlbumLabels',
+      fields: [
+        {
+          name: 'previous',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '上一页按钮标签'
+        },
+        {
+          name: 'next',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '下一页按钮标签'
+        },
+        {
+          name: 'empty',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '空相册提示'
+        },
+        {
+          name: 'flyleafTitle',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '首页飞页主标题'
+        },
+        {
+          name: 'flyleafSubtitle',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '首页飞页副标题'
+        },
+        {
+          name: 'flyleafEndTitle',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '尾页飞页主标题'
+        },
+        {
+          name: 'flyleafEndSubtitle',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '尾页飞页副标题'
+        }
+      ]
+    }
+  ],
+  Turntable: [
+    {
+      name: 'TurntablePrize',
+      fields: [
+        {
+          name: 'label',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'color',
+          type: 'string',
+          required: false,
+          default: '',
+          description: ''
+        }
+      ]
     }
   ]
 };
