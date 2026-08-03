@@ -223,10 +223,13 @@ function buildLlmsTxt(demos) {
     '',
     `- Playground: ${HOMEPAGE}`,
     `- Full AI guide: ${REPO}/blob/master/docs/ai.md`,
+    `- AI discovery (Context7 + Cursor Skill): ${REPO}/blob/master/docs/ai-discovery.md`,
     `- Quickstart: ${REPO}/blob/master/QUICKSTART.md`,
     `- npm: ${NPM}`,
+    `- Context7 library ID: /jiaxiantao/cos-design`,
     `- Cursor Skill: ${REPO}/tree/master/.cursor/skills/cos-design`,
     `- Agent rules: ${REPO}/blob/master/AGENTS.md`,
+    `- English intro: ${REPO}/blob/master/website-content/cos-design-marketing-effects-en.md`,
     '',
     '## Scenario → component map',
     ''

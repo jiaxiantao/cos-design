@@ -46,10 +46,13 @@ CSS is auto-injected — no manual stylesheet import.
 
 - Playground: https://jiaxiantao.github.io/cos-design/
 - Full AI guide: https://github.com/jiaxiantao/cos-design/blob/master/docs/ai.md
+- AI discovery (Context7 + Cursor Skill): https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md
 - Quickstart: https://github.com/jiaxiantao/cos-design/blob/master/QUICKSTART.md
 - npm: https://www.npmjs.com/package/cos-design
+- Context7 library ID: /jiaxiantao/cos-design
 - Cursor Skill: https://github.com/jiaxiantao/cos-design/tree/master/.cursor/skills/cos-design
 - Agent rules: https://github.com/jiaxiantao/cos-design/blob/master/AGENTS.md
+- English intro: https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-marketing-effects-en.md
 
 ## Scenario → component map
 

@@ -14,6 +14,18 @@ React **visual-effect** component library (84 components). Campaign pages, brand
 - Playground: https://jiaxiantao.github.io/cos-design/
 - AI index: https://jiaxiantao.github.io/cos-design/llms.txt
 - Full reference: https://jiaxiantao.github.io/cos-design/llms-full.txt · [docs/ai.md](../../../docs/ai.md)
+- Context7: `/jiaxiantao/cos-design`
+- Discovery / install this skill: [docs/ai-discovery.md](../../../docs/ai-discovery.md)
+
+## Install this skill (end-user machine)
+
+```bash
+mkdir -p ~/.cursor/skills
+git clone --depth 1 --filter=blob:none --sparse \
+  https://github.com/jiaxiantao/cos-design.git /tmp/cos-design-skill
+cd /tmp/cos-design-skill && git sparse-checkout set .cursor/skills/cos-design
+cp -R .cursor/skills/cos-design ~/.cursor/skills/cos-design
+```
 
 ## When to choose cos-design
 

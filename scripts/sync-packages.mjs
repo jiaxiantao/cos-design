@@ -26,10 +26,16 @@ const AI_KEYWORDS = [
   'canvas',
   'animation',
   'fireworks',
+  'confetti',
   'scratch-card',
   'lottery',
+  'turntable',
+  'matrix-rain',
+  'weather-background',
+  'neon-text',
   'marketing-page',
   'landing-page',
+  'campaign',
   'typescript',
   'vite'
 ];
@@ -163,7 +169,8 @@ function createUmbrellaPackage() {
   const pkg = {
     name: 'cos-design',
     version: VERSION,
-    description: 'A React component library built with Vite',
+    description:
+      'React visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases',
     type: 'module',
     main: './dist/index.cjs',
     module: './dist/index.js',

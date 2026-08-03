@@ -24,9 +24,11 @@ const ComponentPage = () => {
   const componentDemos = useLocalizedComponentDemos();
   const [copied, setCopied] = useState(false);
   const [installCopied, setInstallCopied] = useState(false);
+  const [aiCopied, setAiCopied] = useState(false);
   const [editSession, setEditSession] = useState<{ path: string; code: string } | null>(null);
   const copyTimerRef = useRef(0);
   const installTimerRef = useRef(0);
+  const aiTimerRef = useRef(0);
   const editorRef = useRef<HTMLDivElement>(null);
   const shouldScrollToEditor = useRef(false);
 
@@ -59,6 +61,7 @@ const ComponentPage = () => {
     () => () => {
       clearTimeout(copyTimerRef.current);
       clearTimeout(installTimerRef.current);
+      clearTimeout(aiTimerRef.current);
     },
     []
   );
@@ -89,6 +92,49 @@ const ComponentPage = () => {
     setInstallCopied(true);
     clearTimeout(installTimerRef.current);
     installTimerRef.current = window.setTimeout(() => setInstallCopied(false), 2000);
+  };
+
+  const buildAiPrompt = () => {
+    const demoUrl = `https://jiaxiantao.github.io/cos-design/#${current.path}`;
+    return [
+      `# Use cos-design: ${current.name}`,
+      '',
+      current.description,
+      '',
+      '## Install',
+      '',
+      '```bash',
+      installCmd,
+      '# or: pnpm add cos-design',
+      '```',
+      '',
+      '## Example',
+      '',
+      '```tsx',
+      current.codeExample.trim(),
+      '```',
+      '',
+      '## Rules',
+      '',
+      '- Styles auto-inject — do not import CSS manually.',
+      '- Canvas/WebGL: client-only in Next.js (`dynamic(..., { ssr: false })`).',
+      '- Pass explicit `width` / `height` for canvas components.',
+      '- One strong background + limited focal effects per page.',
+      '',
+      '## Docs',
+      '',
+      `- Demo: ${demoUrl}`,
+      '- AI index: https://jiaxiantao.github.io/cos-design/llms.txt',
+      '- Context7: /jiaxiantao/cos-design',
+      ''
+    ].join('\n');
+  };
+
+  const handleCopyForAi = async () => {
+    await navigator.clipboard.writeText(buildAiPrompt());
+    setAiCopied(true);
+    clearTimeout(aiTimerRef.current);
+    aiTimerRef.current = window.setTimeout(() => setAiCopied(false), 2000);
   };
 
   const handleToggleCode = () => {
@@ -125,6 +171,9 @@ const ComponentPage = () => {
             <code className={styles.installCmd}>{installCmd}</code>
             <button type="button" className={styles.installCopyBtn} onClick={handleCopyInstall}>
               {installCopied ? t('component.copied') : t('component.copyInstall')}
+            </button>
+            <button type="button" className={styles.aiCopyBtn} onClick={handleCopyForAi}>
+              {aiCopied ? t('component.copied') : t('component.copyForAi')}
             </button>
           </div>
         </header>

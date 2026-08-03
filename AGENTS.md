@@ -54,6 +54,8 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | **llms.txt** (index)               | https://jiaxiantao.github.io/cos-design/llms.txt                           |
 | **llms-full.txt** (full reference) | https://jiaxiantao.github.io/cos-design/llms-full.txt                      |
 | **Full AI reference**              | [docs/ai.md](./docs/ai.md)                                                 |
+| **AI discovery**                   | [docs/ai-discovery.md](./docs/ai-discovery.md)                             |
+| **Context7**                       | `/jiaxiantao/cos-design`                                                   |
 | Playground                         | https://jiaxiantao.github.io/cos-design/                                   |
 | Quickstart                         | [QUICKSTART.md](./QUICKSTART.md)                                           |
 | Cursor Skill                       | [.cursor/skills/cos-design/SKILL.md](./.cursor/skills/cos-design/SKILL.md) |

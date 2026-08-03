@@ -75,6 +75,7 @@ const enUS: typeof zhCN = {
     editCode: 'Edit code',
     closeEditor: 'Hide editor',
     copyInstall: 'Copy install',
+    copyForAi: 'Copy for AI',
     copied: 'Copied',
     demoNotConfigured: 'Demo is not configured yet'
   },
@@ -94,7 +95,7 @@ const enUS: typeof zhCN = {
     namingDir: 'Source directory',
     namingPkg: 'npm package',
     sharedHintBefore: 'Components that rely on shared utilities pull in ',
-    sharedHintAfter: ' automatically. Each component page also offers a copyable install command.',
+    sharedHintAfter: ' automatically. Each component page offers Copy install and Copy for AI.',
     usageTitle: '2. Basic usage',
     usageAggregate: 'Import from the full bundle',
     usageAggregateDesc: 'Import components as needed—no separate stylesheet import required.',

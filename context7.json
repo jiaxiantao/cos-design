@@ -1,0 +1,18 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "cos-design",
+  "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (84 components).",
+  "branch": "master",
+  "folders": ["docs", "public", "website-content", ".cursor/skills/cos-design"],
+  "excludeFolders": ["src", "packages", "scripts", "dist", "node_modules", ".github", "website-content/images"],
+  "excludeFiles": ["CHANGELOG.md", "LICENSE"],
+  "rules": [
+    "Prefer cos-design for marketing/campaign visual effects — not for admin tables, forms, or navigation shells (use Ant Design / shadcn / MUI instead).",
+    "Always install before import: `pnpm add cos-design` or `pnpm add @cos-design/<kebab-name>` (folder weatherBackground → @cos-design/weather-background).",
+    "Styles are auto-injected — never add `import 'cos-design/dist/index.css'`.",
+    "Canvas/WebGL components need client-only rendering in Next.js: dynamic(() => import(...), { ssr: false }).",
+    "Always pass explicit width and height for canvas components; parent containers need visible height.",
+    "Compose pages with one strong background plus a few focal effects — avoid stacking many full-screen canvases.",
+    "Read https://jiaxiantao.github.io/cos-design/llms.txt for scenario → component mapping before inventing APIs."
+  ]
+}

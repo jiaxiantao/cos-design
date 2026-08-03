@@ -72,6 +72,7 @@ const zhCN = {
     editCode: '编辑代码',
     closeEditor: '关闭编辑',
     copyInstall: '复制安装',
+    copyForAi: '复制给 AI',
     copied: '已复制',
     demoNotConfigured: '演示暂未配置'
   },
@@ -91,7 +92,7 @@ const zhCN = {
     namingDir: '组件目录',
     namingPkg: 'npm 包名',
     sharedHintBefore: '依赖共享工具的组件会自动安装 ',
-    sharedHintAfter: '，无需手动添加。各组件页标题旁也可复制对应安装命令。',
+    sharedHintAfter: '，无需手动添加。各组件页可「复制安装」与「复制给 AI」。',
     usageTitle: '2. 基础用法',
     usageAggregate: '从聚合包导入',
     usageAggregateDesc: '按需导入组件，无需单独引入样式文件。',
