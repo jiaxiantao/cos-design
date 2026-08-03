@@ -225,6 +225,8 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   '悬停抖动强度 0~1': 'Hover jitter strength 0–1',
   悬停行为: 'Hover behavior',
   '旋转动画时长（毫秒），默认 4000': 'Spin animation duration (ms), default 4000',
+  '单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮':
+    'Per-reel spin duration (ms), default 3000; reels still stop with a stagger',
   旋转结束回调: 'Spin finished callback',
   '旋转圈数，默认 5': 'Spin revolutions, default 5',
   旋转中的按钮文案: 'Spinning button text',

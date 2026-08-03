@@ -9,8 +9,8 @@
 | Name | cos-design |
 | npm (umbrella) | cos-design |
 | npm (scoped) | @cos-design/* |
-| Version | 3.7.1 |
-| Components | 73 |
+| Version | 3.7.3 |
+| Components | 84 |
 | Stack | React 19, TypeScript, Vite |
 | License | MIT |
 
@@ -35,6 +35,22 @@ import { Fireworks } from '@cos-design/fireworks';
 ```
 
 ## Scenario index
+
+### photo gallery, album, postcard, filmstrip, lantern, travel photos, fridge magnets
+
+- `PhotoAlbum` — @cos-design/photo-album
+- `PhotoLantern` — @cos-design/photo-lantern
+- `PhotoClothesline` — @cos-design/photo-clothesline
+- `PhotoFilmstrip` — @cos-design/photo-filmstrip
+- `PhotoPolaroid` — @cos-design/photo-polaroid
+- `PhotoLightbox` — @cos-design/photo-lightbox
+- `PhotoCarousel` — @cos-design/photo-carousel
+- `PhotoPrism` — @cos-design/photo-prism
+- `PhotoScroll` — @cos-design/photo-scroll
+- `PhotoPostcard` — @cos-design/photo-postcard
+- `PhotoViewMaster` — @cos-design/photo-view-master
+- `PhotoFridge` — @cos-design/photo-fridge
+- `PhotoTunnel` — @cos-design/photo-tunnel
 
 ### fireworks, celebration, success animation, campaign win
 
@@ -831,8 +847,8 @@ import { RotatingText } from 'cos-design';
 
 ### PhotoAlbum
 
-- **Category**: Interactive toys (交互玩具)
-- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
 - **Title**: 真实翻页相册
 - **Description**: 摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。
 - **Install**: `pnpm add @cos-design/photo-album`
@@ -889,10 +905,54 @@ return (
 - `title`: string (optional) — 照片标题
 - `description`: string (optional) — 照片说明
 
+### PhotoLantern
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 走马灯
+- **Description**: Three.js 六面走马灯图片预览：真实 3D 灯体与内光摆动，空闲顺时针自转，拖拽跟手旋转并带惯性。
+- **Install**: `pnpm add @cos-design/photo-lantern`
+- **Import**: `import { PhotoLantern } from '@cos-design/photo-lantern';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoLantern
+
+**Example**
+
+```tsx
+import { PhotoLantern } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', alt: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', alt: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', alt: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', alt: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85', title: '日落时分', alt: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85', title: '山脊之上', alt: '山脊之上' }
+];
+
+return (
+  <PhotoLantern
+    photos={photos}
+    width={380}
+    height={520}
+    autoRotate
+    autoRotateSpeed={14}
+    showCaption
+    ariaLabel="走马灯图片预览"
+  />
+);
+```
+
+**Props**
+
+- `PhotoLanternItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
 ### PhotoClothesline
 
-- **Category**: Interactive toys (交互玩具)
-- **When to use**: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
 - **Title**: 晾绳照片墙
 - **Description**: 照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。
 - **Install**: `pnpm add @cos-design/photo-clothesline`
@@ -940,6 +1000,419 @@ return (
 **Props**
 
 - `PhotoClotheslineItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### PhotoFilmstrip
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 胶卷条
+- **Description**: 横向胶卷预览：齿孔与帧号齐备，拖拽卷动带惯性，松手后吸附到整帧。
+- **Install**: `pnpm add @cos-design/photo-filmstrip`
+- **Import**: `import { PhotoFilmstrip } from '@cos-design/photo-filmstrip';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoFilmstrip
+
+**Example**
+
+```tsx
+import { PhotoFilmstrip } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进胶卷' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85', title: '日落时分', description: '旅程在余晖中继续' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85', title: '山脊之上', description: '云海在脚下翻涌' }
+];
+
+return (
+  <PhotoFilmstrip
+    photos={photos}
+    height={280}
+    frameWidth={160}
+    frameHeight={120}
+    showCaption
+    ariaLabel="旅行胶卷"
+  />
+);
+```
+
+**Props**
+
+- `PhotoFilmstripItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### PhotoPolaroid
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 拍立得堆
+- **Description**: 散落在桌面上的拍立得：拖拽翻找、置顶，松手后可留在原处并带轻微惯性。
+- **Install**: `pnpm add @cos-design/photo-polaroid`
+- **Import**: `import { PhotoPolaroid } from '@cos-design/photo-polaroid';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoPolaroid
+
+**Example**
+
+```tsx
+import { PhotoPolaroid } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85', title: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85', title: '山脊之上' }
+];
+
+return (
+  <PhotoPolaroid
+    photos={photos}
+    height={420}
+    cardWidth={150}
+    cardHeight={180}
+    showCaption
+    ariaLabel="拍立得照片堆"
+  />
+);
+```
+
+**Props**
+
+- `PhotoPolaroidItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题（显示在底部留白区）
+- `description`: string (optional) — 照片说明（显示在标题下方）
+
+### PhotoLightbox
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 灯箱透片
+- **Description**: 发光灯箱上的幻灯片：横向拖出切换，未过阈值则弹回，带柔和透光氛围。
+- **Install**: `pnpm add @cos-design/photo-lightbox`
+- **Import**: `import { PhotoLightbox } from '@cos-design/photo-lightbox';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoLightbox
+
+**Example**
+
+```tsx
+import { PhotoLightbox } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进灯箱' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆' }
+];
+
+return (
+  <PhotoLightbox
+    photos={photos}
+    width={360}
+    height={480}
+    showCaption
+    ariaLabel="灯箱透片预览"
+  />
+);
+```
+
+**Props**
+
+- `PhotoLightboxItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### PhotoCarousel
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 旋转木马托盘
+- **Description**: 照片立在圆形托盘边缘，拖拽环绕并带惯性，空闲时可缓慢自转。
+- **Install**: `pnpm add @cos-design/photo-carousel`
+- **Import**: `import { PhotoCarousel } from '@cos-design/photo-carousel';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoCarousel
+
+**Example**
+
+```tsx
+import { PhotoCarousel } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85', title: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85', title: '山脊之上' }
+];
+
+return (
+  <PhotoCarousel
+    photos={photos}
+    width={420}
+    height={360}
+    radius={180}
+    autoRotate
+    showCaption
+    ariaLabel="旋转木马照片托盘"
+  />
+);
+```
+
+**Props**
+
+- `PhotoCarouselItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### PhotoPrism
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 棱镜立方
+- **Description**: CSS 3D 六面棱镜贴图，拖拽翻滚带惯性，空闲时缓慢自转并轻微浮动。
+- **Install**: `pnpm add @cos-design/photo-prism`
+- **Import**: `import { PhotoPrism } from '@cos-design/photo-prism';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoPrism
+
+**Example**
+
+```tsx
+import { PhotoPrism } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85', title: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85', title: '山脊之上' }
+];
+
+return (
+  <PhotoPrism
+    photos={photos}
+    width={380}
+    height={380}
+    size={200}
+    autoRotate
+    showCaption
+    ariaLabel="棱镜照片立方"
+  />
+);
+```
+
+**Props**
+
+- `PhotoPrismItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### PhotoScroll
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 卷轴照片
+- **Description**: 中式手卷：左右木轴固定，中间宣纸横向拖拽浏览照片，松手后带惯性并吸附到最近一帧。
+- **Install**: `pnpm add @cos-design/photo-scroll`
+- **Import**: `import { PhotoScroll } from '@cos-design/photo-scroll';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoScroll
+
+**Example**
+
+```tsx
+import { PhotoScroll } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进卷轴' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' }
+];
+
+return (
+  <PhotoScroll
+    photos={photos}
+    width={520}
+    height={280}
+    showCaption
+    ariaLabel="卷轴照片"
+  />
+);
+```
+
+**Props**
+
+- `PhotoScrollItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题，用于卷轴底部墨迹说明
+- `description`: string (optional) — 照片说明，显示在标题下方
+
+### PhotoPostcard
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 旅行明信片
+- **Description**: 可翻转的明信片：正面照片、背面手写说明与邮戳；点击翻转，横向拖拽切换下一张。
+- **Install**: `pnpm add @cos-design/photo-postcard`
+- **Import**: `import { PhotoPostcard } from '@cos-design/photo-postcard';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoPostcard
+
+**Example**
+
+```tsx
+import { PhotoPostcard } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进明信片' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' }
+];
+
+return (
+  <PhotoPostcard
+    photos={photos}
+    width={360}
+    height={420}
+    showCaption
+    ariaLabel="旅行明信片"
+  />
+);
+```
+
+**Props**
+
+- `PhotoPostcardItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 明信片标题（背面问候语 / 正面说明标题）
+- `description`: string (optional) — 明信片正文（背面书写区 / 正面说明）
+
+### PhotoViewMaster
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 观景器圆盘
+- **Description**: View-Master 风格玩具观景器：拖拽旋转圆盘切换画面，松手带惯性并吸附，空闲时可缓慢自转。
+- **Install**: `pnpm add @cos-design/photo-view-master`
+- **Import**: `import { PhotoViewMaster } from '@cos-design/photo-view-master';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoViewMaster
+
+**Example**
+
+```tsx
+import { PhotoViewMaster } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步' }
+];
+
+return (
+  <PhotoViewMaster
+    photos={photos}
+    width={380}
+    height={420}
+    autoRotate
+    showCaption
+    ariaLabel="观景器圆盘"
+  />
+);
+```
+
+**Props**
+
+- `PhotoViewMasterItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题
+- `description`: string (optional) — 照片说明
+
+### PhotoFridge
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 冰箱磁贴墙
+- **Description**: 冰箱门上的磁贴照片墙：拖拽任意照片置顶并留在原处，松手带轻微惯性，磁铁吸住不回弹。
+- **Install**: `pnpm add @cos-design/photo-fridge`
+- **Import**: `import { PhotoFridge } from '@cos-design/photo-fridge';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoFridge
+
+**Example**
+
+```tsx
+import { PhotoFridge } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' }
+];
+
+return (
+  <PhotoFridge
+    photos={photos}
+    width={420}
+    height={480}
+    showCaption
+    ariaLabel="冰箱磁贴照片墙"
+  />
+);
+```
+
+**Props**
+
+- `PhotoFridgeItem`: string (required) — 图片地址
+- `alt`: string (optional) — 图片替代文本
+- `title`: string (optional) — 照片标题（显示在图片下方）
+- `description`: string (optional) — 照片说明（显示在标题下方）
+
+### PhotoTunnel
+
+- **Category**: Photo preview (图片预览)
+- **When to use**: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)
+- **Title**: 纵深隧道
+- **Description**: 照片沿 Z 轴叠成隧道：上下拖拽穿行，松手后带惯性并吸附到最近一帧，近处清晰远处虚化。
+- **Install**: `pnpm add @cos-design/photo-tunnel`
+- **Import**: `import { PhotoTunnel } from '@cos-design/photo-tunnel';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/photoTunnel
+
+**Example**
+
+```tsx
+import { PhotoTunnel } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进隧道' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆' }
+];
+
+return (
+  <PhotoTunnel
+    photos={photos}
+    width={380}
+    height={480}
+    showCaption
+    ariaLabel="纵深照片隧道"
+  />
+);
+```
+
+**Props**
+
+- `PhotoTunnelItem`: string (required) — 图片地址
 - `alt`: string (optional) — 图片替代文本
 - `title`: string (optional) — 照片标题
 - `description`: string (optional) — 照片说明
@@ -1224,6 +1697,7 @@ import { SlotMachine } from 'cos-design';
 **Props**
 
 - `symbols`: string[] (optional, default `DEFAULT_SYMBOLS`) — 符号列表
+- `spinDuration`: number (optional, default `3000`) — 单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮
 - `onSpinEnd`: (results: string[]) => void (optional) — 旋转结束回调
 
 ### DiceRoll

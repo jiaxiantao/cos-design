@@ -5,7 +5,18 @@ import ChargeDemo from '../demos/charge-demo';
 import FireworksDemo from '../demos/fireworks-demo';
 import FlipCounterDemo from '../demos/flip-counter-demo';
 import PhotoAlbumDemo from '../demos/photo-album-demo';
+import PhotoCarouselDemo from '../demos/photo-carousel-demo';
 import PhotoClotheslineDemo from '../demos/photo-clothesline-demo';
+import PhotoFilmstripDemo from '../demos/photo-filmstrip-demo';
+import PhotoFridgeDemo from '../demos/photo-fridge-demo';
+import PhotoLanternDemo from '../demos/photo-lantern-demo';
+import PhotoLightboxDemo from '../demos/photo-lightbox-demo';
+import PhotoPolaroidDemo from '../demos/photo-polaroid-demo';
+import PhotoPostcardDemo from '../demos/photo-postcard-demo';
+import PhotoPrismDemo from '../demos/photo-prism-demo';
+import PhotoScrollDemo from '../demos/photo-scroll-demo';
+import PhotoTunnelDemo from '../demos/photo-tunnel-demo';
+import PhotoViewMasterDemo from '../demos/photo-view-master-demo';
 import WeatherBackgroundDemo from '../demos/weather-background-demo';
 
 /** 演示内的行内文案，按 i18n key 渲染 */
@@ -242,7 +253,18 @@ export const demoComponents: Record<string, React.ReactNode> = {
   ),
   ParticleNetwork: <LocalizedComponentDemo name="ParticleNetwork" />,
   PhotoAlbum: <PhotoAlbumDemo />,
+  PhotoCarousel: <PhotoCarouselDemo />,
   PhotoClothesline: <PhotoClotheslineDemo />,
+  PhotoFilmstrip: <PhotoFilmstripDemo />,
+  PhotoLantern: <PhotoLanternDemo />,
+  PhotoLightbox: <PhotoLightboxDemo />,
+  PhotoPolaroid: <PhotoPolaroidDemo />,
+  PhotoPrism: <PhotoPrismDemo />,
+  PhotoScroll: <PhotoScrollDemo />,
+  PhotoPostcard: <PhotoPostcardDemo />,
+  PhotoViewMaster: <PhotoViewMasterDemo />,
+  PhotoFridge: <PhotoFridgeDemo />,
+  PhotoTunnel: <PhotoTunnelDemo />,
   PlasmaBall: <C.PlasmaBall width={360} height={360} />,
   ProgressChest: <ProgressChestDemo />,
   RadarScan: <C.RadarScan size={280} />,

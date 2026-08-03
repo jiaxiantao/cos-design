@@ -373,7 +373,7 @@ export const componentDemos: ComponentDemoItem[] = [
     title: '真实翻页相册',
     description: '摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。',
     tags: ['CSS', '3D', '交互'],
-    category: 'interactive' as const,
+    category: 'photo' as const,
     isNew: true,
     codeExample: `import { PhotoAlbum } from 'cos-design';
 
@@ -415,13 +415,44 @@ return (
 );`
   },
   {
+    name: 'PhotoLantern',
+    path: '/photoLantern',
+    title: '走马灯',
+    description: 'Three.js 六面走马灯图片预览：真实 3D 灯体与内光摆动，空闲顺时针自转，拖拽跟手旋转并带惯性。',
+    tags: ['Three.js', '3D', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoLantern } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', alt: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', alt: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', alt: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', alt: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85', title: '日落时分', alt: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85', title: '山脊之上', alt: '山脊之上' }
+];
+
+return (
+  <PhotoLantern
+    photos={photos}
+    width={380}
+    height={520}
+    autoRotate
+    autoRotateSpeed={14}
+    showCaption
+    ariaLabel="走马灯图片预览"
+  />
+);`
+  },
+  {
     name: 'PhotoClothesline',
     path: '/photoClothesline',
     title: '晾绳照片墙',
     description:
       '照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。',
     tags: ['CSS', '物理', '交互'],
-    category: 'interactive' as const,
+    category: 'photo' as const,
     isNew: true,
     codeExample: `import { PhotoClothesline } from 'cos-design';
 
@@ -454,6 +485,289 @@ return (
     tilt={5}
     showCaption
     ariaLabel="晾绳照片墙"
+  />
+);`
+  },
+  {
+    name: 'PhotoFilmstrip',
+    path: '/photoFilmstrip',
+    title: '胶卷条',
+    description: '横向胶卷预览：齿孔与帧号齐备，拖拽卷动带惯性，松手后吸附到整帧。',
+    tags: ['CSS', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoFilmstrip } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进胶卷' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85', title: '日落时分', description: '旅程在余晖中继续' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85', title: '山脊之上', description: '云海在脚下翻涌' }
+];
+
+return (
+  <PhotoFilmstrip
+    photos={photos}
+    height={280}
+    frameWidth={160}
+    frameHeight={120}
+    showCaption
+    ariaLabel="旅行胶卷"
+  />
+);`
+  },
+  {
+    name: 'PhotoPolaroid',
+    path: '/photoPolaroid',
+    title: '拍立得堆',
+    description: '散落在桌面上的拍立得：拖拽翻找、置顶，松手后可留在原处并带轻微惯性。',
+    tags: ['CSS', '物理', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoPolaroid } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85', title: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85', title: '山脊之上' }
+];
+
+return (
+  <PhotoPolaroid
+    photos={photos}
+    height={420}
+    cardWidth={150}
+    cardHeight={180}
+    showCaption
+    ariaLabel="拍立得照片堆"
+  />
+);`
+  },
+  {
+    name: 'PhotoLightbox',
+    path: '/photoLightbox',
+    title: '灯箱透片',
+    description: '发光灯箱上的幻灯片：横向拖出切换，未过阈值则弹回，带柔和透光氛围。',
+    tags: ['CSS', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoLightbox } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进灯箱' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆' }
+];
+
+return (
+  <PhotoLightbox
+    photos={photos}
+    width={360}
+    height={480}
+    showCaption
+    ariaLabel="灯箱透片预览"
+  />
+);`
+  },
+  {
+    name: 'PhotoCarousel',
+    path: '/photoCarousel',
+    title: '旋转木马托盘',
+    description: '照片立在圆形托盘边缘，拖拽环绕并带惯性，空闲时可缓慢自转。',
+    tags: ['CSS', '3D', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoCarousel } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85', title: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85', title: '山脊之上' }
+];
+
+return (
+  <PhotoCarousel
+    photos={photos}
+    width={420}
+    height={360}
+    radius={180}
+    autoRotate
+    showCaption
+    ariaLabel="旋转木马照片托盘"
+  />
+);`
+  },
+  {
+    name: 'PhotoPrism',
+    path: '/photoPrism',
+    title: '棱镜立方',
+    description: 'CSS 3D 六面棱镜贴图，拖拽翻滚带惯性，空闲时缓慢自转并轻微浮动。',
+    tags: ['CSS', '3D', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoPrism } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' },
+  { src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85', title: '日落时分' },
+  { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85', title: '山脊之上' }
+];
+
+return (
+  <PhotoPrism
+    photos={photos}
+    width={380}
+    height={380}
+    size={200}
+    autoRotate
+    showCaption
+    ariaLabel="棱镜照片立方"
+  />
+);`
+  },
+  {
+    name: 'PhotoScroll',
+    path: '/photoScroll',
+    title: '卷轴照片',
+    description: '中式手卷：左右木轴固定，中间宣纸横向拖拽浏览照片，松手后带惯性并吸附到最近一帧。',
+    tags: ['CSS', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoScroll } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进卷轴' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' }
+];
+
+return (
+  <PhotoScroll
+    photos={photos}
+    width={520}
+    height={280}
+    showCaption
+    ariaLabel="卷轴照片"
+  />
+);`
+  },
+  {
+    name: 'PhotoPostcard',
+    path: '/photoPostcard',
+    title: '旅行明信片',
+    description: '可翻转的明信片：正面照片、背面手写说明与邮戳；点击翻转，横向拖拽切换下一张。',
+    tags: ['CSS', '3D', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoPostcard } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进明信片' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' }
+];
+
+return (
+  <PhotoPostcard
+    photos={photos}
+    width={360}
+    height={420}
+    showCaption
+    ariaLabel="旅行明信片"
+  />
+);`
+  },
+  {
+    name: 'PhotoViewMaster',
+    path: '/photoViewMaster',
+    title: '观景器圆盘',
+    description: 'View-Master 风格玩具观景器：拖拽旋转圆盘切换画面，松手带惯性并吸附，空闲时可缓慢自转。',
+    tags: ['CSS', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoViewMaster } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步' }
+];
+
+return (
+  <PhotoViewMaster
+    photos={photos}
+    width={380}
+    height={420}
+    autoRotate
+    showCaption
+    ariaLabel="观景器圆盘"
+  />
+);`
+  },
+  {
+    name: 'PhotoFridge',
+    path: '/photoFridge',
+    title: '冰箱磁贴墙',
+    description: '冰箱门上的磁贴照片墙：拖拽任意照片置顶并留在原处，松手带轻微惯性，磁铁吸住不回弹。',
+    tags: ['CSS', '物理', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoFridge } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85', title: '在路上' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85', title: '山谷晨光' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85', title: '湖畔' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85', title: '林间漫步' }
+];
+
+return (
+  <PhotoFridge
+    photos={photos}
+    width={420}
+    height={480}
+    showCaption
+    ariaLabel="冰箱磁贴照片墙"
+  />
+);`
+  },
+  {
+    name: 'PhotoTunnel',
+    path: '/photoTunnel',
+    title: '纵深隧道',
+    description: '照片沿 Z 轴叠成隧道：上下拖拽穿行，松手后带惯性并吸附到最近一帧，近处清晰远处虚化。',
+    tags: ['CSS', '3D', '交互'],
+    category: 'photo' as const,
+    isNew: true,
+    codeExample: `import { PhotoTunnel } from 'cos-design';
+
+const photos = [
+  { src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85', title: '在路上', description: '把远方装进隧道' },
+  { src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85', title: '山谷晨光', description: '风从群山之间吹来' },
+  { src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85', title: '湖畔', description: '安静得只听见水声' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85', title: '林间漫步', description: '盛夏留下的绿色记忆' }
+];
+
+return (
+  <PhotoTunnel
+    photos={photos}
+    width={380}
+    height={480}
+    showCaption
+    ariaLabel="纵深照片隧道"
   />
 );`
   },

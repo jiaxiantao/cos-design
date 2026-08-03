@@ -13,14 +13,18 @@ if (!name) {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const isShared = name === 'shared';
 const usesShared = process.env.COS_PACKAGE_USES_SHARED === '1';
+const usesThree = process.env.COS_PACKAGE_USES_THREE === '1';
 const entry = isShared
   ? resolve(root, 'packages/shared/src/index.ts')
   : resolve(root, `packages/${name}/src/index.ts`);
 const outDir = resolve(root, `packages/${name}/dist`);
-const external =
-  isShared || !usesShared
-    ? ['react', 'react-dom', 'react/jsx-runtime']
-    : ['react', 'react-dom', 'react/jsx-runtime', '@cos-design/shared'];
+const external = [
+  'react',
+  'react-dom',
+  'react/jsx-runtime',
+  ...(usesShared ? ['@cos-design/shared'] : []),
+  ...(usesThree ? ['three'] : [])
+];
 
 export default defineConfig({
   publicDir: false,
@@ -75,7 +79,9 @@ export default defineConfig({
         exports: 'named',
         globals: {
           react: 'React',
-          'react-dom': 'ReactDOM'
+          'react-dom': 'ReactDOM',
+          three: 'THREE',
+          '@cos-design/shared': 'CosDesignShared'
         }
       }
     },

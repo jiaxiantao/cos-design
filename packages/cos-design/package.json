@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "description": "A React component library built with Vite",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -57,7 +57,8 @@
   "license": "MIT",
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "three": ">=0.160.0"
   },
   "publishConfig": {
     "access": "public",

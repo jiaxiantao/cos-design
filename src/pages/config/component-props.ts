@@ -1572,6 +1572,127 @@ export const componentProps: ComponentPropsMap = {
       description: '自定义样式'
     }
   ],
+  PhotoCarousel: [
+    {
+      name: 'photos',
+      type: 'PhotoCarouselItem[]',
+      required: true,
+      default: '',
+      description: '转盘上的照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: '420',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '360',
+      description: '组件高度'
+    },
+    {
+      name: 'radius',
+      type: 'number',
+      required: false,
+      default: '180',
+      description: '照片环半径（px）'
+    },
+    {
+      name: 'cardWidth',
+      type: 'number',
+      required: false,
+      default: '120',
+      description: '单张照片宽度（px）'
+    },
+    {
+      name: 'cardHeight',
+      type: 'number',
+      required: false,
+      default: '160',
+      description: '单张照片高度（px）'
+    },
+    {
+      name: 'autoRotate',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '空闲时是否自动顺时针旋转'
+    },
+    {
+      name: 'autoRotateSpeed',
+      type: 'number',
+      required: false,
+      default: '12',
+      description: '自动旋转角速度（度/秒）'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '0.35',
+      description: '水平拖拽灵敏度，越大同样位移转得越多'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '2.2',
+      description: '惯性摩擦系数，越大减速越快'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '是否仅对正面照片显示标题与说明'
+    },
+    {
+      name: 'initialAngle',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始旋转角（度），0 表示第一张正对镜头'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoCarouselItem) => void',
+      required: false,
+      default: '',
+      description: '点击正面照片回调'
+    },
+    {
+      name: 'onFaceChange',
+      type: '(index: number) => void',
+      required: false,
+      default: '',
+      description: '正对镜头的照片索引变化回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'Photo carousel'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
   PhotoClothesline: [
     {
       name: 'photos',
@@ -1746,6 +1867,1069 @@ export const componentProps: ComponentPropsMap = {
       type: 'string',
       required: false,
       default: "'Photo clothesline'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoFilmstrip: [
+    {
+      name: 'photos',
+      type: 'PhotoFilmstripItem[]',
+      required: true,
+      default: '',
+      description: '胶片条上的照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: "'100%'",
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '280',
+      description: '组件高度'
+    },
+    {
+      name: 'frameWidth',
+      type: 'number',
+      required: false,
+      default: '160',
+      description: '单帧宽度（px）'
+    },
+    {
+      name: 'frameHeight',
+      type: 'number',
+      required: false,
+      default: '120',
+      description: '单帧高度（px）'
+    },
+    {
+      name: 'frameGap',
+      type: 'number',
+      required: false,
+      default: '14',
+      description: '帧间距（px）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示标题与说明'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '2.8',
+      description: '惯性摩擦系数，越大停得越快'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '拖拽灵敏度，1 为 1:1 跟手'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始居中显示的帧索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoFilmstripItem) => void',
+      required: false,
+      default: '',
+      description: '点击照片回调'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoFilmstripItem) => void',
+      required: false,
+      default: '',
+      description: '当前居中帧变化回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'Photo filmstrip'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoFridge: [
+    {
+      name: 'photos',
+      type: 'PhotoFridgeItem[]',
+      required: true,
+      default: '',
+      description: '磁贴照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: "'100%'",
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '480',
+      description: '组件高度'
+    },
+    {
+      name: 'cardWidth',
+      type: 'number',
+      required: false,
+      default: '120',
+      description: '单张卡片宽度（px）'
+    },
+    {
+      name: 'cardHeight',
+      type: 'number',
+      required: false,
+      default: '140',
+      description: '单张卡片高度（px）'
+    },
+    {
+      name: 'scatter',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '散落程度，0 为紧凑，1 为默认散布，>1 更分散'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '2.0',
+      description: '释放惯性摩擦系数，越大减速越快（指数衰减，默认 2.0）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始置于最前的照片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoFridgeItem) => void',
+      required: false,
+      default: '',
+      description: '点击照片回调（几乎无位移时触发）'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'冰箱磁贴照片墙'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoLantern: [
+    {
+      name: 'photos',
+      type: 'PhotoLanternItem[]',
+      required: true,
+      default: '',
+      description: '走马灯六面照片（最多取前 6 张）'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: 'DEFAULT_W',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: 'DEFAULT_H',
+      description: '组件高度'
+    },
+    {
+      name: 'autoRotate',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否自动缓慢顺时针旋转'
+    },
+    {
+      name: 'autoRotateSpeed',
+      type: 'number',
+      required: false,
+      default: '14',
+      description: '自动旋转角速度（度/秒，正值=顺时针）'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '0.42',
+      description: '拖拽灵敏度（度/像素）'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '1.4',
+      description: '松手后惯性衰减系数（越大停得越快，约 0.6~4）'
+    },
+    {
+      name: 'frameColor',
+      type: 'string',
+      required: false,
+      default: "'#5c4033'",
+      description: '灯架颜色'
+    },
+    {
+      name: 'paperColor',
+      type: 'string',
+      required: false,
+      default: "'#faf4e8'",
+      description: '灯纸底色'
+    },
+    {
+      name: 'lightColor',
+      type: 'string',
+      required: false,
+      default: "'#f0b35a'",
+      description: '内部灯光颜色'
+    },
+    {
+      name: 'background',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '舞台背景（任意 CSS background 值）'
+    },
+    {
+      name: 'lightSway',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '灯光摆动幅度（0~1）'
+    },
+    {
+      name: 'showAccessories',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示吊环、飞檐、流苏等走马灯配件'
+    },
+    {
+      name: 'tasselColor',
+      type: 'string',
+      required: false,
+      default: "'#c94b3a'",
+      description: '流苏颜色'
+    },
+    {
+      name: 'objectFit',
+      type: "CSSProperties['objectFit']",
+      required: false,
+      default: "'cover'",
+      description: '照片填充方式'
+    },
+    {
+      name: 'silhouette',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '是否以剪影风格呈现图片（更接近传统走马灯）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '是否在照片底部嵌入标题与说明'
+    },
+    {
+      name: 'initialAngle',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始旋转角（度）'
+    },
+    {
+      name: 'onFaceChange',
+      type: '(index: number, photo: PhotoLanternItem | undefined) => void',
+      required: false,
+      default: '',
+      description: '正面照片变化回调'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoLanternItem) => void',
+      required: false,
+      default: '',
+      description: '点击照片回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'走马灯图片预览'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoLightbox: [
+    {
+      name: 'photos',
+      type: 'PhotoLightboxItem[]',
+      required: true,
+      default: '',
+      description: '灯箱内的胶片幻灯片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: '360',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '480',
+      description: '组件高度'
+    },
+    {
+      name: 'slideWidth',
+      type: 'number',
+      required: false,
+      default: '200',
+      description: '单张幻灯片宽度（px）'
+    },
+    {
+      name: 'slideHeight',
+      type: 'number',
+      required: false,
+      default: '280',
+      description: '单张幻灯片高度（px）'
+    },
+    {
+      name: 'pullThreshold',
+      type: 'number',
+      required: false,
+      default: '100',
+      description: '横向拖拽超过该距离（px）后松手即切换上一张/下一张'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示幻灯片底部标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始显示的幻灯片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoLightboxItem) => void',
+      required: false,
+      default: '',
+      description: '点击当前幻灯片（未发生拖拽）时的回调'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoLightboxItem) => void',
+      required: false,
+      default: '',
+      description: '当前索引变化时的回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'Photo lightbox'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoPolaroid: [
+    {
+      name: 'photos',
+      type: 'PhotoPolaroidItem[]',
+      required: true,
+      default: '',
+      description: '拍立得照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: "'100%'",
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '420',
+      description: '组件高度'
+    },
+    {
+      name: 'cardWidth',
+      type: 'number',
+      required: false,
+      default: '150',
+      description: '单张卡片宽度（px）'
+    },
+    {
+      name: 'cardHeight',
+      type: 'number',
+      required: false,
+      default: '180',
+      description: '单张卡片高度（px）'
+    },
+    {
+      name: 'scatter',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '散落程度，0 为紧凑堆叠，1 为默认散布，>1 更分散'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示底部标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始置于最前的照片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoPolaroidItem) => void',
+      required: false,
+      default: '',
+      description: '点击照片回调（几乎无位移时触发）'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'拍立得照片堆叠'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoPostcard: [
+    {
+      name: 'photos',
+      type: 'PhotoPostcardItem[]',
+      required: true,
+      default: '',
+      description: '明信片照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: '360',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '420',
+      description: '组件高度'
+    },
+    {
+      name: 'cardWidth',
+      type: 'number',
+      required: false,
+      default: '260',
+      description: '单张明信片宽度（px）'
+    },
+    {
+      name: 'cardHeight',
+      type: 'number',
+      required: false,
+      default: '170',
+      description: '单张明信片高度（px）'
+    },
+    {
+      name: 'pullThreshold',
+      type: 'number',
+      required: false,
+      default: '80',
+      description: '水平拖拽切换阈值（px）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否在正面底部显示标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始展示索引'
+    },
+    {
+      name: 'initialFlipped',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '初始是否背面朝上'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoPostcardItem) => void',
+      required: false,
+      default: '',
+      description: '点击当前明信片（几乎无位移时触发）'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoPostcardItem) => void',
+      required: false,
+      default: '',
+      description: '当前索引变化回调'
+    },
+    {
+      name: 'onFlipChange',
+      type: '(flipped: boolean) => void',
+      required: false,
+      default: '',
+      description: '正反面翻转状态变化回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'明信片'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoPrism: [
+    {
+      name: 'photos',
+      type: 'PhotoPrismItem[]',
+      required: true,
+      default: '',
+      description: '六面照片（最多取前 6 张，按 front/back/right/left/top/bottom 顺序映射）'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: 'DEFAULT_W',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: 'DEFAULT_H',
+      description: '组件高度'
+    },
+    {
+      name: 'size',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_SIZE',
+      description: '立方体边长（px）'
+    },
+    {
+      name: 'autoRotate',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '空闲时是否缓慢绕 Y 轴自转'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '0.4',
+      description: '拖拽灵敏度（度/像素）'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '1.35',
+      description: '松手后惯性衰减系数（越大停得越快，约 0.6~4）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否在每面照片底部嵌入标题与说明'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoPrismItem) => void',
+      required: false,
+      default: '',
+      description: '点击某面照片回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'照片棱镜'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoScroll: [
+    {
+      name: 'photos',
+      type: 'PhotoScrollItem[]',
+      required: true,
+      default: '',
+      description: '卷轴上的照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: '520',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '280',
+      description: '组件高度'
+    },
+    {
+      name: 'frameWidth',
+      type: 'number',
+      required: false,
+      default: '160',
+      description: '单张照片框宽度（px）'
+    },
+    {
+      name: 'frameHeight',
+      type: 'number',
+      required: false,
+      default: '200',
+      description: '单张照片框高度（px）'
+    },
+    {
+      name: 'frameGap',
+      type: 'number',
+      required: false,
+      default: '20',
+      description: '照片框之间的间距（px）'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '拖拽灵敏度，1 为 1:1 跟手'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '1.5',
+      description: '惯性摩擦系数，越大减速越快'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否在每张照片底部嵌入标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始居中显示的照片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoScrollItem) => void',
+      required: false,
+      default: '',
+      description: '点击照片回调（位移小于 CLICK_SLOP 时触发）'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoScrollItem) => void',
+      required: false,
+      default: '',
+      description: '当前居中照片索引变化回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'卷轴照片'",
+      description: '无障碍区域名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoTunnel: [
+    {
+      name: 'photos',
+      type: 'PhotoTunnelItem[]',
+      required: true,
+      default: '',
+      description: '隧道中的照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: '380',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: '480',
+      description: '组件高度'
+    },
+    {
+      name: 'depthStep',
+      type: 'number',
+      required: false,
+      default: '180',
+      description: '相邻照片沿 Z 轴间距（px）'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '0.008',
+      description: '拖拽灵敏度（索引单位 / px）'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '1.5',
+      description: '惯性摩擦系数，越大减速越快'
+    },
+    {
+      name: 'autoAdvance',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '空闲时是否缓慢自动前进'
+    },
+    {
+      name: 'autoAdvanceSpeed',
+      type: 'number',
+      required: false,
+      default: '0.15',
+      description: '自动前进速度（张 / 秒）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否显示当前照片的标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始照片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoTunnelItem) => void',
+      required: false,
+      default: '',
+      description: '点击当前照片回调'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoTunnelItem) => void',
+      required: false,
+      default: '',
+      description: '当前索引变化回调（吸附到整数后触发）'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'纵深照片隧道'",
+      description: '无障碍名称'
+    },
+    {
+      name: 'className',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '自定义类名'
+    },
+    {
+      name: 'style',
+      type: 'CSSProperties',
+      required: false,
+      default: '',
+      description: '自定义样式'
+    }
+  ],
+  PhotoViewMaster: [
+    {
+      name: 'photos',
+      type: 'PhotoViewMasterItem[]',
+      required: true,
+      default: '',
+      description: '转盘照片列表'
+    },
+    {
+      name: 'width',
+      type: 'number | string',
+      required: false,
+      default: 'DEFAULT_W',
+      description: '组件宽度'
+    },
+    {
+      name: 'height',
+      type: 'number | string',
+      required: false,
+      default: 'DEFAULT_H',
+      description: '组件高度'
+    },
+    {
+      name: 'discSize',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_DISC',
+      description: '转盘直径（px）'
+    },
+    {
+      name: 'peepSize',
+      type: 'number',
+      required: false,
+      default: 'DEFAULT_PEEP',
+      description: '窥视窗直径（px）'
+    },
+    {
+      name: 'dragSensitivity',
+      type: 'number',
+      required: false,
+      default: '0.45',
+      description: '水平拖拽灵敏度（度/像素）'
+    },
+    {
+      name: 'friction',
+      type: 'number',
+      required: false,
+      default: '1.4',
+      description: '松手后惯性衰减系数（越大停得越快）'
+    },
+    {
+      name: 'autoRotate',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '空闲时是否缓慢自动旋转'
+    },
+    {
+      name: 'autoRotateSpeed',
+      type: 'number',
+      required: false,
+      default: '8',
+      description: '自动旋转角速度（度/秒）'
+    },
+    {
+      name: 'showCaption',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否在窥视窗下方显示当前照片标题与说明'
+    },
+    {
+      name: 'initialIndex',
+      type: 'number',
+      required: false,
+      default: '0',
+      description: '初始正对镜头的照片索引'
+    },
+    {
+      name: 'onPhotoClick',
+      type: '(index: number, photo: PhotoViewMasterItem) => void',
+      required: false,
+      default: '',
+      description: '点击当前照片回调'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoViewMasterItem) => void',
+      required: false,
+      default: '',
+      description: '当前照片索引变化回调'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'观景器'",
       description: '无障碍名称'
     },
     {
@@ -2277,6 +3461,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: 'DEFAULT_SYMBOLS',
       description: '符号列表'
+    },
+    {
+      name: 'spinDuration',
+      type: 'number',
+      required: false,
+      default: '3000',
+      description: '单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮'
     },
     {
       name: 'onSpinEnd',
@@ -3233,9 +4424,394 @@ export const componentRelatedTypes: ComponentTypesMap = {
       ]
     }
   ],
+  PhotoCarousel: [
+    {
+      name: 'PhotoCarouselItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
   PhotoClothesline: [
     {
       name: 'PhotoClotheslineItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
+  PhotoFilmstrip: [
+    {
+      name: 'PhotoFilmstripItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
+  PhotoFridge: [
+    {
+      name: 'PhotoFridgeItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题（显示在图片下方）'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明（显示在标题下方）'
+        }
+      ]
+    }
+  ],
+  PhotoLantern: [
+    {
+      name: 'PhotoLanternItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
+  PhotoLightbox: [
+    {
+      name: 'PhotoLightboxItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
+  PhotoPolaroid: [
+    {
+      name: 'PhotoPolaroidItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题（显示在底部留白区）'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明（显示在标题下方）'
+        }
+      ]
+    }
+  ],
+  PhotoPostcard: [
+    {
+      name: 'PhotoPostcardItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '明信片标题（背面问候语 / 正面说明标题）'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '明信片正文（背面书写区 / 正面说明）'
+        }
+      ]
+    }
+  ],
+  PhotoPrism: [
+    {
+      name: 'PhotoPrismItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
+  PhotoScroll: [
+    {
+      name: 'PhotoScrollItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题，用于卷轴底部墨迹说明'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明，显示在标题下方'
+        }
+      ]
+    }
+  ],
+  PhotoTunnel: [
+    {
+      name: 'PhotoTunnelItem',
+      fields: [
+        {
+          name: 'src',
+          type: 'string',
+          required: true,
+          default: '',
+          description: '图片地址'
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '图片替代文本'
+        },
+        {
+          name: 'title',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片标题'
+        },
+        {
+          name: 'description',
+          type: 'string',
+          required: false,
+          default: '',
+          description: '照片说明'
+        }
+      ]
+    }
+  ],
+  PhotoViewMaster: [
+    {
+      name: 'PhotoViewMasterItem',
       fields: [
         {
           name: 'src',

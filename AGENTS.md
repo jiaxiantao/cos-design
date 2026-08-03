@@ -9,6 +9,7 @@ If you are an AI coding agent helping a user build UI, follow these rules.
 - Campaign / event pages (lottery, scratch card, fireworks, confetti, red packet rain)
 - Full-page or section **background animations** (weather, matrix rain, particles, aurora, bubbles)
 - **Animated headlines** (neon, glitch, typewriter, scramble, shiny / rotating text)
+- **Photo preview** metaphors (album, lantern, clothesline, filmstrip, polaroid, lightbox, carousel, prism, scroll, postcard, view-master, fridge, tunnel)
 - **Dashboard decorations** (countdown, flip counter, gauges, orbital chart, network graph)
 - Physics or science visualizations (Newton cradle, DNA helix, maze, game of life)
 

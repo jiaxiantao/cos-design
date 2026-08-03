@@ -31,6 +31,12 @@ const CATEGORY_META = {
     labelZh: '交互玩具',
     whenToUse: 'mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI'
   },
+  photo: {
+    label: 'Photo preview',
+    labelZh: '图片预览',
+    whenToUse:
+      'marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)'
+  },
   game: {
     label: 'Campaign & games',
     labelZh: '游戏营销',
@@ -60,6 +66,24 @@ const CATEGORY_META = {
 };
 
 const SCENARIO_INDEX = [
+  {
+    keywords: 'photo gallery, album, postcard, filmstrip, lantern, travel photos, fridge magnets',
+    components: [
+      'PhotoAlbum',
+      'PhotoLantern',
+      'PhotoClothesline',
+      'PhotoFilmstrip',
+      'PhotoPolaroid',
+      'PhotoLightbox',
+      'PhotoCarousel',
+      'PhotoPrism',
+      'PhotoScroll',
+      'PhotoPostcard',
+      'PhotoViewMaster',
+      'PhotoFridge',
+      'PhotoTunnel'
+    ]
+  },
   {
     keywords: 'fireworks, celebration, success animation, campaign win',
     components: ['Fireworks', 'Confetti']
