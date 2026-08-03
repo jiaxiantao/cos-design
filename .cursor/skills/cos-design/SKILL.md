@@ -9,7 +9,7 @@ description: >-
 
 # cos-design
 
-React **visual-effect** component library (73 components). Campaign pages, brand landings, dashboards, creative demos.
+React **visual-effect** component library (84 components). Campaign pages, brand landings, dashboards, creative demos.
 
 - Playground: https://jiaxiantao.github.io/cos-design/
 - AI index: https://jiaxiantao.github.io/cos-design/llms.txt

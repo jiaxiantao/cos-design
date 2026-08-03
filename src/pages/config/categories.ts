@@ -1,6 +1,7 @@
 export type ComponentCategory =
   | 'background'
   | 'text'
+  | 'photo'
   | 'interactive'
   | 'game'
   | 'data'
@@ -27,6 +28,12 @@ export const COMPONENT_CATEGORIES: CategoryMeta[] = [
     label: '文字动效',
     description: '标题、Banner 与终端风格文字动画',
     accent: '#f472b6'
+  },
+  {
+    id: 'photo',
+    label: '图片预览',
+    description: '相册、走马灯、晾绳等物件隐喻式图片浏览',
+    accent: '#f59e0b'
   },
   {
     id: 'interactive',

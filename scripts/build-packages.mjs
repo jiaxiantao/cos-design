@@ -11,6 +11,7 @@ import {
   PACKAGES_DIR,
   ROOT,
   componentUsesShared,
+  componentUsesThree,
   listComponentNames,
   packageNameOf,
   toExportName
@@ -91,13 +92,14 @@ function writeUmbrellaTypesEntry() {
   }
 }
 
-async function buildPackage(name, { usesShared = false } = {}) {
+async function buildPackage(name, { usesShared = false, usesThree = false } = {}) {
   await run(
     'pnpm',
     ['exec', 'vite', 'build', '--config', VITE_CONFIG],
     {
       COS_PACKAGE: name,
-      COS_PACKAGE_USES_SHARED: usesShared ? '1' : ''
+      COS_PACKAGE_USES_SHARED: usesShared ? '1' : '',
+      COS_PACKAGE_USES_THREE: usesThree ? '1' : ''
     }
   );
   if (name === 'shared') writeSharedTypesEntry();
@@ -118,7 +120,10 @@ async function main() {
   const names = listComponentNames();
   console.log(`\n▶ Building ${names.length} component packages (concurrency=${CONCURRENCY})`);
   await mapPool(names, CONCURRENCY, async (name) => {
-    await buildPackage(name, { usesShared: componentUsesShared(name) });
+    await buildPackage(name, {
+      usesShared: componentUsesShared(name),
+      usesThree: componentUsesThree(name)
+    });
   });
 
   console.log('\n▶ Building cos-design (umbrella)');

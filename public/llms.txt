@@ -1,7 +1,7 @@
 # cos-design
 
 > React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.7.1 · 73 components · MIT
+> Version 3.7.3 · 84 components · MIT
 
 ## When to use (for AI agents)
 
@@ -53,6 +53,7 @@ CSS is auto-injected — no manual stylesheet import.
 
 ## Scenario → component map
 
+- **photo gallery, album, postcard, filmstrip, lantern, travel photos, fridge magnets** → `PhotoAlbum`, `PhotoLantern`, `PhotoClothesline`, `PhotoFilmstrip`, `PhotoPolaroid`, `PhotoLightbox`, `PhotoCarousel`, `PhotoPrism`, `PhotoScroll`, `PhotoPostcard`, `PhotoViewMaster`, `PhotoFridge`, `PhotoTunnel`
 - **fireworks, celebration, success animation, campaign win** → `Fireworks`, `Confetti`
 - **scratch card, lottery, turntable, slot machine, red packet rain, dice** → `ScratchCard`, `Turntable`, `SlotMachine`, `RedPacketRain`, `DiceRoll`
 - **weather background, rain, snow, fog, live weather API** → `WeatherBackground`
@@ -102,12 +103,28 @@ _Use when: headlines, banners, hero titles, terminal-style text, brand typograph
 - **CurvedLoop** — 曲线跑马灯: 文字沿 SVG 曲线循环滚动，支持拖拽改变方向。 · `@cos-design/curved-loop` · [demo](https://jiaxiantao.github.io/cos-design/#/curvedLoop)
 - **RotatingText** — 轮播翻转: 多文案轮播，字符错峰滑入滑出，适合标题关键词切换。 · `@cos-design/rotating-text` · [demo](https://jiaxiantao.github.io/cos-design/#/rotatingText)
 
+### Photo preview (图片预览)
+
+_Use when: marketing galleries, travel stories, campaign photo browsings with physical metaphors (album, lantern, scroll, postcard, fridge, tunnel)_
+
+- **PhotoAlbum** — 真实翻页相册: 摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。 · `@cos-design/photo-album` · [demo](https://jiaxiantao.github.io/cos-design/#/photoAlbum)
+- **PhotoLantern** — 走马灯: Three.js 六面走马灯图片预览：真实 3D 灯体与内光摆动，空闲顺时针自转，拖拽跟手旋转并带惯性。 · `@cos-design/photo-lantern` · [demo](https://jiaxiantao.github.io/cos-design/#/photoLantern)
+- **PhotoClothesline** — 晾绳照片墙: 照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。 · `@cos-design/photo-clothesline` · [demo](https://jiaxiantao.github.io/cos-design/#/photoClothesline)
+- **PhotoFilmstrip** — 胶卷条: 横向胶卷预览：齿孔与帧号齐备，拖拽卷动带惯性，松手后吸附到整帧。 · `@cos-design/photo-filmstrip` · [demo](https://jiaxiantao.github.io/cos-design/#/photoFilmstrip)
+- **PhotoPolaroid** — 拍立得堆: 散落在桌面上的拍立得：拖拽翻找、置顶，松手后可留在原处并带轻微惯性。 · `@cos-design/photo-polaroid` · [demo](https://jiaxiantao.github.io/cos-design/#/photoPolaroid)
+- **PhotoLightbox** — 灯箱透片: 发光灯箱上的幻灯片：横向拖出切换，未过阈值则弹回，带柔和透光氛围。 · `@cos-design/photo-lightbox` · [demo](https://jiaxiantao.github.io/cos-design/#/photoLightbox)
+- **PhotoCarousel** — 旋转木马托盘: 照片立在圆形托盘边缘，拖拽环绕并带惯性，空闲时可缓慢自转。 · `@cos-design/photo-carousel` · [demo](https://jiaxiantao.github.io/cos-design/#/photoCarousel)
+- **PhotoPrism** — 棱镜立方: CSS 3D 六面棱镜贴图，拖拽翻滚带惯性，空闲时缓慢自转并轻微浮动。 · `@cos-design/photo-prism` · [demo](https://jiaxiantao.github.io/cos-design/#/photoPrism)
+- **PhotoScroll** — 卷轴照片: 中式手卷：左右木轴固定，中间宣纸横向拖拽浏览照片，松手后带惯性并吸附到最近一帧。 · `@cos-design/photo-scroll` · [demo](https://jiaxiantao.github.io/cos-design/#/photoScroll)
+- **PhotoPostcard** — 旅行明信片: 可翻转的明信片：正面照片、背面手写说明与邮戳；点击翻转，横向拖拽切换下一张。 · `@cos-design/photo-postcard` · [demo](https://jiaxiantao.github.io/cos-design/#/photoPostcard)
+- **PhotoViewMaster** — 观景器圆盘: View-Master 风格玩具观景器：拖拽旋转圆盘切换画面，松手带惯性并吸附，空闲时可缓慢自转。 · `@cos-design/photo-view-master` · [demo](https://jiaxiantao.github.io/cos-design/#/photoViewMaster)
+- **PhotoFridge** — 冰箱磁贴墙: 冰箱门上的磁贴照片墙：拖拽任意照片置顶并留在原处，松手带轻微惯性，磁铁吸住不回弹。 · `@cos-design/photo-fridge` · [demo](https://jiaxiantao.github.io/cos-design/#/photoFridge)
+- **PhotoTunnel** — 纵深隧道: 照片沿 Z 轴叠成隧道：上下拖拽穿行，松手后带惯性并吸附到最近一帧，近处清晰远处虚化。 · `@cos-design/photo-tunnel` · [demo](https://jiaxiantao.github.io/cos-design/#/photoTunnel)
+
 ### Interactive toys (交互玩具)
 
 _Use when: mouse-driven micro-interactions, buttons, cards, cursor effects, glass/holographic UI_
 
-- **PhotoAlbum** — 真实翻页相册: 摊开式 3D 相册，点击右页向后翻看，点击左页返回上一张，带纸张、书脊与动态阴影。 · `@cos-design/photo-album` · [demo](https://jiaxiantao.github.io/cos-design/#/photoAlbum)
-- **PhotoClothesline** — 晾绳照片墙: 照片用吊带挂在麻绳上，抓住任意一张往各个方向甩，吊带会跟着弯折，松手后像挂绳吊牌一样摆动回位；空白处左右拖动浏览更多。 · `@cos-design/photo-clothesline` · [demo](https://jiaxiantao.github.io/cos-design/#/photoClothesline)
 - **WaveButton** — 波纹按钮: 带水波扩散动画的交互按钮。 · `@cos-design/wave-button` · [demo](https://jiaxiantao.github.io/cos-design/#/waveButton)
 - **Spotlight** — 手电筒: 暗层中鼠标位置挖洞照亮。 · `@cos-design/spotlight` · [demo](https://jiaxiantao.github.io/cos-design/#/spotlight)
 - **MagneticButton** — 磁吸按钮: 按钮随鼠标靠近磁吸偏移。 · `@cos-design/magnetic-button` · [demo](https://jiaxiantao.github.io/cos-design/#/magneticButton)

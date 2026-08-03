@@ -10,6 +10,7 @@ import {
   PACKAGES_DIR,
   ROOT,
   VERSION,
+  componentPeerDeps,
   componentUsesShared,
   listComponentNames,
   packageNameOf,
@@ -132,7 +133,8 @@ function createComponentPackage(name) {
     license: 'MIT',
     peerDependencies: {
       react: '>=18.0.0',
-      'react-dom': '>=18.0.0'
+      'react-dom': '>=18.0.0',
+      ...(componentPeerDeps(name) || {})
     },
     publishConfig: {
       access: 'public',
@@ -194,7 +196,8 @@ function createUmbrellaPackage() {
     license: 'MIT',
     peerDependencies: {
       react: '>=18.0.0',
-      'react-dom': '>=18.0.0'
+      'react-dom': '>=18.0.0',
+      three: '>=0.160.0'
     },
     publishConfig: {
       access: 'public',

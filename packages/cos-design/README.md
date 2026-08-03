@@ -29,7 +29,7 @@
 | 数据大屏     | 翻牌器、数字递增、仪表盘、关系网络图    |
 | 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成、生命游戏    |
 
-> 从背景到物理、从文字到营销，73 个组件刚好组成一套完整的「视觉工具箱」。
+> 从背景到物理、从文字到营销，84 个组件刚好组成一套完整的「视觉工具箱」。
 
 ---
 
@@ -80,7 +80,7 @@ export default function Page() {
 | ---------------------------------------------------------------------- | -------------------------------------------------------- |
 | [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)           | 供 Agent 抓取的索引（场景 → 组件 → 安装命令）            |
 | [llms-full.txt](https://jiaxiantao.github.io/cos-design/llms-full.txt) | 站点上的完整 AI 参考（与 docs/ai.md 同步）               |
-| [docs/ai.md](./docs/ai.md)                                             | 73 个组件的完整 AI 参考（安装 / import / 示例 / Props）  |
+| [docs/ai.md](./docs/ai.md)                                             | 84 个组件的完整 AI 参考（安装 / import / 示例 / Props）  |
 | [AGENTS.md](./AGENTS.md)                                               | 仓库级 Agent 规则，可复制到用户项目                      |
 | [.cursor/skills/cos-design](./.cursor/skills/cos-design/SKILL.md)      | Cursor Skill，克隆本仓库或复制到你的 `~/.cursor/skills/` |
 
@@ -157,21 +157,42 @@ export default function Page() {
 </details>
 
 <details>
-<summary><strong>交互玩具</strong> — 9 个 · 鼠标驱动的趣味反馈</summary>
+<summary><strong>图片预览</strong> — 13 个 · 物件隐喻式图片浏览</summary>
 
 <br>
 
-| 组件               | 说明         |
-| ------------------ | ------------ |
-| `WaveButton`       | 水波扩散按钮 |
-| `Spotlight`        | 手电筒照亮   |
-| `MagneticButton`   | 磁吸按钮     |
-| `HolographicCard`  | 全息反光卡片 |
-| `PhotoAlbum`       | 真实翻页相册 |
-| `PhotoClothesline` | 晾绳照片墙   |
-| `ClickSpark`       | 点击火花     |
-| `CursorTrail`      | 光标拖尾     |
-| `LiquidGlass`      | 液态毛玻璃   |
+| 组件               | 说明               |
+| ------------------ | ------------------ |
+| `PhotoAlbum`       | 真实翻页相册       |
+| `PhotoLantern`     | 走马灯（Three.js） |
+| `PhotoClothesline` | 晾绳照片墙         |
+| `PhotoFilmstrip`   | 胶卷条             |
+| `PhotoPolaroid`    | 拍立得堆           |
+| `PhotoLightbox`    | 灯箱透片           |
+| `PhotoCarousel`    | 旋转木马托盘       |
+| `PhotoPrism`       | 棱镜立方           |
+| `PhotoScroll`      | 卷轴照片           |
+| `PhotoPostcard`    | 旅行明信片         |
+| `PhotoViewMaster`  | 观景器圆盘         |
+| `PhotoFridge`      | 冰箱磁贴墙         |
+| `PhotoTunnel`      | 纵深隧道           |
+
+</details>
+
+<details>
+<summary><strong>交互玩具</strong> — 7 个 · 鼠标驱动的趣味反馈</summary>
+
+<br>
+
+| 组件              | 说明         |
+| ----------------- | ------------ |
+| `WaveButton`      | 水波扩散按钮 |
+| `Spotlight`       | 手电筒照亮   |
+| `MagneticButton`  | 磁吸按钮     |
+| `HolographicCard` | 全息反光卡片 |
+| `ClickSpark`      | 点击火花     |
+| `CursorTrail`     | 光标拖尾     |
+| `LiquidGlass`     | 液态毛玻璃   |
 
 </details>
 
@@ -264,7 +285,7 @@ export default function Page() {
 
 ## 特性
 
-- **73 个组件**，覆盖背景、文字、交互、营销、数据、物理、科学、特效八大场景
+- **84 个组件**，覆盖背景、文字、交互、营销、数据、物理、科学、特效八大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
@@ -285,7 +306,7 @@ npm run setup          # 安装依赖（绕过 corepack 问题）
 npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-访问 **http://localhost:4000** — 按分类浏览全部 73 个组件，右侧可查看与复制示例代码。
+访问 **http://localhost:4000** — 按分类浏览全部 84 个组件，右侧可查看与复制示例代码。
 
 ---
 

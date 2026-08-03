@@ -211,6 +211,18 @@ export function componentUsesShared(name) {
   return false;
 }
 
+/** 组件额外 peer 依赖（如 three） */
+export function componentPeerDeps(name) {
+  if (name === 'photoLantern') {
+    return { three: '>=0.160.0' };
+  }
+  return null;
+}
+
+export function componentUsesThree(name) {
+  return Boolean(componentPeerDeps(name));
+}
+
 export function toExportName(dirName) {
   return dirName.charAt(0).toUpperCase() + dirName.slice(1);
 }

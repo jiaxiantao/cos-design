@@ -114,6 +114,11 @@ const enUS: typeof zhCN = {
       },
       { label: 'Text effects', desc: 'Headline and banner animations', examples: 'Typewriter, NeonText, ScrambleText' },
       {
+        label: 'Photo preview',
+        desc: 'Object-metaphor photo browsers',
+        examples: 'PhotoAlbum, PhotoLantern, PhotoFilmstrip'
+      },
+      {
         label: 'Interactive toys',
         desc: 'Playful mouse and touch feedback',
         examples: 'WaveButton, Spotlight, MagneticButton'
@@ -288,6 +293,10 @@ cd cos-design && npm run setup && pnpm dev
       label: 'Text effects',
       description: 'Headline, banner, and terminal-style text animations'
     },
+    photo: {
+      label: 'Photo preview',
+      description: 'Object-metaphor photo browsers — album, lantern, clothesline, and more'
+    },
     interactive: {
       label: 'Interactive toys',
       description: 'Playful components driven by mouse and touch'
@@ -372,8 +381,38 @@ cd cos-design && npm run setup && pnpm dev
         { title: 'Lake Reflection', description: 'The sky held whole in still water' },
         { title: 'Misty Horizon', description: 'The road still has farther to go' }
       ],
+      photoLanternAria: 'Revolving lantern photo preview',
+      photoLanternHint: 'Drag left or right to spin · Inertia on release · Idle clockwise rotation',
+      photoLanternPhotos: [
+        { title: 'On the Road', description: 'Scenes glowing inside the lantern' },
+        { title: 'Morning Valley', description: 'Wind moving between the mountains' },
+        { title: 'By the Lake', description: 'Still enough to hear the water' },
+        { title: 'Forest Walk', description: 'A green memory from midsummer' },
+        { title: 'At Sunset', description: 'The journey continues in the afterglow' },
+        { title: 'Above the Ridge', description: 'A sea of clouds rolling below' }
+      ],
       photoClotheslineAria: 'Travel photos on a clothesline',
       photoClotheslineHint: 'Grab a photo and fling it any direction · Drag the empty space to browse',
+      photoFilmstripAria: 'Travel filmstrip',
+      photoFilmstripHint: 'Drag to scroll the film · Snaps to a frame on release',
+      photoPolaroidAria: 'Polaroid photo stack',
+      photoPolaroidHint: 'Drag to rearrange · Click to bring forward · Cards stay where you drop them',
+      photoLightboxAria: 'Lightbox slide preview',
+      photoLightboxHint: 'Drag a slide sideways to change · Snaps back if under the threshold',
+      photoCarouselAria: 'Carousel photo tray',
+      photoCarouselHint: 'Drag to spin the tray · Inertia on release · Slow idle rotation',
+      photoPrismAria: 'Photo prism cube',
+      photoPrismHint: 'Drag to tumble the cube · Inertia on release · Slow idle spin',
+      photoScrollAria: 'Photo scroll',
+      photoScrollHint: 'Drag the parchment · Inertia then snaps to the nearest frame',
+      photoPostcardAria: 'Travel postcard',
+      photoPostcardHint: 'Click to flip · Drag sideways past the threshold to change cards',
+      photoViewMasterAria: 'View-Master disc',
+      photoViewMasterHint: 'Drag to spin the disc · Inertia on release · Optional idle spin',
+      photoFridgeAria: 'Fridge magnet photo wall',
+      photoFridgeHint: 'Drag photos to the front · They stay where you drop them',
+      photoTunnelAria: 'Photo tunnel',
+      photoTunnelHint: 'Drag to fly through · Inertia then snaps to the nearest frame',
       redPacketGrabbed: 'Collected:',
       redPacketEnded: 'Red packet rain ended',
       redPacketHint: 'Click red packets to collect them',

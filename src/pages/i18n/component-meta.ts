@@ -189,11 +189,69 @@ export const componentMetaEn = {
     description: 'An open 3D album with paper, spine and dynamic shadows; click either page to browse naturally.',
     tags: ['CSS', '3D', 'Interactive']
   },
+  PhotoLantern: {
+    title: 'Revolving Lantern',
+    description:
+      'A Three.js six-sided revolving lantern for image preview — idle clockwise spin, drag with inertia, and a gently swaying inner light.',
+    tags: ['Three.js', '3D', 'Interactive']
+  },
   PhotoClothesline: {
     title: 'Photo Clothesline',
     description:
       'Photos hanging from lanyards on a rope — grab one and fling it in any direction, the band bends along and swings it back on release; drag the empty space to browse.',
     tags: ['CSS', 'Physics', 'Interactive']
+  },
+  PhotoFilmstrip: {
+    title: 'Filmstrip',
+    description: 'A horizontal filmstrip with sprocket holes — drag to scroll with inertia, then snap to a full frame.',
+    tags: ['CSS', 'Interactive']
+  },
+  PhotoPolaroid: {
+    title: 'Polaroid Stack',
+    description:
+      'Scattered polaroids on a desk — drag to rearrange, bring to front, and leave cards where you drop them.',
+    tags: ['CSS', 'Physics', 'Interactive']
+  },
+  PhotoLightbox: {
+    title: 'Lightbox Slides',
+    description: 'Translucent slides on a glowing lightbox — drag sideways to switch, snap back under the threshold.',
+    tags: ['CSS', 'Interactive']
+  },
+  PhotoCarousel: {
+    title: 'Carousel Tray',
+    description: 'Photos standing on a circular tray — drag to orbit with inertia, optional slow idle spin.',
+    tags: ['CSS', '3D', 'Interactive']
+  },
+  PhotoPrism: {
+    title: 'Photo Prism',
+    description: 'A CSS 3D cube with up to six photo faces — drag to tumble with inertia and a gentle idle spin.',
+    tags: ['CSS', '3D', 'Interactive']
+  },
+  PhotoScroll: {
+    title: 'Photo Scroll',
+    description:
+      'A Chinese handscroll — drag the parchment between wooden rollers; inertia then snaps to the nearest frame.',
+    tags: ['CSS', 'Interactive']
+  },
+  PhotoPostcard: {
+    title: 'Travel Postcard',
+    description: 'Flip a postcard for photo vs handwritten note; drag sideways past a threshold to change cards.',
+    tags: ['CSS', '3D', 'Interactive']
+  },
+  PhotoViewMaster: {
+    title: 'View-Master Disc',
+    description: 'A toy disc viewer — drag to spin photo slots with inertia, snap to a frame, optional idle spin.',
+    tags: ['CSS', 'Interactive']
+  },
+  PhotoFridge: {
+    title: 'Fridge Magnets',
+    description: 'Photos stuck on a fridge door — drag to rearrange, leave where you drop them with light inertia.',
+    tags: ['CSS', 'Physics', 'Interactive']
+  },
+  PhotoTunnel: {
+    title: 'Photo Tunnel',
+    description: 'A depth tunnel of photo frames — drag to fly through with inertia, nearest frame stays sharp.',
+    tags: ['CSS', '3D', 'Interactive']
   },
   ClickSpark: {
     title: 'Click Spark',

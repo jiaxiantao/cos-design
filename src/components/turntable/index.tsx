@@ -167,13 +167,6 @@ const Turntable: React.FC<TurntableProps> = ({
     };
   }, []);
 
-  const getIndexByRotation = (rotation: number) => {
-    const segmentAngle = 360 / prizes.length;
-    const normalized = (((rotation * (180 / Math.PI)) % 360) + 360) % 360;
-    const index = Math.floor(((360 - normalized + segmentAngle / 2) % 360) / segmentAngle);
-    return index % prizes.length;
-  };
-
   const handleSpin = () => {
     if (spinning || prizes.length === 0) return;
 
@@ -207,12 +200,11 @@ const Turntable: React.FC<TurntableProps> = ({
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
       } else if (!token.cancelled) {
-        const finalIndex = getIndexByRotation(rotation);
-        const prize = prizes[finalIndex];
+        const prize = prizes[targetIndex];
         rotationRef.current = rotation;
         setSpinning(false);
         setResult(prize);
-        onSpinEndRef.current?.(prize, finalIndex);
+        onSpinEndRef.current?.(prize, targetIndex);
       }
     };
 

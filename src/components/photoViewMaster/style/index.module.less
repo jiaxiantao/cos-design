@@ -1,0 +1,253 @@
+.root {
+  --pvm-disc-size: 300px;
+  --pvm-peep-size: 160px;
+  --pvm-body: #c44536;
+  --pvm-body-dark: #9a3428;
+  --pvm-body-light: #e05a48;
+  --pvm-highlight: rgb(255 210 190 / 55%);
+  --pvm-shadow: rgb(60 12 8 / 42%);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 380px;
+  max-width: 100%;
+  height: 420px;
+  margin-inline: auto;
+  padding: 18px 16px 14px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: radial-gradient(
+    ellipse 88% 72% at 50% 18%,
+    rgb(255 235 220 / 38%) 0%,
+    rgb(248 228 214 / 92%) 52%,
+    #efe0d2 100%
+  );
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: grab;
+  outline: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.body {
+  position: relative;
+  flex: 1 1 auto;
+  width: min(100%, calc(var(--pvm-disc-size) + 36px));
+  min-height: calc(var(--pvm-disc-size) + 28px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 22%, var(--pvm-highlight) 0%, transparent 42%),
+    radial-gradient(circle at 68% 78%, rgb(0 0 0 / 18%) 0%, transparent 48%),
+    linear-gradient(155deg, var(--pvm-body-light) 0%, var(--pvm-body) 42%, var(--pvm-body-dark) 100%);
+  box-shadow:
+    inset 0 2px 0 rgb(255 255 255 / 22%),
+    inset 0 -10px 18px rgb(0 0 0 / 22%),
+    0 14px 28px var(--pvm-shadow),
+    0 4px 10px rgb(80 20 12 / 28%);
+}
+
+.bodyRidge {
+  position: absolute;
+  inset: 8% 10%;
+  border: 2px solid rgb(255 255 255 / 10%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.topBulb {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 54px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f06a58 0%, var(--pvm-body) 55%, var(--pvm-body-dark) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 28%),
+    0 3px 8px rgb(60 12 8 / 35%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.sideGrip {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 42px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pvm-body-dark) 0%, var(--pvm-body-light) 50%, var(--pvm-body-dark) 100%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 12%);
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  &.left {
+    left: -4px;
+  }
+
+  &.right {
+    right: -4px;
+  }
+}
+
+.discStage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disc {
+  position: relative;
+  width: var(--pvm-disc-size);
+  height: var(--pvm-disc-size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 38%, #3a3530 0%, #1e1b18 38%, #12100e 100%),
+    repeating-conic-gradient(from -90deg, rgb(255 255 255 / 6%) 0deg 8deg, rgb(0 0 0 / 10%) 8deg 16deg);
+  box-shadow:
+    inset 0 0 0 3px rgb(255 255 255 / 8%),
+    inset 0 0 24px rgb(0 0 0 / 55%),
+    0 2px 6px rgb(0 0 0 / 35%);
+  will-change: transform;
+}
+
+.slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  pointer-events: none;
+}
+
+.slotFrame {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid rgb(255 240 220 / 55%);
+  border-radius: 6px;
+  background: #0a0908;
+  box-shadow:
+    inset 0 0 8px rgb(0 0 0 / 65%),
+    0 1px 3px rgb(0 0 0 / 45%);
+}
+
+.slotImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.peepStack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.peepRing {
+  position: absolute;
+  width: calc(var(--pvm-peep-size) + 18px);
+  height: calc(var(--pvm-peep-size) + 18px);
+  border: 5px solid rgb(255 230 210 / 22%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 2px rgb(0 0 0 / 35%),
+    0 0 0 3px rgb(255 255 255 / 10%);
+  pointer-events: none;
+}
+
+.peepWindow {
+  position: relative;
+  z-index: 2;
+  width: var(--pvm-peep-size);
+  height: var(--pvm-peep-size);
+  overflow: hidden;
+  border: 4px solid rgb(20 16 14 / 88%);
+  border-radius: 50%;
+  background: #080706;
+  box-shadow:
+    inset 0 0 18px rgb(0 0 0 / 82%),
+    inset 0 2px 6px rgb(255 255 255 / 8%),
+    0 4px 14px rgb(0 0 0 / 45%);
+  pointer-events: auto;
+}
+
+.peepImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.peepGlare {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgb(255 255 255 / 22%) 0%, transparent 52%);
+  pointer-events: none;
+}
+
+.peepVignette {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 22px rgb(0 0 0 / 55%);
+  pointer-events: none;
+}
+
+.caption {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: calc(var(--pvm-disc-size) + 20px);
+  margin-top: 10px;
+  padding: 0 6px;
+  color: #4a3028;
+  text-align: center;
+}
+
+.captionTitle {
+  margin: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.captionDesc {
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: rgb(74 48 40 / 78%);
+  font-size: 12px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 200px;
+  color: rgb(74 48 40 / 62%);
+  font-size: 13px;
+}

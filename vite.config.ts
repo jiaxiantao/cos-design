@@ -54,12 +54,13 @@ export default defineConfig(({ mode }) => {
             fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs')
           },
           rollupOptions: {
-            external: ['react', 'react-dom', 'react/jsx-runtime'],
+            external: ['react', 'react-dom', 'react/jsx-runtime', 'three'],
             output: {
               exports: 'named',
               globals: {
                 react: 'React',
-                'react-dom': 'ReactDOM'
+                'react-dom': 'ReactDOM',
+                three: 'THREE'
               }
             }
           },

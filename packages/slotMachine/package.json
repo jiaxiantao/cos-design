@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/slot-machine",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "SlotMachine component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

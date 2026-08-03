@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- 新增图片预览分类 `photo`，并将 `PhotoAlbum` / `PhotoLantern` / `PhotoClothesline` 归入该类
+- 新增 `PhotoFilmstrip` 胶卷条：横向齿孔胶卷、拖拽惯性与整帧吸附
+- 新增 `PhotoPolaroid` 拍立得堆：桌面散落、拖拽置顶、松手留位
+- 新增 `PhotoLightbox` 灯箱透片：发光灯箱上横向拖出切换
+- 新增 `PhotoCarousel` 旋转木马托盘：环形立照、拖拽环绕与空闲自转
+- 新增 `PhotoPrism` 棱镜立方：CSS 3D 六面贴图、拖拽翻滚与空闲自转
+- 新增 `PhotoScroll` 卷轴照片：中式手卷、横向拖拽惯性与整帧吸附
+- 新增 `PhotoPostcard` 旅行明信片：正反面翻转、横向拖拽切换
+- 新增 `PhotoViewMaster` 观景器圆盘：玩具圆盘旋转、惯性吸附与空闲自转
+- 新增 `PhotoFridge` 冰箱磁贴墙：散落磁贴、拖拽置顶并留位
+- 新增 `PhotoTunnel` 纵深隧道：Z 轴穿行、惯性吸附与景深虚化
+- 新增 `PhotoLantern` 走马灯图片预览：基于 Three.js 的六面灯笼、空闲顺时针自转、拖拽跟手旋转与惯性、灯芯暖光自然摆动
+
+### Changed
+
+- `PhotoLantern` 由 CSS 3D 改为 Three.js 实现，立体感与光照更真实；`three` 为 peer 依赖
+
 ## [3.7.2] - 2026-07-31
 
 ### Added

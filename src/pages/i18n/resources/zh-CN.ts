@@ -105,6 +105,7 @@ const zhCN = {
     categoryCards: [
       { label: '背景动效', desc: '全屏氛围、粒子场景', examples: 'MatrixRain、Aurora、Starfield' },
       { label: '文字动效', desc: '标题与 Banner 动画', examples: 'Typewriter、NeonText、ScrambleText' },
+      { label: '图片预览', desc: '物件隐喻式图片浏览', examples: 'PhotoAlbum、PhotoLantern、PhotoFilmstrip' },
       { label: '交互玩具', desc: '鼠标/触摸趣味反馈', examples: 'WaveButton、Spotlight、MagneticButton' },
       { label: '游戏营销', desc: '抽奖与活动玩法', examples: 'Turntable、ScratchCard、Charge' },
       { label: '数据装饰', desc: '大屏与时间展示', examples: 'FlipCounter、Countdown、LiquidProgress' },
@@ -264,6 +265,10 @@ cd cos-design && npm run setup && pnpm dev
       label: '文字动效',
       description: '标题、Banner 与终端风格文字动画'
     },
+    photo: {
+      label: '图片预览',
+      description: '相册、走马灯、晾绳等物件隐喻式图片浏览'
+    },
     interactive: {
       label: '交互玩具',
       description: '鼠标、触摸驱动的趣味交互组件'
@@ -348,8 +353,38 @@ cd cos-design && npm run setup && pnpm dev
         { title: '静湖倒影', description: '天空被完整地接住' },
         { title: '远山薄雾', description: '旅途尚未到尽头' }
       ],
+      photoLanternAria: '走马灯图片预览',
+      photoLanternHint: '左右拖拽旋转走马灯 · 松手后带惯性，空闲时缓慢顺时针自转',
+      photoLanternPhotos: [
+        { title: '在路上', description: '把远方装进灯影' },
+        { title: '山谷晨光', description: '风从群山之间吹来' },
+        { title: '湖畔', description: '安静得只听见水声' },
+        { title: '林间漫步', description: '盛夏留下的绿色记忆' },
+        { title: '日落时分', description: '旅程在余晖中继续' },
+        { title: '山脊之上', description: '云海在脚下翻涌' }
+      ],
       photoClotheslineAria: '晾绳旅行照片墙',
       photoClotheslineHint: '抓住照片往任意方向甩 · 空白处左右拖动浏览更多',
+      photoFilmstripAria: '旅行胶卷',
+      photoFilmstripHint: '左右拖拽卷动胶卷 · 松手后吸附到整帧',
+      photoPolaroidAria: '拍立得照片堆',
+      photoPolaroidHint: '拖拽翻找拍立得 · 点击置顶 · 松手可留在桌面',
+      photoLightboxAria: '灯箱透片预览',
+      photoLightboxHint: '左右拖出透片切换 · 未过阈值则弹回',
+      photoCarouselAria: '旋转木马照片托盘',
+      photoCarouselHint: '左右拖拽旋转托盘 · 松手后带惯性 · 空闲时缓慢自转',
+      photoPrismAria: '棱镜照片立方',
+      photoPrismHint: '拖拽翻滚棱镜 · 松手后带惯性 · 空闲时缓慢自转',
+      photoScrollAria: '卷轴照片',
+      photoScrollHint: '左右拖拽展开卷轴 · 松手后带惯性并吸附到最近一帧',
+      photoPostcardAria: '旅行明信片',
+      photoPostcardHint: '点击翻转正反面 · 左右拖过阈值切换下一张',
+      photoViewMasterAria: '观景器圆盘',
+      photoViewMasterHint: '左右拖拽旋转圆盘 · 松手后带惯性 · 空闲时可缓慢自转',
+      photoFridgeAria: '冰箱磁贴照片墙',
+      photoFridgeHint: '拖拽照片置顶 · 松手留在原处 · 磁铁吸住不回弹',
+      photoTunnelAria: '纵深照片隧道',
+      photoTunnelHint: '上下拖拽穿行隧道 · 松手后带惯性并吸附到最近一帧',
       redPacketGrabbed: '已抢:',
       redPacketEnded: '红包雨结束',
       redPacketHint: '点击红包抢夺',
