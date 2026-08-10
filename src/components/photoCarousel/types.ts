@@ -39,7 +39,9 @@ export interface PhotoCarouselProps {
   /** 点击正面照片回调 */
   onPhotoClick?: (index: number, photo: PhotoCarouselItem) => void;
   /** 正对镜头的照片索引变化回调 */
-  onFaceChange?: (index: number) => void;
+  onFaceChange?: (index: number, photo?: PhotoCarouselItem) => void;
+  /** 正对镜头照片变化回调别名（与其他 photo 组件对齐） */
+  onIndexChange?: (index: number, photo: PhotoCarouselItem) => void;
   /** 无障碍名称 */
   ariaLabel?: string;
   /** 自定义类名 */

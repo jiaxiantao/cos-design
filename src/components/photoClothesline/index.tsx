@@ -49,6 +49,7 @@ const PhotoClothesline: React.FC<PhotoClotheslineProps> = ({
   objectFit = 'cover',
   showCaption = true,
   initialIndex = 0,
+  onIndexChange,
   onPhotoClick,
   ariaLabel = 'Photo clothesline',
   className,
@@ -87,6 +88,8 @@ const PhotoClothesline: React.FC<PhotoClotheslineProps> = ({
   const accRef = useRef(0);
   const readyRef = useRef(false);
   const requestedIndexRef = useRef(initialIndex);
+  const lastIndexRef = useRef(initialIndex);
+  const onIndexChangeRef = useRef(onIndexChange);
   const onPhotoClickRef = useRef(onPhotoClick);
   const photosRef = useRef(photos);
 
@@ -96,9 +99,10 @@ const PhotoClothesline: React.FC<PhotoClotheslineProps> = ({
   const hasCaption = showCaption && photos.some((photo) => photo.title || photo.description);
 
   useEffect(() => {
+    onIndexChangeRef.current = onIndexChange;
     onPhotoClickRef.current = onPhotoClick;
     photosRef.current = photos;
-  }, [onPhotoClick, photos]);
+  }, [onIndexChange, onPhotoClick, photos]);
 
   const layout = useMemo(
     () =>
@@ -191,6 +195,24 @@ const PhotoClothesline: React.FC<PhotoClotheslineProps> = ({
         paint(1, 0);
         lastTimeRef.current = 0;
         accRef.current = 0;
+        const centers = state.layout?.centers;
+        if (centers && centers.length > 0) {
+          const viewCenter = vw / 2 - state.offset;
+          let nearest = 0;
+          let best = Number.POSITIVE_INFINITY;
+          for (let i = 0; i < centers.length; i++) {
+            const distance = Math.abs(centers[i] - viewCenter);
+            if (distance < best) {
+              best = distance;
+              nearest = i;
+            }
+          }
+          if (nearest !== lastIndexRef.current) {
+            lastIndexRef.current = nearest;
+            const photo = photosRef.current[nearest];
+            if (photo) onIndexChangeRef.current?.(nearest, photo);
+          }
+        }
         return;
       }
 

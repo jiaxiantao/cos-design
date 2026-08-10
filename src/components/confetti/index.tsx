@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface ConfettiProps {
@@ -11,6 +11,8 @@ export interface ConfettiProps {
   particleCount?: number;
   /** 画布操作提示 */
   hint?: string;
+  /** 粒子全部消散后回调 */
+  onComplete?: () => void;
 }
 
 export interface ConfettiHandle {
@@ -60,16 +62,24 @@ const createParticles = (width: number, height: number, count: number): Particle
 };
 
 const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
-  ({ width = 800, height = 400, auto = true, particleCount = 120, hint = '点击画布再次喷射' }, ref) => {
+  ({ width = 800, height = 400, auto = true, particleCount = 120, hint = '点击画布再次喷射', onComplete }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const particlesRef = useRef<Particle[]>([]);
     const frameRef = useRef(0);
+    const activeRef = useRef(false);
+    const onCompleteRef = useRef(onComplete);
     const sizeRef = useRef({ width, height, particleCount });
     sizeRef.current = { width, height, particleCount };
 
+    useEffect(() => {
+      onCompleteRef.current = onComplete;
+    }, [onComplete]);
+
     const burst = useCallback(() => {
       const { width: w, height: h, particleCount: count } = sizeRef.current;
-      particlesRef.current.push(...createParticles(w, h, count));
+      const reduced = prefersReducedMotion();
+      particlesRef.current.push(...createParticles(w, h, reduced ? Math.min(24, count) : count));
+      activeRef.current = true;
     }, []);
 
     useImperativeHandle(ref, () => ({ burst }), [burst]);
@@ -90,8 +100,12 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       let paused = document.hidden;
+      let reduced = prefersReducedMotion();
       const unbindVisibility = bindVisibilityPause((hidden) => {
         paused = hidden;
+      });
+      const unbindMotion = bindPrefersReducedMotion((value) => {
+        reduced = value;
       });
 
       const tick = () => {
@@ -100,13 +114,14 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
 
         ctx.clearRect(0, 0, width, height);
 
+        const fade = reduced ? 0.03 : 0.008;
         particlesRef.current = particlesRef.current.filter((p) => {
           p.x += p.vx;
           p.y += p.vy;
           p.vy += p.gravity;
           p.vx *= 0.99;
           p.rotation += p.rotationSpeed;
-          p.alpha -= 0.008;
+          p.alpha -= fade;
 
           if (p.alpha <= 0 || p.y > height + 20) return false;
 
@@ -119,18 +134,29 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
           ctx.restore();
           return true;
         });
+
+        if (activeRef.current && particlesRef.current.length === 0) {
+          activeRef.current = false;
+          onCompleteRef.current?.();
+        }
       };
 
       tick();
       return () => {
         cancelAnimationFrame(frameRef.current);
         unbindVisibility();
+        unbindMotion();
       };
     }, [height, width]);
 
     return (
       <div className={styles.confetti} style={{ width, height }}>
-        <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onClick={burst} />
+        <canvas
+          ref={canvasRef}
+          className={styles.canvas}
+          style={{ width, height, touchAction: 'none' }}
+          onPointerDown={burst}
+        />
         <p className={styles.hint}>{hint}</p>
       </div>
     );

@@ -1,18 +1,40 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  getRelativePointerPosition,
+  prefersReducedMotion
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface RedPacketRainProps {
+  /** 画布宽度，默认 400 */
+  width?: number;
+  /** 画布高度，默认 500 */
+  height?: number;
   /** 持续时间（毫秒），默认 10000 */
   duration?: number;
+  /** 挂载后自动开始，默认 true */
+  auto?: boolean;
   /** 抢到红包回调 */
   onGrab?: (amount: number) => void;
+  /** 红包雨结束回调 */
+  onEnd?: () => void;
   /** 已抢金额标签 */
   grabbedLabel?: string;
   /** 红包雨结束提示 */
   endedText?: string;
   /** 操作提示 */
   hint?: string;
+}
+
+export interface RedPacketRainHandle {
+  /** 重新开始一轮红包雨 */
+  start: () => void;
+  /** 立即结束 */
+  stop: () => void;
+  /** 结束并清零金额 */
+  reset: () => void;
 }
 
 interface Packet {
@@ -25,148 +47,221 @@ interface Packet {
   grabbed: boolean;
 }
 
-const RedPacketRain: React.FC<RedPacketRainProps> = ({
-  duration = 10000,
-  onGrab,
-  grabbedLabel = '已抢:',
-  endedText = '红包雨结束',
-  hint = '点击红包抢夺'
-}) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const packetsRef = useRef<Packet[]>([]);
-  const frameRef = useRef(0);
-  const idRef = useRef(0);
-  const spawnTimerRef = useRef(0);
-  const [grabbed, setGrabbed] = useState(0);
-  const [active, setActive] = useState(true);
-  const activeRef = useRef(true);
-  const onGrabRef = useRef(onGrab);
+const RedPacketRain = forwardRef<RedPacketRainHandle, RedPacketRainProps>(
+  (
+    {
+      width = 400,
+      height = 500,
+      duration = 10000,
+      auto = true,
+      onGrab,
+      onEnd,
+      grabbedLabel = '已抢:',
+      endedText = '红包雨结束',
+      hint = '点击红包抢夺'
+    },
+    ref
+  ) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const packetsRef = useRef<Packet[]>([]);
+    const frameRef = useRef(0);
+    const idRef = useRef(0);
+    const spawnTimerRef = useRef(0);
+    const endTimerRef = useRef(0);
+    const runIdRef = useRef(0);
+    const [grabbed, setGrabbed] = useState(0);
+    const [active, setActive] = useState(auto);
+    const activeRef = useRef(auto);
+    const onGrabRef = useRef(onGrab);
+    const onEndRef = useRef(onEnd);
+    const sizeRef = useRef({ width, height });
+    sizeRef.current = { width, height };
 
-  useEffect(() => {
-    onGrabRef.current = onGrab;
-  }, [onGrab]);
+    useEffect(() => {
+      onGrabRef.current = onGrab;
+    }, [onGrab]);
 
-  useEffect(() => {
-    activeRef.current = active;
-  }, [active]);
+    useEffect(() => {
+      onEndRef.current = onEnd;
+    }, [onEnd]);
 
-  const width = 400;
-  const height = 500;
+    useEffect(() => {
+      activeRef.current = active;
+    }, [active]);
 
-  const spawnPacket = useCallback(() => {
-    packetsRef.current.push({
-      id: idRef.current++,
-      x: Math.random() * (width - 50) + 25,
-      y: -60,
-      speed: Math.random() * 2 + 2,
-      rotation: (Math.random() - 0.5) * 0.1,
-      amount: [1, 2, 5, 8, 10, 18, 66, 88][Math.floor(Math.random() * 8)],
-      grabbed: false
-    });
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    let paused = document.hidden;
-    const unbind = bindVisibilityPause((hidden) => {
-      paused = hidden;
-    });
-
-    const endTimer = window.setTimeout(() => {
+    const finish = useCallback(() => {
+      if (!activeRef.current) return;
       activeRef.current = false;
       setActive(false);
-    }, duration);
+      onEndRef.current?.();
+    }, []);
 
-    const tick = () => {
-      frameRef.current = requestAnimationFrame(tick);
-      if (paused) return;
+    const start = useCallback(() => {
+      runIdRef.current += 1;
+      const runId = runIdRef.current;
+      packetsRef.current = [];
+      spawnTimerRef.current = 0;
+      activeRef.current = true;
+      setActive(true);
+      window.clearTimeout(endTimerRef.current);
+      endTimerRef.current = window.setTimeout(() => {
+        if (runId !== runIdRef.current) return;
+        finish();
+      }, duration);
+    }, [duration, finish]);
 
-      spawnTimerRef.current++;
-      if (activeRef.current && spawnTimerRef.current % 20 === 0) {
-        spawnPacket();
-      }
+    const stop = useCallback(() => {
+      window.clearTimeout(endTimerRef.current);
+      finish();
+    }, [finish]);
 
-      ctx.fillStyle = 'rgb(15 23 42 / 20%)';
-      ctx.fillRect(0, 0, width, height);
+    const reset = useCallback(() => {
+      window.clearTimeout(endTimerRef.current);
+      runIdRef.current += 1;
+      packetsRef.current = [];
+      spawnTimerRef.current = 0;
+      activeRef.current = false;
+      setActive(false);
+      setGrabbed(0);
+    }, []);
 
-      packetsRef.current = packetsRef.current.filter((p) => {
-        if (p.grabbed) return false;
-        p.y += p.speed;
-        p.x += Math.sin(p.y * 0.02) * 0.5;
+    useImperativeHandle(ref, () => ({ start, stop, reset }), [reset, start, stop]);
 
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation);
+    const spawnPacket = useCallback(() => {
+      const { width: w } = sizeRef.current;
+      packetsRef.current.push({
+        id: idRef.current++,
+        x: Math.random() * (w - 50) + 25,
+        y: -60,
+        speed: Math.random() * 2 + 2,
+        rotation: (Math.random() - 0.5) * 0.1,
+        amount: [1, 2, 5, 8, 10, 18, 66, 88][Math.floor(Math.random() * 8)],
+        grabbed: false
+      });
+    }, []);
 
-        ctx.fillStyle = '#dc2626';
-        ctx.beginPath();
-        ctx.roundRect(-22, -28, 44, 56, 6);
-        ctx.fill();
+    useEffect(() => {
+      if (auto) start();
+      return () => {
+        window.clearTimeout(endTimerRef.current);
+      };
+    }, [auto, start]);
 
-        ctx.fillStyle = '#fbbf24';
-        ctx.beginPath();
-        ctx.arc(0, -10, 8, 0, Math.PI * 2);
-        ctx.fill();
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
 
-        ctx.fillStyle = '#fde68a';
-        ctx.font = 'bold 12px system-ui';
-        ctx.textAlign = 'center';
-        ctx.fillText(`¥${p.amount}`, 0, 12);
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        ctx.restore();
+      let paused = document.hidden;
+      let reduced = prefersReducedMotion();
+      const unbindVisibility = bindVisibilityPause((hidden) => {
+        paused = hidden;
+      });
+      const unbindMotion = bindPrefersReducedMotion((value) => {
+        reduced = value;
+      });
 
-        return p.y < height + 60;
+      const tick = () => {
+        frameRef.current = requestAnimationFrame(tick);
+        if (paused) return;
+
+        const { width: w, height: h } = sizeRef.current;
+
+        if (!reduced && activeRef.current) {
+          spawnTimerRef.current++;
+          if (spawnTimerRef.current % 20 === 0) spawnPacket();
+        }
+
+        ctx.fillStyle = 'rgb(15 23 42 / 20%)';
+        ctx.fillRect(0, 0, w, h);
+
+        packetsRef.current = packetsRef.current.filter((p) => {
+          if (p.grabbed) return false;
+          if (!reduced) {
+            p.y += p.speed;
+            p.x += Math.sin(p.y * 0.02) * 0.5;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+
+          ctx.fillStyle = '#dc2626';
+          ctx.beginPath();
+          ctx.roundRect(-22, -28, 44, 56, 6);
+          ctx.fill();
+
+          ctx.fillStyle = '#fbbf24';
+          ctx.beginPath();
+          ctx.arc(0, -10, 8, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#fde68a';
+          ctx.font = 'bold 12px system-ui';
+          ctx.textAlign = 'center';
+          ctx.fillText(`¥${p.amount}`, 0, 12);
+
+          ctx.restore();
+
+          return reduced ? true : p.y < h + 60;
+        });
+      };
+
+      tick();
+
+      return () => {
+        cancelAnimationFrame(frameRef.current);
+        unbindVisibility();
+        unbindMotion();
+      };
+    }, [height, spawnPacket, width]);
+
+    const grabAt = (mx: number, my: number) => {
+      if (!activeRef.current) return;
+      let grabbedOne = false;
+      packetsRef.current = packetsRef.current.map((p) => {
+        if (p.grabbed || grabbedOne) return p;
+        if (Math.abs(mx - p.x) < 30 && Math.abs(my - p.y) < 35) {
+          grabbedOne = true;
+          setGrabbed((g) => g + p.amount);
+          onGrabRef.current?.(p.amount);
+          return { ...p, grabbed: true };
+        }
+        return p;
       });
     };
 
-    tick();
-
-    return () => {
-      cancelAnimationFrame(frameRef.current);
-      clearTimeout(endTimer);
-      unbind();
+    const handlePointer = (e: React.PointerEvent<HTMLCanvasElement>) => {
+      const pos = getRelativePointerPosition(e.currentTarget, e.nativeEvent);
+      if (pos) grabAt(pos.x, pos.y);
     };
-  }, [duration, spawnPacket]);
 
-  const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-
-    let grabbedOne = false;
-    packetsRef.current = packetsRef.current.map((p) => {
-      if (p.grabbed || grabbedOne) return p;
-      if (Math.abs(mx - p.x) < 30 && Math.abs(my - p.y) < 35) {
-        grabbedOne = true;
-        setGrabbed((g) => g + p.amount);
-        onGrabRef.current?.(p.amount);
-        return { ...p, grabbed: true };
-      }
-      return p;
-    });
-  };
-
-  return (
-    <div className={styles.redPacketRain}>
-      <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onClick={handleClick} />
-      <div className={styles.hud}>
-        <span>
-          {grabbedLabel} ¥{grabbed}
-        </span>
-        {!active && <span className={styles.end}>{endedText}</span>}
+    return (
+      <div className={styles.redPacketRain}>
+        <canvas
+          ref={canvasRef}
+          className={styles.canvas}
+          style={{ width, height, touchAction: 'none' }}
+          onPointerDown={handlePointer}
+        />
+        <div className={styles.hud}>
+          <span>
+            {grabbedLabel} ¥{grabbed}
+          </span>
+          {!active && <span className={styles.end}>{endedText}</span>}
+        </div>
+        <p className={styles.hint}>{hint}</p>
       </div>
-      <p className={styles.hint}>{hint}</p>
-    </div>
-  );
-};
+    );
+  }
+);
+
+RedPacketRain.displayName = 'RedPacketRain';
 
 export default RedPacketRain;

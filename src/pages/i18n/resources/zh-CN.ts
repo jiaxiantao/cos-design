@@ -14,7 +14,8 @@ const zhCN = {
     sidebarTitle: '分类导航',
     navHome: '首页介绍',
     navCatalog: '组件目录',
-    navQuickstart: '快速开始'
+    navQuickstart: '快速开始',
+    navRecipes: '活动配方'
   },
   home: {
     eyebrow: 'React 视觉特效组件库',
@@ -66,6 +67,39 @@ const zhCN = {
     homeText: '返回首页了解 cos-design 能做什么',
     quickstartLabel: '新手上路',
     quickstartText: '查看快速开始 — 安装、用法与注意事项'
+  },
+  recipes: {
+    eyebrow: 'Campaign Recipes',
+    title: '活动页配方',
+    subtitle: '把营销尖刀组件串成可落地的活动流程，直接复制组合思路。',
+    back: '← 返回配方列表',
+    notFound: '未找到该配方',
+    howTitle: '组合思路',
+    hintFireworks: '揭开后自动燃放；也可点击补放',
+    hintConfetti: '抽奖结束后喷射；也可点击再喷',
+    items: {
+      scratchCelebrate: {
+        title: '刮开即庆祝',
+        description: '刮刮乐揭开后触发烟花，适合开屏领奖与到店礼。',
+        how: '监听 ScratchCard.onReveal，调用 FireworksHandle.launch 在多个位置燃放。',
+        prize: '🎉 一等奖！',
+        cover: '刮开有惊喜'
+      },
+      countdownRain: {
+        title: '倒计时红包雨',
+        description: '活动倒计时结束后开启红包雨，适合整点开抢。',
+        how: 'Countdown.onEnd 后调用 RedPacketRainHandle.start；可用 width/height/duration 控制场次。',
+        waiting: '倒计时结束后开始红包雨…',
+        ended: '红包雨已开启，点击红包抢夺',
+        hint: '点击红包抢夺'
+      },
+      turntableConfetti: {
+        title: '转盘抽奖庆祝',
+        description: '转盘停轮后喷射彩纸，适合直播间与会场抽奖。',
+        how: 'Turntable.onSpinEnd 触发 ConfettiHandle.burst；也可用 targetIndex / spin() 对接服务端开奖。',
+        button: '开始抽奖'
+      }
+    }
   },
   component: {
     backToCatalog: '← 返回目录',

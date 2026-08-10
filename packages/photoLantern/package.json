@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/photo-lantern",
-  "version": "3.7.3",
+  "version": "3.7.4",
   "description": "PhotoLantern component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

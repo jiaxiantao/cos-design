@@ -16,7 +16,8 @@ const enUS: typeof zhCN = {
     sidebarTitle: 'Browse by category',
     navHome: 'Overview',
     navCatalog: 'Catalog',
-    navQuickstart: 'Quick Start'
+    navQuickstart: 'Quick Start',
+    navRecipes: 'Recipes'
   },
   home: {
     eyebrow: 'React Visual Effect Library',
@@ -69,6 +70,39 @@ const enUS: typeof zhCN = {
     homeText: 'Back to the homepage to see what cos-design can do',
     quickstartLabel: 'Getting started',
     quickstartText: 'Open quick start — installation, usage, and tips'
+  },
+  recipes: {
+    eyebrow: 'Campaign Recipes',
+    title: 'Campaign recipes',
+    subtitle: 'Compose marketing components into ready-to-ship campaign flows.',
+    back: '← Back to recipes',
+    notFound: 'Recipe not found',
+    howTitle: 'How it fits together',
+    hintFireworks: 'Auto-launches on reveal; click canvas for more',
+    hintConfetti: 'Bursts after the spin; click for another burst',
+    items: {
+      scratchCelebrate: {
+        title: 'Scratch & celebrate',
+        description: 'Fireworks launch when the scratch card is revealed.',
+        how: 'Listen to ScratchCard.onReveal, then call FireworksHandle.launch at a few x positions.',
+        prize: '🎉 Grand prize!',
+        cover: 'Scratch to reveal'
+      },
+      countdownRain: {
+        title: 'Countdown red-packet rain',
+        description: 'Start a red-packet rain when the countdown ends.',
+        how: 'On Countdown.onEnd call RedPacketRainHandle.start; size the round with width/height/duration.',
+        waiting: 'Red-packet rain starts when the countdown ends…',
+        ended: 'Rain is live — tap packets to grab',
+        hint: 'Tap packets to grab'
+      },
+      turntableConfetti: {
+        title: 'Turntable + confetti',
+        description: 'Burst confetti when the turntable stops.',
+        how: 'Wire Turntable.onSpinEnd to ConfettiHandle.burst; use targetIndex / spin() for server-drawn prizes.',
+        button: 'Spin'
+      }
+    }
   },
   component: {
     backToCatalog: '← Back to catalog',

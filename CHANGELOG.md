@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.4] - 2026-08-10
+
+### Added
+
+- `@cos-design/shared`：补齐 `prefersReducedMotion` / `bindPrefersReducedMotion`、`observeElementSize`、`getRelativePointerPosition`，以及 `PhotoItem` / 索引回调类型
+- 营销组件命令式 Handle 与服务端开奖能力：`Turntable`（`spin`/`reset`/`targetIndex`）、`SlotMachine`（`spin`/`reset`/`targetResults`/`buttonText`）、`ScratchCard`（`reset`/`reveal`/`revealThreshold`）、`RedPacketRain`（`start`/`stop`/`reset`/`width`/`height`/`onEnd`/`auto`）
+- `Charge.onComplete`；`Fireworks` / `Confetti` 的 `onComplete`；Photo 旗舰统一 `onIndexChange` 别名（Album / Lantern / Clothesline / Carousel）
+- Playground「活动配方」页：刮开庆祝、倒计时红包雨、转盘彩纸
+
+### Changed
+
+- `Fireworks` / `Confetti` / `RedPacketRain` 改用 pointer 事件，并接入 reduced-motion 降级
+- README / QUICKSTART 组件数量与分类同步为 84 个 · 9 类
+- @cos-design/shared: 3.5.3 → 3.5.4
+- @cos-design/charge: 3.5.3 → 3.5.4
+- @cos-design/confetti: 3.5.3 → 3.5.4
+- @cos-design/fireworks: 3.5.3 → 3.5.4
+- @cos-design/photo-album: 3.7.1 → 3.7.2
+- @cos-design/photo-carousel: 3.7.3 → 3.7.4
+- @cos-design/photo-clothesline: 3.7.3 → 3.7.4
+- @cos-design/photo-lantern: 3.7.3 → 3.7.4
+- @cos-design/red-packet-rain: 3.5.3 → 3.5.4
+- @cos-design/scratch-card: 3.5.3 → 3.5.4
+- @cos-design/slot-machine: 3.5.4 → 3.5.5
+- @cos-design/turntable: 3.5.4 → 3.5.5
+- cos-design: 聚合包更新至 3.7.4
+
 ## [3.7.3] - 2026-08-03
 
 ### Added

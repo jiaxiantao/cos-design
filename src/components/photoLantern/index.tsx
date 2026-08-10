@@ -55,6 +55,7 @@ const PhotoLantern: React.FC<PhotoLanternProps> = ({
   showCaption = false,
   initialAngle = 0,
   onFaceChange,
+  onIndexChange,
   onPhotoClick,
   ariaLabel = '走马灯图片预览',
   className,
@@ -76,6 +77,7 @@ const PhotoLantern: React.FC<PhotoLanternProps> = ({
   const frontIndexRef = useRef(frontFaceIndex(initialAngle));
 
   const onFaceChangeRef = useRef(onFaceChange);
+  const onIndexChangeRef = useRef(onIndexChange);
   const onPhotoClickRef = useRef(onPhotoClick);
   const facesRef = useRef<(PhotoLanternItem | undefined)[]>([]);
   const autoRotateRef = useRef(autoRotate);
@@ -96,13 +98,24 @@ const PhotoLantern: React.FC<PhotoLanternProps> = ({
   useEffect(() => {
     facesRef.current = faces;
     onFaceChangeRef.current = onFaceChange;
+    onIndexChangeRef.current = onIndexChange;
     onPhotoClickRef.current = onPhotoClick;
     autoRotateRef.current = autoRotate;
     autoRotateSpeedRef.current = autoRotateSpeed;
     frictionRef.current = friction;
     lightSwayRef.current = lightSway;
     dragSensitivityRef.current = dragSensitivity;
-  }, [faces, onFaceChange, onPhotoClick, autoRotate, autoRotateSpeed, friction, lightSway, dragSensitivity]);
+  }, [
+    faces,
+    onFaceChange,
+    onIndexChange,
+    onPhotoClick,
+    autoRotate,
+    autoRotateSpeed,
+    friction,
+    lightSway,
+    dragSensitivity
+  ]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -196,7 +209,9 @@ const PhotoLantern: React.FC<PhotoLanternProps> = ({
       if (nextFront !== frontIndexRef.current) {
         frontIndexRef.current = nextFront;
         setFrontIndex(nextFront);
-        onFaceChangeRef.current?.(nextFront, facesRef.current[nextFront]);
+        const photo = facesRef.current[nextFront];
+        onFaceChangeRef.current?.(nextFront, photo);
+        if (photo) onIndexChangeRef.current?.(nextFront, photo);
       }
 
       api.setLightSway(now / 1000, lightSwayRef.current);

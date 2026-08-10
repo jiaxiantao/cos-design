@@ -151,7 +151,7 @@ Context7: /jiaxiantao/cos-design
 
 ---
 
-## 组件一览（73 个 · 8 大分类）
+## 组件一览（84 个 · 9 大分类）
 
 <details open>
 <summary><strong>背景动效</strong> — 11 个 · 动态场景与粒子背景</summary>
@@ -331,7 +331,7 @@ Context7: /jiaxiantao/cos-design
 
 ## 特性
 
-- **84 个组件**，覆盖背景、文字、交互、营销、数据、物理、科学、特效八大场景
+- **84 个组件**，覆盖背景、文字、图片、交互、营销、数据、物理、科学、特效九大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`

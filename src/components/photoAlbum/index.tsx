@@ -183,6 +183,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
   ariaLabel = 'Photo album',
   labels,
   onPageChange,
+  onIndexChange,
   className,
   style
 }) => {
@@ -292,7 +293,10 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
       finishingRef.current = false;
       const focused = photos[nextIndex] ?? photos[nextIndex - 1];
       const focusedIndex = photos[nextIndex] ? nextIndex : nextIndex - 1;
-      if (focused && focusedIndex >= 0) onPageChange?.(focusedIndex, focused);
+      if (focused && focusedIndex >= 0) {
+        onPageChange?.(focusedIndex, focused);
+        onIndexChange?.(focusedIndex, focused);
+      }
     };
 
     /*
@@ -333,7 +337,7 @@ const PhotoAlbum: React.FC<PhotoAlbumProps> = ({
       settleRafRef.current.push(mid);
     });
     settleRafRef.current.push(outer);
-  }, [clearSettleRafs, onPageChange, photos]);
+  }, [clearSettleRafs, onIndexChange, onPageChange, photos]);
 
   useEffect(() => {
     if (!turn || turn.phase !== 'run') return;

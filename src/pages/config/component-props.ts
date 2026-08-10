@@ -265,6 +265,13 @@ export const componentProps: ComponentPropsMap = {
       description: '电量变化回调'
     },
     {
+      name: 'onComplete',
+      type: '() => void',
+      required: false,
+      default: '',
+      description: '电量首次到达 100% 时回调'
+    },
+    {
       name: 'autoCharge',
       type: 'boolean',
       required: false,
@@ -388,6 +395,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '画布操作提示'
+    },
+    {
+      name: 'onComplete',
+      type: '() => void',
+      required: false,
+      default: '',
+      description: '粒子全部消散后回调'
     }
   ],
   CountUp: [
@@ -765,6 +779,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: "'点击画布燃放烟花'",
       description: '画布操作提示'
+    },
+    {
+      name: 'onComplete',
+      type: '() => void',
+      required: false,
+      default: '',
+      description: '画面空闲（无火箭/粒子）时回调'
     }
   ],
   FlipCounter: [
@@ -1558,6 +1579,13 @@ export const componentProps: ComponentPropsMap = {
       description: '当前照片变化回调'
     },
     {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoAlbumItem) => void',
+      required: false,
+      default: '',
+      description: '当前照片变化回调别名（与其他 photo 组件对齐）'
+    },
+    {
       name: 'className',
       type: 'string',
       required: false,
@@ -1666,10 +1694,17 @@ export const componentProps: ComponentPropsMap = {
     },
     {
       name: 'onFaceChange',
-      type: '(index: number) => void',
+      type: '(index: number, photo?: PhotoCarouselItem) => void',
       required: false,
       default: '',
       description: '正对镜头的照片索引变化回调'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoCarouselItem) => void',
+      required: false,
+      default: '',
+      description: '正对镜头照片变化回调别名（与其他 photo 组件对齐）'
     },
     {
       name: 'ariaLabel',
@@ -1854,6 +1889,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '0',
       description: '初始居中显示的照片索引'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoClotheslineItem) => void',
+      required: false,
+      default: '',
+      description: '居中照片变化回调（拖拽/惯性停稳后）'
     },
     {
       name: 'onPhotoClick',
@@ -2217,6 +2259,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '正面照片变化回调'
+    },
+    {
+      name: 'onIndexChange',
+      type: '(index: number, photo: PhotoLanternItem) => void',
+      required: false,
+      default: '',
+      description: '正面照片变化回调别名（与其他 photo 组件对齐）'
     },
     {
       name: 'onPhotoClick',
@@ -3032,11 +3081,32 @@ export const componentProps: ComponentPropsMap = {
   ],
   RedPacketRain: [
     {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '',
+      description: '画布宽度，默认 400'
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '',
+      description: '画布高度，默认 500'
+    },
+    {
       name: 'duration',
       type: 'number',
       required: false,
-      default: '10000',
+      default: '',
       description: '持续时间（毫秒），默认 10000'
+    },
+    {
+      name: 'auto',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '挂载后自动开始，默认 true'
     },
     {
       name: 'onGrab',
@@ -3046,24 +3116,31 @@ export const componentProps: ComponentPropsMap = {
       description: '抢到红包回调'
     },
     {
+      name: 'onEnd',
+      type: '() => void',
+      required: false,
+      default: '',
+      description: '红包雨结束回调'
+    },
+    {
       name: 'grabbedLabel',
       type: 'string',
       required: false,
-      default: "'已抢:'",
+      default: '',
       description: '已抢金额标签'
     },
     {
       name: 'endedText',
       type: 'string',
       required: false,
-      default: "'红包雨结束'",
+      default: '',
       description: '红包雨结束提示'
     },
     {
       name: 'hint',
       type: 'string',
       required: false,
-      default: "'点击红包抢夺'",
+      default: '',
       description: '操作提示'
     }
   ],
@@ -3371,22 +3448,29 @@ export const componentProps: ComponentPropsMap = {
       name: 'coverColor',
       type: 'string',
       required: false,
-      default: "'#94a3b8'",
+      default: '',
       description: '涂层颜色'
     },
     {
       name: 'prize',
       type: 'string',
       required: false,
-      default: "'🎉 恭喜中奖！'",
+      default: '',
       description: '奖品文字'
     },
     {
       name: 'coverText',
       type: 'string',
       required: false,
-      default: "'刮开涂层'",
+      default: '',
       description: '涂层上的提示文案'
+    },
+    {
+      name: 'revealThreshold',
+      type: 'number',
+      required: false,
+      default: '',
+      description: '刮开面积比例阈值（0~1），默认 0.45'
     },
     {
       name: 'onReveal',
@@ -3399,14 +3483,14 @@ export const componentProps: ComponentPropsMap = {
       name: 'width',
       type: 'number',
       required: false,
-      default: '300',
+      default: '',
       description: ''
     },
     {
       name: 'height',
       type: 'number',
       required: false,
-      default: '180',
+      default: '',
       description: ''
     }
   ],
@@ -3459,15 +3543,22 @@ export const componentProps: ComponentPropsMap = {
       name: 'symbols',
       type: 'string[]',
       required: false,
-      default: 'DEFAULT_SYMBOLS',
+      default: '',
       description: '符号列表'
     },
     {
       name: 'spinDuration',
       type: 'number',
       required: false,
-      default: '3000',
+      default: '',
       description: '单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮'
+    },
+    {
+      name: 'targetResults',
+      type: 'string[]',
+      required: false,
+      default: '',
+      description: '指定下一次停轮结果（长度 3）；不传则随机'
     },
     {
       name: 'onSpinEnd',
@@ -3480,28 +3571,35 @@ export const componentProps: ComponentPropsMap = {
       name: 'startText',
       type: 'string',
       required: false,
-      default: "'开始'",
+      default: '',
       description: '开始按钮文案'
+    },
+    {
+      name: 'buttonText',
+      type: 'string',
+      required: false,
+      default: '',
+      description: '开始按钮文案别名（与 Turntable.buttonText 对齐）'
     },
     {
       name: 'spinningText',
       type: 'string',
       required: false,
-      default: "'旋转中...'",
+      default: '',
       description: '旋转中的按钮文案'
     },
     {
       name: 'jackpotText',
       type: 'string',
       required: false,
-      default: "'🎰 大奖！'",
+      default: '',
       description: '中奖提示'
     },
     {
       name: 'resultPrefix',
       type: 'string',
       required: false,
-      default: "'结果:'",
+      default: '',
       description: '普通结果前缀'
     }
   ],
@@ -3996,49 +4094,56 @@ export const componentProps: ComponentPropsMap = {
       name: 'prizes',
       type: 'TurntablePrize[]',
       required: false,
-      default: 'DEFAULT_PRIZES',
+      default: '',
       description: '奖品列表'
     },
     {
       name: 'size',
       type: 'number',
       required: false,
-      default: '360',
+      default: '',
       description: '转盘直径，默认 360'
     },
     {
       name: 'spinDuration',
       type: 'number',
       required: false,
-      default: '4000',
+      default: '',
       description: '旋转动画时长（毫秒），默认 4000'
     },
     {
       name: 'spinRounds',
       type: 'number',
       required: false,
-      default: '5',
+      default: '',
       description: '旋转圈数，默认 5'
+    },
+    {
+      name: 'targetIndex',
+      type: 'number',
+      required: false,
+      default: '',
+      description: '指定下一次抽中的奖品索引（服务端开奖）；不传则随机'
     },
     {
       name: 'buttonText',
       type: 'string',
       required: false,
-      default: "'开始抽奖'",
+      default: '',
       description: '抽奖按钮文案'
     },
     {
       name: 'spinningText',
       type: 'string',
       required: false,
-      default: "'抽奖中...'",
+      default: '',
       description: '抽奖进行中的按钮文案'
     },
     {
       name: 'resultPrefix',
       type: 'string',
       required: false,
-      default: "'恭喜获得：'",
+      default: '',
       description: '中奖结果前缀'
     },
     {

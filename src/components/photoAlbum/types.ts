@@ -53,6 +53,8 @@ export interface PhotoAlbumProps {
   labels?: PhotoAlbumLabels;
   /** 当前照片变化回调 */
   onPageChange?: (index: number, photo: PhotoAlbumItem) => void;
+  /** 当前照片变化回调别名（与其他 photo 组件对齐） */
+  onIndexChange?: (index: number, photo: PhotoAlbumItem) => void;
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */

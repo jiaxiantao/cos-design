@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/photo-album",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "description": "PhotoAlbum component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

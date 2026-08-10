@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/photo-clothesline",
-  "version": "3.7.3",
+  "version": "3.7.4",
   "description": "PhotoClothesline component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

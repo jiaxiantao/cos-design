@@ -1,6 +1,6 @@
 # 快速开始
 
-cos-design 是一套面向**视觉表达**的 React 组件库（49 个特效组件），适合活动页、品牌 Landing、数据大屏等场景。本文档帮助你在几分钟内完成安装、使用，并避开常见坑。
+cos-design 是一套面向**视觉表达**的 React 组件库（84 个特效组件），适合活动页、品牌 Landing、数据大屏等场景。本文档帮助你在几分钟内完成安装、使用，并避开常见坑。
 
 ---
 
@@ -108,6 +108,7 @@ pnpm dev
 | -------- | ------------------------ | ------------------------------------------------ |
 | 背景动效 | 全屏氛围、粒子场景       | `BubbleField`、`MatrixRain`、`Aurora`            |
 | 文字动效 | 标题、Banner、终端风文字 | `Typewriter`、`SplitText`、`NeonText`            |
+| 图片预览 | 物件隐喻式图片浏览       | `PhotoAlbum`、`PhotoClothesline`、`PhotoLantern` |
 | 交互玩具 | 鼠标/触摸趣味反馈        | `WaveButton`、`Spotlight`、`MagneticButton`      |
 | 游戏营销 | 抽奖、庆祝、活动玩法     | `Turntable`、`ScratchCard`、`Charge`             |
 | 数据装饰 | 大屏、倒计时、进度展示   | `CountUp`、`NetworkGraph`、`FlipCounter`         |
@@ -173,17 +174,20 @@ const ref = useRef<FireworksHandle>(null);
 // ref.current?.launch();
 ```
 
-支持命令式的组件：`Fireworks`、`Confetti`。
+支持命令式的组件：`Fireworks`、`Confetti`、`Turntable`、`SlotMachine`、`ScratchCard`、`RedPacketRain`。
 
 ### 7. 受控模式
 
-部分组件支持受控数值，便于与业务状态联动：
+部分组件支持受控数值或服务端开奖结果，便于与业务状态联动：
 
 ```tsx
-<Charge value={50} autoCharge={false} onChange={setPct} />
+<Charge value={50} autoCharge={false} onChange={setPct} onComplete={() => alert('满电')} />
 <FlipCounter value={1024} digits={5} />
 <Countdown targetDate="2026-12-31T23:59:59" onEnd={() => alert('时间到')} />
+<Turntable targetIndex={0} onSpinEnd={(prize, index) => console.log(prize, index)} />
 ```
+
+Playground 另有「活动配方」页（`#/recipes`），演示刮开庆祝、倒计时红包雨、转盘彩纸等组合。
 
 ### 8. TypeScript
 

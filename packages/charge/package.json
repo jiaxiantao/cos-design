@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/charge",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "description": "Charge component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -50,6 +50,8 @@ export interface PhotoLanternProps {
   initialAngle?: number;
   /** 正面照片变化回调 */
   onFaceChange?: (index: number, photo: PhotoLanternItem | undefined) => void;
+  /** 正面照片变化回调别名（与其他 photo 组件对齐） */
+  onIndexChange?: (index: number, photo: PhotoLanternItem) => void;
   /** 点击照片回调 */
   onPhotoClick?: (index: number, photo: PhotoLanternItem) => void;
   /** 无障碍名称 */

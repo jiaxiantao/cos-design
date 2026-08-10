@@ -9,6 +9,8 @@ export interface ChargeProps {
   value?: number;
   /** 电量变化回调 */
   onChange?: (value: number) => void;
+  /** 电量首次到达 100% 时回调 */
+  onComplete?: () => void;
   /** 是否自动充电，默认 true */
   autoCharge?: boolean;
   /** 充电间隔（毫秒），默认 500 */
@@ -24,7 +26,7 @@ const CIRCLE_SIZE = 300;
 const MERGE_FROM_TOP = CIRCLE_TOP + CIRCLE_SIZE - 52;
 
 const Charge = (props: ChargeProps): React.ReactElement => {
-  const { initQuantity = 0, value, onChange, autoCharge = true, interval = 500, step = 0.01 } = props;
+  const { initQuantity = 0, value, onChange, onComplete, autoCharge = true, interval = 500, step = 0.01 } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isControlled = value !== undefined;
@@ -32,13 +34,27 @@ const Charge = (props: ChargeProps): React.ReactElement => {
   const quantity = clamp(isControlled ? value : innerQuantity, 0, 100);
   const quantityRef = useRef(quantity);
   const onChangeRef = useRef(onChange);
+  const onCompleteRef = useRef(onComplete);
+  const completedRef = useRef(quantity >= 100);
 
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
 
   useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
     quantityRef.current = quantity;
+    if (quantity < 100) {
+      completedRef.current = false;
+      return;
+    }
+    if (!completedRef.current) {
+      completedRef.current = true;
+      onCompleteRef.current?.();
+    }
   }, [quantity]);
 
   useEffect(() => {
@@ -62,9 +78,8 @@ const Charge = (props: ChargeProps): React.ReactElement => {
     const timer = window.setInterval(() => {
       if (quantityRef.current >= 100) return;
       const next = Math.min(100, Number((quantityRef.current + step).toFixed(2)));
-      if (isControlled) {
-        onChangeRef.current?.(next);
-      } else {
+      onChangeRef.current?.(next);
+      if (!isControlled) {
         setInnerQuantity(next);
       }
     }, interval);

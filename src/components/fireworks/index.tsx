@@ -1,5 +1,10 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  getRelativePointerPosition,
+  prefersReducedMotion
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface FireworksProps {
@@ -9,6 +14,8 @@ export interface FireworksProps {
   auto?: boolean;
   /** 画布操作提示 */
   hint?: string;
+  /** 画面空闲（无火箭/粒子）时回调 */
+  onComplete?: () => void;
 }
 
 export interface FireworksHandle {
@@ -61,10 +68,16 @@ const createExplosion = (x: number, y: number, color: string): Particle[] => {
 };
 
 const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
-  const { width = 800, height = 500, auto = true, hint = '点击画布燃放烟花' } = props;
+  const { width = 800, height = 500, auto = true, hint = '点击画布燃放烟花', onComplete } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rocketsRef = useRef<Rocket[]>([]);
   const frameRef = useRef(0);
+  const activeRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   const launch = useCallback(
     (x?: number) => {
@@ -79,6 +92,7 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
         particles: [],
         age: 0
       });
+      activeRef.current = true;
     },
     [height, width]
   );
@@ -98,8 +112,12 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
 
     let timer = 0;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
+    });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
     });
 
     const tick = () => {
@@ -108,6 +126,14 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
 
       ctx.fillStyle = 'rgb(15 23 42 / 25%)';
       ctx.fillRect(0, 0, width, height);
+
+      if (reduced) {
+        if (activeRef.current && rocketsRef.current.length === 0) {
+          activeRef.current = false;
+          onCompleteRef.current?.();
+        }
+        return;
+      }
 
       rocketsRef.current = rocketsRef.current.filter((rocket) => {
         if (!rocket.exploded) {
@@ -149,28 +175,41 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
 
         return rocket.particles.length > 0;
       });
+
+      if (activeRef.current && rocketsRef.current.length === 0) {
+        activeRef.current = false;
+        onCompleteRef.current?.();
+      }
     };
 
     tick();
-    if (auto) {
+    if (auto && !reduced) {
       timer = window.setInterval(() => launch(), 1200);
+    } else if (auto && reduced) {
+      launch();
     }
 
     return () => {
       cancelAnimationFrame(frameRef.current);
       clearInterval(timer);
       unbindVisibility();
+      unbindMotion();
     };
   }, [auto, height, launch, width]);
 
-  const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    launch(e.clientX - rect.left);
+  const handlePointer = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const pos = getRelativePointerPosition(e.currentTarget, e.nativeEvent);
+    if (pos) launch(pos.x);
   };
 
   return (
     <div className={styles.fireworks} style={{ width, height }}>
-      <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} onClick={handleClick} />
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+        style={{ width, height, touchAction: 'none' }}
+        onPointerDown={handlePointer}
+      />
       <p className={styles.hint}>{hint}</p>
     </div>
   );

@@ -33,6 +33,7 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   initialAngle = 0,
   onPhotoClick,
   onFaceChange,
+  onIndexChange,
   ariaLabel = 'Photo carousel',
   className,
   style
@@ -51,8 +52,10 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   const dragMovedRef = useRef(false);
   const dragStartXRef = useRef(0);
 
+  const photosRef = useRef(photos);
   const onPhotoClickRef = useRef(onPhotoClick);
   const onFaceChangeRef = useRef(onFaceChange);
+  const onIndexChangeRef = useRef(onIndexChange);
   const autoRotateRef = useRef(autoRotate);
   const autoRotateSpeedRef = useRef(autoRotateSpeed);
   const frictionRef = useRef(friction);
@@ -63,15 +66,28 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   const [frontFaceIndex, setFrontFaceIndex] = useState(() => faceIndexForAngle(initialAngle, step, count));
 
   useEffect(() => {
+    photosRef.current = photos;
     onPhotoClickRef.current = onPhotoClick;
     onFaceChangeRef.current = onFaceChange;
+    onIndexChangeRef.current = onIndexChange;
     autoRotateRef.current = autoRotate;
     autoRotateSpeedRef.current = autoRotateSpeed;
     frictionRef.current = friction;
     dragSensitivityRef.current = dragSensitivity;
     stepRef.current = step;
     countRef.current = count;
-  }, [onPhotoClick, onFaceChange, autoRotate, autoRotateSpeed, friction, dragSensitivity, step, count]);
+  }, [
+    photos,
+    onPhotoClick,
+    onFaceChange,
+    onIndexChange,
+    autoRotate,
+    autoRotateSpeed,
+    friction,
+    dragSensitivity,
+    step,
+    count
+  ]);
 
   const applyAngle = useCallback((nextAngle: number) => {
     angleRef.current = nextAngle;
@@ -82,7 +98,9 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
     if (nextFace !== faceIndexRef.current) {
       faceIndexRef.current = nextFace;
       setFrontFaceIndex(nextFace);
-      onFaceChangeRef.current?.(nextFace);
+      const photo = photosRef.current[nextFace];
+      onFaceChangeRef.current?.(nextFace, photo);
+      if (photo) onIndexChangeRef.current?.(nextFace, photo);
     }
   }, []);
 

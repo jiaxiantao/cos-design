@@ -1,0 +1,36 @@
+export interface RecipeItem {
+  id: string;
+  path: string;
+  titleKey: string;
+  descriptionKey: string;
+  tags: string[];
+  components: string[];
+}
+
+/** 活动页组合配方（Playground 场景演示） */
+export const recipes: RecipeItem[] = [
+  {
+    id: 'scratch-celebrate',
+    path: '/recipes/scratch-celebrate',
+    titleKey: 'recipes.items.scratchCelebrate.title',
+    descriptionKey: 'recipes.items.scratchCelebrate.description',
+    tags: ['ScratchCard', 'Fireworks'],
+    components: ['ScratchCard', 'Fireworks']
+  },
+  {
+    id: 'countdown-rain',
+    path: '/recipes/countdown-rain',
+    titleKey: 'recipes.items.countdownRain.title',
+    descriptionKey: 'recipes.items.countdownRain.description',
+    tags: ['Countdown', 'RedPacketRain'],
+    components: ['Countdown', 'RedPacketRain']
+  },
+  {
+    id: 'turntable-confetti',
+    path: '/recipes/turntable-confetti',
+    titleKey: 'recipes.items.turntableConfetti.title',
+    descriptionKey: 'recipes.items.turntableConfetti.description',
+    tags: ['Turntable', 'Confetti'],
+    components: ['Turntable', 'Confetti']
+  }
+];

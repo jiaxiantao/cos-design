@@ -58,6 +58,8 @@ export interface PhotoClotheslineProps {
   showCaption?: boolean;
   /** 初始居中显示的照片索引 */
   initialIndex?: number;
+  /** 居中照片变化回调（拖拽/惯性停稳后） */
+  onIndexChange?: (index: number, photo: PhotoClotheslineItem) => void;
   /** 点击照片回调 */
   onPhotoClick?: (index: number, photo: PhotoClotheslineItem) => void;
   /** 无障碍名称 */

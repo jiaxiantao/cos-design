@@ -1,8 +1,8 @@
-/** 注册 visibilitychange，页面隐藏时暂停动画循环 */
-export const bindVisibilityPause = (onChange: (paused: boolean) => void) => {
-  const handler = () => onChange(document.hidden);
-  document.addEventListener('visibilitychange', handler);
-  return () => document.removeEventListener('visibilitychange', handler);
-};
-
-export const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+export { clamp } from './math';
+export { bindVisibilityPause } from './visibility';
+export { prefersReducedMotion, bindPrefersReducedMotion } from './reduced-motion';
+export { observeElementSize } from './size';
+export type { ElementSize } from './size';
+export { getRelativePointerPosition } from './pointer';
+export type { PointerPosition } from './pointer';
+export type { PhotoItem, PhotoIndexChangeHandler, PhotoFaceChangeHandler } from './photo';

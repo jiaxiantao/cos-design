@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/turntable",
-  "version": "3.5.4",
+  "version": "3.5.5",
   "description": "Turntable component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

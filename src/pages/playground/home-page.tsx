@@ -32,6 +32,9 @@ const HomePage = () => {
           <Link to="/catalog" className={styles.primaryBtn}>
             {t('home.browseCatalog')}
           </Link>
+          <Link to="/recipes" className={styles.secondaryBtn}>
+            {t('layout.navRecipes')}
+          </Link>
           <Link to="/quickstart" className={styles.secondaryBtn}>
             {t('layout.navQuickstart')}
           </Link>
