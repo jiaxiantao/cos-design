@@ -32,5 +32,21 @@ export const recipes: RecipeItem[] = [
     descriptionKey: 'recipes.items.turntableConfetti.description',
     tags: ['Turntable', 'Confetti'],
     components: ['Turntable', 'Confetti']
+  },
+  {
+    id: 'chest-open',
+    path: '/recipes/chest-open',
+    titleKey: 'recipes.items.chestOpen.title',
+    descriptionKey: 'recipes.items.chestOpen.description',
+    tags: ['Charge', 'ProgressChest', 'Confetti'],
+    components: ['Charge', 'ProgressChest', 'Confetti']
+  },
+  {
+    id: 'slot-jackpot',
+    path: '/recipes/slot-jackpot',
+    titleKey: 'recipes.items.slotJackpot.title',
+    descriptionKey: 'recipes.items.slotJackpot.description',
+    tags: ['SlotMachine', 'Confetti'],
+    components: ['SlotMachine', 'Confetti']
   }
 ];

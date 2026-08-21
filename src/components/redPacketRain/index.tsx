@@ -3,7 +3,9 @@ import {
   bindPrefersReducedMotion,
   bindVisibilityPause,
   getRelativePointerPosition,
-  prefersReducedMotion
+  prefersReducedMotion,
+  resolveCanvasBoxSize,
+  useElementSize
 } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
@@ -12,6 +14,8 @@ export interface RedPacketRainProps {
   width?: number;
   /** 画布高度，默认 500 */
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 持续时间（毫秒），默认 10000 */
   duration?: number;
   /** 挂载后自动开始，默认 true */
@@ -50,8 +54,9 @@ interface Packet {
 const RedPacketRain = forwardRef<RedPacketRainHandle, RedPacketRainProps>(
   (
     {
-      width = 400,
-      height = 500,
+      width: widthProp,
+      height: heightProp,
+      fill = false,
       duration = 10000,
       auto = true,
       onGrab,
@@ -62,6 +67,16 @@ const RedPacketRain = forwardRef<RedPacketRainHandle, RedPacketRainProps>(
     },
     ref
   ) => {
+    const hostRef = useRef<HTMLDivElement>(null);
+    const measured = useElementSize(hostRef, { enabled: fill });
+    const { width, height } = resolveCanvasBoxSize({
+      fill,
+      width: widthProp,
+      height: heightProp,
+      defaultWidth: 400,
+      defaultHeight: 500,
+      measured
+    });
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const packetsRef = useRef<Packet[]>([]);
     const frameRef = useRef(0);
@@ -243,7 +258,7 @@ const RedPacketRain = forwardRef<RedPacketRainHandle, RedPacketRainProps>(
     };
 
     return (
-      <div className={styles.redPacketRain}>
+      <div ref={hostRef} className={styles.redPacketRain} style={fill ? { width: '100%', height: '100%' } : undefined}>
         <canvas
           ref={canvasRef}
           className={styles.canvas}

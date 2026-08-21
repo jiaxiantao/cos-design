@@ -820,7 +820,11 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
-  packages/shared: {}
+  packages/shared:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
 
   packages/shinyText:
     dependencies:

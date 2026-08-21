@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.5] - 2026-08-21
+
+### Added
+
+- `@cos-design/shared`：新增 `useElementSize` / `resolveCanvasBoxSize`（React peer）
+- Canvas 组件支持 `fill` 铺满父容器：`Fireworks`、`Confetti`、`RedPacketRain`、`MatrixRain`、`ParticleNetwork`
+- Playground 活动配方新增：充电开宝箱、老虎机大奖
+
+### Changed
+
+- QUICKSTART / README / AGENTS 补充 `fill` 尺寸用法说明
+- @cos-design/shared: 3.5.4 → 3.5.5
+- @cos-design/confetti: 3.5.4 → 3.5.5
+- @cos-design/fireworks: 3.5.4 → 3.5.5
+- @cos-design/matrix-rain: 3.5.3 → 3.5.4
+- @cos-design/particle-network: 3.5.3 → 3.5.4
+- @cos-design/red-packet-rain: 3.5.4 → 3.5.5
+- cos-design: 聚合包更新至 3.7.5
+
 ## [3.7.4] - 2026-08-10
 
 ### Added

@@ -101,6 +101,19 @@ const enUS: typeof zhCN = {
         description: 'Burst confetti when the turntable stops.',
         how: 'Wire Turntable.onSpinEnd to ConfettiHandle.burst; use targetIndex / spin() for server-drawn prizes.',
         button: 'Spin'
+      },
+      chestOpen: {
+        title: 'Charge to open the chest',
+        description: 'Sync charge progress to a chest, then celebrate when it opens.',
+        how: 'Drive ProgressChest.progress from Charge.onChange; fire Confetti.burst on ProgressChest.onOpen or Charge.onComplete.',
+        charging: 'Charging…',
+        opened: 'Chest opened!'
+      },
+      slotJackpot: {
+        title: 'Slot machine jackpot',
+        description: 'Burst confetti when all three reels match.',
+        how: 'In SlotMachine.onSpinEnd, check if all symbols match then call ConfettiHandle.burst; use targetResults for controlled outcomes.',
+        button: 'Spin'
       }
     }
   },

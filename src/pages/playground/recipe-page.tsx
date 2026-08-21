@@ -3,11 +3,14 @@ import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import {
+  Charge,
   Confetti,
   Countdown,
   Fireworks,
+  ProgressChest,
   RedPacketRain,
   ScratchCard,
+  SlotMachine,
   Turntable,
   type ConfettiHandle,
   type FireworksHandle,
@@ -90,10 +93,58 @@ const TurntableConfettiRecipe = () => {
   );
 };
 
+const ChestOpenRecipe = () => {
+  const { t } = useTranslation();
+  const confettiRef = useRef<ConfettiHandle>(null);
+  const [progress, setProgress] = useState(0);
+
+  return (
+    <div className={styles.stage}>
+      <div className={styles.countdownBlock}>
+        <Charge
+          value={progress}
+          autoCharge
+          interval={80}
+          step={1}
+          onChange={setProgress}
+          onComplete={() => confettiRef.current?.burst()}
+        />
+        <ProgressChest
+          progress={progress}
+          label={t('recipes.items.chestOpen.charging')}
+          openedLabel={t('recipes.items.chestOpen.opened')}
+        />
+      </div>
+      <Confetti ref={confettiRef} width={420} height={260} auto={false} hint={t('recipes.hintConfetti')} />
+    </div>
+  );
+};
+
+const SlotJackpotRecipe = () => {
+  const { t } = useTranslation();
+  const confettiRef = useRef<ConfettiHandle>(null);
+
+  return (
+    <div className={styles.stage}>
+      <SlotMachine
+        buttonText={t('recipes.items.slotJackpot.button')}
+        onSpinEnd={(results) => {
+          if (results.length >= 3 && results[0] === results[1] && results[1] === results[2]) {
+            confettiRef.current?.burst();
+          }
+        }}
+      />
+      <Confetti ref={confettiRef} width={420} height={260} auto={false} hint={t('recipes.hintConfetti')} />
+    </div>
+  );
+};
+
 const recipeViews: Record<string, () => ReactElement> = {
   'scratch-celebrate': ScratchCelebrateRecipe,
   'countdown-rain': CountdownRainRecipe,
-  'turntable-confetti': TurntableConfettiRecipe
+  'turntable-confetti': TurntableConfettiRecipe,
+  'chest-open': ChestOpenRecipe,
+  'slot-jackpot': SlotJackpotRecipe
 };
 
 const RecipePage = () => {

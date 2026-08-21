@@ -137,13 +137,22 @@ const MatrixRain = dynamic(() => import('cos-design').then((m) => m.MatrixRain),
 
 建议每页 **「一个强视觉背景 + 若干局部交互」**，避免多个全屏 Canvas 同时运行导致卡顿或视觉杂乱。
 
-### 3. 给 Canvas 组件明确宽高
+### 3. 给 Canvas 组件明确宽高（或使用 fill）
 
 多数 Canvas 组件通过 `width` / `height` 控制画布尺寸，父容器也应有可见高度：
 
 ```tsx
 <div style={{ width: '100%', height: 500 }}>
   <Fireworks width={800} height={500} />
+</div>
+```
+
+也可以让组件铺满父容器（父级必须有明确高度）：
+
+```tsx
+<div style={{ width: '100%', height: 500 }}>
+  <Fireworks fill />
+  {/* 同样支持：Confetti / RedPacketRain / MatrixRain / ParticleNetwork */}
 </div>
 ```
 

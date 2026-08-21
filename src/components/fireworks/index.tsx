@@ -3,13 +3,17 @@ import {
   bindPrefersReducedMotion,
   bindVisibilityPause,
   getRelativePointerPosition,
-  prefersReducedMotion
+  prefersReducedMotion,
+  resolveCanvasBoxSize,
+  useElementSize
 } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface FireworksProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 是否自动燃放，默认 true */
   auto?: boolean;
   /** 画布操作提示 */
@@ -68,7 +72,24 @@ const createExplosion = (x: number, y: number, color: string): Particle[] => {
 };
 
 const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
-  const { width = 800, height = 500, auto = true, hint = '点击画布燃放烟花', onComplete } = props;
+  const {
+    width: widthProp,
+    height: heightProp,
+    fill = false,
+    auto = true,
+    hint = '点击画布燃放烟花',
+    onComplete
+  } = props;
+  const hostRef = useRef<HTMLDivElement>(null);
+  const measured = useElementSize(hostRef, { enabled: fill });
+  const { width, height } = resolveCanvasBoxSize({
+    fill,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500,
+    measured
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rocketsRef = useRef<Rocket[]>([]);
   const frameRef = useRef(0);
@@ -203,7 +224,11 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
   };
 
   return (
-    <div className={styles.fireworks} style={{ width, height }}>
+    <div
+      ref={hostRef}
+      className={styles.fireworks}
+      style={fill ? { width: '100%', height: '100%' } : { width, height }}
+    >
       <canvas
         ref={canvasRef}
         className={styles.canvas}

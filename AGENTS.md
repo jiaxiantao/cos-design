@@ -44,7 +44,7 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | ---------------- | ---------------------------------------------------------------------------------------------- |
 | React            | >= 18                                                                                          |
 | SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js) |
-| Canvas size      | Always set `width` and `height`                                                                |
+| Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork |
 | Page composition | One strong background + limited focal effects                                                  |
 
 ## Documentation for agents

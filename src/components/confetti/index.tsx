@@ -1,10 +1,18 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
-import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  prefersReducedMotion,
+  resolveCanvasBoxSize,
+  useElementSize
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface ConfettiProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 挂载后自动播放，默认 true */
   auto?: boolean;
   /** 每次喷射粒子数，默认 120 */
@@ -62,7 +70,28 @@ const createParticles = (width: number, height: number, count: number): Particle
 };
 
 const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
-  ({ width = 800, height = 400, auto = true, particleCount = 120, hint = '点击画布再次喷射', onComplete }, ref) => {
+  (
+    {
+      width: widthProp,
+      height: heightProp,
+      fill = false,
+      auto = true,
+      particleCount = 120,
+      hint = '点击画布再次喷射',
+      onComplete
+    },
+    ref
+  ) => {
+    const hostRef = useRef<HTMLDivElement>(null);
+    const measured = useElementSize(hostRef, { enabled: fill });
+    const { width, height } = resolveCanvasBoxSize({
+      fill,
+      width: widthProp,
+      height: heightProp,
+      defaultWidth: 800,
+      defaultHeight: 400,
+      measured
+    });
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const particlesRef = useRef<Particle[]>([]);
     const frameRef = useRef(0);
@@ -150,7 +179,11 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
     }, [height, width]);
 
     return (
-      <div className={styles.confetti} style={{ width, height }}>
+      <div
+        ref={hostRef}
+        className={styles.confetti}
+        style={fill ? { width: '100%', height: '100%' } : { width, height }}
+      >
         <canvas
           ref={canvasRef}
           className={styles.canvas}

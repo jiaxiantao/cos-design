@@ -376,6 +376,13 @@ export const componentProps: ComponentPropsMap = {
       description: ''
     },
     {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
+    },
+    {
       name: 'auto',
       type: 'boolean',
       required: false,
@@ -756,15 +763,22 @@ export const componentProps: ComponentPropsMap = {
       name: 'width',
       type: 'number',
       required: false,
-      default: '800',
+      default: '',
       description: ''
     },
     {
       name: 'height',
       type: 'number',
       required: false,
-      default: '500',
+      default: '',
       description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'auto',
@@ -1186,15 +1200,22 @@ export const componentProps: ComponentPropsMap = {
       name: 'width',
       type: 'number',
       required: false,
-      default: '800',
+      default: '',
       description: ''
     },
     {
       name: 'height',
       type: 'number',
       required: false,
-      default: '500',
+      default: '',
       description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'density',
@@ -1447,15 +1468,22 @@ export const componentProps: ComponentPropsMap = {
       name: 'width',
       type: 'number',
       required: false,
-      default: '800',
+      default: '',
       description: ''
     },
     {
       name: 'height',
       type: 'number',
       required: false,
-      default: '500',
+      default: '',
       description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'particleCount',
@@ -3093,6 +3121,13 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: '画布高度，默认 500'
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'duration',

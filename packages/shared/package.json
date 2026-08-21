@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/shared",
-  "version": "3.5.4",
+  "version": "3.5.5",
   "description": "Shared utilities for cos-design components",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,6 +24,9 @@
   ],
   "sideEffects": false,
   "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
   "homepage": "https://jiaxiantao.github.io/cos-design/",
   "repository": {
     "type": "git",

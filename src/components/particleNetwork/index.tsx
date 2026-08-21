@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, resolveCanvasBoxSize, useElementSize } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface ParticleNetworkProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 粒子数量 */
   particleCount?: number;
   /** 连线距离 */
@@ -26,14 +28,25 @@ interface Particle {
 }
 
 const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
-  width = 800,
-  height = 500,
+  width: widthProp,
+  height: heightProp,
+  fill = false,
   particleCount = 60,
   linkDistance = 120,
   repelRadius = 150,
   color = '#38bdf8',
   hint = '移动鼠标或手指与粒子互动'
 }) => {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const measured = useElementSize(hostRef, { enabled: fill });
+  const { width, height } = resolveCanvasBoxSize({
+    fill,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500,
+    measured
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: -1000, y: -1000 });
@@ -153,7 +166,11 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
   };
 
   return (
-    <div className={styles.particleNetwork} style={{ width, height }}>
+    <div
+      ref={hostRef}
+      className={styles.particleNetwork}
+      style={fill ? { width: '100%', height: '100%' } : { width, height }}
+    >
       <canvas
         ref={canvasRef}
         className={styles.canvas}

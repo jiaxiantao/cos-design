@@ -9,7 +9,7 @@
 | Name           | cos-design                 |
 | npm (umbrella) | cos-design                 |
 | npm (scoped)   | @cos-design/\*             |
-| Version        | 3.7.3                      |
+| Version        | 3.7.4                      |
 | Components     | 84                         |
 | Stack          | React 19, TypeScript, Vite |
 | License        | MIT                        |
@@ -258,8 +258,9 @@ import { MatrixRain } from 'cos-design';
 
 **Props**
 
-- `width`: number (optional, default `800`)
-- `height`: number (optional, default `500`)
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
 - `density`: number (optional, default `0.6`) — 列密度 0~1，默认 0.6
 - `color`: string (optional, default `true`) — 是否显示标题叠层，默认 true
 
@@ -307,8 +308,9 @@ import { ParticleNetwork } from 'cos-design';
 
 **Props**
 
-- `width`: number (optional, default `800`)
-- `height`: number (optional, default `500`)
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
 - `particleCount`: number (optional, default `60`) — 粒子数量
 - `linkDistance`: number (optional, default `120`) — 连线距离
 - `repelRadius`: number (optional, default `150`) — 鼠标排斥半径
@@ -1814,6 +1816,7 @@ import { Confetti } from 'cos-design';
 
 - `width`: number (optional)
 - `height`: number (optional)
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
 - `auto`: boolean (optional) — 挂载后自动播放，默认 true
 - `particleCount`: number (optional) — 每次喷射粒子数，默认 120
 - `hint`: string (optional) — 画布操作提示
@@ -1949,12 +1952,12 @@ import { RedPacketRain } from 'cos-design';
 
 - `width`: number (optional) — 画布宽度，默认 400
 - `height`: number (optional) — 画布高度，默认 500
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
 - `duration`: number (optional) — 持续时间（毫秒），默认 10000
 - `auto`: boolean (optional) — 挂载后自动开始，默认 true
 - `onGrab`: (amount: number) => void (optional) — 抢到红包回调
 - `onEnd`: () => void (optional) — 红包雨结束回调
 - `grabbedLabel`: string (optional) — 已抢金额标签
-- `endedText`: string (optional) — 红包雨结束提示
 
 ### ProgressChest
 
@@ -2562,8 +2565,9 @@ import { Fireworks } from 'cos-design';
 
 **Props**
 
-- `width`: number (optional, default `800`)
-- `height`: number (optional, default `500`)
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
 - `auto`: boolean (optional, default `true`) — 是否自动燃放，默认 true
 - `hint`: string (optional) — 画面空闲（无火箭/粒子）时回调
 

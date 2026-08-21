@@ -98,6 +98,19 @@ const zhCN = {
         description: '转盘停轮后喷射彩纸，适合直播间与会场抽奖。',
         how: 'Turntable.onSpinEnd 触发 ConfettiHandle.burst；也可用 targetIndex / spin() 对接服务端开奖。',
         button: '开始抽奖'
+      },
+      chestOpen: {
+        title: '充电开宝箱',
+        description: '充电进度同步宝箱，满电开启后喷射彩纸，适合签到 / 任务完成。',
+        how: '用 Charge.onChange 驱动 ProgressChest.progress；ProgressChest.onOpen 或 Charge.onComplete 触发 Confetti.burst。',
+        charging: '充电中…',
+        opened: '宝箱已开启！'
+      },
+      slotJackpot: {
+        title: '老虎机大奖',
+        description: '三列同号时喷射彩纸，适合小游戏与会场互动。',
+        how: 'SlotMachine.onSpinEnd 判断三列是否相同，相同则 ConfettiHandle.burst；也可用 targetResults 指定开奖结果。',
+        button: '拉杆'
       }
     }
   },

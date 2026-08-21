@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, resolveCanvasBoxSize, useElementSize } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface MatrixRainProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 列密度 0~1，默认 0.6 */
   density?: number;
   /** 主色调 */
@@ -20,14 +22,25 @@ export interface MatrixRainProps {
 const CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*アイウエオカキクケコ';
 
 const MatrixRain: React.FC<MatrixRainProps> = ({
-  width = 800,
-  height = 500,
+  width: widthProp,
+  height: heightProp,
+  fill = false,
   density = 0.6,
   color = '#00ff41',
   showOverlay = true,
   title = 'MATRIX',
   subtitle = '数字雨效果'
 }) => {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const measured = useElementSize(hostRef, { enabled: fill });
+  const { width, height } = resolveCanvasBoxSize({
+    fill,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500,
+    measured
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -80,7 +93,11 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
   }, [color, density, height, width]);
 
   return (
-    <div className={styles.matrixRain} style={{ width, height }}>
+    <div
+      ref={hostRef}
+      className={styles.matrixRain}
+      style={fill ? { width: '100%', height: '100%' } : { width, height }}
+    >
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
       {showOverlay && (
         <div className={styles.overlay}>
