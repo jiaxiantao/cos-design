@@ -1,6 +1,6 @@
 {
   "name": "cos-design-monorepo",
-  "version": "3.7.7",
+  "version": "3.7.8",
   "private": true,
   "description": "cos-design monorepo — React visual effect components",
   "type": "module",
@@ -53,6 +53,8 @@
     "extract-props": "node scripts/extract-component-props.mjs && node scripts/generate-ai-docs.mjs",
     "generate:ai-docs": "node scripts/generate-ai-docs.mjs",
     "verify:context7": "node scripts/verify-context7.mjs",
+    "context7:refresh": "node scripts/context7-refresh.mjs",
+    "test:smoke": "playwright test",
     "preview": "vite preview",
     "pub": "pnpm build && pnpm --filter \"./packages/**\" publish --access public --no-git-checks",
     "prepare": "husky",
@@ -98,7 +100,8 @@
     "typescript-eslint": "^8.61.1",
     "vite": "^8.0.16",
     "vite-plugin-dts": "^5.0.2",
-    "vite-plugin-lib-inject-css": "^2.2.2"
+    "vite-plugin-lib-inject-css": "^2.2.2",
+    "@playwright/test": "^1.55.0"
   },
   "engines": {
     "node": ">=20",

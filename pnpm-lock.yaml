@@ -24,6 +24,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.4
+      '@playwright/test':
+        specifier: ^1.55.0
+        version: 1.62.1
       '@types/node':
         specifier: ^22.19.21
         version: 22.19.21
@@ -111,6 +114,9 @@ importers:
 
   examples/next-app:
     dependencies:
+      '@cos-design/confetti':
+        specifier: ^3.5.5
+        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@cos-design/fireworks':
         specifier: ^3.5.5
         version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -120,12 +126,15 @@ importers:
       '@cos-design/scratch-card':
         specifier: ^3.5.4
         version: 3.5.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@cos-design/turntable':
+        specifier: ^3.5.5
+        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@cos-design/weather-background':
         specifier: ^3.5.5
         version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       next:
         specifier: ^15.5.2
-        version: 15.5.24(@babel/core@7.29.7)(@types/node@22.19.21)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 15.5.24(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@22.19.21)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: ^19.1.1
         version: 19.2.7
@@ -392,6 +401,15 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/flipCard:
+    dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/flipCounter:
     dependencies:
       react:
@@ -577,6 +595,15 @@ importers:
       '@cos-design/shared':
         specifier: workspace:*
         version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/nineGrid:
+    dependencies:
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1204,6 +1231,12 @@ packages:
   '@cacheable/utils@2.4.1':
     resolution: {integrity: sha512-eiFgzCbIneyMlLOmNG4g9xzF7Hv3Mga4LjxjcSC/ues6VYq2+gUbQI8JqNuw/ZM8tJIeIaBGpswAsqV2V7ApgA==}
 
+  '@cos-design/confetti@3.5.5':
+    resolution: {integrity: sha512-K8ofynIYtNmFwVIEY7nRijWEWsa4XykqtbkZuYhaTioQ3CWB5cxLUeZ5dizcLMd3Y5b1GEQEWc4mGOQTpJ9KIw==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+
   '@cos-design/fireworks@3.5.5':
     resolution: {integrity: sha512-TilaOuzMXy/I3cE4O16nKdCLAGEl/AeZPo5swfKcL9wiL27VtMu0K/qc5NBORZB2Ka8KC6DX+P8ksMNSYLDO7w==}
     peerDependencies:
@@ -1234,6 +1267,12 @@ packages:
     resolution: {integrity: sha512-LRxwCHmFlUmbSs8j6XE16GMYV1EH1bSYmB1EbDXes5cuOq1RHGHbyi8x3VPloworjOUNGk377TeE7x4HWJdMYQ==}
     peerDependencies:
       react: '>=18.0.0'
+
+  '@cos-design/turntable@3.5.5':
+    resolution: {integrity: sha512-9WNCfNciff/ctT4UtJGgZeXZIL7VR6DZXljQWPbJw7l61kYsTkppbs9R81e3s8KCWXzC2kTSbjXu8dUrjMd1aQ==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   '@cos-design/weather-background@3.5.5':
     resolution: {integrity: sha512-0wfZoDCYDQhNGqEJUofjlcHtDtby0yUFFfEfv8R/OSMZ49qo2na9US6bQaTLt2q/hC58v1R4oEcggRPCEhD3FQ==}
@@ -1617,6 +1656,11 @@ packages:
   '@pkgr/core@0.3.6':
     resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
     engines: {node: ^14.18.0 || >=16.0.0}
+
+  '@playwright/test@1.62.1':
+    resolution: {integrity: sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   '@rolldown/binding-android-arm64@1.0.3':
     resolution: {integrity: sha512-454rs7jHngixp/NMxd5srYD57OnzSlZ/eFTETjORQHLwJG1lRtmNOJcBerZlfu4GjKqeq8aCCIQrMdHyhI51Hw==}
@@ -2520,6 +2564,11 @@ packages:
     resolution: {integrity: sha512-eKpRKAovdpZtR1WopLHxlBWvAgPny3c4gX1G5Jhwmmw4XJj0ifSD5qB5TOo8hmA0wlRKDAOAhEE1yVPgs6Fgcg==}
     engines: {node: '>=14.14'}
 
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -3222,6 +3271,16 @@ packages:
 
   pkg-types@2.3.1:
     resolution: {integrity: sha512-y+ichcgc2LrADuhLNAx8DFjVfgz91pRxfZdI3UDhxHvcVEZsenLO+7XaU5vOp0u/7V/wZ+plyuQxtrDlZJ+yeg==}
+
+  playwright-core@1.62.1:
+    resolution: {integrity: sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  playwright@1.62.1:
+    resolution: {integrity: sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
@@ -4050,6 +4109,12 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
+  '@cos-design/confetti@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      '@cos-design/shared': 3.5.5(react@19.2.7)
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+
   '@cos-design/fireworks@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@cos-design/shared': 3.5.5(react@19.2.7)
@@ -4076,6 +4141,11 @@ snapshots:
   '@cos-design/shared@3.5.6(react@19.2.7)':
     dependencies:
       react: 19.2.7
+
+  '@cos-design/turntable@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
 
   '@cos-design/weather-background@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
@@ -4417,6 +4487,10 @@ snapshots:
   '@oxc-project/types@0.133.0': {}
 
   '@pkgr/core@0.3.6': {}
+
+  '@playwright/test@1.62.1':
+    dependencies:
+      playwright: 1.62.1
 
   '@rolldown/binding-android-arm64@1.0.3':
     optional: true
@@ -5382,6 +5456,9 @@ snapshots:
       universalify: 2.0.1
     optional: true
 
+  fsevents@2.3.2:
+    optional: true
+
   fsevents@2.3.3:
     optional: true
 
@@ -5928,7 +6005,7 @@ snapshots:
       sax: 1.6.0
     optional: true
 
-  next@15.5.24(@babel/core@7.29.7)(@types/node@22.19.21)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  next@15.5.24(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@22.19.21)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       '@next/env': 15.5.24
       '@swc/helpers': 0.5.15
@@ -5946,6 +6023,7 @@ snapshots:
       '@next/swc-linux-x64-musl': 15.5.24
       '@next/swc-win32-arm64-msvc': 15.5.24
       '@next/swc-win32-x64-msvc': 15.5.24
+      '@playwright/test': 1.62.1
       sharp: 0.35.3(@types/node@22.19.21)
     transitivePeerDependencies:
       - '@babel/core'
@@ -6072,6 +6150,14 @@ snapshots:
       confbox: 0.2.4
       exsolve: 1.0.8
       pathe: 2.0.3
+
+  playwright-core@1.62.1: {}
+
+  playwright@1.62.1:
+    dependencies:
+      playwright-core: 1.62.1
+    optionalDependencies:
+      fsevents: 2.3.2
 
   possible-typed-array-names@1.1.0: {}
 

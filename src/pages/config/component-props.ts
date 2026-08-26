@@ -823,6 +823,71 @@ export const componentProps: ComponentPropsMap = {
       description: '画面空闲（无火箭/粒子）时回调'
     }
   ],
+  FlipCard: [
+    {
+      name: 'frontTitle',
+      type: 'string',
+      required: false,
+      default: '',
+      description: 'Front face title (e.g. Day 3)'
+    },
+    {
+      name: 'frontSubtitle',
+      type: 'string',
+      required: false,
+      default: '',
+      description: 'Front face subtitle'
+    },
+    {
+      name: 'backTitle',
+      type: 'string',
+      required: false,
+      default: '',
+      description: 'Back face reward title'
+    },
+    {
+      name: 'backSubtitle',
+      type: 'string',
+      required: false,
+      default: '',
+      description: 'Back face detail'
+    },
+    {
+      name: 'flipped',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: 'Controlled flip; omit for uncontrolled'
+    },
+    {
+      name: 'defaultFlipped',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: 'Initial flip when uncontrolled'
+    },
+    {
+      name: 'onReveal',
+      type: '() => void',
+      required: false,
+      default: '',
+      description: 'Called after flip toggles to true (reveal)'
+    },
+    {
+      name: 'onFlipChange',
+      type: '(flipped: boolean) => void',
+      required: false,
+      default: '',
+      description: 'Called on any flip change'
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: 'Disable clicking the card'
+    }
+  ],
   FlipCounter: [
     {
       name: 'value',
@@ -1473,6 +1538,43 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '200',
       description: ''
+    }
+  ],
+  NineGrid: [
+    {
+      name: 'items',
+      type: 'NineGridItem[]',
+      required: false,
+      default: '',
+      description: 'Exactly 9 prize cells (or will be padded/truncated to 9)'
+    },
+    {
+      name: 'targetIndex',
+      type: 'number',
+      required: false,
+      default: '',
+      description: 'Next winning index 0–8 (server draw). Omit for random.'
+    },
+    {
+      name: 'buttonText',
+      type: 'string',
+      required: false,
+      default: '',
+      description: 'Draw button label'
+    },
+    {
+      name: 'onDrawEnd',
+      type: '(item: NineGridItem, index: number) => void',
+      required: false,
+      default: '',
+      description: 'Called when the highlight settles on a cell'
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: 'Disable interaction while drawing'
     }
   ],
   OrbitalChart: [
@@ -4506,6 +4608,27 @@ export const componentRelatedTypes: ComponentTypesMap = {
           required: false,
           default: '',
           description: ''
+        }
+      ]
+    }
+  ],
+  NineGrid: [
+    {
+      name: 'NineGridItem',
+      fields: [
+        {
+          name: 'label',
+          type: 'string',
+          required: true,
+          default: '',
+          description: ''
+        },
+        {
+          name: 'icon',
+          type: 'string',
+          required: false,
+          default: '',
+          description: 'Optional emoji / short mark shown above the label'
         }
       ]
     }

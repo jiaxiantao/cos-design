@@ -1,0 +1,74 @@
+.nineGrid {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+  width: min(100%, 360px);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  gap: 4px;
+  border-radius: 14px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  background: linear-gradient(160deg, #1c2433, #121821);
+  color: #e8eef7;
+  text-align: center;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.label {
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 0 6px;
+}
+
+.active {
+  border-color: #f5c451;
+  box-shadow: 0 0 0 2px rgb(245 196 81 / 35%);
+  transform: scale(1.03);
+}
+
+.winner {
+  border-color: #7dd3fc;
+  background: linear-gradient(160deg, #243247, #152033);
+  box-shadow: 0 0 0 2px rgb(125 211 252 / 45%);
+}
+
+.button {
+  min-width: 140px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: #f5c451;
+  color: #1a1408;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}

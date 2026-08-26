@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause, useCanvasBox } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion, useCanvasBox } from '@cos-design/shared';
 import { createPointerState, FRAME_MS, MAX_DPR } from './constants';
 import { drawDynamicBackground, drawStaticBackground, createSnowSprite } from './background';
 import { applyMergeAttraction, startNearbyMerges, updateMerges, resolveMergePose } from './merge';
@@ -74,16 +74,20 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!snowSpriteRef.current) snowSpriteRef.current = createSnowSprite();
-    const snowSprite = snowSpriteRef.current;
     let lastFrameTs = 0;
 
     let frameId = 0;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
+
+    if (!snowSpriteRef.current) snowSpriteRef.current = createSnowSprite();
+    const snowSprite = snowSpriteRef.current;
 
     const toLocalPoint = (clientX: number, clientY: number) => {
       const rect = canvas.getBoundingClientRect();
@@ -147,19 +151,7 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('pointerleave', clearPointer);
 
-    const draw = (frameTs = 0) => {
-      frameId = requestAnimationFrame(draw);
-      if (paused) return;
-
-      if (!lastFrameTs) lastFrameTs = frameTs;
-      const deltaMs = Math.min(40, Math.max(8, frameTs - lastFrameTs || FRAME_MS));
-      lastFrameTs = frameTs;
-      const frameScale = deltaMs / FRAME_MS;
-      const deltaSec = deltaMs / 1000;
-      timeRef.current += deltaSec * (reduceMotion ? 0.6 : 1);
-      const time = timeRef.current;
-      const { color: tint, speed: currentSpeed, bubbleCount: maxCount, interactive: isInteractive } = propsRef.current;
-
+    const ensureBackground = (tint: string) => {
       const bgKey = `${width}x${height}@${dpr}:${tint}`;
       if (backgroundCacheRef.current?.key !== bgKey) {
         const bgCanvas = document.createElement('canvas');
@@ -172,11 +164,49 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
           backgroundCacheRef.current = { key: bgKey, canvas: bgCanvas };
         }
       }
-
       if (backgroundCacheRef.current) {
         ctx.drawImage(backgroundCacheRef.current.canvas, 0, 0, width, height);
       }
-      drawDynamicBackground(ctx, width, height, time, snowSprite, reduceMotion);
+    };
+
+    const paintStaticFrame = () => {
+      const { color: tint } = propsRef.current;
+      ensureBackground(tint);
+      drawDynamicBackground(ctx, width, height, timeRef.current, snowSprite, true);
+      const drawOrder = [...bubblesRef.current].sort((a, b) => b.y - a.y);
+      for (const bubble of drawOrder) {
+        drawBubble(ctx, bubble, timeRef.current, tint, width, height);
+      }
+    };
+
+    if (reduced) {
+      paintStaticFrame();
+      return () => {
+        canvas.removeEventListener('pointermove', onPointerMove);
+        canvas.removeEventListener('pointerenter', onPointerEnter);
+        canvas.removeEventListener('pointerdown', onPointerDown);
+        canvas.removeEventListener('pointerleave', clearPointer);
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const draw = (frameTs = 0) => {
+      frameId = requestAnimationFrame(draw);
+      if (paused) return;
+      if (reduced) return;
+
+      if (!lastFrameTs) lastFrameTs = frameTs;
+      const deltaMs = Math.min(40, Math.max(8, frameTs - lastFrameTs || FRAME_MS));
+      lastFrameTs = frameTs;
+      const frameScale = deltaMs / FRAME_MS;
+      const deltaSec = deltaMs / 1000;
+      timeRef.current += deltaSec;
+      const time = timeRef.current;
+      const { color: tint, speed: currentSpeed, bubbleCount: maxCount, interactive: isInteractive } = propsRef.current;
+
+      ensureBackground(tint);
+      drawDynamicBackground(ctx, width, height, time, snowSprite, false);
 
       spawnTimerRef.current += deltaSec;
       if (spawnTimerRef.current > 0.2 && bubblesRef.current.length < maxCount) {
@@ -238,9 +268,8 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
           );
           if (flow.excite > 0.01 || Math.hypot(flow.fx, flow.fy) > 0.01) {
             const inertia = 1 / (0.75 + bubble.radius * 0.035);
-            const motionScale = reduceMotion ? 0.55 : 1;
-            bubble.vx += flow.fx * inertia * frameScale * motionScale;
-            bubble.vy += flow.fy * inertia * 0.82 * frameScale * motionScale;
+            bubble.vx += flow.fx * inertia * frameScale;
+            bubble.vy += flow.fy * inertia * 0.82 * frameScale;
             exciteBubbleFromFlow(bubble, flow.strain, flow.strainAngle, flow.excite, flow.fx, flow.fy);
           }
         }
@@ -286,6 +315,7 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
       canvas.removeEventListener('pointerdown', onPointerDown);
       canvas.removeEventListener('pointerleave', clearPointer);
       unbindVisibility();
+      unbindMotion();
     };
   }, [height, width]);
 

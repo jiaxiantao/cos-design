@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause, resolveCanvasBoxSize, useElementSize } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  prefersReducedMotion,
+  resolveCanvasBoxSize,
+  useElementSize
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface ParticleNetworkProps {
@@ -78,16 +84,15 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
 
     let frameId = 0;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
-    const draw = () => {
-      if (paused) {
-        frameId = requestAnimationFrame(draw);
-        return;
-      }
-
+    const paintFrame = (animate: boolean) => {
       ctx.fillStyle = '#0f172a';
       ctx.fillRect(0, 0, width, height);
 
@@ -95,21 +100,23 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
       const mouse = mouseRef.current;
       const repelRadiusSq = repelRadius * repelRadius;
 
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
+      if (animate) {
+        particles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const distSq = dx * dx + dy * dy;
-        if (distSq < repelRadiusSq && distSq > 0) {
-          const dist = Math.sqrt(distSq);
-          p.vx -= (dx / dist) * 0.15;
-          p.vy -= (dy / dist) * 0.15;
-        }
-      });
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < repelRadiusSq && distSq > 0) {
+            const dist = Math.sqrt(distSq);
+            p.vx -= (dx / dist) * 0.15;
+            p.vy -= (dy / dist) * 0.15;
+          }
+        });
+      }
 
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -136,14 +143,28 @@ const ParticleNetwork: React.FC<ParticleNetworkProps> = ({
         ctx.fillStyle = color;
         ctx.fill();
       });
+    };
 
+    if (reduced) {
+      paintFrame(false);
+      return () => {
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const draw = () => {
       frameId = requestAnimationFrame(draw);
+      if (paused) return;
+      if (reduced) return;
+      paintFrame(true);
     };
 
     draw();
     return () => {
       cancelAnimationFrame(frameId);
       unbindVisibility();
+      unbindMotion();
     };
   }, [color, height, initParticles, linkDistance, repelRadius, width]);
 

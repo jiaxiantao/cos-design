@@ -119,6 +119,21 @@ const enUS: typeof zhCN = {
         title: 'Full-bleed atmosphere hero',
         description: 'Fill the viewport with a weather background and a neon headline.',
         how: 'Give the parent height: 100vh and set WeatherBackground fill; overlay NeonText. In Next.js use dynamic with ssr:false.'
+      },
+      nineGridDraw: {
+        title: 'Nine-grid draw',
+        description: 'Celebrate a nine-grid lottery hit with confetti; use targetIndex for server draws.',
+        how: 'NineGrid.onDrawEnd triggers Confetti.burst; pass targetIndex or draw(index) for a fixed outcome.',
+        button: 'Draw'
+      },
+      flipCheckin: {
+        title: 'Check-in flip card',
+        description: 'Flip a check-in card to reveal a reward and celebrate.',
+        how: 'FlipCard.onReveal triggers Confetti.burst; use ref.flip()/reset() for programmatic control.',
+        frontTitle: 'Day 3',
+        frontSubtitle: 'Tap to reveal today’s reward',
+        backTitle: 'Checked in',
+        backSubtitle: '+20 points'
       }
     }
   },
@@ -402,6 +417,11 @@ cd cos-design && npm run setup && pnpm dev
       diceRoll: 'Roll dice',
       diceRolling: 'Rolling...',
       diceResult: 'Result:',
+      nineGridButton: 'Draw',
+      flipCardFrontTitle: 'Day 3',
+      flipCardFrontSubtitle: 'Tap to reveal today’s reward',
+      flipCardBackTitle: 'Checked in',
+      flipCardBackSubtitle: '+20 points',
       fireworksHint: 'Click the canvas to launch fireworks',
       gameOfLifeLabels: {
         generation: 'Generation',

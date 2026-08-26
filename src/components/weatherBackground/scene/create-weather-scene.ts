@@ -1,4 +1,4 @@
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion } from '@cos-design/shared';
 import { sampleWindField } from '../wind';
 import { drawClouds, drawFog, drawHaze } from './draw-atmosphere';
 import { drawLightning, drawWind } from './draw-effects';
@@ -48,23 +48,30 @@ export function createWeatherScene(params: WeatherSceneParams): () => void {
     applyDayCycleToScene(scene, scene.liveClock ? Date.now() : scene.sceneTimeMs);
   }
 
-  const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // 降级：只画一帧静态画面，不启动动画循环
-  if (reduceMotion) {
-    paintFrame(scene, false);
-    return () => undefined;
-  }
-
-  let frameId = 0;
   let paused = document.hidden;
+  let reduced = prefersReducedMotion();
   const unbindVisibility = bindVisibilityPause((hidden) => {
     paused = hidden;
   });
+  const unbindMotion = bindPrefersReducedMotion((value) => {
+    reduced = value;
+  });
+
+  // 降级：只画一帧静态画面，不启动动画循环
+  if (reduced) {
+    paintFrame(scene, false);
+    return () => {
+      unbindVisibility();
+      unbindMotion();
+    };
+  }
+
+  let frameId = 0;
 
   const tick = () => {
     frameId = requestAnimationFrame(tick);
     if (paused) return;
+    if (reduced) return;
     paintFrame(scene, true);
   };
 
@@ -73,5 +80,6 @@ export function createWeatherScene(params: WeatherSceneParams): () => void {
   return () => {
     cancelAnimationFrame(frameId);
     unbindVisibility();
+    unbindMotion();
   };
 }

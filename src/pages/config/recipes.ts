@@ -56,5 +56,21 @@ export const recipes: RecipeItem[] = [
     descriptionKey: 'recipes.items.fillHero.description',
     tags: ['WeatherBackground', 'NeonText', 'fill'],
     components: ['WeatherBackground', 'NeonText']
+  },
+  {
+    id: 'nine-grid-draw',
+    path: '/recipes/nine-grid-draw',
+    titleKey: 'recipes.items.nineGridDraw.title',
+    descriptionKey: 'recipes.items.nineGridDraw.description',
+    tags: ['NineGrid', 'Confetti'],
+    components: ['NineGrid', 'Confetti']
+  },
+  {
+    id: 'flip-checkin',
+    path: '/recipes/flip-checkin',
+    titleKey: 'recipes.items.flipCheckin.title',
+    descriptionKey: 'recipes.items.flipCheckin.description',
+    tags: ['FlipCard', 'Confetti'],
+    components: ['FlipCard', 'Confetti']
   }
 ];

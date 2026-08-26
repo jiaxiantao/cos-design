@@ -14,11 +14,27 @@ Public page: https://context7.com/jiaxiantao/cos-design
 
 ## Status check (2026-08-26)
 
-| Check                                            | Result                                                                     |
-| ------------------------------------------------ | -------------------------------------------------------------------------- |
-| Searchable as `/jiaxiantao/cos-design`           | Yes (`state: finalized`)                                                   |
-| Hosted llms.txt                                  | https://jiaxiantao.github.io/cos-design/llms.txt                           |
-| Index freshness (`fill` / Next example snippets) | **Stale** until API refresh runs (last known Context7 update ≈ 2026-08-03) |
+| Check                                            | Result                                                 |
+| ------------------------------------------------ | ------------------------------------------------------ |
+| Searchable as `/jiaxiantao/cos-design`           | Yes (`state: finalized`)                               |
+| Hosted llms.txt                                  | https://jiaxiantao.github.io/cos-design/llms.txt       |
+| Index freshness (`fill` / Next example snippets) | **Stale until you refresh** (needs `CONTEXT7_API_KEY`) |
+
+### Unblock freshness (required once)
+
+```bash
+# 1) Create key at https://context7.com/dashboard
+export CONTEXT7_API_KEY=ctx7sk-894d0748-8919-459e-bbb3-db6c42db613e
+
+# 2) Local refresh + verify
+pnpm context7:refresh
+# wait ~1–5 minutes
+pnpm verify:context7
+
+# 3) Persist for CI auto-refresh on master pushes
+# GitHub → Settings → Secrets → Actions → New repository secret
+# Name: CONTEXT7_API_KEY  Value: (same key)
+```
 
 Verify anytime:
 

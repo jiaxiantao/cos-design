@@ -45,7 +45,10 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | React            | >= 18                                                                                                                                                                                            |
 | SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js)                                                                                                   |
 | Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork/WeatherBackground/Aurora/Starfield/Snowfall/MeteorRain/CyberGrid/SmokeFog/BubbleField/RippleWater |
+| Reduced motion   | Key canvas backgrounds freeze to a static frame when `prefers-reduced-motion: reduce`                                                                                                            |
 | Page composition | One strong background + limited focal effects                                                                                                                                                    |
+| Smoke tests      | `pnpm test:smoke` (Playwright against pages build)                                                                                                                                               |
+| Context7         | `/jiaxiantao/cos-design` — set `CONTEXT7_API_KEY`, then `pnpm context7:refresh` / `pnpm verify:context7`                                                                                         |
 
 ## Documentation for agents
 

@@ -298,6 +298,16 @@ export const componentMetaEn = {
     description: '3D CSS dice tumble to a face value.',
     tags: ['CSS', '3D']
   },
+  NineGrid: {
+    title: 'Nine Grid',
+    description: 'Classic 3×3 lottery grid with optional server targetIndex.',
+    tags: ['CSS', 'Interactive', 'Campaign']
+  },
+  FlipCard: {
+    title: 'Flip Card',
+    description: 'Flip a card to reveal a check-in reward.',
+    tags: ['CSS', 'Interactive', 'Campaign']
+  },
   RedPacketRain: {
     title: 'Red Packet Rain',
     description: 'Red packets fall from above; click to grab them.',
@@ -508,6 +518,8 @@ const CODE_EXAMPLE_PROPS_EN: Partial<Record<ComponentMetaName, string[]>> = {
     'resultPrefix="Result:"'
   ],
   DiceRoll: ['rollText="Roll dice"', 'rollingText="Rolling..."', 'resultPrefix="Result:"'],
+  NineGrid: ['buttonText="Draw"', 'targetIndex={4}'],
+  FlipCard: ['frontTitle="Day 3"', 'backTitle="Check-in"', 'backSubtitle="+20 pts"'],
   RedPacketRain: [
     'grabbedLabel="Collected:"',
     'endedText="Red packet rain ended"',

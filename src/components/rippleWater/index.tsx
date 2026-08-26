@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause, clamp, useCanvasBox } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  clamp,
+  prefersReducedMotion,
+  useCanvasBox
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface RippleWaterProps {
@@ -455,27 +461,32 @@ const RippleWater: React.FC<RippleWaterProps> = ({
 
     uploadHeight();
 
-    const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let paused = document.hidden;
+    let reduced = prefersReducedMotion();
+    const unbindVisibility = bindVisibilityPause((hidden) => {
+      paused = hidden;
+    });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
-    if (reduceMotion) {
+    if (reduced) {
       drawFrame(0);
       return () => {
+        unbindVisibility();
+        unbindMotion();
         gl.deleteTexture(heightTex);
         gl.deleteBuffer(buf);
         gl.deleteProgram(program);
       };
     }
 
-    let paused = document.hidden;
-    const unbindVisibility = bindVisibilityPause((hidden) => {
-      paused = hidden;
-    });
-
     const start = performance.now();
 
     const tick = (now: number) => {
       frameRef.current = requestAnimationFrame(tick);
       if (paused) return;
+      if (reduced) return;
 
       const cfg = configRef.current;
 
@@ -498,6 +509,7 @@ const RippleWater: React.FC<RippleWaterProps> = ({
     return () => {
       cancelAnimationFrame(frameRef.current);
       unbindVisibility();
+      unbindMotion();
       gl.deleteTexture(heightTex);
       gl.deleteBuffer(buf);
       gl.deleteProgram(program);

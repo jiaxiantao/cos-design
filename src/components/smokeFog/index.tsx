@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause, clamp, useCanvasBox } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  clamp,
+  prefersReducedMotion,
+  useCanvasBox
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface SmokeFogProps {
@@ -372,11 +378,13 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
 
     let time = 0;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
-
-    const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
     const paintBackground = () => {
       const [top, mid, bottom] = resolveBackground(configRef.current.backgroundColor);
@@ -420,6 +428,7 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
     const tick = () => {
       frameRef.current = requestAnimationFrame(tick);
       if (paused) return;
+      if (reduced) return;
 
       const motion = clamp(configRef.current.speed, 0, 3);
       const forceScale = clamp(configRef.current.disperseStrength, 0, 3);
@@ -541,13 +550,14 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
       ctx.globalAlpha = 1;
     };
 
-    if (reduceMotion) {
+    if (reduced) {
       paintBackground();
       for (const puff of puffsRef.current) drawPuff(puff);
       ctx.globalCompositeOperation = 'source-over';
       ctx.globalAlpha = 1;
       return () => {
         unbindVisibility();
+        unbindMotion();
       };
     }
 
@@ -555,6 +565,7 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
     return () => {
       cancelAnimationFrame(frameRef.current);
       unbindVisibility();
+      unbindMotion();
     };
   }, [height, width]);
 

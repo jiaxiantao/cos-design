@@ -915,6 +915,37 @@ return (
 <DiceRoll onRoll={(n) => console.log(n)} />`
   },
   {
+    name: 'NineGrid',
+    path: '/nineGrid',
+    title: '九宫格抽奖',
+    description: '经典 3×3 宫格抽奖，支持 targetIndex 服务端开奖与命令式 draw/reset。',
+    tags: ['CSS', '交互', '活动'],
+    category: 'game' as const,
+    isNew: true,
+    codeExample: `import { NineGrid } from 'cos-design';
+
+<NineGrid
+  targetIndex={4}
+  onDrawEnd={(item, index) => console.log(item, index)}
+/>`
+  },
+  {
+    name: 'FlipCard',
+    path: '/flipCard',
+    title: '签到翻牌',
+    description: '正反面翻牌揭示奖励，适合签到 / 每日翻卡。',
+    tags: ['CSS', '交互', '活动'],
+    category: 'game' as const,
+    isNew: true,
+    codeExample: `import { FlipCard } from 'cos-design';
+
+<FlipCard
+  frontTitle="Day 3"
+  backTitle="积分 +20"
+  onReveal={() => console.log('revealed')}
+/>`
+  },
+  {
     name: 'RedPacketRain',
     path: '/redPacketRain',
     title: '红包雨',

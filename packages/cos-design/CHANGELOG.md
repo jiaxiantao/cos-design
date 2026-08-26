@@ -5,13 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.7.7] - 2026-08-26
+## [3.7.8] - 2026-08-26
 
 ### Changed
 
-- cos-design: 聚合包更新至 3.7.7
+- @cos-design/bubble-field: 3.7.1 → 3.7.2
+- @cos-design/flip-card: 3.7.7 → 3.7.8
+- @cos-design/matrix-rain: 3.5.4 → 3.5.5
+- @cos-design/nine-grid: 3.7.7 → 3.7.8
+- @cos-design/particle-network: 3.5.4 → 3.5.5
+- @cos-design/ripple-water: 3.5.5 → 3.5.6
+- @cos-design/smoke-fog: 3.5.5 → 3.5.6
+- @cos-design/weather-background: 3.5.5 → 3.5.6
+- cos-design: 聚合包更新至 3.7.8
 
 ## [Unreleased]
+
+### Added
+
+- 新组件 `NineGrid`（九宫格抽奖，`targetIndex` / `draw`/`reset`）与 `FlipCard`（签到翻牌）
+- Playground 配方：九宫格开奖、签到翻牌
+- Playwright smoke：`pnpm test:smoke`（Scratch / Turntable / WeatherBackground / recipes）
+- `pnpm context7:refresh`：本地触发 Context7 索引刷新
+- Next 示例加深：`/api/draw` + Turntable `spin(targetIndex)` 服务端开奖
+
+### Changed
+
+- MatrixRain / ParticleNetwork / SmokeFog / BubbleField / RippleWater / WeatherBackground 接入 reduced-motion 静态降级
+- CI 在 Pages 构建后跑 smoke；ai-discovery 补充 Context7 key 配置步骤
+
+## [3.7.7] - 2026-08-26
 
 ### Added
 
@@ -22,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Context7 校验结论写入 [docs/ai-discovery.md](./docs/ai-discovery.md)；刷新 workflow 在缺少 `CONTEXT7_API_KEY` 时发出 warning
 - `context7.json` 规则补充 `fill` 与 Next 示例路径
+- cos-design: 聚合包更新至 3.7.7
 
 ## [3.7.6] - 2026-08-26
 

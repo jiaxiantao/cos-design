@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
     '@cos-design/neon-text',
     '@cos-design/scratch-card',
     '@cos-design/fireworks',
+    '@cos-design/turntable',
+    '@cos-design/confetti',
     '@cos-design/shared'
   ]
 };

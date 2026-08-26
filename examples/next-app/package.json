@@ -9,9 +9,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@cos-design/confetti": "^3.5.5",
     "@cos-design/fireworks": "^3.5.5",
     "@cos-design/neon-text": "^3.5.3",
     "@cos-design/scratch-card": "^3.5.4",
+    "@cos-design/turntable": "^3.5.5",
     "@cos-design/weather-background": "^3.5.5",
     "next": "^15.5.2",
     "react": "^19.1.1",

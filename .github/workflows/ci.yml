@@ -42,6 +42,17 @@ jobs:
       - name: Build GitHub Pages
         run: pnpm build:pages
 
+      - name: Build demo for smoke
+        run: pnpm build:demo
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Smoke tests
+        run: pnpm test:smoke
+        env:
+          CI: true
+
       - name: Upload packages artifact
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4

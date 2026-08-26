@@ -2,8 +2,8 @@
 
 # cos-design
 
-**84 React visual-effect components** for marketing pages, brand landings, and creative showcases  
-**84 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
+**86 React visual-effect components** for marketing pages, brand landings, and creative showcases  
+**86 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
@@ -62,7 +62,7 @@ export function Campaign() {
 | 数据大屏     | 翻牌器、数字递增、仪表盘、关系网络图    |
 | 创意作品集   | 牛顿摆、DNA 螺旋、迷宫生成、生命游戏    |
 
-> 从背景到物理、从文字到营销，84 个组件刚好组成一套完整的「视觉工具箱」。
+> 从背景到物理、从文字到营销，86 个组件刚好组成一套完整的「视觉工具箱」。
 
 ---
 
@@ -113,7 +113,7 @@ export default function Page() {
 | ---------------------------------------------------------------------- | ------------------------------------------------------- |
 | [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)           | 供 Agent 抓取的索引（场景 → 组件 → 安装命令）           |
 | [llms-full.txt](https://jiaxiantao.github.io/cos-design/llms-full.txt) | 站点上的完整 AI 参考（与 docs/ai.md 同步）              |
-| [docs/ai.md](./docs/ai.md)                                             | 84 个组件的完整 AI 参考（安装 / import / 示例 / Props） |
+| [docs/ai.md](./docs/ai.md)                                             | 86 个组件的完整 AI 参考（安装 / import / 示例 / Props） |
 | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) | Next.js App Router 接入说明（SSR + fill）               |
 | [examples/next-app](./examples/next-app)                               | 可运行 Next.js 示例（`pnpm install && pnpm dev`）       |
 | [docs/ai-discovery.md](./docs/ai-discovery.md)                         | Context7 提交、校验、Cursor Skill 安装、项目 Rule 片段  |
@@ -153,7 +153,7 @@ Context7: /jiaxiantao/cos-design
 
 ---
 
-## 组件一览（84 个 · 9 大分类）
+## 组件一览（86 个 · 9 大分类）
 
 <details open>
 <summary><strong>背景动效</strong> — 11 个 · 动态场景与粒子背景</summary>
@@ -333,7 +333,7 @@ Context7: /jiaxiantao/cos-design
 
 ## 特性
 
-- **84 个组件**，覆盖背景、文字、图片、交互、营销、数据、物理、科学、特效九大场景
+- **86 个组件**，覆盖背景、文字、图片、交互、营销、数据、物理、科学、特效九大场景
 - **React 19** + **Vite 8** + **TypeScript 5** 现代技术栈
 - **ESM / CJS** 双格式，完整 `.d.ts` 类型
 - **样式自动注入**，无需 `import 'cos-design/dist/index.css'`
@@ -354,7 +354,7 @@ npm run setup          # 安装依赖（绕过 corepack 问题）
 npx --yes pnpm@9 dev   # 启动 Playground
 ```
 
-访问 **http://localhost:4000** — 按分类浏览全部 84 个组件，右侧可查看与复制示例代码。
+访问 **http://localhost:4000** — 按分类浏览全部 86 个组件，右侧可查看与复制示例代码。
 
 ---
 

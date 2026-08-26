@@ -1,7 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "cos-design",
-  "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (84 components).",
+  "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (86 components).",
   "branch": "master",
   "folders": ["docs", "public", "website-content", ".cursor/skills/cos-design", "examples"],
   "excludeFolders": [

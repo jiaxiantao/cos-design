@@ -1,5 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause, resolveCanvasBoxSize, useElementSize } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  prefersReducedMotion,
+  resolveCanvasBoxSize,
+  useElementSize
+} from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface MatrixRainProps {
@@ -60,16 +66,22 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
 
     let frameId = 0;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
-    const draw = () => {
-      frameId = requestAnimationFrame(draw);
-      if (paused) return;
-
-      ctx.fillStyle = 'rgb(0 0 0 / 8%)';
-      ctx.fillRect(0, 0, width, height);
+    const paintFrame = (animate: boolean) => {
+      if (animate) {
+        ctx.fillStyle = 'rgb(0 0 0 / 8%)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, width, height);
+      }
       ctx.font = `${fontSize}px monospace`;
 
       drops.forEach((y, i) => {
@@ -78,17 +90,38 @@ const MatrixRain: React.FC<MatrixRainProps> = ({
         ctx.fillStyle = color;
         ctx.fillText(char, x, y * fontSize);
 
-        if (y * fontSize > height && Math.random() > 0.975) {
-          drops[i] = 0;
+        if (animate) {
+          if (y * fontSize > height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i] += 1;
         }
-        drops[i] += 1;
       });
+    };
+
+    if (reduced) {
+      for (let i = 0; i < drops.length; i++) {
+        drops[i] = Math.random() * (height / fontSize);
+      }
+      paintFrame(false);
+      return () => {
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const draw = () => {
+      frameId = requestAnimationFrame(draw);
+      if (paused) return;
+      if (reduced) return;
+      paintFrame(true);
     };
 
     draw();
     return () => {
       cancelAnimationFrame(frameId);
       unbindVisibility();
+      unbindMotion();
     };
   }, [color, density, height, width]);
 

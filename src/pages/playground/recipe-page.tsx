@@ -7,7 +7,9 @@ import {
   Confetti,
   Countdown,
   Fireworks,
+  FlipCard,
   NeonText,
+  NineGrid,
   ProgressChest,
   RedPacketRain,
   ScratchCard,
@@ -152,13 +154,52 @@ const FillHeroRecipe = () => {
   );
 };
 
+const NineGridDrawRecipe = () => {
+  const { t } = useTranslation();
+  const confettiRef = useRef<ConfettiHandle>(null);
+
+  return (
+    <div className={styles.stage}>
+      <NineGrid
+        buttonText={t('recipes.items.nineGridDraw.button')}
+        onDrawEnd={() => {
+          confettiRef.current?.burst();
+        }}
+      />
+      <Confetti ref={confettiRef} width={480} height={280} auto={false} hint={t('recipes.hintConfetti')} />
+    </div>
+  );
+};
+
+const FlipCheckinRecipe = () => {
+  const { t } = useTranslation();
+  const confettiRef = useRef<ConfettiHandle>(null);
+
+  return (
+    <div className={styles.stage}>
+      <FlipCard
+        frontTitle={t('recipes.items.flipCheckin.frontTitle')}
+        frontSubtitle={t('recipes.items.flipCheckin.frontSubtitle')}
+        backTitle={t('recipes.items.flipCheckin.backTitle')}
+        backSubtitle={t('recipes.items.flipCheckin.backSubtitle')}
+        onReveal={() => {
+          confettiRef.current?.burst();
+        }}
+      />
+      <Confetti ref={confettiRef} width={480} height={280} auto={false} hint={t('recipes.hintConfetti')} />
+    </div>
+  );
+};
+
 const recipeViews: Record<string, () => ReactElement> = {
   'scratch-celebrate': ScratchCelebrateRecipe,
   'countdown-rain': CountdownRainRecipe,
   'turntable-confetti': TurntableConfettiRecipe,
   'chest-open': ChestOpenRecipe,
   'slot-jackpot': SlotJackpotRecipe,
-  'fill-hero': FillHeroRecipe
+  'fill-hero': FillHeroRecipe,
+  'nine-grid-draw': NineGridDrawRecipe,
+  'flip-checkin': FlipCheckinRecipe
 };
 
 const RecipePage = () => {

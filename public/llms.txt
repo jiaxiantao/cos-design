@@ -1,7 +1,7 @@
 # cos-design
 
 > React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.7.7 · 84 components · MIT
+> Version 3.7.8 · 86 components · MIT
 
 ## When to use (for AI agents)
 
@@ -146,6 +146,8 @@ _Use when: lottery wheels, scratch cards, confetti, red packet rain, slot machin
 - **ScratchCard** — 刮刮乐: Canvas 刮开涂层露出奖品。 · `@cos-design/scratch-card` · [demo](https://jiaxiantao.github.io/cos-design/#/scratchCard)
 - **SlotMachine** — 老虎机: 三列滚轮停下对齐的抽奖玩法。 · `@cos-design/slot-machine` · [demo](https://jiaxiantao.github.io/cos-design/#/slotMachine)
 - **DiceRoll** — 掷骰子: 3D CSS 骰子翻滚出点数。 · `@cos-design/dice-roll` · [demo](https://jiaxiantao.github.io/cos-design/#/diceRoll)
+- **NineGrid** — 九宫格抽奖: 经典 3×3 宫格抽奖，支持 targetIndex 服务端开奖与命令式 draw/reset。 · `@cos-design/nine-grid` · [demo](https://jiaxiantao.github.io/cos-design/#/nineGrid)
+- **FlipCard** — 签到翻牌: 正反面翻牌揭示奖励，适合签到 / 每日翻卡。 · `@cos-design/flip-card` · [demo](https://jiaxiantao.github.io/cos-design/#/flipCard)
 - **RedPacketRain** — 红包雨: 红包从上掉落，点击抢夺。 · `@cos-design/red-packet-rain` · [demo](https://jiaxiantao.github.io/cos-design/#/redPacketRain)
 - **ProgressChest** — 宝箱进度: 进度满后宝箱打开动画。 · `@cos-design/progress-chest` · [demo](https://jiaxiantao.github.io/cos-design/#/progressChest)
 - **RadarScan** — 雷达扫描: 圆形雷达光点扫描 HUD。 · `@cos-design/radar-scan` · [demo](https://jiaxiantao.github.io/cos-design/#/radarScan)

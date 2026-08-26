@@ -116,6 +116,21 @@ const zhCN = {
         title: '全屏氛围 Hero',
         description: '用 fill 铺满视口的天气背景 + 霓虹标题，适合品牌开屏。',
         how: '父级设 height: 100vh，WeatherBackground 传 fill；前景叠 NeonText。Next.js 请 dynamic + ssr:false。'
+      },
+      nineGridDraw: {
+        title: '九宫格开奖',
+        description: '九宫格抽奖命中后喷射彩纸，可用 targetIndex 对接服务端开奖。',
+        how: 'NineGrid.onDrawEnd 触发 Confetti.burst；传 targetIndex 或 draw(index) 指定结果。',
+        button: '抽奖'
+      },
+      flipCheckin: {
+        title: '签到翻牌',
+        description: '翻开签到卡揭示奖励并庆祝，适合每日签到。',
+        how: 'FlipCard.onReveal 触发 Confetti.burst；可用 ref.flip()/reset() 做程序化控制。',
+        frontTitle: 'Day 3',
+        frontSubtitle: '点击翻开今日奖励',
+        backTitle: '签到成功',
+        backSubtitle: '积分 +20'
       }
     }
   },
@@ -374,6 +389,11 @@ cd cos-design && npm run setup && pnpm dev
       diceRoll: '掷骰子',
       diceRolling: '掷骰中...',
       diceResult: '点数:',
+      nineGridButton: '开始抽奖',
+      flipCardFrontTitle: 'Day 3',
+      flipCardFrontSubtitle: '点击翻开今日奖励',
+      flipCardBackTitle: '签到成功',
+      flipCardBackSubtitle: '积分 +20',
       fireworksHint: '点击画布燃放烟花',
       gameOfLifeLabels: {
         generation: '演化代数',

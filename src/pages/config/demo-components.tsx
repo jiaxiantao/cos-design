@@ -73,6 +73,8 @@ type LocalizedDemoName =
   | 'Confetti'
   | 'CursorTrail'
   | 'DiceRoll'
+  | 'NineGrid'
+  | 'FlipCard'
   | 'GameOfLife'
   | 'NetworkGraph'
   | 'ParticleNetwork'
@@ -113,6 +115,17 @@ const LocalizedComponentDemo = ({
           rollText={t(`${key}.diceRoll`)}
           rollingText={t(`${key}.diceRolling`)}
           resultPrefix={t(`${key}.diceResult`)}
+        />
+      );
+    case 'NineGrid':
+      return <C.NineGrid buttonText={t(`${key}.nineGridButton`)} />;
+    case 'FlipCard':
+      return (
+        <C.FlipCard
+          frontTitle={t(`${key}.flipCardFrontTitle`)}
+          frontSubtitle={t(`${key}.flipCardFrontSubtitle`)}
+          backTitle={t(`${key}.flipCardBackTitle`)}
+          backSubtitle={t(`${key}.flipCardBackSubtitle`)}
         />
       );
     case 'GameOfLife':
@@ -210,6 +223,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   DnaHelix: <C.DnaHelix width={280} height={420} />,
   ElectricArc: <C.ElectricArc width={420} height={200} />,
   Fireworks: <FireworksDemo />,
+  FlipCard: <LocalizedComponentDemo name="FlipCard" />,
   FlipCounter: <FlipCounterDemo />,
   FuzzyText: <C.FuzzyText text="FUZZY" fontSize={72} />,
   GlitchText: <C.GlitchText text="COS DESIGN" fontSize={56} />,
@@ -241,6 +255,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
   NetworkGraph: <LocalizedComponentDemo name="NetworkGraph" />,
   NeonText: <C.NeonText />,
   NewtonCradle: <C.NewtonCradle />,
+  NineGrid: <LocalizedComponentDemo name="NineGrid" />,
   OrbitalChart: (
     <C.OrbitalChart
       size={260}
