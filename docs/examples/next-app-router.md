@@ -88,6 +88,18 @@ export function ScratchCelebrate() {
 | Density   | One strong background + a few focal effects                                          |
 | AI lookup | https://jiaxiantao.github.io/cos-design/llms.txt · Context7 `/jiaxiantao/cos-design` |
 
+## Runnable sample
+
+A full App Router project lives in the repo:
+
+```bash
+cd examples/next-app
+pnpm install
+pnpm dev
+```
+
+See [examples/next-app/README.md](../../examples/next-app/README.md). It includes the fill hero and scratch → fireworks patterns above.
+
 ## Live demos
 
 - Playground: https://jiaxiantao.github.io/cos-design/

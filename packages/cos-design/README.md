@@ -11,7 +11,7 @@
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./docs/examples/next-app-router.md) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
+[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./examples/next-app) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
 
 </div>
 
@@ -114,11 +114,12 @@ export default function Page() {
 | [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)           | 供 Agent 抓取的索引（场景 → 组件 → 安装命令）           |
 | [llms-full.txt](https://jiaxiantao.github.io/cos-design/llms-full.txt) | 站点上的完整 AI 参考（与 docs/ai.md 同步）              |
 | [docs/ai.md](./docs/ai.md)                                             | 84 个组件的完整 AI 参考（安装 / import / 示例 / Props） |
-| [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) | Next.js App Router 接入（SSR + fill）                   |
-| [docs/ai-discovery.md](./docs/ai-discovery.md)                         | Context7 提交、Cursor Skill 安装、项目 Rule 片段        |
+| [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) | Next.js App Router 接入说明（SSR + fill）               |
+| [examples/next-app](./examples/next-app)                               | 可运行 Next.js 示例（`pnpm install && pnpm dev`）       |
+| [docs/ai-discovery.md](./docs/ai-discovery.md)                         | Context7 提交、校验、Cursor Skill 安装、项目 Rule 片段  |
 | [AGENTS.md](./AGENTS.md)                                               | 仓库级 Agent 规则，可复制到用户项目                     |
 | [.cursor/skills/cos-design](./.cursor/skills/cos-design/SKILL.md)      | Cursor Skill                                            |
-| Context7                                                               | `/jiaxiantao/cos-design`（提交后生效，见 ai-discovery） |
+| Context7                                                               | `/jiaxiantao/cos-design`（`pnpm verify:context7`）      |
 
 **安装 Cursor Skill（用户本机）：**
 

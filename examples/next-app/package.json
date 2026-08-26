@@ -1,0 +1,32 @@
+{
+  "name": "cos-design-next-app-example",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Runnable Next.js App Router example for cos-design (fill hero + scratch celebrate)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@cos-design/fireworks": "^3.5.5",
+    "@cos-design/neon-text": "^3.5.3",
+    "@cos-design/scratch-card": "^3.5.4",
+    "@cos-design/weather-background": "^3.5.5",
+    "next": "^15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.17.2",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@types/three": "^0.185.3",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}

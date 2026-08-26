@@ -49,17 +49,17 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 
 ## Documentation for agents
 
-| Resource                           | URL                                                                        |
-| ---------------------------------- | -------------------------------------------------------------------------- |
-| **llms.txt** (index)               | https://jiaxiantao.github.io/cos-design/llms.txt                           |
-| **llms-full.txt** (full reference) | https://jiaxiantao.github.io/cos-design/llms-full.txt                      |
-| **Full AI reference**              | [docs/ai.md](./docs/ai.md)                                                 |
-| **Next.js example**                | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md)     |
-| **AI discovery**                   | [docs/ai-discovery.md](./docs/ai-discovery.md)                             |
-| **Context7**                       | `/jiaxiantao/cos-design`                                                   |
-| Playground                         | https://jiaxiantao.github.io/cos-design/                                   |
-| Quickstart                         | [QUICKSTART.md](./QUICKSTART.md)                                           |
-| Cursor Skill                       | [.cursor/skills/cos-design/SKILL.md](./.cursor/skills/cos-design/SKILL.md) |
+| Resource                           | URL                                                                                                                        |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **llms.txt** (index)               | https://jiaxiantao.github.io/cos-design/llms.txt                                                                           |
+| **llms-full.txt** (full reference) | https://jiaxiantao.github.io/cos-design/llms-full.txt                                                                      |
+| **Full AI reference**              | [docs/ai.md](./docs/ai.md)                                                                                                 |
+| **Next.js example**                | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) · runnable [examples/next-app](./examples/next-app) |
+| **AI discovery**                   | [docs/ai-discovery.md](./docs/ai-discovery.md)                                                                             |
+| **Context7**                       | `/jiaxiantao/cos-design`（校验：`pnpm verify:context7`）                                                                   |
+| Playground                         | https://jiaxiantao.github.io/cos-design/                                                                                   |
+| Quickstart                         | [QUICKSTART.md](./QUICKSTART.md)                                                                                           |
+| Cursor Skill                       | [.cursor/skills/cos-design/SKILL.md](./.cursor/skills/cos-design/SKILL.md)                                                 |
 
 ## Regenerating AI docs
 

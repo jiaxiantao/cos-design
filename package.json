@@ -1,6 +1,6 @@
 {
   "name": "cos-design-monorepo",
-  "version": "3.7.6",
+  "version": "3.7.7",
   "private": true,
   "description": "cos-design monorepo — React visual effect components",
   "type": "module",
@@ -52,6 +52,7 @@
     "build:pages": "vite build --mode pages",
     "extract-props": "node scripts/extract-component-props.mjs && node scripts/generate-ai-docs.mjs",
     "generate:ai-docs": "node scripts/generate-ai-docs.mjs",
+    "verify:context7": "node scripts/verify-context7.mjs",
     "preview": "vite preview",
     "pub": "pnpm build && pnpm --filter \"./packages/**\" publish --access public --no-git-checks",
     "prepare": "husky",
@@ -63,9 +64,10 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*.less": "stylelint",
+    "src/**/*.less": "stylelint",
     "**/*.{ts,tsx,less,md,json}": "prettier --write",
-    "**/*.{ts,tsx}": "eslint --fix"
+    "src/**/*.{ts,tsx}": "eslint --fix",
+    "packages/shared/src/**/*.{ts,tsx}": "eslint --fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

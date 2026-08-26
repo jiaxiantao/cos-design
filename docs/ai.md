@@ -9,7 +9,7 @@
 | Name           | cos-design                 |
 | npm (umbrella) | cos-design                 |
 | npm (scoped)   | @cos-design/\*             |
-| Version        | 3.7.5                      |
+| Version        | 3.7.7                      |
 | Components     | 84                         |
 | Stack          | React 19, TypeScript, Vite |
 | License        | MIT                        |

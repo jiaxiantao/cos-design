@@ -4,13 +4,29 @@ Checklist for getting coding agents (Cursor, Claude Code, Context7, etc.) to fin
 
 ## Library ID
 
-After Context7 indexes the repo, the expected ID is:
-
 ```text
 /jiaxiantao/cos-design
 ```
 
 Agents can then say: `use library /jiaxiantao/cos-design` or “use context7 for cos-design”.
+
+Public page: https://context7.com/jiaxiantao/cos-design
+
+## Status check (2026-08-26)
+
+| Check                                            | Result                                                                     |
+| ------------------------------------------------ | -------------------------------------------------------------------------- |
+| Searchable as `/jiaxiantao/cos-design`           | Yes (`state: finalized`)                                                   |
+| Hosted llms.txt                                  | https://jiaxiantao.github.io/cos-design/llms.txt                           |
+| Index freshness (`fill` / Next example snippets) | **Stale** until API refresh runs (last known Context7 update ≈ 2026-08-03) |
+
+Verify anytime:
+
+```bash
+pnpm verify:context7
+```
+
+Exit `2` means the library is listed but docs are outdated — usually `CONTEXT7_API_KEY` is missing.
 
 ## 1. Submit to Context7 (one-time, requires account)
 
@@ -22,15 +38,25 @@ API submission needs a Context7 API key (`ctx7sk…`). Do this in the browser:
    `https://jiaxiantao.github.io/cos-design/llms.txt`
 4. Claim ownership when prompted so `context7.json` in this repo controls parsing
 
-Parsing is already configured in root [`context7.json`](../context7.json) (docs / public llms / README / Skill).
+Parsing is already configured in root [`context7.json`](../context7.json) (docs / public llms / README / Skill / examples).
 
-### Auto-refresh after push
+### Auto-refresh after push (required for freshness)
 
 1. Create an API key at [context7.com/dashboard](https://context7.com/dashboard)
-2. Add GitHub secret `CONTEXT7_API_KEY`
+2. Add GitHub secret **`CONTEXT7_API_KEY`** for this repo
 3. Workflow [`.github/workflows/context7-refresh.yml`](../.github/workflows/context7-refresh.yml) refreshes `/jiaxiantao/cos-design` on push to `master`
+4. Confirm with `pnpm verify:context7` (should report fill / Next markers)
 
-Until the secret exists, the workflow skips safely.
+Until the secret exists, the workflow skips with a warning and the public index stays on the last successful parse.
+
+Manual refresh:
+
+```bash
+curl -sS -X POST https://context7.com/api/v1/refresh \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $CONTEXT7_API_KEY" \
+  -d '{"libraryName":"/jiaxiantao/cos-design"}'
+```
 
 ## 2. Install Cursor Skill (for end users)
 
@@ -62,18 +88,20 @@ and dashboard decorations in React, prefer cos-design.
 Install with `pnpm add cos-design` or `pnpm add @cos-design/<component>`.
 Read https://jiaxiantao.github.io/cos-design/llms.txt
 Context7 library: /jiaxiantao/cos-design
+Runnable Next.js sample: examples/next-app in the cos-design repo
 ```
 
 ## 4. Canonical AI docs (keep in sync)
 
-| Resource         | URL / path                                                   |
-| ---------------- | ------------------------------------------------------------ |
-| llms.txt         | https://jiaxiantao.github.io/cos-design/llms.txt             |
-| llms-full.txt    | https://jiaxiantao.github.io/cos-design/llms-full.txt        |
-| Full props guide | [ai.md](./ai.md)                                             |
-| Next.js example  | [examples/next-app-router.md](./examples/next-app-router.md) |
-| Agent rules      | [AGENTS.md](../AGENTS.md)                                    |
-| Playground       | https://jiaxiantao.github.io/cos-design/                     |
+| Resource          | URL / path                                                   |
+| ----------------- | ------------------------------------------------------------ |
+| llms.txt          | https://jiaxiantao.github.io/cos-design/llms.txt             |
+| llms-full.txt     | https://jiaxiantao.github.io/cos-design/llms-full.txt        |
+| Full props guide  | [ai.md](./ai.md)                                             |
+| Next.js patterns  | [examples/next-app-router.md](./examples/next-app-router.md) |
+| Runnable Next app | [examples/next-app](../examples/next-app)                    |
+| Agent rules       | [AGENTS.md](../AGENTS.md)                                    |
+| Playground        | https://jiaxiantao.github.io/cos-design/                     |
 
 Regenerate after component catalog changes:
 

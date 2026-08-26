@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.7.7] - 2026-08-26
+
+### Added
+
+- 可运行 Next.js 示例工程 [examples/next-app](./examples/next-app)（fill hero + 刮开庆祝）
+- `pnpm verify:context7`：检查 Context7 是否收录以及索引是否包含 `fill` / Next 示例
+
+### Changed
+
+- Context7 校验结论写入 [docs/ai-discovery.md](./docs/ai-discovery.md)；刷新 workflow 在缺少 `CONTEXT7_API_KEY` 时发出 warning
+- `context7.json` 规则补充 `fill` 与 Next 示例路径
+- cos-design: 聚合包更新至 3.7.7
+
 ## [3.7.6] - 2026-08-26
 
 ### Added

@@ -71,7 +71,8 @@ No manual CSS import — styles auto-inject.
 3. **Dimensions** — pass `width`/`height`, **or** `fill` (parent must have explicit height). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater.
 4. **Density** — one strong background + a few focal effects; avoid stacking many full-screen animations.
 5. **Props** — read [docs/ai.md](../../../docs/ai.md) or Playground examples; do not invent API.
-6. **Next.js** — see [docs/examples/next-app-router.md](../../../docs/examples/next-app-router.md).
+6. **Next.js** — patterns: [docs/examples/next-app-router.md](../../../docs/examples/next-app-router.md); runnable app: [examples/next-app](../../../examples/next-app).
+7. **Context7** — library `/jiaxiantao/cos-design`; maintainers can run `pnpm verify:context7`.
 
 ## Quick examples
 

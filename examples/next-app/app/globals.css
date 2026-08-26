@@ -1,0 +1,79 @@
+:root {
+  color-scheme: dark;
+  --bg: #07111f;
+  --ink: #f4f7fb;
+  --muted: #9db0c7;
+  --line: rgba(255, 255, 255, 0.12);
+  --accent: #7dd3fc;
+  font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+a {
+  color: var(--accent);
+}
+
+main {
+  display: grid;
+  gap: 0;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.heroContent {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  text-align: center;
+  padding: 24px;
+}
+
+.heroContent p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.panel {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+  display: grid;
+  gap: 24px;
+  justify-items: center;
+}
+
+.panel h2 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.panel p {
+  margin: 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.fireworksSlot {
+  width: min(100%, 560px);
+  height: 320px;
+}

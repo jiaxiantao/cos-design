@@ -7,6 +7,8 @@ dist-demo
 dist-pages
 lib
 packages/*/dist
+examples/**/.next
+examples/**/out
 
 # Lock files from other package managers
 package-lock.json
