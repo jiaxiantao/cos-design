@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import { useCanvasBox } from '@cos-design/shared';
 import { approximateDayCycleTimes, computeDayCycle, resolveSceneTimeMs } from './day-cycle';
 import { useLiveWeather } from './live-weather';
 import { DEFAULT_FOG_LEVEL } from './fog';
@@ -13,8 +14,9 @@ import { buildWindMotion, DEFAULT_WIND_LEVEL, resolveWindKmh } from './wind';
 export type { WeatherBackgroundProps, WeatherType } from './types';
 
 const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
-  width = 800,
-  height = 450,
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
   weather = 'partlyCloudy',
   time = '14:00',
   live = false,
@@ -31,6 +33,13 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
   ariaLabel,
   loadingText = '天气加载中…'
 }) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 450
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hasCoords = latitude != null && longitude != null;
   // 仅 live=true 时请求 Open-Meteo；手动模式用近似日出日落（约 06:00–18:00）
@@ -117,7 +126,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({
   ]);
 
   return (
-    <div className={styles.weatherBackground} style={{ width, height }}>
+    <div ref={hostRef} className={styles.weatherBackground} style={hostStyle}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}

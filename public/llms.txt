@@ -1,7 +1,7 @@
 # cos-design
 
 > React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.7.4 · 84 components · MIT
+> Version 3.7.5 · 84 components · MIT
 
 ## When to use (for AI agents)
 

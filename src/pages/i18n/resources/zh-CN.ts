@@ -111,6 +111,11 @@ const zhCN = {
         description: '三列同号时喷射彩纸，适合小游戏与会场互动。',
         how: 'SlotMachine.onSpinEnd 判断三列是否相同，相同则 ConfettiHandle.burst；也可用 targetResults 指定开奖结果。',
         button: '拉杆'
+      },
+      fillHero: {
+        title: '全屏氛围 Hero',
+        description: '用 fill 铺满视口的天气背景 + 霓虹标题，适合品牌开屏。',
+        how: '父级设 height: 100vh，WeatherBackground 传 fill；前景叠 NeonText。Next.js 请 dynamic + ssr:false。'
       }
     }
   },

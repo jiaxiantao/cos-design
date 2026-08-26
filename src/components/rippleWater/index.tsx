@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause, clamp } from '@cos-design/shared';
+import { bindVisibilityPause, clamp, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface RippleWaterProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 水面渐变浅端（左上） */
   fromColor?: string;
   /** 水面渐变深端（右下） */
@@ -224,8 +226,9 @@ const buildConfig = (props: {
 });
 
 const RippleWater: React.FC<RippleWaterProps> = ({
-  width = 800,
-  height = 500,
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
   fromColor = '#52ade3',
   toColor = '#013565',
   color = '#a8d8f5',
@@ -241,6 +244,13 @@ const RippleWater: React.FC<RippleWaterProps> = ({
   showHint = true,
   hint = '点击水面产生涟漪'
 }) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef(0);
   const dropRef = useRef<{ x: number; y: number; strength: number } | null>(null);
@@ -495,7 +505,7 @@ const RippleWater: React.FC<RippleWaterProps> = ({
   }, [height, width]);
 
   return (
-    <div className={styles.rippleWater} style={{ width, height }}>
+    <div ref={hostRef} className={styles.rippleWater} style={hostStyle}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}

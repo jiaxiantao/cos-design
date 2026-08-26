@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [3.7.6] - 2026-08-26
+
+### Added
+
+- `@cos-design/shared`：新增 `useCanvasBox`（fill 尺寸一站式 hook）
+- 背景组件全面支持 `fill`：`WeatherBackground`、`Aurora`、`Starfield`、`Snowfall`、`MeteorRain`、`CyberGrid`、`SmokeFog`、`BubbleField`、`RippleWater`
+- `Starfield` / `Snowfall` / `MeteorRain` / `CyberGrid` / `Aurora` 接入 `prefers-reduced-motion` 静态降级
+- Playground 配方「全屏氛围 Hero」；Next.js 接入示例 [docs/examples/next-app-router.md](./docs/examples/next-app-router.md)
+
+### Changed
+
+- AGENTS / Cursor Skill / QUICKSTART 同步扩展 `fill` 组件列表与发现文档入口
+- @cos-design/shared: 3.5.5 → 3.5.6
+- @cos-design/aurora: 3.5.3 → 3.5.4
+- @cos-design/bubble-field: 3.7.0 → 3.7.1
+- @cos-design/cyber-grid: 3.5.3 → 3.5.4
+- @cos-design/meteor-rain: 3.5.3 → 3.5.4
+- @cos-design/ripple-water: 3.5.4 → 3.5.5
+- @cos-design/smoke-fog: 3.5.4 → 3.5.5
+- @cos-design/snowfall: 3.5.3 → 3.5.4
+- @cos-design/starfield: 3.5.3 → 3.5.4
+- @cos-design/weather-background: 3.5.4 → 3.5.5
+- cos-design: 聚合包更新至 3.7.6
+
 ## [3.7.5] - 2026-08-21
 
 ### Added

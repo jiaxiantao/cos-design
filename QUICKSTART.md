@@ -152,9 +152,13 @@ const MatrixRain = dynamic(() => import('cos-design').then((m) => m.MatrixRain),
 ```tsx
 <div style={{ width: '100%', height: 500 }}>
   <Fireworks fill />
-  {/* 同样支持：Confetti / RedPacketRain / MatrixRain / ParticleNetwork */}
+  {/* 同样支持：Confetti / RedPacketRain / MatrixRain / ParticleNetwork /
+      WeatherBackground / Aurora / Starfield / Snowfall / MeteorRain /
+      CyberGrid / SmokeFog / BubbleField / RippleWater */}
 </div>
 ```
+
+Next.js 完整接入示例见 [docs/examples/next-app-router.md](./docs/examples/next-app-router.md)。
 
 全屏类组件（如 `Charge`）需父级 `height: 100%` 或固定高度。
 

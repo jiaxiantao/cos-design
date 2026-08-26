@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause, clamp } from '@cos-design/shared';
+import { bindVisibilityPause, clamp, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface SmokeFogProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 烟雾密度 0~1，默认 0.5 */
   density?: number;
   /** 烟雾颜色，默认偏冷灰白 `#d2d4d8` */
@@ -250,8 +252,9 @@ const heightDensity = (y: number, height: number) => {
 };
 
 const SmokeFog: React.FC<SmokeFogProps> = ({
-  width = 800,
-  height = 500,
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
   density = 0.5,
   color = DEFAULT_COLOR,
   backgroundColor = DEFAULT_BG,
@@ -261,6 +264,13 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
   interactive = true,
   ariaLabel
 }) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const puffsRef = useRef<SmokePuff[]>([]);
   const gustsRef = useRef<Gust[]>([]);
@@ -549,7 +559,7 @@ const SmokeFog: React.FC<SmokeFogProps> = ({
   }, [height, width]);
 
   return (
-    <div className={styles.smokeFog} style={{ width, height }}>
+    <div ref={hostRef} className={styles.smokeFog} style={hostStyle}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}

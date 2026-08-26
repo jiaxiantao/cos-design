@@ -6,5 +6,11 @@ export type { ElementSize } from './size';
 export { getRelativePointerPosition } from './pointer';
 export type { PointerPosition } from './pointer';
 export type { PhotoItem, PhotoIndexChangeHandler, PhotoFaceChangeHandler } from './photo';
-export { useElementSize, resolveCanvasBoxSize } from './use-element-size';
-export type { UseElementSizeOptions, CanvasBoxSizeInput, CanvasBoxSize } from './use-element-size';
+export { useElementSize, resolveCanvasBoxSize, useCanvasBox } from './use-element-size';
+export type {
+  UseElementSizeOptions,
+  CanvasBoxSizeInput,
+  CanvasBoxSize,
+  UseCanvasBoxOptions,
+  UseCanvasBoxResult
+} from './use-element-size';

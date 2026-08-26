@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/bubble-field",
-  "version": "3.7.0",
+  "version": "3.7.1",
   "description": "BubbleField component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

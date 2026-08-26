@@ -66,13 +66,14 @@ Context7 library: /jiaxiantao/cos-design
 
 ## 4. Canonical AI docs (keep in sync)
 
-| Resource         | URL / path                                            |
-| ---------------- | ----------------------------------------------------- |
-| llms.txt         | https://jiaxiantao.github.io/cos-design/llms.txt      |
-| llms-full.txt    | https://jiaxiantao.github.io/cos-design/llms-full.txt |
-| Full props guide | [ai.md](./ai.md)                                      |
-| Agent rules      | [AGENTS.md](../AGENTS.md)                             |
-| Playground       | https://jiaxiantao.github.io/cos-design/              |
+| Resource         | URL / path                                                   |
+| ---------------- | ------------------------------------------------------------ |
+| llms.txt         | https://jiaxiantao.github.io/cos-design/llms.txt             |
+| llms-full.txt    | https://jiaxiantao.github.io/cos-design/llms-full.txt        |
+| Full props guide | [ai.md](./ai.md)                                             |
+| Next.js example  | [examples/next-app-router.md](./examples/next-app-router.md) |
+| Agent rules      | [AGENTS.md](../AGENTS.md)                                    |
+| Playground       | https://jiaxiantao.github.io/cos-design/                     |
 
 Regenerate after component catalog changes:
 

@@ -7,11 +7,13 @@ import {
   Confetti,
   Countdown,
   Fireworks,
+  NeonText,
   ProgressChest,
   RedPacketRain,
   ScratchCard,
   SlotMachine,
   Turntable,
+  WeatherBackground,
   type ConfettiHandle,
   type FireworksHandle,
   type RedPacketRainHandle
@@ -139,12 +141,24 @@ const SlotJackpotRecipe = () => {
   );
 };
 
+const FillHeroRecipe = () => {
+  return (
+    <div className={styles.fillHero}>
+      <WeatherBackground fill weather="partlyCloudy" live={false} />
+      <div className={styles.fillHeroContent}>
+        <NeonText text="COS DESIGN" />
+      </div>
+    </div>
+  );
+};
+
 const recipeViews: Record<string, () => ReactElement> = {
   'scratch-celebrate': ScratchCelebrateRecipe,
   'countdown-rain': CountdownRainRecipe,
   'turntable-confetti': TurntableConfettiRecipe,
   'chest-open': ChestOpenRecipe,
-  'slot-jackpot': SlotJackpotRecipe
+  'slot-jackpot': SlotJackpotRecipe,
+  'fill-hero': FillHeroRecipe
 };
 
 const RecipePage = () => {

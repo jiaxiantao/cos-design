@@ -68,9 +68,10 @@ No manual CSS import — styles auto-inject.
 
 1. **Add dependency first** — run `pnpm add` / `npm install` for the exact package used.
 2. **Canvas / WebGL** — client-only; in Next.js use `dynamic(() => import('@cos-design/fireworks').then(m => m.Fireworks), { ssr: false })`.
-3. **Dimensions** — pass explicit `width` and `height` for canvas components; parent must have visible height.
+3. **Dimensions** — pass `width`/`height`, **or** `fill` (parent must have explicit height). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater.
 4. **Density** — one strong background + a few focal effects; avoid stacking many full-screen animations.
 5. **Props** — read [docs/ai.md](../../../docs/ai.md) or Playground examples; do not invent API.
+6. **Next.js** — see [docs/examples/next-app-router.md](../../../docs/examples/next-app-router.md).
 
 ## Quick examples
 
@@ -98,10 +99,16 @@ const WeatherBackground = dynamic(() => import('@cos-design/weather-background')
 });
 
 export function Hero() {
-  return <WeatherBackground weather="partlyCloudy" width={1200} height={600} live={false} />;
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <WeatherBackground fill weather="partlyCloudy" live={false} />
+    </div>
+  );
 }
 ```
 
 ## Component lookup
 
 For the full catalog with install/import/props per component, read [docs/ai.md](../../../docs/ai.md) or fetch https://jiaxiantao.github.io/cos-design/llms.txt
+
+Campaign recipes (scratch → fireworks, fill hero, …): Playground `#/recipes`

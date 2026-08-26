@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface SnowfallProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 飘落模式 */
   mode?: 'snow' | 'sakura';
   /** 粒子数量 */
@@ -22,7 +24,20 @@ interface Flake {
   opacity: number;
 }
 
-const Snowfall: React.FC<SnowfallProps> = ({ width = 800, height = 500, mode = 'snow', count = 120 }) => {
+const Snowfall: React.FC<SnowfallProps> = ({
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
+  mode = 'snow',
+  count = 120
+}) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const flakesRef = useRef<Flake[]>([]);
   const frameRef = useRef(0);
@@ -57,8 +72,12 @@ const Snowfall: React.FC<SnowfallProps> = ({ width = 800, height = 500, mode = '
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
+    });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
     });
 
     const drawSnowflake = (flake: Flake) => {
@@ -89,20 +108,19 @@ const Snowfall: React.FC<SnowfallProps> = ({ width = 800, height = 500, mode = '
       ctx.restore();
     };
 
-    const tick = () => {
-      frameRef.current = requestAnimationFrame(tick);
-      if (paused) return;
-
+    const paintFrame = (animate: boolean) => {
       ctx.fillStyle = mode === 'sakura' ? '#1a1020' : '#0f172a';
       ctx.fillRect(0, 0, width, height);
 
       flakesRef.current.forEach((flake) => {
-        flake.y += flake.speed;
-        flake.x += flake.drift + Math.sin(flake.y * 0.02) * 0.3;
-        flake.rotation += flake.rotationSpeed;
+        if (animate) {
+          flake.y += flake.speed;
+          flake.x += flake.drift + Math.sin(flake.y * 0.02) * 0.3;
+          flake.rotation += flake.rotationSpeed;
 
-        if (flake.y > height + 10) {
-          Object.assign(flake, createFlake(-10));
+          if (flake.y > height + 10) {
+            Object.assign(flake, createFlake(-10));
+          }
         }
 
         if (mode === 'sakura') {
@@ -115,15 +133,31 @@ const Snowfall: React.FC<SnowfallProps> = ({ width = 800, height = 500, mode = '
       ctx.globalAlpha = 1;
     };
 
+    if (reduced) {
+      paintFrame(false);
+      return () => {
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const tick = () => {
+      frameRef.current = requestAnimationFrame(tick);
+      if (paused) return;
+      if (reduced) return;
+      paintFrame(true);
+    };
+
     tick();
     return () => {
       cancelAnimationFrame(frameRef.current);
       unbindVisibility();
+      unbindMotion();
     };
   }, [createFlake, height, mode, width]);
 
   return (
-    <div className={styles.snowfall} style={{ width, height }}>
+    <div ref={hostRef} className={styles.snowfall} style={hostStyle}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
     </div>
   );

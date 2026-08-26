@@ -32,6 +32,8 @@ export type WeatherType =
 export interface WeatherBackgroundProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 天气类型：sunny / partlyCloudy / overcast / rain 雨天 / thunderstorm / fog / snow 雪天 / sleet / hail / smog；雨量用 rainLevel，雪量用 snowLevel，风效用 windLevel */
   weather?: WeatherType;
   /**

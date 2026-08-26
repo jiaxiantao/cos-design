@@ -48,5 +48,13 @@ export const recipes: RecipeItem[] = [
     descriptionKey: 'recipes.items.slotJackpot.description',
     tags: ['SlotMachine', 'Confetti'],
     components: ['SlotMachine', 'Confetti']
+  },
+  {
+    id: 'fill-hero',
+    path: '/recipes/fill-hero',
+    titleKey: 'recipes.items.fillHero.title',
+    descriptionKey: 'recipes.items.fillHero.description',
+    tags: ['WeatherBackground', 'NeonText', 'fill'],
+    components: ['WeatherBackground', 'NeonText']
   }
 ];

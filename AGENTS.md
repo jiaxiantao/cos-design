@@ -40,12 +40,12 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 
 ## Technical constraints
 
-| Topic            | Rule                                                                                           |
-| ---------------- | ---------------------------------------------------------------------------------------------- |
-| React            | >= 18                                                                                          |
-| SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js) |
-| Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork |
-| Page composition | One strong background + limited focal effects                                                  |
+| Topic            | Rule                                                                                                                                                                                             |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| React            | >= 18                                                                                                                                                                                            |
+| SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js)                                                                                                   |
+| Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork/WeatherBackground/Aurora/Starfield/Snowfall/MeteorRain/CyberGrid/SmokeFog/BubbleField/RippleWater |
+| Page composition | One strong background + limited focal effects                                                                                                                                                    |
 
 ## Documentation for agents
 
@@ -54,6 +54,7 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | **llms.txt** (index)               | https://jiaxiantao.github.io/cos-design/llms.txt                           |
 | **llms-full.txt** (full reference) | https://jiaxiantao.github.io/cos-design/llms-full.txt                      |
 | **Full AI reference**              | [docs/ai.md](./docs/ai.md)                                                 |
+| **Next.js example**                | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md)     |
 | **AI discovery**                   | [docs/ai-discovery.md](./docs/ai-discovery.md)                             |
 | **Context7**                       | `/jiaxiantao/cos-design`                                                   |
 | Playground                         | https://jiaxiantao.github.io/cos-design/                                   |

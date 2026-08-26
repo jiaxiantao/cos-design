@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, useCanvasBox } from '@cos-design/shared';
 import { createPointerState, FRAME_MS, MAX_DPR } from './constants';
 import { drawDynamicBackground, drawStaticBackground, createSnowSprite } from './background';
 import { applyMergeAttraction, startNearbyMerges, updateMerges, resolveMergePose } from './merge';
@@ -18,13 +18,21 @@ import styles from './style/index.module.less';
 export type { ActiveMerge, Bubble, BubbleFieldProps, PointerState } from './types';
 
 const BubbleField: React.FC<BubbleFieldProps> = ({
-  width = 800,
-  height = 500,
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
   bubbleCount = 36,
   speed = 1,
   color = '#7dd3fc',
   interactive = true
 }) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bubblesRef = useRef<Bubble[]>([]);
   const mergesRef = useRef<ActiveMerge[]>([]);
@@ -282,7 +290,7 @@ const BubbleField: React.FC<BubbleFieldProps> = ({
   }, [height, width]);
 
   return (
-    <div className={styles.bubbleField} style={{ width, height }}>
+    <div ref={hostRef} className={styles.bubbleField} style={hostStyle}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
     </div>
   );

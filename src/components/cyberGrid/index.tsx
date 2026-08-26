@@ -1,17 +1,32 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface CyberGridProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 网格线颜色 */
   color?: string;
   /** 移动速度，默认 1 */
   speed?: number;
 }
 
-const CyberGrid: React.FC<CyberGridProps> = ({ width = 800, height = 500, color = '#00f0ff', speed = 1 }) => {
+const CyberGrid: React.FC<CyberGridProps> = ({
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
+  color = '#00f0ff',
+  speed = 1
+}) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef(0);
   const offsetRef = useRef(0);
@@ -30,15 +45,18 @@ const CyberGrid: React.FC<CyberGridProps> = ({ width = 800, height = 500, color 
     const horizonY = height * 0.45;
     const gridSpacing = 40;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
-    const draw = () => {
-      frameRef.current = requestAnimationFrame(draw);
-      if (paused) return;
-
-      offsetRef.current = (offsetRef.current + speed * 1.5) % gridSpacing;
+    const paintGrid = (animate: boolean) => {
+      if (animate) {
+        offsetRef.current = (offsetRef.current + speed * 1.5) % gridSpacing;
+      }
 
       ctx.fillStyle = '#050510';
       ctx.fillRect(0, 0, width, height);
@@ -91,15 +109,31 @@ const CyberGrid: React.FC<CyberGridProps> = ({ width = 800, height = 500, color 
       ctx.fillRect(0, 0, width, height);
     };
 
+    if (reduced) {
+      paintGrid(false);
+      return () => {
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const draw = () => {
+      frameRef.current = requestAnimationFrame(draw);
+      if (paused) return;
+      if (reduced) return;
+      paintGrid(true);
+    };
+
     draw();
     return () => {
       cancelAnimationFrame(frameRef.current);
       unbindVisibility();
+      unbindMotion();
     };
   }, [color, height, speed, width]);
 
   return (
-    <div className={styles.cyberGrid} style={{ width, height }}>
+    <div ref={hostRef} className={styles.cyberGrid} style={hostStyle}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
     </div>
   );

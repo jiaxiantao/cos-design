@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface StarfieldProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 星星数量 */
   starCount?: number;
   /** 飞行速度，默认 1 */
@@ -17,7 +19,20 @@ interface Star {
   z: number;
 }
 
-const Starfield: React.FC<StarfieldProps> = ({ width = 800, height = 500, starCount = 400, speed = 1 }) => {
+const Starfield: React.FC<StarfieldProps> = ({
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
+  starCount = 400,
+  speed = 1
+}) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<Star[]>([]);
   const frameRef = useRef(0);
@@ -44,24 +59,27 @@ const Starfield: React.FC<StarfieldProps> = ({ width = 800, height = 500, starCo
     const centerX = width / 2;
     const centerY = height / 2;
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
-    const tick = () => {
-      frameRef.current = requestAnimationFrame(tick);
-      if (paused) return;
-
+    const drawStars = (animateZ: boolean) => {
       ctx.fillStyle = 'rgb(0 0 0 / 25%)';
       ctx.fillRect(0, 0, width, height);
 
       starsRef.current.forEach((star) => {
-        star.z -= speed * 2;
+        if (animateZ) {
+          star.z -= speed * 2;
 
-        if (star.z <= 0) {
-          star.x = (Math.random() - 0.5) * width;
-          star.y = (Math.random() - 0.5) * height;
-          star.z = width;
+          if (star.z <= 0) {
+            star.x = (Math.random() - 0.5) * width;
+            star.y = (Math.random() - 0.5) * height;
+            star.z = width;
+          }
         }
 
         const k = 128 / star.z;
@@ -73,7 +91,7 @@ const Starfield: React.FC<StarfieldProps> = ({ width = 800, height = 500, starCo
         const size = (1 - star.z / width) * 3;
         const brightness = (1 - star.z / width) * 255;
 
-        if (size > 0.5) {
+        if (animateZ && size > 0.5) {
           const prevK = 128 / (star.z + speed * 4);
           const prevPx = star.x * prevK + centerX;
           const prevPy = star.y * prevK + centerY;
@@ -86,20 +104,38 @@ const Starfield: React.FC<StarfieldProps> = ({ width = 800, height = 500, starCo
           ctx.stroke();
         } else {
           ctx.fillStyle = `rgb(${brightness} ${brightness} ${brightness + 30})`;
-          ctx.fillRect(px, py, size, size);
+          ctx.fillRect(px, py, Math.max(size, 0.5), Math.max(size, 0.5));
         }
       });
+    };
+
+    if (reduced) {
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, width, height);
+      drawStars(false);
+      return () => {
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const tick = () => {
+      frameRef.current = requestAnimationFrame(tick);
+      if (paused) return;
+      if (reduced) return;
+      drawStars(true);
     };
 
     tick();
     return () => {
       cancelAnimationFrame(frameRef.current);
       unbindVisibility();
+      unbindMotion();
     };
   }, [height, speed, starCount, width]);
 
   return (
-    <div className={styles.starfield} style={{ width, height }}>
+    <div ref={hostRef} className={styles.starfield} style={hostStyle}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
     </div>
   );

@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "3.7.5",
+  "version": "3.7.6",
   "description": "React visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases",
   "type": "module",
   "main": "./dist/index.cjs",

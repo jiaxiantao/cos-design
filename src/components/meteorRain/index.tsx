@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface MeteorRainProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 流星数量，默认 8 */
   meteorCount?: number;
 }
@@ -17,7 +19,19 @@ interface Meteor {
   opacity: number;
 }
 
-const MeteorRain: React.FC<MeteorRainProps> = ({ width = 800, height = 500, meteorCount = 8 }) => {
+const MeteorRain: React.FC<MeteorRainProps> = ({
+  width: widthProp,
+  height: heightProp,
+  fill: fillProp = false,
+  meteorCount = 8
+}) => {
+  const { hostRef, width, height, hostStyle } = useCanvasBox({
+    fill: fillProp,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth: 800,
+    defaultHeight: 500
+  });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const meteorsRef = useRef<Meteor[]>([]);
   const frameRef = useRef(0);
@@ -44,27 +58,35 @@ const MeteorRain: React.FC<MeteorRainProps> = ({ width = 800, height = 500, mete
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     let paused = document.hidden;
+    let reduced = prefersReducedMotion();
     const unbindVisibility = bindVisibilityPause((hidden) => {
       paused = hidden;
     });
+    const unbindMotion = bindPrefersReducedMotion((value) => {
+      reduced = value;
+    });
 
-    const tick = () => {
-      frameRef.current = requestAnimationFrame(tick);
-      if (paused) return;
-
-      ctx.fillStyle = 'rgb(15 23 42 / 15%)';
-      ctx.fillRect(0, 0, width, height);
+    const drawMeteors = (animate: boolean) => {
+      if (animate) {
+        ctx.fillStyle = 'rgb(15 23 42 / 15%)';
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, width, height);
+      }
 
       meteorsRef.current.forEach((meteor) => {
-        meteor.x += meteor.speed;
-        meteor.y += meteor.speed * 0.6;
+        if (animate) {
+          meteor.x += meteor.speed;
+          meteor.y += meteor.speed * 0.6;
 
-        if (meteor.x > width + meteor.length || meteor.y > height + meteor.length) {
-          meteor.x = -meteor.length;
-          meteor.y = Math.random() * height * 0.4;
-          meteor.length = Math.random() * 60 + 40;
-          meteor.speed = Math.random() * 6 + 4;
-          meteor.opacity = Math.random() * 0.5 + 0.3;
+          if (meteor.x > width + meteor.length || meteor.y > height + meteor.length) {
+            meteor.x = -meteor.length;
+            meteor.y = Math.random() * height * 0.4;
+            meteor.length = Math.random() * 60 + 40;
+            meteor.speed = Math.random() * 6 + 4;
+            meteor.opacity = Math.random() * 0.5 + 0.3;
+          }
         }
 
         const tailX = meteor.x - meteor.length;
@@ -84,15 +106,31 @@ const MeteorRain: React.FC<MeteorRainProps> = ({ width = 800, height = 500, mete
       });
     };
 
+    if (reduced) {
+      drawMeteors(false);
+      return () => {
+        unbindVisibility();
+        unbindMotion();
+      };
+    }
+
+    const tick = () => {
+      frameRef.current = requestAnimationFrame(tick);
+      if (paused) return;
+      if (reduced) return;
+      drawMeteors(true);
+    };
+
     tick();
     return () => {
       cancelAnimationFrame(frameRef.current);
       unbindVisibility();
+      unbindMotion();
     };
   }, [height, width]);
 
   return (
-    <div className={styles.meteorRain} style={{ width, height }}>
+    <div ref={hostRef} className={styles.meteorRain} style={hostStyle}>
       <canvas ref={canvasRef} className={styles.canvas} style={{ width, height }} />
     </div>
   );

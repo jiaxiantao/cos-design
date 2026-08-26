@@ -114,6 +114,11 @@ const enUS: typeof zhCN = {
         description: 'Burst confetti when all three reels match.',
         how: 'In SlotMachine.onSpinEnd, check if all symbols match then call ConfettiHandle.burst; use targetResults for controlled outcomes.',
         button: 'Spin'
+      },
+      fillHero: {
+        title: 'Full-bleed atmosphere hero',
+        description: 'Fill the viewport with a weather background and a neon headline.',
+        how: 'Give the parent height: 100vh and set WeatherBackground fill; overlay NeonText. In Next.js use dynamic with ssr:false.'
       }
     }
   },

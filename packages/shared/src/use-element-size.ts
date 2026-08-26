@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import { observeElementSize, type ElementSize } from './size';
 
 export interface UseElementSizeOptions {
@@ -64,4 +64,47 @@ export const resolveCanvasBoxSize = ({
     height: height ?? defaultHeight,
     pending: false
   };
+};
+
+export interface UseCanvasBoxOptions {
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
+  width?: number;
+  height?: number;
+  defaultWidth: number;
+  defaultHeight: number;
+}
+
+export interface UseCanvasBoxResult {
+  hostRef: RefObject<HTMLDivElement | null>;
+  width: number;
+  height: number;
+  /** 挂到宿主容器的样式（fill 时为 100%×100%） */
+  hostStyle: CSSProperties;
+  fill: boolean;
+  /** 是否处于 fill 模式且尚未量到有效尺寸 */
+  pending: boolean;
+}
+
+/** 画布/效果宿主尺寸：fill 时跟随父容器，否则用显式宽高或默认值 */
+export const useCanvasBox = ({
+  fill = false,
+  width: widthProp,
+  height: heightProp,
+  defaultWidth,
+  defaultHeight
+}: UseCanvasBoxOptions): UseCanvasBoxResult => {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const measured = useElementSize(hostRef, { enabled: fill });
+  const { width, height, pending } = resolveCanvasBoxSize({
+    fill,
+    width: widthProp,
+    height: heightProp,
+    defaultWidth,
+    defaultHeight,
+    measured
+  });
+  const hostStyle: CSSProperties = fill ? { width: '100%', height: '100%' } : { width, height };
+
+  return { hostRef, width, height, hostStyle, fill, pending };
 };

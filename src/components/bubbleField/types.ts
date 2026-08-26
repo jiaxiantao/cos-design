@@ -1,6 +1,8 @@
 export interface BubbleFieldProps {
   width?: number;
   height?: number;
+  /** 为 true 时铺满父容器（父级需有明确高度） */
+  fill?: boolean;
   /** 气泡数量上限 */
   bubbleCount?: number;
   /** 上浮速度 */
