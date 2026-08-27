@@ -98,13 +98,15 @@ pnpm install
 pnpm dev
 ```
 
-See [examples/next-app/README.md](../../examples/next-app/README.md). It includes:
+See [examples/next-app/README.md](../../examples/next-app/README.md). Primary fork path:
 
-- fill hero + scratch → fireworks
-- server Turntable draw via `/api/draw`
-- FlipCard check-in → NineGrid unlock (`/api/draw?cells=9`)
+1. fill hero
+2. FlipCard check-in → NineGrid (`/api/draw?cells=9`) → Confetti
+3. optional Scratch / Turntable modules below
+
+Guides: [campaign-10-minutes.md](../campaign-10-minutes.md) · [campaign-patterns.md](../campaign-patterns.md)
 
 ## Live demos
 
 - Playground: https://jiaxiantao.github.io/cos-design/
-- Campaign recipes: https://jiaxiantao.github.io/cos-design/#/recipes
+- Campaign recipes (copyable snippets): https://jiaxiantao.github.io/cos-design/#/recipes

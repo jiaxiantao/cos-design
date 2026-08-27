@@ -277,6 +277,7 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   '9 个奖品格子（不足补齐、超出截断）': 'Exactly 9 prize cells (padded if short, truncated if long)',
   '指定下一次抽中的索引 0–8（服务端开奖）；不传则随机': 'Next winning index 0–8 (server draw); omit for random',
   抽奖结束回调: 'Draw-finished callback',
+  抽奖进行中的按钮文案: 'Button label while drawing/spinning',
   禁用交互: 'Disable interaction',
   奖品文案: 'Prize label',
   '可选图标（emoji 等），显示在文案上方': 'Optional icon (e.g. emoji) shown above the label',

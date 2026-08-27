@@ -1,11 +1,9 @@
 # cos-design · Next.js App Router example
 
-Runnable campaign page using published npm packages:
+Forkable campaign starter using published npm packages:
 
-- full-viewport `WeatherBackground` with `fill` + `NeonText`
-- `ScratchCard` → `Fireworks` celebration
-- **Server lottery**: `GET /api/draw` → `Turntable.spin(targetIndex)` + Confetti
-- **Check-in chain**: `FlipCard` unlock → `NineGrid` draw (`/api/draw?cells=9`) + Confetti
+1. **Primary flow**: full-viewport `WeatherBackground` `fill` + `NeonText` → `FlipCard` check-in → `NineGrid` draw (`/api/draw?cells=9`) → `Confetti`
+2. **More patterns**: Scratch → Fireworks; Turntable server `spin(targetIndex)`
 
 ## Run
 
@@ -15,7 +13,7 @@ pnpm install
 pnpm dev
 ```
 
-Open http://localhost:3000
+Open http://localhost:3000 — start at the hero, jump to **#campaign** for the check-in chain.
 
 ## Why this shape
 
@@ -24,9 +22,12 @@ Open http://localhost:3000
 | SSR     | Canvas components load with `next/dynamic(..., { ssr: false })` |
 | Size    | `fill` needs a parent with explicit height (`100vh` / fixed px) |
 | Density | One hero background + one interaction focal                     |
+| Busy    | NineGrid / Turntable expose `aria-busy` while animating         |
 
 ## Related
 
+- 10-minute guide: [docs/campaign-10-minutes.md](../../docs/campaign-10-minutes.md)
+- Busy / retry patterns: [docs/campaign-patterns.md](../../docs/campaign-patterns.md)
 - Pattern notes: [docs/examples/next-app-router.md](../../docs/examples/next-app-router.md)
 - Playground recipes: https://jiaxiantao.github.io/cos-design/#/recipes
 - AI index: https://jiaxiantao.github.io/cos-design/llms.txt

@@ -21,6 +21,7 @@ import {
   type RedPacketRainHandle
 } from '@/components';
 import { recipes } from '../config/recipes';
+import { recipeSnippets } from '../config/recipe-snippets';
 import styles from './style/recipes.module.less';
 
 const toComponentPath = (name: string) => `/${name.charAt(0).toLowerCase()}${name.slice(1)}`;
@@ -237,6 +238,17 @@ const RecipePage = () => {
   const { t } = useTranslation();
   const recipe = recipes.find((item) => item.id === recipeId);
   const View = recipeId ? recipeViews[recipeId] : undefined;
+  const snippet = recipeId ? recipeSnippets[recipeId] : undefined;
+  const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(0);
+
+  const copySnippet = useCallback(async () => {
+    if (!snippet) return;
+    await navigator.clipboard.writeText(snippet);
+    setCopied(true);
+    window.clearTimeout(copyTimerRef.current);
+    copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000);
+  }, [snippet]);
 
   if (!recipe || !View) {
     return (
@@ -268,6 +280,19 @@ const RecipePage = () => {
         <h2>{t('recipes.howTitle')}</h2>
         <p>{t(recipe.titleKey.replace('.title', '.how'))}</p>
       </section>
+      {snippet ? (
+        <section className={styles.snippet}>
+          <div className={styles.snippetHeader}>
+            <h2>{t('recipes.snippetTitle')}</h2>
+            <button type="button" className={styles.copyBtn} onClick={() => void copySnippet()}>
+              {copied ? t('recipes.snippetCopied') : t('recipes.snippetCopy')}
+            </button>
+          </div>
+          <pre className={styles.snippetCode}>
+            <code>{snippet}</code>
+          </pre>
+        </section>
+      ) : null}
     </div>
   );
 };

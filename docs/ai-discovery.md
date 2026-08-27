@@ -100,15 +100,17 @@ Runnable Next.js sample: examples/next-app in the cos-design repo
 
 ## 4. Canonical AI docs (keep in sync)
 
-| Resource          | URL / path                                                   |
-| ----------------- | ------------------------------------------------------------ |
-| llms.txt          | https://jiaxiantao.github.io/cos-design/llms.txt             |
-| llms-full.txt     | https://jiaxiantao.github.io/cos-design/llms-full.txt        |
-| Full props guide  | [ai.md](./ai.md)                                             |
-| Next.js patterns  | [examples/next-app-router.md](./examples/next-app-router.md) |
-| Runnable Next app | [examples/next-app](../examples/next-app)                    |
-| Agent rules       | [AGENTS.md](../AGENTS.md)                                    |
-| Playground        | https://jiaxiantao.github.io/cos-design/                     |
+| Resource           | URL / path                                                   |
+| ------------------ | ------------------------------------------------------------ |
+| llms.txt           | https://jiaxiantao.github.io/cos-design/llms.txt             |
+| llms-full.txt      | https://jiaxiantao.github.io/cos-design/llms-full.txt        |
+| Full props guide   | [ai.md](./ai.md)                                             |
+| 10-minute campaign | [campaign-10-minutes.md](./campaign-10-minutes.md)           |
+| Campaign patterns  | [campaign-patterns.md](./campaign-patterns.md)               |
+| Next.js patterns   | [examples/next-app-router.md](./examples/next-app-router.md) |
+| Runnable Next app  | [examples/next-app](../examples/next-app)                    |
+| Agent rules        | [AGENTS.md](../AGENTS.md)                                    |
+| Playground         | https://jiaxiantao.github.io/cos-design/                     |
 
 Regenerate after component catalog changes:
 

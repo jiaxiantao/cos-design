@@ -5,7 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.10] - 2026-08-27
+
+### Changed
+
+- @cos-design/aurora: 3.5.4 → 3.5.5
+- @cos-design/nine-grid: 3.7.9 → 3.7.10
+- @cos-design/slot-machine: 3.5.5 → 3.5.6
+- @cos-design/turntable: 3.5.5 → 3.5.6
+- cos-design: 聚合包更新至 3.7.10
+
 ## [Unreleased]
+
+### Added
+
+- Playground 配方页「可复制片段」（`recipe-snippets` + 一键复制）
+- Next 示例主链路：`CampaignFlow`（fill hero → FlipCard → NineGrid → Confetti）
+- 文档：[docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)、[docs/campaign-patterns.md](./docs/campaign-patterns.md)
+- Playwright 交互 smoke：翻牌 / 九宫格 busy / 转盘出结果 / checkin-draw 解锁
+- `NineGrid.spinningText`；Turntable / SlotMachine / NineGrid 按钮 `aria-busy` + `data-testid`
+
+### Changed
+
+- `Aurora`：标签页隐藏时暂停 CSS 动画（`bindVisibilityPause`）
+- AGENTS / Cursor Skill 强化「何时不用 cos-design」；Context7 rules 补充活动页约定
 
 ## [3.7.9] - 2026-08-27
 

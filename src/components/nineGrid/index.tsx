@@ -22,6 +22,8 @@ export interface NineGridProps {
   targetIndex?: number;
   /** 抽奖按钮文案 */
   buttonText?: string;
+  /** 抽奖进行中的按钮文案 */
+  spinningText?: string;
   /** 抽奖结束回调 */
   onDrawEnd?: (item: NineGridItem, index: number) => void;
   /** 禁用交互 */
@@ -47,7 +49,17 @@ const normalizeItems = (items: NineGridItem[] | undefined): NineGridItem[] => {
 };
 
 const NineGrid = forwardRef<NineGridHandle, NineGridProps>(
-  ({ items = DEFAULT_ITEMS, targetIndex, buttonText = '开始抽奖', onDrawEnd, disabled = false }, ref) => {
+  (
+    {
+      items = DEFAULT_ITEMS,
+      targetIndex,
+      buttonText = '开始抽奖',
+      spinningText = '抽奖中…',
+      onDrawEnd,
+      disabled = false
+    },
+    ref
+  ) => {
     const cells = normalizeItems(items);
     const [active, setActive] = useState<number | null>(null);
     const [winner, setWinner] = useState<number | null>(null);
@@ -136,8 +148,15 @@ const NineGrid = forwardRef<NineGridHandle, NineGridProps>(
             );
           })}
         </div>
-        <button type="button" className={styles.button} onClick={() => draw()} disabled={drawing || disabled}>
-          {drawing ? '抽奖中…' : buttonText}
+        <button
+          type="button"
+          className={styles.button}
+          data-testid="nine-grid-draw"
+          onClick={() => draw()}
+          disabled={drawing || disabled}
+          aria-busy={drawing}
+        >
+          {drawing ? spinningText : buttonText}
         </button>
       </div>
     );

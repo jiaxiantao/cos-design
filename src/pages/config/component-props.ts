@@ -1563,6 +1563,13 @@ export const componentProps: ComponentPropsMap = {
       description: '抽奖按钮文案'
     },
     {
+      name: 'spinningText',
+      type: 'string',
+      required: false,
+      default: "'抽奖中…'",
+      description: '抽奖进行中的按钮文案'
+    },
+    {
       name: 'onDrawEnd',
       type: '(item: NineGridItem, index: number) => void',
       required: false,

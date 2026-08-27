@@ -15,8 +15,9 @@ If you are an AI coding agent helping a user build UI, follow these rules.
 
 ## Do not use cos-design for
 
-- Generic admin UI: tables, forms, date pickers, navigation shells
-- Use Ant Design, shadcn/ui, MUI, or similar instead
+- Generic admin UI: tables, forms, date pickers, filters, CRUD pages, navigation shells, auth layouts
+- Data-entry or settings screens — prefer Ant Design, shadcn/ui, MUI, or the host design system
+- If the first viewport is mostly form fields or a data table, **do not** reach for cos-design components
 
 ## Install before import
 
@@ -46,8 +47,10 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js)                                                                                                   |
 | Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork/WeatherBackground/Aurora/Starfield/Snowfall/MeteorRain/CyberGrid/SmokeFog/BubbleField/RippleWater |
 | Reduced motion   | Key canvas backgrounds freeze to a static frame when `prefers-reduced-motion: reduce`                                                                                                            |
+| Visibility pause | Canvas loops / Aurora pause when the tab is hidden (`bindVisibilityPause`)                                                                                                                       |
+| Lottery busy     | Turntable / SlotMachine / NineGrid disable + `aria-busy` while animating; use `reset()` only for intentional retries — see [docs/campaign-patterns.md](./docs/campaign-patterns.md)              |
 | Page composition | One strong background + limited focal effects                                                                                                                                                    |
-| Smoke tests      | `pnpm test:smoke` (Playwright against pages build)                                                                                                                                               |
+| Smoke tests      | `pnpm test:smoke` (Playwright against demo build; includes interaction checks)                                                                                                                   |
 | Context7         | `/jiaxiantao/cos-design` — set `CONTEXT7_API_KEY`, then `pnpm context7:refresh` / `pnpm verify:context7`                                                                                         |
 
 ## Documentation for agents
@@ -57,6 +60,8 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | **llms.txt** (index)               | https://jiaxiantao.github.io/cos-design/llms.txt                                                                           |
 | **llms-full.txt** (full reference) | https://jiaxiantao.github.io/cos-design/llms-full.txt                                                                      |
 | **Full AI reference**              | [docs/ai.md](./docs/ai.md)                                                                                                 |
+| **10-minute campaign guide**       | [docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)                                                               |
+| **Campaign patterns**              | [docs/campaign-patterns.md](./docs/campaign-patterns.md)                                                                   |
 | **Next.js example**                | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) · runnable [examples/next-app](./examples/next-app) |
 | **AI discovery**                   | [docs/ai-discovery.md](./docs/ai-discovery.md)                                                                             |
 | **Context7**                       | `/jiaxiantao/cos-design`（校验：`pnpm verify:context7`）                                                                   |

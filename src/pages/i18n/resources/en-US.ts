@@ -78,6 +78,9 @@ const enUS: typeof zhCN = {
     back: '← Back to recipes',
     notFound: 'Recipe not found',
     howTitle: 'How it fits together',
+    snippetTitle: 'Copyable snippet',
+    snippetCopy: 'Copy code',
+    snippetCopied: 'Copied',
     hintFireworks: 'Auto-launches on reveal; click canvas for more',
     hintConfetti: 'Bursts after the spin; click for another burst',
     items: {

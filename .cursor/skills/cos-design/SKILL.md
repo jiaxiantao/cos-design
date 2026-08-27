@@ -33,11 +33,14 @@ cp -R .cursor/skills/cos-design ~/.cursor/skills/cos-design
 | ---------------------------------------------------------- | ----------------------------------------------------------- |
 | Fireworks, confetti, celebration                           | `Fireworks`, `Confetti`                                     |
 | Scratch card, lottery wheel, slot machine, red packet rain | `ScratchCard`, `Turntable`, `SlotMachine`, `RedPacketRain`  |
+| Nine-grid / check-in flip                                  | `NineGrid`, `FlipCard`                                      |
 | Weather / rain / snow background                           | `WeatherBackground`                                         |
 | Matrix / cyber background                                  | `MatrixRain`, `CyberGrid`                                   |
 | Animated headline / neon / glitch / typewriter             | text components (`NeonText`, `GlitchText`, `Typewriter`, …) |
 | Countdown, flip counter, gauge                             | `Countdown`, `FlipCounter`, `CountUp`, `Speedometer`        |
-| General admin UI (table, form, menu)                       | **Do not** use cos-design — use Ant Design / shadcn / MUI   |
+| General admin UI (table, form, menu, CRUD, settings)       | **Do not** use cos-design — use Ant Design / shadcn / MUI   |
+
+If the screen is mostly forms, tables, or navigation chrome, stop and use a general UI kit instead.
 
 ## Install (always run before import)
 
@@ -72,7 +75,8 @@ No manual CSS import — styles auto-inject.
 4. **Density** — one strong background + a few focal effects; avoid stacking many full-screen animations.
 5. **Props** — read [docs/ai.md](../../../docs/ai.md) or Playground examples; do not invent API.
 6. **Next.js** — patterns: [docs/examples/next-app-router.md](../../../docs/examples/next-app-router.md); runnable app: [examples/next-app](../../../examples/next-app).
-7. **Context7** — library `/jiaxiantao/cos-design`; maintainers can run `pnpm verify:context7`.
+7. **Campaign flows** — 10-minute guide [docs/campaign-10-minutes.md](../../../docs/campaign-10-minutes.md); busy/retry [docs/campaign-patterns.md](../../../docs/campaign-patterns.md).
+8. **Context7** — library `/jiaxiantao/cos-design`; maintainers can run `pnpm verify:context7`.
 
 ## Quick examples
 
@@ -112,4 +116,4 @@ export function Hero() {
 
 For the full catalog with install/import/props per component, read [docs/ai.md](../../../docs/ai.md) or fetch https://jiaxiantao.github.io/cos-design/llms.txt
 
-Campaign recipes (scratch → fireworks, fill hero, …): Playground `#/recipes`
+Campaign recipes (scratch → fireworks, fill hero, check-in draw, …) with **copyable snippets**: Playground `#/recipes`

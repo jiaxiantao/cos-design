@@ -75,6 +75,9 @@ const zhCN = {
     back: '← 返回配方列表',
     notFound: '未找到该配方',
     howTitle: '组合思路',
+    snippetTitle: '可复制片段',
+    snippetCopy: '复制代码',
+    snippetCopied: '已复制',
     hintFireworks: '揭开后自动燃放；也可点击补放',
     hintConfetti: '抽奖结束后喷射；也可点击再喷',
     items: {

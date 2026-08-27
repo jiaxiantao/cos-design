@@ -1,5 +1,5 @@
-import React from 'react';
-import { useCanvasBox } from '@cos-design/shared';
+import React, { useEffect, useState } from 'react';
+import { bindVisibilityPause, useCanvasBox } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface AuroraProps {
@@ -27,6 +27,9 @@ const Aurora: React.FC<AuroraProps> = ({
     defaultHeight: 500
   });
   const palette = colors.length >= 2 ? colors : DEFAULT_COLORS;
+  const [paused, setPaused] = useState(() => typeof document !== 'undefined' && document.hidden);
+
+  useEffect(() => bindVisibilityPause(setPaused), []);
 
   return (
     <div ref={hostRef} className={styles.aurora} style={hostStyle}>
@@ -38,7 +41,8 @@ const Aurora: React.FC<AuroraProps> = ({
             {
               '--aurora-color': color,
               '--aurora-delay': `${i * -3}s`,
-              '--aurora-duration': `${12 + i * 2}s`
+              '--aurora-duration': `${12 + i * 2}s`,
+              animationPlayState: paused ? 'paused' : 'running'
             } as React.CSSProperties
           }
         />

@@ -198,7 +198,14 @@ const SlotMachine = forwardRef<SlotMachineHandle, SlotMachineProps>(
             </div>
           ))}
         </div>
-        <button type="button" className={styles.spinBtn} onClick={() => spin()} disabled={spinning}>
+        <button
+          type="button"
+          className={styles.spinBtn}
+          data-testid="slot-machine-spin"
+          onClick={() => spin()}
+          disabled={spinning}
+          aria-busy={spinning}
+        >
           {spinning ? spinningText : label}
         </button>
         {results.length > 0 && !spinning && (

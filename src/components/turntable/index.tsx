@@ -262,7 +262,14 @@ const Turntable = forwardRef<TurntableHandle, TurntableProps>(
         <div className={styles.wheelWrap} style={{ width: canvasSize, height: canvasSize }}>
           <div className={styles.pointer} />
           <canvas ref={canvasRef} className={styles.canvas} style={{ width: canvasSize, height: canvasSize }} />
-          <button type="button" className={styles.spinBtn} onClick={() => spin()} disabled={spinning}>
+          <button
+            type="button"
+            className={styles.spinBtn}
+            data-testid="turntable-spin"
+            onClick={() => spin()}
+            disabled={spinning}
+            aria-busy={spinning}
+          >
             {spinning ? spinningText : buttonText}
           </button>
         </div>

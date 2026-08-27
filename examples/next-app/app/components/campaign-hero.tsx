@@ -7,13 +7,17 @@ const WeatherBackground = dynamic(() => import('@cos-design/weather-background')
   ssr: false
 });
 
+/** Full-viewport campaign open — one background + one brand signal. */
 export function CampaignHero() {
   return (
-    <section className="hero">
+    <section className="hero" id="hero">
       <WeatherBackground fill weather="partlyCloudy" live={false} />
       <div className="heroContent">
         <NeonText text="COS DESIGN" />
-        <p>fill background · Next.js App Router · client-only canvas</p>
+        <p>Campaign starter · fill hero → check-in → draw</p>
+        <a className="heroCta" href="#campaign">
+          Start check-in
+        </a>
       </div>
     </section>
   );
