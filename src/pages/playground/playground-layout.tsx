@@ -198,12 +198,6 @@ const PlaygroundLayout = () => {
               >
                 {t('layout.navQuickstart')}
               </Link>
-              <Link
-                to="/recipes"
-                className={`${styles.navLink} ${pathname.startsWith('/recipes') ? styles.navLinkActive : ''}`}
-              >
-                {t('layout.navRecipes')}
-              </Link>
             </div>
             {categories.map((cat) => {
               const items = filteredDemos.filter((item) => item.category === cat.id);

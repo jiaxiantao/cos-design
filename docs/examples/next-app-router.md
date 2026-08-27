@@ -109,4 +109,3 @@ Guides: [campaign-10-minutes.md](../campaign-10-minutes.md) · [campaign-pattern
 ## Live demos
 
 - Playground: https://jiaxiantao.github.io/cos-design/
-- Campaign recipes (copyable snippets): https://jiaxiantao.github.io/cos-design/#/recipes

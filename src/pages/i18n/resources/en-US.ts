@@ -16,8 +16,7 @@ const enUS: typeof zhCN = {
     sidebarTitle: 'Browse by category',
     navHome: 'Overview',
     navCatalog: 'Catalog',
-    navQuickstart: 'Quick Start',
-    navRecipes: 'Recipes'
+    navQuickstart: 'Quick Start'
   },
   home: {
     eyebrow: 'React Visual Effect Library',
@@ -70,86 +69,6 @@ const enUS: typeof zhCN = {
     homeText: 'Back to the homepage to see what cos-design can do',
     quickstartLabel: 'Getting started',
     quickstartText: 'Open quick start — installation, usage, and tips'
-  },
-  recipes: {
-    eyebrow: 'Campaign Recipes',
-    title: 'Campaign recipes',
-    subtitle: 'Compose marketing components into ready-to-ship campaign flows.',
-    back: '← Back to recipes',
-    notFound: 'Recipe not found',
-    howTitle: 'How it fits together',
-    snippetTitle: 'Copyable snippet',
-    snippetCopy: 'Copy code',
-    snippetCopied: 'Copied',
-    hintFireworks: 'Auto-launches on reveal; click canvas for more',
-    hintConfetti: 'Bursts after the spin; click for another burst',
-    items: {
-      scratchCelebrate: {
-        title: 'Scratch & celebrate',
-        description: 'Fireworks launch when the scratch card is revealed.',
-        how: 'Listen to ScratchCard.onReveal, then call FireworksHandle.launch at a few x positions.',
-        prize: '🎉 Grand prize!',
-        cover: 'Scratch to reveal'
-      },
-      countdownRain: {
-        title: 'Countdown red-packet rain',
-        description: 'Start a red-packet rain when the countdown ends.',
-        how: 'On Countdown.onEnd call RedPacketRainHandle.start; size the round with width/height/duration.',
-        waiting: 'Red-packet rain starts when the countdown ends…',
-        ended: 'Rain is live — tap packets to grab',
-        hint: 'Tap packets to grab'
-      },
-      turntableConfetti: {
-        title: 'Turntable + confetti',
-        description: 'Burst confetti when the turntable stops.',
-        how: 'Wire Turntable.onSpinEnd to ConfettiHandle.burst; use targetIndex / spin() for server-drawn prizes.',
-        button: 'Spin'
-      },
-      chestOpen: {
-        title: 'Charge to open the chest',
-        description: 'Sync charge progress to a chest, then celebrate when it opens.',
-        how: 'Drive ProgressChest.progress from Charge.onChange; fire Confetti.burst on ProgressChest.onOpen or Charge.onComplete.',
-        charging: 'Charging…',
-        opened: 'Chest opened!'
-      },
-      slotJackpot: {
-        title: 'Slot machine jackpot',
-        description: 'Burst confetti when all three reels match.',
-        how: 'In SlotMachine.onSpinEnd, check if all symbols match then call ConfettiHandle.burst; use targetResults for controlled outcomes.',
-        button: 'Spin'
-      },
-      fillHero: {
-        title: 'Full-bleed atmosphere hero',
-        description: 'Fill the viewport with a weather background and a neon headline.',
-        how: 'Give the parent height: 100vh and set WeatherBackground fill; overlay NeonText. In Next.js use dynamic with ssr:false.'
-      },
-      nineGridDraw: {
-        title: 'Nine-grid draw',
-        description: 'Celebrate a nine-grid lottery hit with confetti; use targetIndex for server draws.',
-        how: 'NineGrid.onDrawEnd triggers Confetti.burst; pass targetIndex or draw(index) for a fixed outcome.',
-        button: 'Draw'
-      },
-      flipCheckin: {
-        title: 'Check-in flip card',
-        description: 'Flip a check-in card to reveal a reward and celebrate.',
-        how: 'FlipCard.onReveal triggers Confetti.burst; use ref.flip()/reset() for programmatic control.',
-        frontTitle: 'Day 3',
-        frontSubtitle: 'Tap to reveal today’s reward',
-        backTitle: 'Checked in',
-        backSubtitle: '+20 points'
-      },
-      checkinDraw: {
-        title: 'Check-in then draw',
-        description: 'Flip to check in, unlock a nine-grid draw, and celebrate — a short campaign chain.',
-        how: 'FlipCard.onReveal unlocks NineGrid (disabled=false) and Confetti.burst; NineGrid.onDrawEnd celebrates again.',
-        frontTitle: 'Day 3',
-        frontSubtitle: 'Check in to unlock the draw',
-        backTitle: 'Checked in',
-        backSubtitle: 'Draw unlocked',
-        lockButton: 'Check in first',
-        drawButton: 'Draw'
-      }
-    }
   },
   component: {
     backToCatalog: '← Back to catalog',

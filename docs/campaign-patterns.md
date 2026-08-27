@@ -43,6 +43,12 @@ Canvas loops that use `@cos-design/shared` `bindVisibilityPause` stop `requestAn
 
 When `prefers-reduced-motion: reduce`, key backgrounds freeze to a static frame instead of looping.
 
+## Celebration canvas vs controls
+
+`Confetti` / `Fireworks` with `auto={false}` default to **non-interactive** (`interactive` follows `auto`). They do not capture pointer events, so lottery / check-in buttons beside or above them stay clickable. Pass `interactive` when you want click-to-burst on the canvas itself.
+
+In composed pages, keep celebration canvases visually below controls, and rely on `auto={false}` / non-interactive celebration canvases so lottery buttons stay clickable.
+
 ## Density
 
 One strong `fill` background + one interaction focal (draw / scratch / flip). Stacking multiple full-screen canvases drains battery and fights for attention.
@@ -51,4 +57,3 @@ One strong `fill` background + one interaction focal (draw / scratch / flip). St
 
 - 10-minute English guide: [campaign-10-minutes.md](./campaign-10-minutes.md)
 - Runnable Next app: [examples/next-app](../examples/next-app)
-- Playground recipes (copyable snippets): https://jiaxiantao.github.io/cos-design/#/recipes

@@ -9,7 +9,7 @@
 | Name | cos-design |
 | npm (umbrella) | cos-design |
 | npm (scoped) | @cos-design/* |
-| Version | 3.7.9 |
+| Version | 3.7.10 |
 | Components | 86 |
 | Stack | React 19, TypeScript, Vite |
 | License | MIT |
@@ -1631,6 +1631,7 @@ import { Confetti } from 'cos-design';
 - `height`: number (optional)
 - `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
 - `auto`: boolean (optional, default `true`) — 挂载后自动播放，默认 true
+- `interactive`: boolean (optional)
 - `particleCount`: number (optional, default `120`) — 每次喷射粒子数，默认 120
 - `hint`: string (optional) — 粒子全部消散后回调
 
@@ -2431,7 +2432,8 @@ import { Fireworks } from 'cos-design';
 - `height`: number (optional)
 - `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
 - `auto`: boolean (optional) — 是否自动燃放，默认 true
-- `hint`: string (optional) — 画布操作提示
+- `interactive`: boolean (optional)
+- `hint`: string (optional) — 画布操作提示；非 interactive 时不展示
 - `onComplete`: () => void (optional) — 画面空闲（无火箭/粒子）时回调
 
 ### ReturnCity

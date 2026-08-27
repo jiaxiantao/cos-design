@@ -11,7 +11,7 @@
 [![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./examples/next-app) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
+[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [**10-minute campaign**](./docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./examples/next-app) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
 
 </div>
 
@@ -43,6 +43,7 @@ export function Campaign() {
 
 - **Use for:** campaign / lottery / celebration UI, canvas backgrounds, animated headlines, dashboard decorations
 - **Do not use for:** tables, forms, nav shells → use Ant Design / shadcn / MUI
+- **Start here (campaign):** [Build a campaign page in 10 minutes](./docs/campaign-10-minutes.md) · runnable [examples/next-app](./examples/next-app)
 - **AI index:** https://jiaxiantao.github.io/cos-design/llms.txt · **Context7:** `/jiaxiantao/cos-design`
 - **Cursor Skill install:** see [docs/ai-discovery.md](./docs/ai-discovery.md)
 - **Article:** [React marketing page effects with cos-design](./website-content/cos-design-marketing-effects-en.md)

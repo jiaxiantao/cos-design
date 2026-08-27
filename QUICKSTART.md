@@ -200,7 +200,7 @@ const ref = useRef<FireworksHandle>(null);
 <Turntable targetIndex={0} onSpinEnd={(prize, index) => console.log(prize, index)} />
 ```
 
-Playground 另有「活动配方」页（`#/recipes`），演示刮开庆祝、倒计时红包雨、转盘彩纸等组合。
+活动页组合示例见 [examples/next-app](./examples/next-app) 与 [docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)。
 
 ### 8. TypeScript
 

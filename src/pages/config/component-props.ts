@@ -404,6 +404,13 @@ export const componentProps: ComponentPropsMap = {
       description: '挂载后自动播放，默认 true'
     },
     {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
       name: 'particleCount',
       type: 'number',
       required: false,
@@ -415,7 +422,7 @@ export const componentProps: ComponentPropsMap = {
       type: 'string',
       required: false,
       default: "'点击画布再次喷射'",
-      description: '画布操作提示'
+      description: '画布操作提示；非 interactive 时不展示'
     },
     {
       name: 'onComplete',
@@ -809,11 +816,18 @@ export const componentProps: ComponentPropsMap = {
       description: '是否自动燃放，默认 true'
     },
     {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
       name: 'hint',
       type: 'string',
       required: false,
       default: '',
-      description: '画布操作提示'
+      description: '画布操作提示；非 interactive 时不展示'
     },
     {
       name: 'onComplete',

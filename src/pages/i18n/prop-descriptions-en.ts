@@ -290,6 +290,11 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   翻到背面时回调: 'Callback when flipped to the back',
   翻面状态变化回调: 'Flipped-state change callback',
   禁用点击: 'Disable clicking',
+  '是否响应点击再次喷射；默认跟随 auto（auto=false 时不拦截指针，避免挡住抽奖按钮）':
+    'Whether click re-bursts; defaults to auto (auto=false does not capture pointers so draw buttons stay clickable)',
+  '是否响应点击燃放；默认跟随 auto（auto=false 时不拦截指针）':
+    'Whether click launches; defaults to auto (auto=false does not capture pointers)',
+  '画布操作提示；非 interactive 时不展示': 'Canvas hint; hidden when not interactive',
   'live 模式解析出真实天气后回调': 'Callback after live weather is resolved'
 };
 

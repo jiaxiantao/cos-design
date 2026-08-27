@@ -8,8 +8,6 @@ import ComponentPage from './playground/component-page';
 import HomePage from './playground/home-page';
 import PlaygroundLayout from './playground/playground-layout';
 import QuickstartPage from './playground/quickstart-page';
-import RecipePage from './playground/recipe-page';
-import RecipesPage from './playground/recipes-page';
 import { PlaygroundSearchProvider } from './playground/search-context';
 
 const App = () => {
@@ -22,8 +20,6 @@ const App = () => {
               <Route index element={<HomePage />} />
               <Route path="catalog" element={<CatalogPage />} />
               <Route path="quickstart" element={<QuickstartPage />} />
-              <Route path="recipes" element={<RecipesPage />} />
-              <Route path="recipes/:recipeId" element={<RecipePage />} />
               {componentDemos.map((item) => (
                 <Route key={item.path} path={item.path.replace(/^\//, '')} element={<ComponentPage />} />
               ))}

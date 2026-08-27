@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.7.11] - 2026-08-27
+
+### Removed
+
+- Playground「活动配方」整页路由与导航（`#/recipes`）；活动组合改走 [examples/next-app](./examples/next-app) 与 [docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)
+
+### Added
+
+- Confetti / Fireworks：`interactive`（默认跟随 `auto`；`auto={false}` 不拦截指针）
+- Next 示例 README「3-step fork」；活动页入口改指向 Next 示例与 10 分钟指南
+
+### Changed
+
+- Confetti/Fireworks 在 `auto={false}` 时默认不拦截指针；交互 smoke 改在组件页（FlipCard / NineGrid / Turntable）
+- campaign-patterns 补充 celebration vs controls 约定
+- @cos-design/confetti: 3.5.5 → 3.5.6
+- @cos-design/fireworks: 3.5.5 → 3.5.6
+- cos-design: 聚合包更新至 3.7.11
+
 ## [3.7.10] - 2026-08-27
 
 ### Added

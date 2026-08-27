@@ -112,8 +112,18 @@ export function Hero() {
 }
 ```
 
+## Campaign composition
+
+When the user wants an **event / campaign page**, prefer the runnable Next sample and docs — not a random component mashup:
+
+- [docs/campaign-10-minutes.md](../../../docs/campaign-10-minutes.md)
+- [examples/next-app](../../../examples/next-app) — fill hero → FlipCard → NineGrid → Confetti
+- [docs/campaign-patterns.md](../../../docs/campaign-patterns.md) — busy / retry / pointer rules
+
+Do **not** invent new Photo / Text components for a campaign unless the user names a concrete metaphor.
+
 ## Component lookup
 
 For the full catalog with install/import/props per component, read [docs/ai.md](../../../docs/ai.md) or fetch https://jiaxiantao.github.io/cos-design/llms.txt
 
-Campaign recipes (scratch → fireworks, fill hero, check-in draw, …) with **copyable snippets**: Playground `#/recipes`
+Playground: https://jiaxiantao.github.io/cos-design/

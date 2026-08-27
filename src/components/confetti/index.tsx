@@ -15,9 +15,13 @@ export interface ConfettiProps {
   fill?: boolean;
   /** 挂载后自动播放，默认 true */
   auto?: boolean;
+  /**
+   * 是否响应点击再次喷射；默认跟随 auto（auto=false 时不拦截指针，避免挡住抽奖按钮）
+   */
+  interactive?: boolean;
   /** 每次喷射粒子数，默认 120 */
   particleCount?: number;
-  /** 画布操作提示 */
+  /** 画布操作提示；非 interactive 时不展示 */
   hint?: string;
   /** 粒子全部消散后回调 */
   onComplete?: () => void;
@@ -76,12 +80,14 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
       height: heightProp,
       fill = false,
       auto = true,
+      interactive: interactiveProp,
       particleCount = 120,
       hint = '点击画布再次喷射',
       onComplete
     },
     ref
   ) => {
+    const interactive = interactiveProp ?? auto;
     const hostRef = useRef<HTMLDivElement>(null);
     const measured = useElementSize(hostRef, { enabled: fill });
     const { width, height } = resolveCanvasBoxSize({
@@ -186,11 +192,11 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiProps>(
       >
         <canvas
           ref={canvasRef}
-          className={styles.canvas}
-          style={{ width, height, touchAction: 'none' }}
-          onPointerDown={burst}
+          className={`${styles.canvas} ${interactive ? '' : styles.canvasPassthrough}`}
+          style={{ width, height, touchAction: interactive ? 'none' : 'auto' }}
+          onPointerDown={interactive ? burst : undefined}
         />
-        <p className={styles.hint}>{hint}</p>
+        {interactive && hint ? <p className={styles.hint}>{hint}</p> : null}
       </div>
     );
   }

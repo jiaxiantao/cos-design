@@ -14,8 +14,7 @@ const zhCN = {
     sidebarTitle: '分类导航',
     navHome: '首页介绍',
     navCatalog: '组件目录',
-    navQuickstart: '快速开始',
-    navRecipes: '活动配方'
+    navQuickstart: '快速开始'
   },
   home: {
     eyebrow: 'React 视觉特效组件库',
@@ -67,86 +66,6 @@ const zhCN = {
     homeText: '返回首页了解 cos-design 能做什么',
     quickstartLabel: '新手上路',
     quickstartText: '查看快速开始 — 安装、用法与注意事项'
-  },
-  recipes: {
-    eyebrow: 'Campaign Recipes',
-    title: '活动页配方',
-    subtitle: '把营销尖刀组件串成可落地的活动流程，直接复制组合思路。',
-    back: '← 返回配方列表',
-    notFound: '未找到该配方',
-    howTitle: '组合思路',
-    snippetTitle: '可复制片段',
-    snippetCopy: '复制代码',
-    snippetCopied: '已复制',
-    hintFireworks: '揭开后自动燃放；也可点击补放',
-    hintConfetti: '抽奖结束后喷射；也可点击再喷',
-    items: {
-      scratchCelebrate: {
-        title: '刮开即庆祝',
-        description: '刮刮乐揭开后触发烟花，适合开屏领奖与到店礼。',
-        how: '监听 ScratchCard.onReveal，调用 FireworksHandle.launch 在多个位置燃放。',
-        prize: '🎉 一等奖！',
-        cover: '刮开有惊喜'
-      },
-      countdownRain: {
-        title: '倒计时红包雨',
-        description: '活动倒计时结束后开启红包雨，适合整点开抢。',
-        how: 'Countdown.onEnd 后调用 RedPacketRainHandle.start；可用 width/height/duration 控制场次。',
-        waiting: '倒计时结束后开始红包雨…',
-        ended: '红包雨已开启，点击红包抢夺',
-        hint: '点击红包抢夺'
-      },
-      turntableConfetti: {
-        title: '转盘抽奖庆祝',
-        description: '转盘停轮后喷射彩纸，适合直播间与会场抽奖。',
-        how: 'Turntable.onSpinEnd 触发 ConfettiHandle.burst；也可用 targetIndex / spin() 对接服务端开奖。',
-        button: '开始抽奖'
-      },
-      chestOpen: {
-        title: '充电开宝箱',
-        description: '充电进度同步宝箱，满电开启后喷射彩纸，适合签到 / 任务完成。',
-        how: '用 Charge.onChange 驱动 ProgressChest.progress；ProgressChest.onOpen 或 Charge.onComplete 触发 Confetti.burst。',
-        charging: '充电中…',
-        opened: '宝箱已开启！'
-      },
-      slotJackpot: {
-        title: '老虎机大奖',
-        description: '三列同号时喷射彩纸，适合小游戏与会场互动。',
-        how: 'SlotMachine.onSpinEnd 判断三列是否相同，相同则 ConfettiHandle.burst；也可用 targetResults 指定开奖结果。',
-        button: '拉杆'
-      },
-      fillHero: {
-        title: '全屏氛围 Hero',
-        description: '用 fill 铺满视口的天气背景 + 霓虹标题，适合品牌开屏。',
-        how: '父级设 height: 100vh，WeatherBackground 传 fill；前景叠 NeonText。Next.js 请 dynamic + ssr:false。'
-      },
-      nineGridDraw: {
-        title: '九宫格开奖',
-        description: '九宫格抽奖命中后喷射彩纸，可用 targetIndex 对接服务端开奖。',
-        how: 'NineGrid.onDrawEnd 触发 Confetti.burst；传 targetIndex 或 draw(index) 指定结果。',
-        button: '抽奖'
-      },
-      flipCheckin: {
-        title: '签到翻牌',
-        description: '翻开签到卡揭示奖励并庆祝，适合每日签到。',
-        how: 'FlipCard.onReveal 触发 Confetti.burst；可用 ref.flip()/reset() 做程序化控制。',
-        frontTitle: 'Day 3',
-        frontSubtitle: '点击翻开今日奖励',
-        backTitle: '签到成功',
-        backSubtitle: '积分 +20'
-      },
-      checkinDraw: {
-        title: '签到后抽奖',
-        description: '先翻牌签到，再解锁九宫格抽奖并庆祝，适合连续活动链路。',
-        how: 'FlipCard.onReveal 解锁 NineGrid（disabled=false）并 Confetti.burst；NineGrid.onDrawEnd 再庆祝一次。',
-        frontTitle: 'Day 3',
-        frontSubtitle: '点击签到解锁抽奖',
-        backTitle: '签到成功',
-        backSubtitle: '抽奖已解锁',
-        lockButton: '请先签到',
-        drawButton: '抽奖'
-      }
-    }
   },
   component: {
     backToCatalog: '← 返回目录',

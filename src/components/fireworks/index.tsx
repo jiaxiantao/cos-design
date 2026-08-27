@@ -16,7 +16,11 @@ export interface FireworksProps {
   fill?: boolean;
   /** 是否自动燃放，默认 true */
   auto?: boolean;
-  /** 画布操作提示 */
+  /**
+   * 是否响应点击燃放；默认跟随 auto（auto=false 时不拦截指针）
+   */
+  interactive?: boolean;
+  /** 画布操作提示；非 interactive 时不展示 */
   hint?: string;
   /** 画面空闲（无火箭/粒子）时回调 */
   onComplete?: () => void;
@@ -77,9 +81,11 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
     height: heightProp,
     fill = false,
     auto = true,
+    interactive: interactiveProp,
     hint = '点击画布燃放烟花',
     onComplete
   } = props;
+  const interactive = interactiveProp ?? auto;
   const hostRef = useRef<HTMLDivElement>(null);
   const measured = useElementSize(hostRef, { enabled: fill });
   const { width, height } = resolveCanvasBoxSize({
@@ -231,11 +237,11 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
     >
       <canvas
         ref={canvasRef}
-        className={styles.canvas}
-        style={{ width, height, touchAction: 'none' }}
-        onPointerDown={handlePointer}
+        className={`${styles.canvas} ${interactive ? '' : styles.canvasPassthrough}`}
+        style={{ width, height, touchAction: interactive ? 'none' : 'auto' }}
+        onPointerDown={interactive ? handlePointer : undefined}
       />
-      <p className={styles.hint}>{hint}</p>
+      {interactive && hint ? <p className={styles.hint}>{hint}</p> : null}
     </div>
   );
 });

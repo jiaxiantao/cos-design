@@ -91,10 +91,10 @@ Skip this library for admin tables, forms, date pickers, and navigation shells â
 
 ## Next steps
 
-| Resource                  | Link                                              |
-| ------------------------- | ------------------------------------------------- |
-| Runnable sample           | [examples/next-app](../examples/next-app)         |
-| Busy / retry / visibility | [campaign-patterns.md](./campaign-patterns.md)    |
-| Recipes + copy snippets   | https://jiaxiantao.github.io/cos-design/#/recipes |
-| AI index                  | https://jiaxiantao.github.io/cos-design/llms.txt  |
-| Context7                  | `/jiaxiantao/cos-design`                          |
+| Resource                  | Link                                             |
+| ------------------------- | ------------------------------------------------ |
+| Runnable sample           | [examples/next-app](../examples/next-app)        |
+| Busy / retry / visibility | [campaign-patterns.md](./campaign-patterns.md)   |
+| AI index                  | https://jiaxiantao.github.io/cos-design/llms.txt |
+| Context7                  | `/jiaxiantao/cos-design`                         |
+| Playground                | https://jiaxiantao.github.io/cos-design/         |

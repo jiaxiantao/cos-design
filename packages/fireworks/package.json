@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/fireworks",
-  "version": "3.5.5",
+  "version": "3.5.6",
   "description": "Fireworks component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",

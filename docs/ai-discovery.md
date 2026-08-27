@@ -20,6 +20,7 @@ Public page: https://context7.com/jiaxiantao/cos-design
 | Hosted llms.txt                        | https://jiaxiantao.github.io/cos-design/llms.txt                 |
 | Index freshness                        | Healthy after 2026-08-26 refresh (required: `fill` + `next-app`) |
 | Manual refresh cooldown                | About **10 days** between refreshes (`too-early`)                |
+| Optional markers (NineGrid / FlipCard) | Pending next refresh after cooldown                              |
 
 ### Keep fresh
 
