@@ -5,6 +5,7 @@ Runnable campaign page using published npm packages:
 - full-viewport `WeatherBackground` with `fill` + `NeonText`
 - `ScratchCard` → `Fireworks` celebration
 - **Server lottery**: `GET /api/draw` → `Turntable.spin(targetIndex)` + Confetti
+- **Check-in chain**: `FlipCard` unlock → `NineGrid` draw (`/api/draw?cells=9`) + Confetti
 
 ## Run
 

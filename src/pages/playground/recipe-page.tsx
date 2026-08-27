@@ -191,6 +191,35 @@ const FlipCheckinRecipe = () => {
   );
 };
 
+const CheckinDrawRecipe = () => {
+  const { t } = useTranslation();
+  const confettiRef = useRef<ConfettiHandle>(null);
+  const [checkedIn, setCheckedIn] = useState(false);
+
+  return (
+    <div className={styles.stage}>
+      <FlipCard
+        frontTitle={t('recipes.items.checkinDraw.frontTitle')}
+        frontSubtitle={t('recipes.items.checkinDraw.frontSubtitle')}
+        backTitle={t('recipes.items.checkinDraw.backTitle')}
+        backSubtitle={t('recipes.items.checkinDraw.backSubtitle')}
+        onReveal={() => {
+          setCheckedIn(true);
+          confettiRef.current?.burst();
+        }}
+      />
+      <NineGrid
+        disabled={!checkedIn}
+        buttonText={checkedIn ? t('recipes.items.checkinDraw.drawButton') : t('recipes.items.checkinDraw.lockButton')}
+        onDrawEnd={() => {
+          confettiRef.current?.burst();
+        }}
+      />
+      <Confetti ref={confettiRef} width={480} height={280} auto={false} hint={t('recipes.hintConfetti')} />
+    </div>
+  );
+};
+
 const recipeViews: Record<string, () => ReactElement> = {
   'scratch-celebrate': ScratchCelebrateRecipe,
   'countdown-rain': CountdownRainRecipe,
@@ -199,7 +228,8 @@ const recipeViews: Record<string, () => ReactElement> = {
   'slot-jackpot': SlotJackpotRecipe,
   'fill-hero': FillHeroRecipe,
   'nine-grid-draw': NineGridDrawRecipe,
-  'flip-checkin': FlipCheckinRecipe
+  'flip-checkin': FlipCheckinRecipe,
+  'checkin-draw': CheckinDrawRecipe
 };
 
 const RecipePage = () => {

@@ -274,6 +274,21 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   组件高度: 'Component height',
   组件宽度: 'Component width',
   '最少位数（左侧补零），默认 4': 'Minimum digits (zero-padded), default 4',
+  '9 个奖品格子（不足补齐、超出截断）': 'Exactly 9 prize cells (padded if short, truncated if long)',
+  '指定下一次抽中的索引 0–8（服务端开奖）；不传则随机': 'Next winning index 0–8 (server draw); omit for random',
+  抽奖结束回调: 'Draw-finished callback',
+  禁用交互: 'Disable interaction',
+  奖品文案: 'Prize label',
+  '可选图标（emoji 等），显示在文案上方': 'Optional icon (e.g. emoji) shown above the label',
+  正面标题: 'Front-face title',
+  正面副标题: 'Front-face subtitle',
+  背面奖励标题: 'Back-face reward title',
+  背面奖励说明: 'Back-face reward detail',
+  '受控翻面状态；不传则非受控': 'Controlled flipped state; omit for uncontrolled',
+  '非受控时的初始翻面状态，默认 false': 'Initial flipped state when uncontrolled, default false',
+  翻到背面时回调: 'Callback when flipped to the back',
+  翻面状态变化回调: 'Flipped-state change callback',
+  禁用点击: 'Disable clicking',
   'live 模式解析出真实天气后回调': 'Callback after live weather is resolved'
 };
 

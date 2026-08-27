@@ -5,21 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.7.8] - 2026-08-26
+## [Unreleased]
+
+## [3.7.9] - 2026-08-27
+
+### Added
+
+- Playground 配方「签到后抽奖」（FlipCard → NineGrid → Confetti）
+- Next 示例加深：`CampaignCheckin`（FlipCard 解锁 NineGrid + `/api/draw?cells=9`）
+- Playwright smoke：NineGrid / FlipCard 组件页与 checkin-draw 配方
 
 ### Changed
 
-- @cos-design/bubble-field: 3.7.1 → 3.7.2
-- @cos-design/flip-card: 3.7.7 → 3.7.8
-- @cos-design/matrix-rain: 3.5.4 → 3.5.5
-- @cos-design/nine-grid: 3.7.7 → 3.7.8
-- @cos-design/particle-network: 3.5.4 → 3.5.5
-- @cos-design/ripple-water: 3.5.5 → 3.5.6
-- @cos-design/smoke-fog: 3.5.5 → 3.5.6
-- @cos-design/weather-background: 3.5.5 → 3.5.6
-- cos-design: 聚合包更新至 3.7.8
+- NineGrid / FlipCard Playground 属性说明改为中文源 + EN 映射；`extract-props` 支持 forwardRef 换行解构默认值
+- `pnpm verify:context7`：区分 required（`fill` / `next-app`）与 optional markers
+- [docs/ai-discovery.md](./docs/ai-discovery.md) 同步健康状态与 refresh 冷却说明（勿把 API key 写入仓库）
+- @cos-design/flip-card: 3.7.8 → 3.7.9
+- @cos-design/nine-grid: 3.7.8 → 3.7.9
+- cos-design: 聚合包更新至 3.7.9
 
-## [Unreleased]
+## [3.7.8] - 2026-08-26
 
 ### Added
 
@@ -33,6 +38,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - MatrixRain / ParticleNetwork / SmokeFog / BubbleField / RippleWater / WeatherBackground 接入 reduced-motion 静态降级
 - CI 在 Pages 构建后跑 smoke；ai-discovery 补充 Context7 key 配置步骤
+- @cos-design/bubble-field: 3.7.1 → 3.7.2
+- @cos-design/flip-card: 3.7.7 → 3.7.8
+- @cos-design/matrix-rain: 3.5.4 → 3.5.5
+- @cos-design/nine-grid: 3.7.7 → 3.7.8
+- @cos-design/particle-network: 3.5.4 → 3.5.5
+- @cos-design/ripple-water: 3.5.5 → 3.5.6
+- @cos-design/smoke-fog: 3.5.5 → 3.5.6
+- @cos-design/weather-background: 3.5.5 → 3.5.6
+- cos-design: 聚合包更新至 3.7.8
 
 ## [3.7.7] - 2026-08-26
 

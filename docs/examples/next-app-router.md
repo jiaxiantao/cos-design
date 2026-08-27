@@ -98,7 +98,11 @@ pnpm install
 pnpm dev
 ```
 
-See [examples/next-app/README.md](../../examples/next-app/README.md). It includes the fill hero and scratch → fireworks patterns above.
+See [examples/next-app/README.md](../../examples/next-app/README.md). It includes:
+
+- fill hero + scratch → fireworks
+- server Turntable draw via `/api/draw`
+- FlipCard check-in → NineGrid unlock (`/api/draw?cells=9`)
 
 ## Live demos
 

@@ -1629,11 +1629,10 @@ import { Confetti } from 'cos-design';
 
 - `width`: number (optional)
 - `height`: number (optional)
-- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
-- `auto`: boolean (optional) — 挂载后自动播放，默认 true
-- `particleCount`: number (optional) — 每次喷射粒子数，默认 120
-- `hint`: string (optional) — 画布操作提示
-- `onComplete`: () => void (optional) — 粒子全部消散后回调
+- `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
+- `auto`: boolean (optional, default `true`) — 挂载后自动播放，默认 true
+- `particleCount`: number (optional, default `120`) — 每次喷射粒子数，默认 120
+- `hint`: string (optional) — 粒子全部消散后回调
 
 ### Charge
 
@@ -1655,13 +1654,13 @@ import { Charge } from 'cos-design';
 
 **Props**
 
-- `initQuantity`: number (optional, default `0`) — 初始电量（非受控），默认 0
+- `initQuantity`: number (optional) — 初始电量（非受控），默认 0
 - `value`: number (optional) — 受控电量 0–100
 - `onChange`: (value: number) => void (optional) — 电量变化回调
 - `onComplete`: () => void (optional) — 电量首次到达 100% 时回调
-- `autoCharge`: boolean (optional, default `true`) — 是否自动充电，默认 true
-- `interval`: number (optional, default `500`) — 充电间隔（毫秒），默认 500
-- `step`: number (optional, default `0.01`) — 每次增量，默认 0.01
+- `autoCharge`: boolean (optional) — 是否自动充电，默认 true
+- `interval`: number (optional) — 充电间隔（毫秒），默认 500
+- `step`: number (optional) — 每次增量，默认 0.01
 
 ### ScratchCard
 
@@ -1683,13 +1682,10 @@ import { ScratchCard } from 'cos-design';
 
 **Props**
 
-- `coverColor`: string (optional) — 涂层颜色
-- `prize`: string (optional) — 奖品文字
-- `coverText`: string (optional) — 涂层上的提示文案
-- `revealThreshold`: number (optional) — 刮开面积比例阈值（0~1），默认 0.45
+- `coverColor`: string (optional, default `0.45`) — 刮开面积比例阈值（0~1），默认 0.45
 - `onReveal`: () => void (optional) — 刮开完成回调
-- `width`: number (optional)
-- `height`: number (optional)
+- `width`: number (optional, default `300`)
+- `height`: number (optional, default `180`)
 
 ### SlotMachine
 
@@ -1711,14 +1707,12 @@ import { SlotMachine } from 'cos-design';
 
 **Props**
 
-- `symbols`: string[] (optional) — 符号列表
-- `spinDuration`: number (optional) — 单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮
+- `symbols`: string[] (optional, default `DEFAULT_SYMBOLS`) — 符号列表
+- `spinDuration`: number (optional, default `3000`) — 单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮
 - `targetResults`: string[] (optional) — 指定下一次停轮结果（长度 3）；不传则随机
 - `onSpinEnd`: (results: string[]) => void (optional) — 旋转结束回调
 - `startText`: string (optional) — 开始按钮文案
 - `buttonText`: string (optional) — 开始按钮文案别名（与 Turntable.buttonText 对齐）
-- `spinningText`: string (optional) — 旋转中的按钮文案
-- `jackpotText`: string (optional) — 中奖提示
 
 ### DiceRoll
 
@@ -1766,8 +1760,8 @@ import { NineGrid } from 'cos-design';
 
 **Props**
 
-- `NineGridItem`: string (required)
-- `icon`: string (optional) — Optional emoji / short mark shown above the label
+- `NineGridItem`: string (required) — 奖品文案
+- `icon`: string (optional) — 可选图标（emoji 等），显示在文案上方
 
 ### FlipCard
 
@@ -1793,14 +1787,11 @@ import { FlipCard } from 'cos-design';
 
 **Props**
 
-- `frontTitle`: string (optional) — Front face title (e.g. Day 3)
-- `frontSubtitle`: string (optional) — Front face subtitle
-- `backTitle`: string (optional) — Back face reward title
-- `backSubtitle`: string (optional) — Back face detail
-- `flipped`: boolean (optional) — Controlled flip; omit for uncontrolled
-- `defaultFlipped`: boolean (optional) — Initial flip when uncontrolled
-- `onReveal`: () => void (optional) — Called after flip toggles to true (reveal)
-- `onFlipChange`: (flipped: boolean) => void (optional) — Called on any flip change
+- `frontTitle`: string (optional) — 受控翻面状态；不传则非受控
+- `defaultFlipped`: boolean (optional, default `false`) — 非受控时的初始翻面状态，默认 false
+- `onReveal`: () => void (optional) — 翻到背面时回调
+- `onFlipChange`: (flipped: boolean) => void (optional) — 翻面状态变化回调
+- `disabled`: boolean (optional, default `false`) — 禁用点击
 
 ### RedPacketRain
 
@@ -1824,12 +1815,11 @@ import { RedPacketRain } from 'cos-design';
 
 - `width`: number (optional) — 画布宽度，默认 400
 - `height`: number (optional) — 画布高度，默认 500
-- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
-- `duration`: number (optional) — 持续时间（毫秒），默认 10000
-- `auto`: boolean (optional) — 挂载后自动开始，默认 true
+- `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
+- `duration`: number (optional, default `10000`) — 持续时间（毫秒），默认 10000
+- `auto`: boolean (optional, default `true`) — 挂载后自动开始，默认 true
 - `onGrab`: (amount: number) => void (optional) — 抢到红包回调
 - `onEnd`: () => void (optional) — 红包雨结束回调
-- `grabbedLabel`: string (optional) — 已抢金额标签
 
 ### ProgressChest
 
@@ -2439,9 +2429,10 @@ import { Fireworks } from 'cos-design';
 
 - `width`: number (optional)
 - `height`: number (optional)
-- `fill`: boolean (optional, default `false`) — 为 true 时铺满父容器（父级需有明确高度）
-- `auto`: boolean (optional, default `true`) — 是否自动燃放，默认 true
-- `hint`: string (optional) — 画面空闲（无火箭/粒子）时回调
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
+- `auto`: boolean (optional) — 是否自动燃放，默认 true
+- `hint`: string (optional) — 画布操作提示
+- `onComplete`: () => void (optional) — 画面空闲（无火箭/粒子）时回调
 
 ### ReturnCity
 

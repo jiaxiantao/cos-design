@@ -134,6 +134,17 @@ const enUS: typeof zhCN = {
         frontSubtitle: 'Tap to reveal today’s reward',
         backTitle: 'Checked in',
         backSubtitle: '+20 points'
+      },
+      checkinDraw: {
+        title: 'Check-in then draw',
+        description: 'Flip to check in, unlock a nine-grid draw, and celebrate — a short campaign chain.',
+        how: 'FlipCard.onReveal unlocks NineGrid (disabled=false) and Confetti.burst; NineGrid.onDrawEnd celebrates again.',
+        frontTitle: 'Day 3',
+        frontSubtitle: 'Check in to unlock the draw',
+        backTitle: 'Checked in',
+        backSubtitle: 'Draw unlocked',
+        lockButton: 'Check in first',
+        drawButton: 'Draw'
       }
     }
   },

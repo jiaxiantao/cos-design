@@ -131,6 +131,17 @@ const zhCN = {
         frontSubtitle: '点击翻开今日奖励',
         backTitle: '签到成功',
         backSubtitle: '积分 +20'
+      },
+      checkinDraw: {
+        title: '签到后抽奖',
+        description: '先翻牌签到，再解锁九宫格抽奖并庆祝，适合连续活动链路。',
+        how: 'FlipCard.onReveal 解锁 NineGrid（disabled=false）并 Confetti.burst；NineGrid.onDrawEnd 再庆祝一次。',
+        frontTitle: 'Day 3',
+        frontSubtitle: '点击签到解锁抽奖',
+        backTitle: '签到成功',
+        backSubtitle: '抽奖已解锁',
+        lockButton: '请先签到',
+        drawButton: '抽奖'
       }
     }
   },

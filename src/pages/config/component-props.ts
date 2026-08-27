@@ -261,7 +261,7 @@ export const componentProps: ComponentPropsMap = {
       name: 'initQuantity',
       type: 'number',
       required: false,
-      default: '0',
+      default: '',
       description: '初始电量（非受控），默认 0'
     },
     {
@@ -289,21 +289,21 @@ export const componentProps: ComponentPropsMap = {
       name: 'autoCharge',
       type: 'boolean',
       required: false,
-      default: 'true',
+      default: '',
       description: '是否自动充电，默认 true'
     },
     {
       name: 'interval',
       type: 'number',
       required: false,
-      default: '500',
+      default: '',
       description: '充电间隔（毫秒），默认 500'
     },
     {
       name: 'step',
       type: 'number',
       required: false,
-      default: '0.01',
+      default: '',
       description: '每次增量，默认 0.01'
     }
   ],
@@ -393,28 +393,28 @@ export const componentProps: ComponentPropsMap = {
       name: 'fill',
       type: 'boolean',
       required: false,
-      default: '',
+      default: 'false',
       description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'auto',
       type: 'boolean',
       required: false,
-      default: '',
+      default: 'true',
       description: '挂载后自动播放，默认 true'
     },
     {
       name: 'particleCount',
       type: 'number',
       required: false,
-      default: '',
+      default: '120',
       description: '每次喷射粒子数，默认 120'
     },
     {
       name: 'hint',
       type: 'string',
       required: false,
-      default: '',
+      default: "'点击画布再次喷射'",
       description: '画布操作提示'
     },
     {
@@ -798,21 +798,21 @@ export const componentProps: ComponentPropsMap = {
       name: 'fill',
       type: 'boolean',
       required: false,
-      default: 'false',
+      default: '',
       description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'auto',
       type: 'boolean',
       required: false,
-      default: 'true',
+      default: '',
       description: '是否自动燃放，默认 true'
     },
     {
       name: 'hint',
       type: 'string',
       required: false,
-      default: "'点击画布燃放烟花'",
+      default: '',
       description: '画布操作提示'
     },
     {
@@ -828,64 +828,64 @@ export const componentProps: ComponentPropsMap = {
       name: 'frontTitle',
       type: 'string',
       required: false,
-      default: '',
-      description: 'Front face title (e.g. Day 3)'
+      default: "'签到翻牌'",
+      description: '正面标题'
     },
     {
       name: 'frontSubtitle',
       type: 'string',
       required: false,
-      default: '',
-      description: 'Front face subtitle'
+      default: "'点击翻开今日奖励'",
+      description: '正面副标题'
     },
     {
       name: 'backTitle',
       type: 'string',
       required: false,
-      default: '',
-      description: 'Back face reward title'
+      default: "'恭喜获得'",
+      description: '背面奖励标题'
     },
     {
       name: 'backSubtitle',
       type: 'string',
       required: false,
-      default: '',
-      description: 'Back face detail'
+      default: "'积分 +20'",
+      description: '背面奖励说明'
     },
     {
       name: 'flipped',
       type: 'boolean',
       required: false,
       default: '',
-      description: 'Controlled flip; omit for uncontrolled'
+      description: '受控翻面状态；不传则非受控'
     },
     {
       name: 'defaultFlipped',
       type: 'boolean',
       required: false,
-      default: '',
-      description: 'Initial flip when uncontrolled'
+      default: 'false',
+      description: '非受控时的初始翻面状态，默认 false'
     },
     {
       name: 'onReveal',
       type: '() => void',
       required: false,
       default: '',
-      description: 'Called after flip toggles to true (reveal)'
+      description: '翻到背面时回调'
     },
     {
       name: 'onFlipChange',
       type: '(flipped: boolean) => void',
       required: false,
       default: '',
-      description: 'Called on any flip change'
+      description: '翻面状态变化回调'
     },
     {
       name: 'disabled',
       type: 'boolean',
       required: false,
-      default: '',
-      description: 'Disable clicking the card'
+      default: 'false',
+      description: '禁用点击'
     }
   ],
   FlipCounter: [
@@ -1545,36 +1545,36 @@ export const componentProps: ComponentPropsMap = {
       name: 'items',
       type: 'NineGridItem[]',
       required: false,
-      default: '',
-      description: 'Exactly 9 prize cells (or will be padded/truncated to 9)'
+      default: 'DEFAULT_ITEMS',
+      description: '9 个奖品格子（不足补齐、超出截断）'
     },
     {
       name: 'targetIndex',
       type: 'number',
       required: false,
       default: '',
-      description: 'Next winning index 0–8 (server draw). Omit for random.'
+      description: '指定下一次抽中的索引 0–8（服务端开奖）；不传则随机'
     },
     {
       name: 'buttonText',
       type: 'string',
       required: false,
-      default: '',
-      description: 'Draw button label'
+      default: "'开始抽奖'",
+      description: '抽奖按钮文案'
     },
     {
       name: 'onDrawEnd',
       type: '(item: NineGridItem, index: number) => void',
       required: false,
       default: '',
-      description: 'Called when the highlight settles on a cell'
+      description: '抽奖结束回调'
     },
     {
       name: 'disabled',
       type: 'boolean',
       required: false,
-      default: '',
-      description: 'Disable interaction while drawing'
+      default: 'false',
+      description: '禁用交互'
     }
   ],
   OrbitalChart: [
@@ -3256,21 +3256,21 @@ export const componentProps: ComponentPropsMap = {
       name: 'fill',
       type: 'boolean',
       required: false,
-      default: '',
+      default: 'false',
       description: '为 true 时铺满父容器（父级需有明确高度）'
     },
     {
       name: 'duration',
       type: 'number',
       required: false,
-      default: '',
+      default: '10000',
       description: '持续时间（毫秒），默认 10000'
     },
     {
       name: 'auto',
       type: 'boolean',
       required: false,
-      default: '',
+      default: 'true',
       description: '挂载后自动开始，默认 true'
     },
     {
@@ -3291,21 +3291,21 @@ export const componentProps: ComponentPropsMap = {
       name: 'grabbedLabel',
       type: 'string',
       required: false,
-      default: '',
+      default: "'已抢:'",
       description: '已抢金额标签'
     },
     {
       name: 'endedText',
       type: 'string',
       required: false,
-      default: '',
+      default: "'红包雨结束'",
       description: '红包雨结束提示'
     },
     {
       name: 'hint',
       type: 'string',
       required: false,
-      default: '',
+      default: "'点击红包抢夺'",
       description: '操作提示'
     }
   ],
@@ -3620,28 +3620,28 @@ export const componentProps: ComponentPropsMap = {
       name: 'coverColor',
       type: 'string',
       required: false,
-      default: '',
+      default: "'#94a3b8'",
       description: '涂层颜色'
     },
     {
       name: 'prize',
       type: 'string',
       required: false,
-      default: '',
+      default: "'🎉 恭喜中奖！'",
       description: '奖品文字'
     },
     {
       name: 'coverText',
       type: 'string',
       required: false,
-      default: '',
+      default: "'刮开涂层'",
       description: '涂层上的提示文案'
     },
     {
       name: 'revealThreshold',
       type: 'number',
       required: false,
-      default: '',
+      default: '0.45',
       description: '刮开面积比例阈值（0~1），默认 0.45'
     },
     {
@@ -3655,14 +3655,14 @@ export const componentProps: ComponentPropsMap = {
       name: 'width',
       type: 'number',
       required: false,
-      default: '',
+      default: '300',
       description: ''
     },
     {
       name: 'height',
       type: 'number',
       required: false,
-      default: '',
+      default: '180',
       description: ''
     }
   ],
@@ -3715,14 +3715,14 @@ export const componentProps: ComponentPropsMap = {
       name: 'symbols',
       type: 'string[]',
       required: false,
-      default: '',
+      default: 'DEFAULT_SYMBOLS',
       description: '符号列表'
     },
     {
       name: 'spinDuration',
       type: 'number',
       required: false,
-      default: '',
+      default: '3000',
       description: '单列旋转时长（毫秒），默认 3000；列之间仍有错峰停轮'
     },
     {
@@ -3757,21 +3757,21 @@ export const componentProps: ComponentPropsMap = {
       name: 'spinningText',
       type: 'string',
       required: false,
-      default: '',
+      default: "'旋转中...'",
       description: '旋转中的按钮文案'
     },
     {
       name: 'jackpotText',
       type: 'string',
       required: false,
-      default: '',
+      default: "'🎰 大奖！'",
       description: '中奖提示'
     },
     {
       name: 'resultPrefix',
       type: 'string',
       required: false,
-      default: '',
+      default: "'结果:'",
       description: '普通结果前缀'
     }
   ],
@@ -4287,28 +4287,28 @@ export const componentProps: ComponentPropsMap = {
       name: 'prizes',
       type: 'TurntablePrize[]',
       required: false,
-      default: '',
+      default: 'DEFAULT_PRIZES',
       description: '奖品列表'
     },
     {
       name: 'size',
       type: 'number',
       required: false,
-      default: '',
+      default: '360',
       description: '转盘直径，默认 360'
     },
     {
       name: 'spinDuration',
       type: 'number',
       required: false,
-      default: '',
+      default: '4000',
       description: '旋转动画时长（毫秒），默认 4000'
     },
     {
       name: 'spinRounds',
       type: 'number',
       required: false,
-      default: '',
+      default: '5',
       description: '旋转圈数，默认 5'
     },
     {
@@ -4322,21 +4322,21 @@ export const componentProps: ComponentPropsMap = {
       name: 'buttonText',
       type: 'string',
       required: false,
-      default: '',
+      default: "'开始抽奖'",
       description: '抽奖按钮文案'
     },
     {
       name: 'spinningText',
       type: 'string',
       required: false,
-      default: '',
+      default: "'抽奖中...'",
       description: '抽奖进行中的按钮文案'
     },
     {
       name: 'resultPrefix',
       type: 'string',
       required: false,
-      default: '',
+      default: "'恭喜获得：'",
       description: '中奖结果前缀'
     },
     {
@@ -4621,14 +4621,14 @@ export const componentRelatedTypes: ComponentTypesMap = {
           type: 'string',
           required: true,
           default: '',
-          description: ''
+          description: '奖品文案'
         },
         {
           name: 'icon',
           type: 'string',
           required: false,
           default: '',
-          description: 'Optional emoji / short mark shown above the label'
+          description: '可选图标（emoji 等），显示在文案上方'
         }
       ]
     }

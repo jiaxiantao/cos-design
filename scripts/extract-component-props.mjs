@@ -99,7 +99,9 @@ const applyDefaults = (props, destructureBody) => {
 
 const applyDefaultsFromIndex = (props, componentName, indexContent) => {
   const destructureMatch =
-    indexContent.match(new RegExp(`const ${componentName}[\\s\\S]*?=\\s*\\(\\{([\\s\\S]*?)\\}\\s*[,)]`)) ||
+    // FC: const Name = ({ ... }) =>
+    // forwardRef: const Name = forwardRef(..., ({ ... }, ref) =>
+    indexContent.match(new RegExp(`const ${componentName}[\\s\\S]*?=\\s*[\\s\\S]*?\\(\\s*\\{([\\s\\S]*?)\\}\\s*[,)]`)) ||
     indexContent.match(new RegExp(`const \\{([\\s\\S]*?)\\}\\s*=\\s*props`));
   if (destructureMatch?.[1]) applyDefaults(props, destructureMatch[1]);
 };

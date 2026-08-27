@@ -72,5 +72,13 @@ export const recipes: RecipeItem[] = [
     descriptionKey: 'recipes.items.flipCheckin.description',
     tags: ['FlipCard', 'Confetti'],
     components: ['FlipCard', 'Confetti']
+  },
+  {
+    id: 'checkin-draw',
+    path: '/recipes/checkin-draw',
+    titleKey: 'recipes.items.checkinDraw.title',
+    descriptionKey: 'recipes.items.checkinDraw.description',
+    tags: ['FlipCard', 'NineGrid', 'Confetti'],
+    components: ['FlipCard', 'NineGrid', 'Confetti']
   }
 ];

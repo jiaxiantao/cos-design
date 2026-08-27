@@ -1,18 +1,24 @@
 #!/usr/bin/env node
 /**
- * 校验 Context7 是否已索引 cos-design，以及文档是否足够新（含 fill / Next 示例）。
+ * 校验 Context7 是否已索引 cos-design，以及文档是否足够新。
  *
  * 用法：
  *   node scripts/verify-context7.mjs
  *   pnpm verify:context7
+ *
+ * Required markers（至少命中全部）才算健康；
+ * Optional markers 仅作提示，不影响退出码。
  */
 const LIBRARY_ID = '/jiaxiantao/cos-design';
 const SEARCH_URL = `https://context7.com/api/v1/search?query=${encodeURIComponent('cos-design')}`;
 const CONTEXT_URL =
   `https://context7.com/api/v2/context?libraryId=${encodeURIComponent(LIBRARY_ID)}` +
-  `&query=${encodeURIComponent('WeatherBackground fill Next.js App Router')}`;
+  `&query=${encodeURIComponent('WeatherBackground fill Next.js App Router campaign')}`;
 
-const FRESH_MARKERS = ['fill', 'useCanvasBox', 'next-app-router', 'next-app'];
+/** 必须出现：fill 尺寸能力 + Next 示例路径之一 */
+const REQUIRED_MARKERS = ['fill', 'next-app'];
+/** 加分项（索引未必抽到） */
+const OPTIONAL_MARKERS = ['useCanvasBox', 'next-app-router', 'NineGrid', 'FlipCard'];
 
 async function fetchJson(url) {
   const res = await fetch(url);
@@ -31,9 +37,9 @@ function findLibrary(results) {
   return results.find((item) => item?.id === LIBRARY_ID) ?? null;
 }
 
-function markersIn(text) {
+function markersIn(text, markers) {
   const lower = String(text).toLowerCase();
-  return FRESH_MARKERS.filter((m) => lower.includes(m.toLowerCase()));
+  return markers.filter((m) => lower.includes(m.toLowerCase()));
 }
 
 async function main() {
@@ -66,24 +72,27 @@ async function main() {
   }
 
   const blob = typeof ctx.body === 'string' ? ctx.body : JSON.stringify(ctx.body);
-  const hit = markersIn(blob);
-  console.log(`\nFreshness markers in context (${hit.length}/${FRESH_MARKERS.length}):`);
-  for (const m of FRESH_MARKERS) {
-    console.log(`  ${hit.includes(m) ? '✓' : '✗'} ${m}`);
+  const requiredHit = markersIn(blob, REQUIRED_MARKERS);
+  const optionalHit = markersIn(blob, OPTIONAL_MARKERS);
+
+  console.log(`\nRequired markers (${requiredHit.length}/${REQUIRED_MARKERS.length}):`);
+  for (const m of REQUIRED_MARKERS) {
+    console.log(`  ${requiredHit.includes(m) ? '✓' : '✗'} ${m}`);
+  }
+  console.log(`Optional markers (${optionalHit.length}/${OPTIONAL_MARKERS.length}):`);
+  for (const m of OPTIONAL_MARKERS) {
+    console.log(`  ${optionalHit.includes(m) ? '✓' : '·'} ${m}`);
   }
 
-  if (hit.length === 0) {
+  const missingRequired = REQUIRED_MARKERS.filter((m) => !requiredHit.includes(m));
+  if (missingRequired.length) {
     console.log(`
-Index looks stale (no fill / Next example snippets).
+Index looks stale (missing: ${missingRequired.join(', ')}).
 
 Fix:
   1. Add GitHub secret CONTEXT7_API_KEY (from https://context7.com/dashboard)
-  2. Push a docs change, or manually:
-       curl -X POST https://context7.com/api/v1/refresh \\
-         -H "Authorization: Bearer $CONTEXT7_API_KEY" \\
-         -H "Content-Type: application/json" \\
-         -d '{"libraryName":"${LIBRARY_ID}"}'
-  3. Re-run: pnpm verify:context7
+  2. Wait out Context7 refresh cooldown if you see too-early / user-has-active-task
+  3. pnpm context7:refresh && pnpm verify:context7
 `);
     process.exit(2);
   }

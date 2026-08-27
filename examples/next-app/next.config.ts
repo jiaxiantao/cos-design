@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
     '@cos-design/fireworks',
     '@cos-design/turntable',
     '@cos-design/confetti',
+    '@cos-design/flip-card',
+    '@cos-design/nine-grid',
     '@cos-design/shared'
   ]
 };
