@@ -5,17 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.7.10] - 2026-08-27
-
-### Changed
-
-- @cos-design/aurora: 3.5.4 → 3.5.5
-- @cos-design/nine-grid: 3.7.9 → 3.7.10
-- @cos-design/slot-machine: 3.5.5 → 3.5.6
-- @cos-design/turntable: 3.5.5 → 3.5.6
-- cos-design: 聚合包更新至 3.7.10
-
 ## [Unreleased]
+
+## [3.7.10] - 2026-08-27
 
 ### Added
 
@@ -29,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `Aurora`：标签页隐藏时暂停 CSS 动画（`bindVisibilityPause`）
 - AGENTS / Cursor Skill 强化「何时不用 cos-design」；Context7 rules 补充活动页约定
+- @cos-design/aurora: 3.5.4 → 3.5.5
+- @cos-design/nine-grid: 3.7.9 → 3.7.10
+- @cos-design/slot-machine: 3.5.5 → 3.5.6
+- @cos-design/turntable: 3.5.5 → 3.5.6
+- cos-design: 聚合包更新至 3.7.10
 
 ## [3.7.9] - 2026-08-27
 
