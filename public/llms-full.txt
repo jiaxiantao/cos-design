@@ -9,8 +9,8 @@
 | Name | cos-design |
 | npm (umbrella) | cos-design |
 | npm (scoped) | @cos-design/* |
-| Version | 3.7.10 |
-| Components | 86 |
+| Version | 3.8.0 |
+| Components | 91 |
 | Stack | React 19, TypeScript, Vite |
 | License | MIT |
 
@@ -98,6 +98,14 @@ import { Fireworks } from '@cos-design/fireworks';
 - `Starfield` — @cos-design/starfield
 - `BubbleField` — @cos-design/bubble-field
 - `MeteorRain` — @cos-design/meteor-rain
+
+### aurora veil, dandelion, ice crack, lava bubble, ink in water, soap bubbles, interactive background
+
+- `SoapBubbles` — @cos-design/soap-bubbles
+- `DandelionField` — @cos-design/dandelion-field
+- `LavaBubble` — @cos-design/lava-bubble
+- `InkBloom` — @cos-design/ink-bloom
+- `AuroraVeil` — @cos-design/aurora-veil
 
 ## Components
 
@@ -238,6 +246,144 @@ import { BubbleField } from 'cos-design';
 - `bubbleCount`: number (optional, default `36`) — 气泡数量上限
 - `speed`: number (optional, default `1`) — 上浮速度
 - `color`: string (optional, default `true`) — 是否启用鼠标划过扰动
+
+### SoapBubbles
+
+- **Category**: Background effects (背景动效)
+- **When to use**: full-page or section backgrounds, login screens, hero sections, ambient canvas/CSS animations
+- **Title**: 肥皂泡天空
+- **Description**: 虹彩薄膜肥皂泡在天空中缓缓飘飞，点击即可爆裂成细小水珠。
+- **Install**: `pnpm add @cos-design/soap-bubbles`
+- **Import**: `import { SoapBubbles } from '@cos-design/soap-bubbles';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/soapBubbles
+
+**Example**
+
+```tsx
+import { SoapBubbles } from 'cos-design';
+
+<SoapBubbles width={800} height={500} count={28} />
+```
+
+**Props**
+
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
+- `count`: number (optional, default `28`) — 气泡数量 8~80，默认 28
+- `speed`: number (optional, default `1`) — 飘动速度倍率 0~3，默认 1
+- `interactive`: boolean (optional, default `true`) — 是否响应点击爆裂，默认 true
+
+### DandelionField
+
+- **Category**: Background effects (背景动效)
+- **When to use**: full-page or section backgrounds, login screens, hero sections, ambient canvas/CSS animations
+- **Title**: 蒲公英播种
+- **Description**: 鼠标滑动如风吹散绒毛，点击整朵炸开，种子旋转飘飞后重新生长。
+- **Install**: `pnpm add @cos-design/dandelion-field`
+- **Import**: `import { DandelionField } from '@cos-design/dandelion-field';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/dandelionField
+
+**Example**
+
+```tsx
+import { DandelionField } from 'cos-design';
+
+<DandelionField width={800} height={500} />
+```
+
+**Props**
+
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
+- `plantCount`: number (optional, default `5`) — 蒲公英株数，默认 5
+- `seedCount`: number (optional, default `32`) — 每株种子数，默认 32
+- `speed`: number (optional, default `1`) — 运动速度倍率 0~3，默认 1
+- `interactive`: boolean (optional, default `true`) — 是否响应指针交互，默认 true
+
+### LavaBubble
+
+- **Category**: Background effects (背景动效)
+- **When to use**: full-page or section backgrounds, login screens, hero sections, ambient canvas/CSS animations
+- **Title**: 熔岩泡
+- **Description**: 点击处壳层鼓起并闷裂；WebGL 高度场 + 法线光照，溅射热量写回湖面。
+- **Install**: `pnpm add @cos-design/lava-bubble`
+- **Import**: `import { LavaBubble } from '@cos-design/lava-bubble';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/lavaBubble
+
+**Example**
+
+```tsx
+import { LavaBubble } from 'cos-design';
+
+<LavaBubble width={800} height={500} autoSpawn activity={1} />
+```
+
+**Props**
+
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
+- `heat`: number (optional, default `1`) — 热度 0~2，默认 1
+- `speed`: number (optional, default `1`) — 运动速度倍率 0~3，默认 1
+- `autoSpawn`: boolean (optional, default `true`) — 是否自动在表面随机鼓起气泡，默认 true
+- `activity`: number (optional, default `1`) — 自动鼓起活跃度 0~2，默认 1
+- `interactive`: boolean (optional, default `true`) — 是否响应指针交互（点击鼓起），默认 true
+
+### InkBloom
+
+- **Category**: Background effects (背景动效)
+- **When to use**: full-page or section backgrounds, login screens, hero sections, ambient canvas/CSS animations
+- **Title**: 墨染清水
+- **Description**: 点击滴入浓墨，靠浮力、涡旋与扩散在水中自然溶开；墨水溶入后会把清水逐渐染深，点得越多越深。拖拽可轻轻搅动。
+- **Install**: `pnpm add @cos-design/ink-bloom`
+- **Import**: `import { InkBloom } from '@cos-design/ink-bloom';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/inkBloom
+
+**Example**
+
+```tsx
+import { InkBloom } from 'cos-design';
+
+<InkBloom width={800} height={500} />
+```
+
+**Props**
+
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
+- `inkColor`: string (optional, default `1`) — 扩散速度倍率 0~3，默认 1
+- `interactive`: boolean (optional, default `true`) — 是否响应指针交互，默认 true
+
+### AuroraVeil
+
+- **Category**: Background effects (背景动效)
+- **When to use**: full-page or section backgrounds, login screens, hero sections, ambient canvas/CSS animations
+- **Title**: 极光帷幕
+- **Description**: 星夜中垂落的彩色光带会随鼠标弯曲收窄，点击爆发能量脉冲。
+- **Install**: `pnpm add @cos-design/aurora-veil`
+- **Import**: `import { AuroraVeil } from '@cos-design/aurora-veil';`
+- **Playground**: https://jiaxiantao.github.io/cos-design/#/auroraVeil
+
+**Example**
+
+```tsx
+import { AuroraVeil } from 'cos-design';
+
+<AuroraVeil width={800} height={500} />
+```
+
+**Props**
+
+- `width`: number (optional)
+- `height`: number (optional)
+- `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
+- `colors`: string[] (optional, default `DEFAULT_COLORS`) — 光带颜色列表
+- `bandCount`: number (optional, default `5`) — 光带数量，默认 5
+- `speed`: number (optional, default `1`) — 运动速度倍率 0~3，默认 1
+- `interactive`: boolean (optional, default `true`) — 是否响应指针交互，默认 true
 
 ### MatrixRain
 

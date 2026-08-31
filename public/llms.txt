@@ -1,7 +1,7 @@
 # cos-design
 
 > React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.7.10 · 86 components · MIT
+> Version 3.8.0 · 91 components · MIT
 
 ## When to use (for AI agents)
 
@@ -64,6 +64,7 @@ CSS is auto-injected — no manual stylesheet import.
 - **neon text, glitch, typewriter, scramble, shiny text, rotating headline** → `NeonText`, `GlitchText`, `Typewriter`, `ScrambleText`, `ShinyText`, `RotatingText`
 - **countdown, flip counter, count up, dashboard gauge** → `Countdown`, `FlipCounter`, `CountUp`, `Speedometer`, `LiquidProgress`
 - **particle network, aurora, starfield, bubble, meteor shower** → `ParticleNetwork`, `Aurora`, `Starfield`, `BubbleField`, `MeteorRain`
+- **aurora veil, dandelion, ice crack, lava bubble, ink in water, soap bubbles, interactive background** → `SoapBubbles`, `DandelionField`, `LavaBubble`, `InkBloom`, `AuroraVeil`
 
 ## Component catalog
 
@@ -75,6 +76,11 @@ _Use when: full-page or section backgrounds, login screens, hero sections, ambie
 - **RippleWater** — 水波纹: 真实感水面背景，点击后产生物理扩散的水花涟漪。 · `@cos-design/ripple-water` · [demo](https://jiaxiantao.github.io/cos-design/#/rippleWater)
 - **SmokeFog** — 烟雾雾气: Canvas 噪声雾气缓慢飘动；点击画面可使雾气向外散开。 · `@cos-design/smoke-fog` · [demo](https://jiaxiantao.github.io/cos-design/#/smokeFog)
 - **BubbleField** — 气泡场: 深海气泡从海底生成并上升，相近气泡自动融合，带真实水下光影。 · `@cos-design/bubble-field` · [demo](https://jiaxiantao.github.io/cos-design/#/bubbleField)
+- **SoapBubbles** — 肥皂泡天空: 虹彩薄膜肥皂泡在天空中缓缓飘飞，点击即可爆裂成细小水珠。 · `@cos-design/soap-bubbles` · [demo](https://jiaxiantao.github.io/cos-design/#/soapBubbles)
+- **DandelionField** — 蒲公英播种: 鼠标滑动如风吹散绒毛，点击整朵炸开，种子旋转飘飞后重新生长。 · `@cos-design/dandelion-field` · [demo](https://jiaxiantao.github.io/cos-design/#/dandelionField)
+- **LavaBubble** — 熔岩泡: 点击处壳层鼓起并闷裂；WebGL 高度场 + 法线光照，溅射热量写回湖面。 · `@cos-design/lava-bubble` · [demo](https://jiaxiantao.github.io/cos-design/#/lavaBubble)
+- **InkBloom** — 墨染清水: 点击滴入浓墨，靠浮力、涡旋与扩散在水中自然溶开；墨水溶入后会把清水逐渐染深，点得越多越深。拖拽可轻轻搅动。 · `@cos-design/ink-bloom` · [demo](https://jiaxiantao.github.io/cos-design/#/inkBloom)
+- **AuroraVeil** — 极光帷幕: 星夜中垂落的彩色光带会随鼠标弯曲收窄，点击爆发能量脉冲。 · `@cos-design/aurora-veil` · [demo](https://jiaxiantao.github.io/cos-design/#/auroraVeil)
 - **MatrixRain** — 黑客帝国数字雨: 经典 Matrix 风格数字雨背景动画。 · `@cos-design/matrix-rain` · [demo](https://jiaxiantao.github.io/cos-design/#/matrixRain)
 - **MeteorRain** — 流星雨: Canvas 流星雨背景动画，适合登录页与活动页。 · `@cos-design/meteor-rain` · [demo](https://jiaxiantao.github.io/cos-design/#/meteorRain)
 - **ParticleNetwork** — 粒子网络: 粒子连线网络，鼠标靠近时产生排斥互动。 · `@cos-design/particle-network` · [demo](https://jiaxiantao.github.io/cos-design/#/particleNetwork)

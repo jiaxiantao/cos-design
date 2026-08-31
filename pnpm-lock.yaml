@@ -191,6 +191,18 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/auroraVeil:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/barcodeScan:
     dependencies:
       react:
@@ -350,6 +362,18 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
 
+  packages/dandelionField:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
   packages/diceRoll:
     dependencies:
       react:
@@ -478,6 +502,30 @@ importers:
 
   packages/holographicCard:
     dependencies:
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/inkBloom:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/lavaBubble:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -936,6 +984,18 @@ importers:
         version: 19.2.7(react@19.2.7)
 
   packages/snowfall:
+    dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: '>=18.0.0'
+        version: 19.2.7
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 19.2.7(react@19.2.7)
+
+  packages/soapBubbles:
     dependencies:
       '@cos-design/shared':
         specifier: workspace:*

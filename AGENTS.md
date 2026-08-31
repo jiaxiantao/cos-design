@@ -41,17 +41,17 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 
 ## Technical constraints
 
-| Topic            | Rule                                                                                                                                                                                             |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| React            | >= 18                                                                                                                                                                                            |
-| SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js)                                                                                                   |
-| Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork/WeatherBackground/Aurora/Starfield/Snowfall/MeteorRain/CyberGrid/SmokeFog/BubbleField/RippleWater |
-| Reduced motion   | Key canvas backgrounds freeze to a static frame when `prefers-reduced-motion: reduce`                                                                                                            |
-| Visibility pause | Canvas loops / Aurora pause when the tab is hidden (`bindVisibilityPause`)                                                                                                                       |
-| Lottery busy     | Turntable / SlotMachine / NineGrid disable + `aria-busy` while animating; use `reset()` only for intentional retries — see [docs/campaign-patterns.md](./docs/campaign-patterns.md)              |
-| Page composition | One strong background + limited focal effects                                                                                                                                                    |
-| Smoke tests      | `pnpm test:smoke` (Playwright against demo build; includes interaction checks)                                                                                                                   |
-| Context7         | `/jiaxiantao/cos-design` — set `CONTEXT7_API_KEY`, then `pnpm context7:refresh` / `pnpm verify:context7`                                                                                         |
+| Topic            | Rule                                                                                                                                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| React            | >= 18                                                                                                                                                                                                                                                      |
+| SSR              | Canvas/WebGL components need client-only rendering (`dynamic(..., { ssr: false })` in Next.js)                                                                                                                                                             |
+| Canvas size      | Set `width`/`height`, or `fill` on Fireworks/Confetti/RedPacketRain/MatrixRain/ParticleNetwork/WeatherBackground/Aurora/Starfield/Snowfall/MeteorRain/CyberGrid/SmokeFog/BubbleField/RippleWater/AuroraVeil/DandelionField/LavaBubble/InkBloom/SoapBubbles |
+| Reduced motion   | Key canvas backgrounds freeze to a static frame when `prefers-reduced-motion: reduce`                                                                                                                                                                      |
+| Visibility pause | Canvas loops / Aurora pause when the tab is hidden (`bindVisibilityPause`)                                                                                                                                                                                 |
+| Lottery busy     | Turntable / SlotMachine / NineGrid disable + `aria-busy` while animating; use `reset()` only for intentional retries — see [docs/campaign-patterns.md](./docs/campaign-patterns.md)                                                                        |
+| Page composition | One strong background + limited focal effects                                                                                                                                                                                                              |
+| Smoke tests      | `pnpm test:smoke` (Playwright against demo build; includes interaction checks)                                                                                                                                                                             |
+| Context7         | `/jiaxiantao/cos-design` — set `CONTEXT7_API_KEY`, then `pnpm context7:refresh` / `pnpm verify:context7`                                                                                                                                                   |
 
 ## Documentation for agents
 

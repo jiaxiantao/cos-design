@@ -295,7 +295,24 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   '是否响应点击燃放；默认跟随 auto（auto=false 时不拦截指针）':
     'Whether click launches; defaults to auto (auto=false does not capture pointers)',
   '画布操作提示；非 interactive 时不展示': 'Canvas hint; hidden when not interactive',
-  'live 模式解析出真实天气后回调': 'Callback after live weather is resolved'
+  'live 模式解析出真实天气后回调': 'Callback after live weather is resolved',
+  '为 true 时铺满父容器（父级需有明确高度）': 'When true, fills the parent (parent needs an explicit height)',
+  光带颜色列表: 'Aurora band color list',
+  '光带数量，默认 6': 'Band count, default 6',
+  '是否响应指针交互，默认 true': 'Respond to pointer input, default true',
+  '蒲公英株数，默认 10': 'Dandelion plant count, default 10',
+  '每株种子数，默认 52': 'Seeds per plant, default 52',
+  裂纹发光颜色: 'Crack glow color',
+  '裂纹蔓延速度倍率 0~3，默认 1': 'Crack spread speed 0–3, default 1',
+  '热度 0~2，默认 1': 'Heat 0–2, default 1',
+  '是否自动在表面随机鼓起气泡，默认 true': 'Auto-spawn blisters at random on the surface, default true',
+  '自动鼓起活跃度 0~2，默认 1': 'Auto-spawn activity 0–2, default 1',
+  '是否响应指针交互（点击鼓起），默认 true': 'Respond to pointer (click to raise a blister), default true',
+  '气泡数量 8~80，默认 28': 'Bubble count 8–80, default 28',
+  '飘动速度倍率 0~3，默认 1': 'Drift speed multiplier 0–3, default 1',
+  '是否响应点击爆裂，默认 true': 'Respond to click-to-pop, default true',
+  墨水色: 'Ink color',
+  '扩散速度倍率 0~3，默认 1': 'Bloom speed 0–3, default 1'
 };
 
 export const localizePropDescription = (description: string, locale: string) => {

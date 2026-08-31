@@ -78,6 +78,64 @@ export const componentProps: ComponentPropsMap = {
       description: '极光色带，默认绿/青/紫'
     }
   ],
+  AuroraVeil: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
+    },
+    {
+      name: 'colors',
+      type: 'string[]',
+      required: false,
+      default: 'DEFAULT_COLORS',
+      description: '光带颜色列表'
+    },
+    {
+      name: 'bandCount',
+      type: 'number',
+      required: false,
+      default: '5',
+      description: '光带数量，默认 5'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '运动速度倍率 0~3，默认 1'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应指针交互，默认 true'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'极光帷幕背景'",
+      description: '画布无障碍标签'
+    }
+  ],
   BarcodeScan: [
     {
       name: 'children',
@@ -659,6 +717,64 @@ export const componentProps: ComponentPropsMap = {
       description: '移动速度，默认 1'
     }
   ],
+  DandelionField: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
+    },
+    {
+      name: 'plantCount',
+      type: 'number',
+      required: false,
+      default: '10',
+      description: '蒲公英株数，默认 10'
+    },
+    {
+      name: 'seedCount',
+      type: 'number',
+      required: false,
+      default: '32',
+      description: '每株种子数，默认 32'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '运动速度倍率 0~3，默认 1'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应指针交互，默认 true'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'蒲公英播种背景'",
+      description: '画布无障碍标签'
+    }
+  ],
   DiceRoll: [
     {
       name: 'onRoll',
@@ -1180,6 +1296,122 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '',
       description: ''
+    }
+  ],
+  InkBloom: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
+    },
+    {
+      name: 'inkColor',
+      type: 'string',
+      required: false,
+      default: "'#0c0e12'",
+      description: '墨水色'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '扩散速度倍率 0~3，默认 1'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应指针交互，默认 true'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'墨染清水背景'",
+      description: '画布无障碍标签'
+    }
+  ],
+  LavaBubble: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
+    },
+    {
+      name: 'heat',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '热度 0~2，默认 1'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '运动速度倍率 0~3，默认 1'
+    },
+    {
+      name: 'autoSpawn',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否自动在表面随机鼓起气泡，默认 true'
+    },
+    {
+      name: 'activity',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '自动鼓起活跃度 0~2，默认 1'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应指针交互（点击鼓起），默认 true'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'熔岩泡背景'",
+      description: '画布无障碍标签'
     }
   ],
   LiquidGlass: [
@@ -3910,6 +4142,57 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '120',
       description: '粒子数量'
+    }
+  ],
+  SoapBubbles: [
+    {
+      name: 'width',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'height',
+      type: 'number',
+      required: false,
+      default: '',
+      description: ''
+    },
+    {
+      name: 'fill',
+      type: 'boolean',
+      required: false,
+      default: '',
+      description: '为 true 时铺满父容器（父级需有明确高度）'
+    },
+    {
+      name: 'count',
+      type: 'number',
+      required: false,
+      default: '28',
+      description: '气泡数量 8~80，默认 28'
+    },
+    {
+      name: 'speed',
+      type: 'number',
+      required: false,
+      default: '1',
+      description: '飘动速度倍率 0~3，默认 1'
+    },
+    {
+      name: 'interactive',
+      type: 'boolean',
+      required: false,
+      default: 'true',
+      description: '是否响应点击爆裂，默认 true'
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      required: false,
+      default: "'肥皂泡背景'",
+      description: '画布无障碍标签'
     }
   ],
   SolarSystem: [

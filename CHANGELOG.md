@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.8.0] - 2026-08-31
+
+### Added
+
+- 背景动效：`AuroraVeil`（极光帷幕）、`DandelionField`（蒲公英播种）、`LavaBubble`（熔岩泡）、`InkBloom`（墨染清水）、`SoapBubbles`（肥皂泡）
+- 对应 `@cos-design/*` 分包与 Playground 演示；Playwright smoke 覆盖新组件 canvas 挂载
+- `@cos-design/shared`：`softSat` 等数学工具导出
+
+### Changed
+
+- `DandelionField`：模块化拆分（scene / plant / seed / draw）与帧级性能优化（植株几何缓存、附着种子计数）
+- cos-design: 聚合包更新至 3.8.0（91 components）
+
 ## [3.7.11] - 2026-08-27
 
 ### Removed

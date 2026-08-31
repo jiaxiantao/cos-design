@@ -1,7 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "cos-design",
-  "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (86 components).",
+  "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (91 components).",
   "branch": "master",
   "folders": ["docs", "public", "website-content", ".cursor/skills/cos-design", "examples"],
   "excludeFolders": [
@@ -21,7 +21,7 @@
     "Always install before import: `pnpm add cos-design` or `pnpm add @cos-design/<kebab-name>` (folder weatherBackground → @cos-design/weather-background).",
     "Styles are auto-injected — never add `import 'cos-design/dist/index.css'`.",
     "Canvas/WebGL components need client-only rendering in Next.js: dynamic(() => import(...), { ssr: false }).",
-    "Pass width/height, or fill (parent must have explicit height such as 100vh / 500px). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater.",
+    "Pass width/height, or fill (parent must have explicit height such as 100vh / 500px). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater, AuroraVeil, DandelionField, LavaBubble, InkBloom, SoapBubbles.",
     "Compose pages with one strong background plus a few focal effects — avoid stacking many full-screen canvases.",
     "Runnable Next.js sample: examples/next-app — primary path fill hero → FlipCard → NineGrid → Confetti (see docs/campaign-10-minutes.md).",
     "Lottery busy: Turntable / SlotMachine / NineGrid disable + aria-busy while animating; use reset() only for intentional retries (docs/campaign-patterns.md).",

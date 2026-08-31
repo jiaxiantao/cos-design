@@ -1,4 +1,4 @@
-export { clamp } from './math';
+export { clamp, lerp } from './math';
 export { bindVisibilityPause } from './visibility';
 export { prefersReducedMotion, bindPrefersReducedMotion } from './reduced-motion';
 export { observeElementSize } from './size';

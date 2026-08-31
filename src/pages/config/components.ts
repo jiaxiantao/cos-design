@@ -84,6 +84,67 @@ export const componentDemos: ComponentDemoItem[] = [
 <BubbleField width={800} height={500} bubbleCount={32} speed={1} />`
   },
   {
+    name: 'SoapBubbles',
+    path: '/soapBubbles',
+    title: '肥皂泡天空',
+    description: '虹彩薄膜肥皂泡在天空中缓缓飘飞，点击即可爆裂成细小水珠。',
+    tags: ['Canvas', '交互'],
+    category: 'background' as const,
+    isNew: true,
+    codeExample: `import { SoapBubbles } from 'cos-design';
+
+<SoapBubbles width={800} height={500} count={28} />`
+  },
+  {
+    name: 'DandelionField',
+    path: '/dandelionField',
+    title: '蒲公英播种',
+    description: '鼠标滑动如风吹散绒毛，点击整朵炸开，种子旋转飘飞后重新生长。',
+    tags: ['Canvas', '交互'],
+    category: 'background' as const,
+    isNew: true,
+    codeExample: `import { DandelionField } from 'cos-design';
+
+<DandelionField width={800} height={500} />`
+  },
+  {
+    name: 'LavaBubble',
+    path: '/lavaBubble',
+    title: '熔岩泡',
+    description: '点击处壳层鼓起并闷裂；WebGL 高度场 + 法线光照，溅射热量写回湖面。',
+    tags: ['Canvas', '交互'],
+    category: 'background' as const,
+    isNew: true,
+    codeExample: `import { LavaBubble } from 'cos-design';
+
+<LavaBubble width={800} height={500} autoSpawn activity={1} />`
+  },
+  {
+    name: 'InkBloom',
+    path: '/inkBloom',
+    title: '墨染清水',
+    description:
+      '点击滴入浓墨，靠浮力、涡旋与扩散在水中自然溶开；墨水溶入后会把清水逐渐染深，点得越多越深。拖拽可轻轻搅动。',
+    tags: ['Canvas', '交互'],
+    category: 'background' as const,
+    isNew: true,
+    codeExample: `import { InkBloom } from 'cos-design';
+
+<InkBloom width={800} height={500} />`
+  },
+  {
+    name: 'AuroraVeil',
+    path: '/auroraVeil',
+    title: '极光帷幕',
+    description: '星夜中垂落的彩色光带会随鼠标弯曲收窄，点击爆发能量脉冲。',
+    tags: ['Canvas', '交互'],
+    category: 'background' as const,
+    isNew: true,
+    codeExample: `import { AuroraVeil } from 'cos-design';
+
+<AuroraVeil width={800} height={500} />`
+  },
+  {
     name: 'MatrixRain',
     path: '/matrixRain',
     title: '黑客帝国数字雨',

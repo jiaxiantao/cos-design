@@ -29,6 +29,13 @@ test.describe('playground smoke', () => {
     await gotoZh(page, '/flipCard');
     await expect(page.getByRole('button', { name: /CHECK-IN/ })).toBeVisible();
   });
+
+  for (const path of ['/soapBubbles', '/dandelionField', '/lavaBubble', '/inkBloom', '/auroraVeil'] as const) {
+    test(`${path} canvas mounts`, async ({ page }) => {
+      await gotoZh(page, path);
+      await expect(page.locator('canvas').first()).toBeVisible();
+    });
+  }
 });
 
 test.describe('playground interactions', () => {

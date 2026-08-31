@@ -111,6 +111,10 @@ const SCENARIO_INDEX = [
   {
     keywords: 'particle network, aurora, starfield, bubble, meteor shower',
     components: ['ParticleNetwork', 'Aurora', 'Starfield', 'BubbleField', 'MeteorRain']
+  },
+  {
+    keywords: 'aurora veil, dandelion, ice crack, lava bubble, ink in water, soap bubbles, interactive background',
+    components: ['SoapBubbles', 'DandelionField', 'LavaBubble', 'InkBloom', 'AuroraVeil']
   }
 ];
 

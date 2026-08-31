@@ -9,7 +9,7 @@ description: >-
 
 # cos-design
 
-React **visual-effect** component library (86 components). Campaign pages, brand landings, dashboards, creative demos.
+React **visual-effect** component library (90 components). Campaign pages, brand landings, dashboards, creative demos.
 
 - Playground: https://jiaxiantao.github.io/cos-design/
 - AI index: https://jiaxiantao.github.io/cos-design/llms.txt
@@ -71,7 +71,7 @@ No manual CSS import — styles auto-inject.
 
 1. **Add dependency first** — run `pnpm add` / `npm install` for the exact package used.
 2. **Canvas / WebGL** — client-only; in Next.js use `dynamic(() => import('@cos-design/fireworks').then(m => m.Fireworks), { ssr: false })`.
-3. **Dimensions** — pass `width`/`height`, **or** `fill` (parent must have explicit height). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater.
+3. **Dimensions** — pass `width`/`height`, **or** `fill` (parent must have explicit height). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater, AuroraVeil, DandelionField, LavaBubble, InkBloom, SoapBubbles.
 4. **Density** — one strong background + a few focal effects; avoid stacking many full-screen animations.
 5. **Props** — read [docs/ai.md](../../../docs/ai.md) or Playground examples; do not invent API.
 6. **Next.js** — patterns: [docs/examples/next-app-router.md](../../../docs/examples/next-app-router.md); runnable app: [examples/next-app](../../../examples/next-app).

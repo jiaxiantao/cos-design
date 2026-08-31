@@ -39,6 +39,34 @@ export const componentMetaEn = {
     description: 'Deep-sea bubbles rise from the bottom, merge when close, with underwater lighting.',
     tags: ['Canvas', 'Interactive']
   },
+  SoapBubbles: {
+    title: 'Soap Bubbles',
+    description: 'Iridescent soap bubbles drift across a soft sky; click a bubble to pop it into sparkling droplets.',
+    tags: ['Canvas', 'Interactive']
+  },
+  DandelionField: {
+    title: 'Dandelion Field',
+    description: 'Pointer motion blows seeds like wind; a click bursts a head, then new buds grow in the distance.',
+    tags: ['Canvas', 'Interactive']
+  },
+  LavaBubble: {
+    title: 'Lava Bubble',
+    description:
+      'Lava lake blisters swell and burst at random intervals; click to raise a blister at a point. WebGL height-field crust, cracks, spatters.',
+    tags: ['Canvas', 'Interactive', 'WebGL']
+  },
+  InkBloom: {
+    title: 'Ink Bloom',
+    description:
+      'A click drops ink that sinks and blooms in water via buoyancy, vortices, and diffusion; drag gently stirs the plume.',
+    tags: ['Canvas', 'Interactive']
+  },
+  AuroraVeil: {
+    title: 'Aurora Veil',
+    description:
+      'Silk-like aurora curtains hang over a starfield; the cursor bends them, a click bursts an energy pulse.',
+    tags: ['Canvas', 'Interactive']
+  },
   MatrixRain: {
     title: 'Matrix Rain',
     description: 'Classic Matrix-style digital rain background animation.',
