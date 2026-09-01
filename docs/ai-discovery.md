@@ -33,7 +33,7 @@ pnpm verify:context7          # does not consume refresh quota
 pnpm context7:refresh         # only after cooldown / when docs drift
 
 # GitHub → Settings → Secrets → Actions → CONTEXT7_API_KEY
-# enables .github/workflows/context7-refresh.yml on master doc pushes
+# enables CI workflow refresh-context7 job on master doc pushes
 ```
 
 `pnpm verify:context7` exit `2` means required markers are missing. Optional markers are informational.
@@ -54,7 +54,7 @@ Parsing is already configured in root [`context7.json`](../context7.json) (docs 
 
 1. Create an API key at [context7.com/dashboard](https://context7.com/dashboard)
 2. Add GitHub secret **`CONTEXT7_API_KEY`** for this repo
-3. Workflow [`.github/workflows/context7-refresh.yml`](../.github/workflows/context7-refresh.yml) refreshes `/jiaxiantao/cos-design` on push to `master`
+3. CI workflow [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (`refresh-context7` job) refreshes `/jiaxiantao/cos-design` on push to `master` when doc paths change
 4. Confirm with `pnpm verify:context7`
 
 Manual refresh:

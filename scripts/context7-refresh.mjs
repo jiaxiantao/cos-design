@@ -15,7 +15,7 @@ async function main() {
 1. Create a key at https://context7.com/dashboard
 2. Export it locally:
      export CONTEXT7_API_KEY=ctx7sk-...
-3. Add GitHub secret CONTEXT7_API_KEY so .github/workflows/context7-refresh.yml can refresh on push.
+3. Add GitHub secret CONTEXT7_API_KEY so CI refresh-context7 job can refresh on push.
 4. Re-run: pnpm context7:refresh && pnpm verify:context7
 `);
     process.exit(1);
