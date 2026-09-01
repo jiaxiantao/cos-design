@@ -115,6 +115,72 @@ const SCENARIO_INDEX = [
   {
     keywords: 'aurora veil, dandelion, ice crack, lava bubble, ink in water, soap bubbles, interactive background',
     components: ['SoapBubbles', 'DandelionField', 'LavaBubble', 'InkBloom', 'AuroraVeil']
+  },
+  {
+    keywords: 'check-in, nine grid, flip card, daily sign-in lottery',
+    components: ['FlipCard', 'NineGrid', 'ProgressChest']
+  }
+];
+
+/** Copy-paste campaign compositions for AI agents (also in docs/campaign-recipes-ai.md) */
+const CAMPAIGN_RECIPES = [
+  {
+    title: 'Check-in → NineGrid → Confetti',
+    when: 'daily check-in unlocks server-side lottery draw',
+    packages:
+      '@cos-design/weather-background @cos-design/flip-card @cos-design/nine-grid @cos-design/confetti',
+    snippet: `'use client';
+import { useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { FlipCard } from '@cos-design/flip-card';
+import { NineGrid, type NineGridHandle } from '@cos-design/nine-grid';
+import type { ConfettiHandle } from '@cos-design/confetti';
+
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
+
+export function Campaign() {
+  const gridRef = useRef<NineGridHandle>(null);
+  const confettiRef = useRef<ConfettiHandle>(null);
+  const [checkedIn, setCheckedIn] = useState(false);
+
+  return (
+    <>
+      <FlipCard onReveal={() => setCheckedIn(true)} />
+      <NineGrid ref={gridRef} disabled={!checkedIn} onDrawEnd={() => confettiRef.current?.burst()} />
+      <div style={{ height: 280 }}><Confetti ref={confettiRef} fill auto={false} /></div>
+    </>
+  );
+}`
+  },
+  {
+    title: 'ScratchCard → Fireworks',
+    when: 'scratch-to-reveal then celebrate',
+    packages: '@cos-design/scratch-card @cos-design/fireworks',
+    snippet: `'use client';
+import { useRef } from 'react';
+import dynamic from 'next/dynamic';
+import { ScratchCard } from '@cos-design/scratch-card';
+import type { FireworksHandle } from '@cos-design/fireworks';
+
+const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), { ssr: false });
+
+export function ScratchCelebrate() {
+  const fw = useRef<FireworksHandle>(null);
+  return (
+  <>
+    <Fireworks ref={fw} fill auto={false} />
+    <ScratchCard prize="🎉 50% OFF" width={320} height={200} onReveal={() => fw.current?.launch()} />
+  </>
+  );
+}`
+  },
+  {
+    title: 'Turntable server targetIndex',
+    when: 'wheel lottery with backend-picked segment',
+    packages: '@cos-design/turntable @cos-design/confetti',
+    snippet: `const res = await fetch('/api/draw?cells=6');
+const { targetIndex } = await res.json();
+turntableRef.current?.spin(targetIndex);`
   }
 ];
 
@@ -220,8 +286,9 @@ function buildLlmsTxt(demos) {
     '',
     '- React >= 18, client components for Canvas/WebGL',
     '- Next.js: `dynamic(() => import(...), { ssr: false })` for canvas components',
-    '- Canvas components need explicit `width` / `height`',
+    '- Canvas components need explicit `width` / `height`, or `fill` (parent must have explicit height)',
     '- One strong background + a few focal effects per page',
+    '- Campaign pages: see **Campaign recipes** below and docs/campaign-recipes-ai.md',
     '',
     '## Links',
     '',
@@ -234,10 +301,32 @@ function buildLlmsTxt(demos) {
     `- Cursor Skill: ${REPO}/tree/master/.cursor/skills/cos-design`,
     `- Agent rules: ${REPO}/blob/master/AGENTS.md`,
     `- English intro: ${REPO}/blob/master/website-content/cos-design-marketing-effects-en.md`,
+    `- Campaign recipes (AI): ${REPO}/blob/master/docs/campaign-recipes-ai.md`,
+    `- Next.js example: ${REPO}/tree/master/examples/next-app`,
     '',
-    '## Scenario → component map',
+    '## Campaign recipes (copy-paste)',
+    '',
+    '_Full versions: docs/campaign-recipes-ai.md · runnable: examples/next-app_',
     ''
   ];
+
+  for (const recipe of CAMPAIGN_RECIPES) {
+    lines.push(`### ${recipe.title}`);
+    lines.push('');
+    lines.push(`**When:** ${recipe.when}`);
+    lines.push('');
+    lines.push(`**Install:** \`pnpm add ${recipe.packages}\``);
+    lines.push('');
+    lines.push('```tsx');
+    lines.push(recipe.snippet);
+    lines.push('```');
+    lines.push('');
+  }
+
+  lines.push(
+    '## Scenario → component map',
+    ''
+  );
 
   for (const row of SCENARIO_INDEX) {
     lines.push(`- **${row.keywords}** → ${row.components.map((c) => `\`${c}\``).join(', ')}`);
@@ -290,6 +379,23 @@ function buildAiMd(demos, propsMap) {
     '3. Always add the dependency (`pnpm add ...`) before importing.',
     '4. For Next.js App Router, mark canvas components as client-only with `dynamic(..., { ssr: false })`.',
     '5. Do not invent props — use the list below or the Playground source.',
+    '6. For **campaign pages**, use recipes in [campaign-recipes-ai.md](./campaign-recipes-ai.md) or examples/next-app — not random component mashups.',
+    '7. Lottery components (`Turntable`, `SlotMachine`, `NineGrid`) skip spin animation when `prefers-reduced-motion: reduce`.',
+    '',
+    '## Campaign recipes',
+    '',
+    'See [campaign-recipes-ai.md](./campaign-recipes-ai.md) for full copy-paste flows (check-in → draw, scratch → fireworks, server turntable).',
+    '',
+    '```bash',
+    'pnpm add @cos-design/flip-card @cos-design/nine-grid @cos-design/confetti',
+    '```',
+    '',
+    '```tsx',
+    "// Minimal check-in → draw (fetch targetIndex before draw())",
+    '<FlipCard onReveal={() => setCheckedIn(true)} />',
+    '<NineGrid disabled={!checkedIn} onDrawEnd={() => confettiRef.current?.burst()} />',
+    '<Confetti ref={confettiRef} fill auto={false} />',
+    '```',
     '',
     '## Install patterns',
     '',

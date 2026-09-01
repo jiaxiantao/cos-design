@@ -1,7 +1,7 @@
 # cos-design
 
 > React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.8.0 · 91 components · MIT
+> Version 3.8.1 · 91 components · MIT
 
 ## When to use (for AI agents)
 
@@ -39,8 +39,9 @@ CSS is auto-injected — no manual stylesheet import.
 
 - React >= 18, client components for Canvas/WebGL
 - Next.js: `dynamic(() => import(...), { ssr: false })` for canvas components
-- Canvas components need explicit `width` / `height`
+- Canvas components need explicit `width` / `height`, or `fill` (parent must have explicit height)
 - One strong background + a few focal effects per page
+- Campaign pages: see **Campaign recipes** below and docs/campaign-recipes-ai.md
 
 ## Links
 
@@ -53,6 +54,81 @@ CSS is auto-injected — no manual stylesheet import.
 - Cursor Skill: https://github.com/jiaxiantao/cos-design/tree/master/.cursor/skills/cos-design
 - Agent rules: https://github.com/jiaxiantao/cos-design/blob/master/AGENTS.md
 - English intro: https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-marketing-effects-en.md
+- Campaign recipes (AI): https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-recipes-ai.md
+- Next.js example: https://github.com/jiaxiantao/cos-design/tree/master/examples/next-app
+
+## Campaign recipes (copy-paste)
+
+_Full versions: docs/campaign-recipes-ai.md · runnable: examples/next-app_
+
+### Check-in → NineGrid → Confetti
+
+**When:** daily check-in unlocks server-side lottery draw
+
+**Install:** `pnpm add @cos-design/weather-background @cos-design/flip-card @cos-design/nine-grid @cos-design/confetti`
+
+```tsx
+'use client';
+import { useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { FlipCard } from '@cos-design/flip-card';
+import { NineGrid, type NineGridHandle } from '@cos-design/nine-grid';
+import type { ConfettiHandle } from '@cos-design/confetti';
+
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
+
+export function Campaign() {
+  const gridRef = useRef<NineGridHandle>(null);
+  const confettiRef = useRef<ConfettiHandle>(null);
+  const [checkedIn, setCheckedIn] = useState(false);
+
+  return (
+    <>
+      <FlipCard onReveal={() => setCheckedIn(true)} />
+      <NineGrid ref={gridRef} disabled={!checkedIn} onDrawEnd={() => confettiRef.current?.burst()} />
+      <div style={{ height: 280 }}><Confetti ref={confettiRef} fill auto={false} /></div>
+    </>
+  );
+}
+```
+
+### ScratchCard → Fireworks
+
+**When:** scratch-to-reveal then celebrate
+
+**Install:** `pnpm add @cos-design/scratch-card @cos-design/fireworks`
+
+```tsx
+'use client';
+import { useRef } from 'react';
+import dynamic from 'next/dynamic';
+import { ScratchCard } from '@cos-design/scratch-card';
+import type { FireworksHandle } from '@cos-design/fireworks';
+
+const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), { ssr: false });
+
+export function ScratchCelebrate() {
+  const fw = useRef<FireworksHandle>(null);
+  return (
+  <>
+    <Fireworks ref={fw} fill auto={false} />
+    <ScratchCard prize="🎉 50% OFF" width={320} height={200} onReveal={() => fw.current?.launch()} />
+  </>
+  );
+}
+```
+
+### Turntable server targetIndex
+
+**When:** wheel lottery with backend-picked segment
+
+**Install:** `pnpm add @cos-design/turntable @cos-design/confetti`
+
+```tsx
+const res = await fetch('/api/draw?cells=6');
+const { targetIndex } = await res.json();
+turntableRef.current?.spin(targetIndex);
+```
 
 ## Scenario → component map
 
@@ -65,6 +141,7 @@ CSS is auto-injected — no manual stylesheet import.
 - **countdown, flip counter, count up, dashboard gauge** → `Countdown`, `FlipCounter`, `CountUp`, `Speedometer`, `LiquidProgress`
 - **particle network, aurora, starfield, bubble, meteor shower** → `ParticleNetwork`, `Aurora`, `Starfield`, `BubbleField`, `MeteorRain`
 - **aurora veil, dandelion, ice crack, lava bubble, ink in water, soap bubbles, interactive background** → `SoapBubbles`, `DandelionField`, `LavaBubble`, `InkBloom`, `AuroraVeil`
+- **check-in, nine grid, flip card, daily sign-in lottery** → `FlipCard`, `NineGrid`, `ProgressChest`
 
 ## Component catalog
 

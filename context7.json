@@ -27,6 +27,8 @@
     "Lottery busy: Turntable / SlotMachine / NineGrid disable + aria-busy while animating; use reset() only for intentional retries (docs/campaign-patterns.md).",
     "Confetti/Fireworks with auto=false do not capture pointers by default (interactive follows auto) so nearby lottery buttons stay clickable.",
     "Prefer the runnable Next sample (examples/next-app) and docs/campaign-10-minutes.md for campaign pages — not a random component mashup.",
+    "Campaign copy-paste recipes for agents: docs/campaign-recipes-ai.md (check-in → NineGrid, ScratchCard → Fireworks, Turntable server targetIndex).",
+    "Lottery components (Turntable, SlotMachine, NineGrid) skip spin animation when prefers-reduced-motion: reduce; still expose aria-busy while busy.",
     "Read https://jiaxiantao.github.io/cos-design/llms.txt for scenario → component mapping before inventing APIs."
   ]
 }

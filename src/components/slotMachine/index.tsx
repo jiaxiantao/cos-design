@@ -1,4 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { prefersReducedMotion } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface SlotMachineProps {
@@ -136,6 +137,20 @@ const SlotMachine = forwardRef<SlotMachineHandle, SlotMachineProps>(
         const token = { cancelled: false };
         spinTokenRef.current = token;
 
+        const finishSpin = () => {
+          if (token.cancelled) return;
+          const finalResults = targets.map((t) => list[t]);
+          setOffsets(targets.map((t) => offsetForTarget(t, Math.round(restBand / cycle))));
+          setResults(finalResults);
+          setSpinning(false);
+          onSpinEndRef.current?.(finalResults);
+        };
+
+        if (prefersReducedMotion()) {
+          finishSpin();
+          return;
+        }
+
         const animateFrame = (now: number) => {
           if (token.cancelled) return;
 
@@ -153,13 +168,8 @@ const SlotMachine = forwardRef<SlotMachineHandle, SlotMachineProps>(
 
           if (!allDone) {
             frameRef.current = requestAnimationFrame(animateFrame);
-          } else if (!token.cancelled) {
-            const finalResults = targets.map((t) => list[t]);
-            // Snap to an equivalent mid-strip offset so the next spin still has travel room.
-            setOffsets(targets.map((t) => offsetForTarget(t, Math.round(restBand / cycle))));
-            setResults(finalResults);
-            setSpinning(false);
-            onSpinEndRef.current?.(finalResults);
+          } else {
+            finishSpin();
           }
         };
 

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.8.1] - 2026-09-01
+
+### Added
+
+- AI：`docs/campaign-recipes-ai.md` 活动页组合配方（签到抽奖 / 刮刮乐庆祝 / 服务端转盘）；`llms.txt` / `docs/ai.md` 同步 Campaign recipes 章节
+- Playwright smoke：ScratchCard 刮开、SlotMachine 旋转、Confetti 挂载
+- ScratchCard：`data-testid="scratch-card-canvas"` 与 `aria-label`
+
+### Changed
+
+- `Turntable` / `SlotMachine` / `NineGrid`：`prefers-reduced-motion: reduce` 时跳过旋转动画，直接展示结果
+- Context7 rules 补充 campaign-recipes 与抽奖 reduced-motion 约定；`verify:context7` optional markers 扩展
+- CONTRIBUTING 增加工程质量清单；AGENTS / Cursor Skill 指向 campaign-recipes-ai
+- @cos-design/nine-grid: 3.7.10 → 3.7.11
+- @cos-design/scratch-card: 3.5.4 → 3.5.5
+- @cos-design/slot-machine: 3.5.6 → 3.5.7
+- @cos-design/turntable: 3.5.6 → 3.5.7
+- cos-design: 聚合包更新至 3.8.1
+
 ## [3.8.0] - 2026-08-31
 
 ### Added

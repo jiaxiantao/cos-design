@@ -9,7 +9,7 @@
 | Name           | cos-design                 |
 | npm (umbrella) | cos-design                 |
 | npm (scoped)   | @cos-design/\*             |
-| Version        | 3.8.0                      |
+| Version        | 3.8.1                      |
 | Components     | 91                         |
 | Stack          | React 19, TypeScript, Vite |
 | License        | MIT                        |
@@ -21,6 +21,23 @@
 3. Always add the dependency (`pnpm add ...`) before importing.
 4. For Next.js App Router, mark canvas components as client-only with `dynamic(..., { ssr: false })`.
 5. Do not invent props — use the list below or the Playground source.
+6. For **campaign pages**, use recipes in [campaign-recipes-ai.md](./campaign-recipes-ai.md) or examples/next-app — not random component mashups.
+7. Lottery components (`Turntable`, `SlotMachine`, `NineGrid`) skip spin animation when `prefers-reduced-motion: reduce`.
+
+## Campaign recipes
+
+See [campaign-recipes-ai.md](./campaign-recipes-ai.md) for full copy-paste flows (check-in → draw, scratch → fireworks, server turntable).
+
+```bash
+pnpm add @cos-design/flip-card @cos-design/nine-grid @cos-design/confetti
+```
+
+```tsx
+// Minimal check-in → draw (fetch targetIndex before draw())
+<FlipCard onReveal={() => setCheckedIn(true)} />
+<NineGrid disabled={!checkedIn} onDrawEnd={() => confettiRef.current?.burst()} />
+<Confetti ref={confettiRef} fill auto={false} />
+```
 
 ## Install patterns
 
@@ -106,6 +123,12 @@ import { Fireworks } from '@cos-design/fireworks';
 - `LavaBubble` — @cos-design/lava-bubble
 - `InkBloom` — @cos-design/ink-bloom
 - `AuroraVeil` — @cos-design/aurora-veil
+
+### check-in, nine grid, flip card, daily sign-in lottery
+
+- `FlipCard` — @cos-design/flip-card
+- `NineGrid` — @cos-design/nine-grid
+- `ProgressChest` — @cos-design/progress-chest
 
 ## Components
 
@@ -297,7 +320,7 @@ import { DandelionField } from 'cos-design';
 - `width`: number (optional)
 - `height`: number (optional)
 - `fill`: boolean (optional) — 为 true 时铺满父容器（父级需有明确高度）
-- `plantCount`: number (optional, default `5`) — 蒲公英株数，默认 5
+- `plantCount`: number (optional, default `10`) — 蒲公英株数，默认 10
 - `seedCount`: number (optional, default `32`) — 每株种子数，默认 32
 - `speed`: number (optional, default `1`) — 运动速度倍率 0~3，默认 1
 - `interactive`: boolean (optional, default `true`) — 是否响应指针交互，默认 true

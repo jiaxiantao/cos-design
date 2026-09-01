@@ -1,4 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { prefersReducedMotion } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface NineGridItem {
@@ -104,6 +105,14 @@ const NineGrid = forwardRef<NineGridHandle, NineGridProps>(
               ? targetRef.current
               : Math.floor(Math.random() * 9);
         const finalIndex = ((resolved % 9) + 9) % 9;
+
+        if (prefersReducedMotion()) {
+          setActive(finalIndex);
+          setWinner(finalIndex);
+          setDrawing(false);
+          onDrawEndRef.current?.(cells[finalIndex], finalIndex);
+          return;
+        }
 
         const steps = 18 + finalIndex;
         let step = 0;

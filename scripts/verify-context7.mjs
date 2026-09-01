@@ -18,7 +18,15 @@ const CONTEXT_URL =
 /** 必须出现：fill 尺寸能力 + Next 示例路径之一 */
 const REQUIRED_MARKERS = ['fill', 'next-app'];
 /** 加分项（索引未必抽到） */
-const OPTIONAL_MARKERS = ['useCanvasBox', 'next-app-router', 'NineGrid', 'FlipCard'];
+const OPTIONAL_MARKERS = [
+  'useCanvasBox',
+  'next-app-router',
+  'NineGrid',
+  'FlipCard',
+  'ScratchCard',
+  'campaign-recipes-ai',
+  'campaign-patterns'
+];
 
 async function fetchJson(url) {
   const res = await fetch(url);

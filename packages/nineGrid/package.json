@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/nine-grid",
-  "version": "3.7.10",
+  "version": "3.7.11",
   "description": "NineGrid component from cos-design",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -50,5 +50,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
+  },
+  "dependencies": {
+    "@cos-design/shared": "workspace:*"
   }
 }

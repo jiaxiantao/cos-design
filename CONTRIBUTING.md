@@ -123,8 +123,22 @@ git push origin v3.5.3
 
 1. Fork 本仓库并创建功能分支
 2. 完成改动，确保 `npx --yes pnpm@9 lint` 与 `npx --yes pnpm@9 build` 通过
-3. 如有必要，更新 `CHANGELOG.md` 与 `README.md`
-4. 提交 PR 并填写 PR 模板
+3. 涉及活动页 / 抽奖组件时，运行 `pnpm test:smoke`（需先 `pnpm build:demo`）
+4. 如有必要，更新 `CHANGELOG.md` 与 `README.md`；改组件目录后运行 `pnpm generate:ai-docs`
+5. 提交 PR 并填写 PR 模板
+
+## 工程质量清单
+
+新增或修改 Canvas / 营销组件时，请尽量满足：
+
+| 项                         | 说明                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| `bindVisibilityPause`      | 持续 `requestAnimationFrame` 循环的 Canvas 在标签页隐藏时暂停                      |
+| `bindPrefersReducedMotion` | 背景 Canvas 冻结静态帧；抽奖组件（Turntable / SlotMachine / NineGrid）跳过旋转动画 |
+| `aria-busy`                | 抽奖进行中按钮暴露 busy 态，防止连点                                               |
+| `fill`                     | 全屏背景优先支持 `fill` + `useCanvasBox` / `resolveCanvasBoxSize`                  |
+| Smoke                      | 关键交互在 `tests/smoke/playground.spec.ts` 补一条挂载或交互用例                   |
+| AI 文档                    | 新场景组合写入 `docs/campaign-recipes-ai.md`，并 `pnpm generate:ai-docs`           |
 
 ## 代码风格
 

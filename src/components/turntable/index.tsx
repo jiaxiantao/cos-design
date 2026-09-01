@@ -1,4 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { prefersReducedMotion } from '@cos-design/shared';
 import styles from './style/index.module.less';
 
 export interface TurntablePrize {
@@ -223,6 +224,21 @@ const Turntable = forwardRef<TurntableHandle, TurntableProps>(
         const token = { cancelled: false };
         spinTokenRef.current = token;
 
+        const finishSpin = (rotation: number) => {
+          if (token.cancelled) return;
+          const prize = list[targetIndex];
+          rotationRef.current = rotation;
+          drawWheel(rotation);
+          setSpinning(false);
+          setResult(prize);
+          onSpinEndRef.current?.(prize, targetIndex);
+        };
+
+        if (prefersReducedMotion()) {
+          finishSpin(endRotation);
+          return;
+        }
+
         const animate = (now: number) => {
           if (token.cancelled) return;
 
@@ -236,12 +252,8 @@ const Turntable = forwardRef<TurntableHandle, TurntableProps>(
 
           if (progress < 1) {
             animationRef.current = requestAnimationFrame(animate);
-          } else if (!token.cancelled) {
-            const prize = list[targetIndex];
-            rotationRef.current = rotation;
-            setSpinning(false);
-            setResult(prize);
-            onSpinEndRef.current?.(prize, targetIndex);
+          } else {
+            finishSpin(rotation);
           }
         };
 

@@ -9,7 +9,7 @@ description: >-
 
 # cos-design
 
-React **visual-effect** component library (90 components). Campaign pages, brand landings, dashboards, creative demos.
+React **visual-effect** component library (91 components). Campaign pages, brand landings, dashboards, creative demos.
 
 - Playground: https://jiaxiantao.github.io/cos-design/
 - AI index: https://jiaxiantao.github.io/cos-design/llms.txt
@@ -75,8 +75,9 @@ No manual CSS import — styles auto-inject.
 4. **Density** — one strong background + a few focal effects; avoid stacking many full-screen animations.
 5. **Props** — read [docs/ai.md](../../../docs/ai.md) or Playground examples; do not invent API.
 6. **Next.js** — patterns: [docs/examples/next-app-router.md](../../../docs/examples/next-app-router.md); runnable app: [examples/next-app](../../../examples/next-app).
-7. **Campaign flows** — 10-minute guide [docs/campaign-10-minutes.md](../../../docs/campaign-10-minutes.md); busy/retry [docs/campaign-patterns.md](../../../docs/campaign-patterns.md).
-8. **Context7** — library `/jiaxiantao/cos-design`; maintainers can run `pnpm verify:context7`.
+7. **Campaign flows** — 10-minute guide [docs/campaign-10-minutes.md](../../../docs/campaign-10-minutes.md); busy/retry [docs/campaign-patterns.md](../../../docs/campaign-patterns.md); copy-paste recipes [docs/campaign-recipes-ai.md](../../../docs/campaign-recipes-ai.md).
+8. **Reduced motion** — `Turntable` / `SlotMachine` / `NineGrid` skip spin animation when `prefers-reduced-motion: reduce`.
+9. **Context7** — library `/jiaxiantao/cos-design`; maintainers can run `pnpm verify:context7`.
 
 ## Quick examples
 
@@ -117,6 +118,7 @@ export function Hero() {
 When the user wants an **event / campaign page**, prefer the runnable Next sample and docs — not a random component mashup:
 
 - [docs/campaign-10-minutes.md](../../../docs/campaign-10-minutes.md)
+- [docs/campaign-recipes-ai.md](../../../docs/campaign-recipes-ai.md) — copy-paste check-in → draw, scratch → fireworks, server turntable
 - [examples/next-app](../../../examples/next-app) — fill hero → FlipCard → NineGrid → Confetti
 - [docs/campaign-patterns.md](../../../docs/campaign-patterns.md) — busy / retry / pointer rules
 
