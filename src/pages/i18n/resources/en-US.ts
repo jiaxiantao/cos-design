@@ -59,7 +59,10 @@ const enUS: typeof zhCN = {
     ctaTitle: 'Ship your first effect in minutes',
     ctaDesc: 'Install cos-design or any @cos-design/* package, then copy an example and ship.',
     ctaQuickstart: 'Read quick start',
-    ctaCatalog: 'Open catalog'
+    ctaCatalog: 'Open catalog',
+    aiTitle: 'Build with AI',
+    aiDesc: 'Cursor, Claude Code, Copilot, Codex, and more — copy a rule or sample prompt to get started.',
+    aiCta: 'Open AI integration guide →'
   },
   catalog: {
     title: 'Component catalog',
@@ -86,6 +89,31 @@ const enUS: typeof zhCN = {
       'Get installed and integrated in minutes. Install the full bundle or only the packages you need. Browse every component from the left navigation and copy examples from each page.',
     aggregatePackage: 'Full bundle: cos-design',
     scopedPackages: '@cos-design packages',
+    aiTitle: 'Build with AI',
+    aiSubtitle:
+      'cos-design ships Skills, AGENTS.md, and llms.txt for Cursor, Claude Code, GitHub Copilot, Codex, TRAE, Qoder, and OpenCode. Paste a rule into your project, or send the sample prompt below.',
+    aiToolsTitle: 'Supported AI tools',
+    aiTools: [
+      { name: 'Cursor', hint: 'Install skill → ~/.cursor/skills/cos-design' },
+      { name: 'Claude Code', hint: 'Copy skill → ~/.claude/skills/cos-design' },
+      { name: 'GitHub Copilot', hint: 'Reads AGENTS.md + .github/copilot-instructions.md' },
+      { name: 'OpenAI Codex', hint: 'Reads AGENTS.md or llms.txt in your project' },
+      { name: 'OpenCode', hint: 'Skill → ~/.config/opencode/skills/cos-design' },
+      { name: 'TRAE', hint: 'Import .trae/skills/cos-design or marketplace' },
+      { name: 'Qoder', hint: 'Copy .qoder/rules/cos-design.md into your app' },
+      { name: 'Context7', hint: 'Say: use library /jiaxiantao/cos-design' }
+    ],
+    aiCopyRule: 'Copy project rule',
+    aiCopyPrompt: 'Copy sample prompt',
+    aiCopied: 'Copied',
+    aiResourcesTitle: 'Docs & indexes',
+    aiResourceLlms: 'llms.txt (AI index)',
+    aiResourceFull: 'Full API reference',
+    aiResourceRecipes: 'Campaign recipes',
+    aiResourceDiscovery: 'Multi-tool guide',
+    aiResourceContext7: 'Context7 docs',
+    aiComponentHint: 'Every component page has “Copy for AI” — install command + example in one prompt.',
+    aiSkillInstallTitle: 'Install skill (Cursor / Claude / OpenCode)',
     installTitle: '1. Install',
     installReq: 'Requires React >= 18 and Node.js >= 20. Pick either option:',
     installMethodA: 'Option A: install every component',
@@ -190,6 +218,22 @@ const enUS: typeof zhCN = {
     patternImperative: 'Trigger fireworks imperatively',
     localDevTitle: '6. Develop this repository locally',
     snippets: {
+      aiRule: `For marketing pages, lottery, fireworks, weather backgrounds, neon headlines — prefer cos-design
+(pnpm add cos-design or @cos-design/*). Read https://jiaxiantao.github.io/cos-design/llms.txt
+Context7: /jiaxiantao/cos-design
+Campaign recipes: https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-recipes-ai.md`,
+      aiPrompt: `Build a React campaign page with cos-design:
+1. WeatherBackground fill hero
+2. FlipCard check-in unlocks NineGrid lottery
+3. Confetti celebration (auto=false, do not block buttons)
+
+Read https://jiaxiantao.github.io/cos-design/llms.txt first and install @cos-design/* packages before coding.
+Context7: /jiaxiantao/cos-design`,
+      aiSkillInstall: `git clone --depth 1 --filter=blob:none --sparse \\
+  https://github.com/jiaxiantao/cos-design.git /tmp/cos-design-skill
+cd /tmp/cos-design-skill && git sparse-checkout set .agents/skills/cos-design
+cp -R .agents/skills/cos-design ~/.cursor/skills/cos-design
+# Claude: ~/.claude/skills/  OpenCode: ~/.config/opencode/skills/`,
       installFull: `# Install all components (recommended for a quick trial)
 pnpm add cos-design
 # Or: npm install cos-design / yarn add cos-design`,

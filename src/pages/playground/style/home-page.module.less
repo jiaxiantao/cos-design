@@ -107,6 +107,76 @@
   }
 }
 
+.aiBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid rgb(167 139 250 / 45%);
+  background: linear-gradient(135deg, rgb(139 92 246 / 28%), rgb(99 102 241 / 16%));
+  color: #ede9fe;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s;
+
+  &:hover {
+    background: linear-gradient(135deg, rgb(139 92 246 / 40%), rgb(99 102 241 / 24%));
+  }
+}
+
+.aiBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  border: 1px solid rgb(139 92 246 / 30%);
+  background: linear-gradient(135deg, rgb(139 92 246 / 12%), rgb(99 102 241 / 6%));
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    color: #aeb4c4;
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 520px;
+  }
+}
+
+.aiBannerLabel {
+  margin: 0 0 6px;
+  color: #a78bfa;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.aiBannerBtn {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid rgb(139 92 246 / 50%);
+  background: rgb(139 92 246 / 22%);
+  color: #ede9fe;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgb(139 92 246 / 34%);
+  }
+}
+
 .ghostBtn {
   border: 1px solid transparent;
   background: transparent;
@@ -312,6 +382,11 @@
   }
 
   .cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .aiBanner {
     flex-direction: column;
     align-items: flex-start;
   }

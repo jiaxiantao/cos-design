@@ -35,6 +35,9 @@ const HomePage = () => {
           <Link to="/quickstart" className={styles.secondaryBtn}>
             {t('layout.navQuickstart')}
           </Link>
+          <Link to="/quickstart#ai" className={styles.aiBtn}>
+            {t('home.aiTitle')}
+          </Link>
           <a
             className={styles.ghostBtn}
             href="https://www.npmjs.com/package/cos-design"
@@ -71,6 +74,17 @@ const HomePage = () => {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className={styles.aiBanner}>
+        <div>
+          <p className={styles.aiBannerLabel}>AI</p>
+          <h2>{t('home.aiTitle')}</h2>
+          <p>{t('home.aiDesc')}</p>
+        </div>
+        <Link to="/quickstart#ai" className={styles.aiBannerBtn}>
+          {t('home.aiCta')}
+        </Link>
       </section>
 
       <section className={styles.section}>

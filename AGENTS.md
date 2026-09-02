@@ -63,6 +63,7 @@ Styles are auto-injected. No `import 'cos-design/dist/index.css'`.
 | **10-minute campaign guide**       | [docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)                                                               |
 | **Campaign patterns**              | [docs/campaign-patterns.md](./docs/campaign-patterns.md)                                                                   |
 | **Campaign recipes (AI)**          | [docs/campaign-recipes-ai.md](./docs/campaign-recipes-ai.md)                                                               |
+| **Multi-tool AI discovery**        | [docs/ai-discovery.md](./docs/ai-discovery.md) (Cursor / Claude / Copilot / Codex / TRAE / Qoder / OpenCode)               |
 | **Next.js example**                | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) · runnable [examples/next-app](./examples/next-app) |
 | **AI discovery**                   | [docs/ai-discovery.md](./docs/ai-discovery.md)                                                                             |
 | **Context7**                       | `/jiaxiantao/cos-design`（校验：`pnpm verify:context7`）                                                                   |

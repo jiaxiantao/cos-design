@@ -41,6 +41,7 @@
     "preinstall": "npx only-allow pnpm",
     "sync:packages": "node scripts/sync-packages.mjs",
     "sync:logo": "node scripts/sync-public-logo.mjs",
+    "sync:skills": "node scripts/sync-skills.mjs",
     "release": "node scripts/release-changed.mjs",
     "predev": "pnpm sync:logo",
     "dev": "vite",

@@ -1,7 +1,19 @@
+import { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useLocalizedCategories, useLocalizedComponentDemos } from '../i18n/hooks';
 import styles from './style/quickstart-page.module.less';
+
+const LLMS_TXT = 'https://jiaxiantao.github.io/cos-design/llms.txt';
+const LLMS_FULL = 'https://jiaxiantao.github.io/cos-design/llms-full.txt';
+const AI_DISCOVERY = 'https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md';
+const CAMPAIGN_RECIPES = 'https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-recipes-ai.md';
+const CONTEXT7 = 'https://context7.com/jiaxiantao/cos-design';
+
+interface AiTool {
+  name: string;
+  hint: string;
+}
 
 const SINGLE_SNIPPET = `import { WeatherBackground } from '@cos-design/weather-background';
 import { Fireworks } from '@cos-design/fireworks';
@@ -46,6 +58,18 @@ const QuickstartPage = () => {
   const componentDemos = useLocalizedComponentDemos();
   const categoryCards = t('quickstart.categoryCards', { returnObjects: true }) as CategoryCard[];
   const notes = t('quickstart.notes', { returnObjects: true }) as QuickstartNote[];
+  const aiTools = t('quickstart.aiTools', { returnObjects: true }) as AiTool[];
+  const [ruleCopied, setRuleCopied] = useState(false);
+  const [promptCopied, setPromptCopied] = useState(false);
+  const ruleTimerRef = useRef(0);
+  const promptTimerRef = useRef(0);
+
+  const copyText = async (text: string, setCopied: (v: boolean) => void, timerRef: { current: number }) => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className={styles.page}>
@@ -72,6 +96,65 @@ const QuickstartPage = () => {
           </a>
         </div>
       </header>
+
+      <section id="ai" className={styles.aiSection}>
+        <div className={styles.aiBadge}>AI</div>
+        <h2 className={styles.sectionTitle}>{t('quickstart.aiTitle')}</h2>
+        <p className={styles.sectionDesc}>{t('quickstart.aiSubtitle')}</p>
+
+        <div className={styles.copyActions}>
+          <button
+            type="button"
+            className={styles.copyBtn}
+            onClick={() => copyText(t('quickstart.snippets.aiRule'), setRuleCopied, ruleTimerRef)}
+          >
+            {ruleCopied ? t('quickstart.aiCopied') : t('quickstart.aiCopyRule')}
+          </button>
+          <button
+            type="button"
+            className={styles.copyBtnSecondary}
+            onClick={() => copyText(t('quickstart.snippets.aiPrompt'), setPromptCopied, promptTimerRef)}
+          >
+            {promptCopied ? t('quickstart.aiCopied') : t('quickstart.aiCopyPrompt')}
+          </button>
+        </div>
+
+        <h3 className={styles.subHeading}>{t('quickstart.aiToolsTitle')}</h3>
+        <div className={styles.toolGrid}>
+          {aiTools.map((tool) => (
+            <article key={tool.name} className={styles.toolCard}>
+              <strong>{tool.name}</strong>
+              <span>{tool.hint}</span>
+            </article>
+          ))}
+        </div>
+
+        <h3 className={styles.subHeading}>{t('quickstart.aiResourcesTitle')}</h3>
+        <div className={styles.resourceLinks}>
+          <a href={LLMS_TXT} target="_blank" rel="noreferrer">
+            {t('quickstart.aiResourceLlms')}
+          </a>
+          <a href={LLMS_FULL} target="_blank" rel="noreferrer">
+            {t('quickstart.aiResourceFull')}
+          </a>
+          <a href={CAMPAIGN_RECIPES} target="_blank" rel="noreferrer">
+            {t('quickstart.aiResourceRecipes')}
+          </a>
+          <a href={AI_DISCOVERY} target="_blank" rel="noreferrer">
+            {t('quickstart.aiResourceDiscovery')}
+          </a>
+          <a href={CONTEXT7} target="_blank" rel="noreferrer">
+            {t('quickstart.aiResourceContext7')}
+          </a>
+        </div>
+
+        <p className={styles.aiHint}>{t('quickstart.aiComponentHint')}</p>
+
+        <h3 className={styles.subHeading}>{t('quickstart.aiSkillInstallTitle')}</h3>
+        <pre className={styles.code}>
+          <code>{t('quickstart.snippets.aiSkillInstall')}</code>
+        </pre>
+      </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>{t('quickstart.installTitle')}</h2>

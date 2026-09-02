@@ -3,7 +3,14 @@
   "projectTitle": "cos-design",
   "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (91 components).",
   "branch": "master",
-  "folders": ["docs", "public", "website-content", ".cursor/skills/cos-design", "examples"],
+  "folders": [
+    "docs",
+    "public",
+    "website-content",
+    ".cursor/skills/cos-design",
+    ".agents/skills/cos-design",
+    "examples"
+  ],
   "excludeFolders": [
     "src",
     "packages",

@@ -239,3 +239,125 @@
     line-height: 1.55;
   }
 }
+
+.aiSection {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 24px 24px 22px;
+  border: 1px solid rgb(139 92 246 / 35%);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgb(139 92 246 / 12%) 0%, #12141c 55%);
+  scroll-margin-top: 24px;
+}
+
+.aiBadge {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(139 92 246 / 25%);
+  border: 1px solid rgb(167 139 250 / 40%);
+  color: #ddd6fe;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.copyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.copyBtn,
+.copyBtnSecondary {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.copyBtn {
+  border: 1px solid rgb(139 92 246 / 50%);
+  background: rgb(139 92 246 / 22%);
+  color: #ede9fe;
+
+  &:hover {
+    background: rgb(139 92 246 / 34%);
+  }
+}
+
+.copyBtnSecondary {
+  border: 1px solid rgb(255 255 255 / 12%);
+  background: rgb(255 255 255 / 4%);
+  color: #c7ccd8;
+
+  &:hover {
+    background: rgb(255 255 255 / 8%);
+  }
+}
+
+.toolGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.toolCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgb(0 0 0 / 20%);
+  border: 1px solid rgb(255 255 255 / 6%);
+
+  strong {
+    font-size: 13px;
+    color: #e8eaef;
+  }
+
+  span {
+    font-size: 11px;
+    line-height: 1.45;
+    color: #8b92a8;
+  }
+}
+
+.resourceLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  a {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 10%);
+    background: rgb(255 255 255 / 4%);
+    color: #c4b5fd;
+    font-size: 12px;
+    text-decoration: none;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgb(139 92 246 / 18%);
+    }
+  }
+}
+
+.aiHint {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
+  color: #8b92a8;
+  font-size: 13px;
+  line-height: 1.55;
+}
