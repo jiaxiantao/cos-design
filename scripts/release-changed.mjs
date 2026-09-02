@@ -116,6 +116,13 @@ Or pass an explicit baseline:
   });
   if ((sync.status ?? 1) !== 0) process.exit(sync.status ?? 1);
 
+  const lockfile = spawnSync('pnpm', ['install', '--lockfile-only'], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: { ...process.env, HUSKY: '0' }
+  });
+  if ((lockfile.status ?? 1) !== 0) process.exit(lockfile.status ?? 1);
+
   console.log(`
 Done. Next steps:
   1. Review CHANGELOG.md and version bumps
