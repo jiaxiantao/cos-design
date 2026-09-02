@@ -1,0 +1,31 @@
+.cos-shiny-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+  overflow: hidden;
+  background: radial-gradient(circle at 70% 30%, rgba(148, 163, 184, 0.12), transparent 34%), linear-gradient(180deg, #0a0a0a, #111827);
+  border-radius: 18px;
+}
+.cos-shiny-text__text {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  background-image: linear-gradient(110deg, var(--shiny-color, #94a3b8) 0%, var(--shiny-color, #94a3b8) 40%, var(--shiny-shine, #fff) 50%, var(--shiny-color, #94a3b8) 60%, var(--shiny-color, #94a3b8) 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  color: transparent;
+  animation: shine-sweep var(--shiny-duration, 2s) linear infinite;
+}
+.cos-shiny-text__paused {
+  animation-play-state: paused;
+}
+@keyframes shine-sweep {
+  0% {
+    background-position: 150% center;
+  }
+  100% {
+    background-position: -50% center;
+  }
+}

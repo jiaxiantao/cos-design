@@ -1,0 +1,61 @@
+.cos-blur-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+  overflow: hidden;
+  background: radial-gradient(circle at 25% 30%, rgba(56, 189, 248, 0.1), transparent 32%), linear-gradient(180deg, #0a0a0a, #0f172a);
+  border-radius: 18px;
+}
+.cos-blur-text__text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  color: var(--blur-color, #f8fafc);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.cos-blur-text__unit {
+  display: inline-block;
+  will-change: transform, filter, opacity;
+  animation-duration: var(--blur-duration, 500ms);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cos-blur-text__idle {
+  opacity: 0;
+  filter: blur(12px);
+}
+.cos-blur-text__top.cos-blur-text__enter {
+  animation-name: blurFromTop;
+}
+.cos-blur-text__bottom.cos-blur-text__enter {
+  animation-name: blurFromBottom;
+}
+@keyframes blurFromTop {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(-36px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes blurFromBottom {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}

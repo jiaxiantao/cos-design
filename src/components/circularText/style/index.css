@@ -1,0 +1,45 @@
+.cos-circular-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: 40px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.12), transparent 40%), linear-gradient(180deg, #0a0a0a, #111827);
+  border-radius: 18px;
+}
+.cos-circular-text__scale-wrap {
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cos-circular-text__bonkers {
+  transform: scale(0.85);
+}
+.cos-circular-text__ring {
+  position: relative;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  user-select: none;
+  animation-name: spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.cos-circular-text__char {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  width: 1em;
+  margin-left: -0.5em;
+  margin-top: -0.5em;
+  text-align: center;
+  transform-origin: center center;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

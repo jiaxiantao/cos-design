@@ -40,6 +40,9 @@
     "setup": "node scripts/install.mjs",
     "preinstall": "npx only-allow pnpm",
     "sync:packages": "node scripts/sync-packages.mjs",
+    "migrate:component": "node scripts/migrate-component.mjs",
+    "migrate:batch-a": "node scripts/migrate-batch-a.mjs",
+    "verify:v4-matrix": "node scripts/verify-v4-matrix.mjs",
     "sync:logo": "node scripts/sync-public-logo.mjs",
     "sync:skills": "node scripts/sync-skills.mjs",
     "release": "node scripts/release-changed.mjs",
@@ -74,11 +77,14 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.55.0",
     "@types/node": "^22.19.21",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.185.3",
-    "@vitejs/plugin-react": "^6.0.2",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vue/tsconfig": "^0.8.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -102,7 +108,7 @@
     "vite": "^8.0.16",
     "vite-plugin-dts": "^5.0.2",
     "vite-plugin-lib-inject-css": "^2.2.2",
-    "@playwright/test": "^1.55.0"
+    "vue": "^3.5.28"
   },
   "engines": {
     "node": ">=20",

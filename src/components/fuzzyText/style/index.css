@@ -1,0 +1,14 @@
+.cos-fuzzy-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 40px;
+  overflow: hidden;
+  background: radial-gradient(circle at 55% 40%, rgba(244, 114, 182, 0.12), transparent 34%), linear-gradient(180deg, #0a0a0a, #111827);
+  border-radius: 18px;
+}
+.cos-fuzzy-text__canvas {
+  display: block;
+  max-width: 100%;
+}

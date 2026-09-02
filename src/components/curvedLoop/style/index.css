@@ -1,0 +1,30 @@
+.cos-curved-loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 24px 12px;
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 50%, rgba(56, 189, 248, 0.1), transparent 36%), linear-gradient(180deg, #0a0a0a, #0f172a);
+  border-radius: 18px;
+  user-select: none;
+}
+.cos-curved-loop__svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  aspect-ratio: 100 / 12;
+  font-size: var(--curve-font-size, 56px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.cos-curved-loop__measure {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+.cos-curved-loop__path-text {
+  fill: var(--curve-color, #f8fafc);
+}

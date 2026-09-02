@@ -1,0 +1,86 @@
+.cos-timeline-pulse {
+  --dot-size: 14px;
+  --line-inset: calc(100% / var(--step-count, 4) / 2);
+  padding: 24px 16px;
+  min-width: 280px;
+}
+.cos-timeline-pulse__axis {
+  position: relative;
+}
+.cos-timeline-pulse__track,
+.cos-timeline-pulse__progress {
+  position: absolute;
+  top: calc(var(--dot-size) / 2);
+  left: var(--line-inset);
+  height: 3px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.cos-timeline-pulse__track {
+  right: var(--line-inset);
+  background: rgba(148, 163, 184, 0.2);
+}
+.cos-timeline-pulse__progress {
+  width: calc((100% - 2 * var(--line-inset)) * var(--progress-ratio, 0));
+  background: var(--pulse-color, #22d3ee);
+  transition: width 0.4s ease;
+}
+.cos-timeline-pulse__steps {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+}
+.cos-timeline-pulse__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.cos-timeline-pulse__dot {
+  box-sizing: border-box;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: #1e293b;
+  border: 2px solid #475569;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cos-timeline-pulse__step[data-state='done'] .cos-timeline-pulse__dot {
+  background: var(--pulse-color, #22d3ee);
+  border-color: var(--pulse-color, #22d3ee);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--pulse-color, #22d3ee) 50%, transparent);
+}
+.cos-timeline-pulse__step[data-state='current'] .cos-timeline-pulse__dot {
+  background: var(--pulse-color, #22d3ee);
+  border-color: var(--pulse-color, #22d3ee);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.cos-timeline-pulse__name {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72px;
+}
+.cos-timeline-pulse__step[data-state='current'] .cos-timeline-pulse__name,
+.cos-timeline-pulse__step[data-state='done'] .cos-timeline-pulse__name {
+  color: #e2e8f0;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--pulse-color, #22d3ee) 50%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}

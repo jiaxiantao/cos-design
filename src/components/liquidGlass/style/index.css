@@ -1,0 +1,34 @@
+.cos-liquid-glass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: 40px;
+  background: radial-gradient(circle at 20% 30%, #6366f1 0%, transparent 50%), radial-gradient(circle at 80% 70%, #ec4899 0%, transparent 50%), radial-gradient(circle at 50% 50%, #06b6d4 0%, transparent 60%), #0f172a;
+  border-radius: 16px;
+}
+.cos-liquid-glass__panel {
+  position: relative;
+  padding: 32px 48px;
+  border-radius: var(--glass-radius, 20px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(var(--glass-blur, 16px));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.cos-liquid-glass__panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cos-liquid-glass__content {
+  position: relative;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}

@@ -1,6 +1,6 @@
 /**
  * 根据 src/components 同步生成 packages/<name>/package.json 与入口文件。
- * 组件 / shared 保留已有版本号；聚合包 cos-design 与根目录 version 对齐。
+ * v4 组件（含 core/index.ts）生成 react / vue / core / element 四入口。
  * 用法：node scripts/sync-packages.mjs
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -16,11 +16,15 @@ import {
   packageNameOf,
   toExportName
 } from './component-packages.mjs';
+import { isV4Component } from './v4-utils.mjs';
+import { v4ExportMap, v4PeerDependencies, writeV4PackageEntries } from './v4-package-exports.mjs';
 
 const AI_KEYWORDS = [
   'cos',
   'cos-design',
   'react',
+  'vue',
+  'web-components',
   'component-library',
   'visual-effects',
   'canvas',
@@ -54,6 +58,21 @@ function readExistingVersion(pkgPath, fallback) {
   }
 }
 
+function legacyExports() {
+  return {
+    '.': {
+      import: {
+        types: './dist/index.d.ts',
+        default: './dist/index.js'
+      },
+      require: {
+        types: './dist/index.d.ts',
+        default: './dist/index.cjs'
+      }
+    }
+  };
+}
+
 function createComponentPackage(name) {
   const dir = join(PACKAGES_DIR, name);
   const srcDir = join(dir, 'src');
@@ -65,67 +84,75 @@ function createComponentPackage(name) {
   const extra = EXTRA_EXPORTS[name];
   const componentPath = `../../../src/components/${name}`;
   const version = readExistingVersion(pkgPath, VERSION);
+  const v4 = isV4Component(name);
 
-  const lines = [
-    `export { default } from '${componentPath}';`,
-    `export { default as ${exportName} } from '${componentPath}';`,
-    `export type * from '${componentPath}';`
-  ];
+  if (v4) {
+    writeV4PackageEntries(name, srcDir, exportName, extra);
+  } else {
+    const lines = [
+      `export { default } from '${componentPath}';`,
+      `export { default as ${exportName} } from '${componentPath}';`,
+      `export type * from '${componentPath}';`
+    ];
 
-  if (extra) {
-    const fromLive = extra.from || {};
-    const byFrom = new Map();
+    if (extra) {
+      const fromLive = extra.from || {};
+      const byFrom = new Map();
 
-    for (const value of extra.values || []) {
-      const rel = fromLive[value] || '.';
-      if (rel === '.') continue;
-      if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
-      byFrom.get(rel).values.push(value);
-    }
-
-    for (const typeName of extra.types || []) {
-      const rel = fromLive[typeName] || '.';
-      if (rel === '.') continue;
-      if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
-      byFrom.get(rel).types.push(typeName);
-    }
-
-    for (const [rel, group] of byFrom) {
-      const base = `${componentPath}/${rel.replace(/^\.\//, '')}`;
-      if (group.values.length) {
-        lines.push(`export { ${group.values.join(', ')} } from '${base}';`);
+      for (const value of extra.values || []) {
+        const rel = fromLive[value] || '.';
+        if (rel === '.') continue;
+        if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
+        byFrom.get(rel).values.push(value);
       }
-      if (group.types.length) {
-        lines.push(`export type { ${group.types.join(', ')} } from '${base}';`);
+
+      for (const typeName of extra.types || []) {
+        const rel = fromLive[typeName] || '.';
+        if (rel === '.') continue;
+        if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
+        byFrom.get(rel).types.push(typeName);
+      }
+
+      for (const [rel, group] of byFrom) {
+        const base = `${componentPath}/${rel.replace(/^\.\//, '')}`;
+        if (group.values.length) {
+          lines.push(`export { ${group.values.join(', ')} } from '${base}';`);
+        }
+        if (group.types.length) {
+          lines.push(`export type { ${group.types.join(', ')} } from '${base}';`);
+        }
       }
     }
+
+    writeFileSync(join(srcDir, 'index.ts'), `${lines.join('\n')}\n`);
   }
 
-  writeFileSync(join(srcDir, 'index.ts'), `${lines.join('\n')}\n`);
+  const extraPeers = componentPeerDeps(name);
+  const { peers, peerDependenciesMeta } = v4
+    ? v4PeerDependencies(extraPeers || undefined)
+    : {
+        peers: {
+          react: '>=18.0.0',
+          'react-dom': '>=18.0.0',
+          ...(extraPeers || {})
+        },
+        peerDependenciesMeta: undefined
+      };
 
   const pkg = {
     name: packageNameOf(name),
     version,
     description: `${exportName} component from cos-design`,
     type: 'module',
-    main: './dist/index.cjs',
-    module: './dist/index.js',
-    types: './dist/index.d.ts',
-    exports: {
-      '.': {
-        import: {
-          types: './dist/index.d.ts',
-          default: './dist/index.js'
-        },
-        require: {
-          types: './dist/index.d.ts',
-          default: './dist/index.cjs'
-        }
-      }
-    },
+    main: v4 ? './dist/react/index.cjs' : './dist/index.cjs',
+    module: v4 ? './dist/react/index.js' : './dist/index.js',
+    types: v4 ? './dist/react/index.d.ts' : './dist/index.d.ts',
+    exports: v4 ? v4ExportMap() : legacyExports(),
     files: ['dist', 'LICENSE'],
-    sideEffects: ['**/*.css', '**/*.less'],
-    keywords: ['cos-design', 'react', name, exportName],
+    sideEffects: v4
+      ? ['**/*.css', '**/*.less', './dist/element/index.js']
+      : ['**/*.css', '**/*.less'],
+    keywords: ['cos-design', 'react', 'vue', name, exportName],
     homepage: 'https://jiaxiantao.github.io/cos-design/',
     bugs: {
       url: 'https://github.com/jiaxiantao/cos-design/issues'
@@ -137,16 +164,16 @@ function createComponentPackage(name) {
     },
     author: 'jiaxiantao <jiaxiantao@souche.com>',
     license: 'MIT',
-    peerDependencies: {
-      react: '>=18.0.0',
-      'react-dom': '>=18.0.0',
-      ...(componentPeerDeps(name) || {})
-    },
+    peerDependencies: peers,
     publishConfig: {
       access: 'public',
       registry: 'https://registry.npmjs.org'
     }
   };
+
+  if (peerDependenciesMeta) {
+    pkg.peerDependenciesMeta = peerDependenciesMeta;
+  }
 
   if (usesShared) {
     pkg.dependencies = {
@@ -175,18 +202,7 @@ function createUmbrellaPackage() {
     main: './dist/index.cjs',
     module: './dist/index.js',
     types: './dist/index.d.ts',
-    exports: {
-      '.': {
-        import: {
-          types: './dist/index.d.ts',
-          default: './dist/index.js'
-        },
-        require: {
-          types: './dist/index.d.ts',
-          default: './dist/index.cjs'
-        }
-      }
-    },
+    exports: legacyExports(),
     files: ['dist', 'LICENSE', 'README.md', 'CHANGELOG.md'],
     sideEffects: ['**/*.css', '**/*.less'],
     keywords: AI_KEYWORDS,
@@ -223,6 +239,31 @@ function createUmbrellaPackage() {
 const sharedPkgPath = join(PACKAGES_DIR, 'shared', 'package.json');
 const sharedPkg = JSON.parse(readFileSync(sharedPkgPath, 'utf8'));
 sharedPkg.version = readExistingVersion(sharedPkgPath, VERSION);
+sharedPkg.exports = {
+  '.': {
+    import: {
+      types: './dist/index.d.ts',
+      default: './dist/index.js'
+    },
+    require: {
+      types: './dist/index.d.ts',
+      default: './dist/index.cjs'
+    }
+  },
+  './react': {
+    import: {
+      types: './dist/react/index.d.ts',
+      default: './dist/react/index.js'
+    }
+  }
+};
+sharedPkg.peerDependencies = {
+  react: '>=18.0.0'
+};
+sharedPkg.peerDependenciesMeta = {
+  react: { optional: true }
+};
+
 const licenseSrc = join(ROOT, 'LICENSE');
 if (existsSync(licenseSrc)) {
   cpSync(licenseSrc, join(PACKAGES_DIR, 'shared', 'LICENSE'));
@@ -235,11 +276,12 @@ for (const name of names) {
 }
 createUmbrellaPackage();
 
+const v4Count = names.filter(isV4Component).length;
 const uniqueVersions = new Set([
   VERSION,
   sharedPkg.version,
   ...names.map((n) => readExistingVersion(join(PACKAGES_DIR, n, 'package.json'), VERSION))
 ]);
 console.log(
-  `Synced ${names.length} component packages + shared + cos-design (root/umbrella=${VERSION}; versions=${[...uniqueVersions].sort().join(', ')})`
+  `Synced ${names.length} component packages + shared + cos-design (v4=${v4Count}; root=${VERSION}; versions=${[...uniqueVersions].sort().join(', ')})`
 );
