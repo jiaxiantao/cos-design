@@ -658,6 +658,9 @@ importers:
 
   packages/nineGrid:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -964,6 +967,9 @@ importers:
 
   packages/slotMachine:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1114,6 +1120,9 @@ importers:
 
   packages/turntable:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
