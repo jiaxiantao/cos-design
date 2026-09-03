@@ -24,7 +24,7 @@ export const resolveCanvasBoxSize = ({
   height,
   defaultWidth,
   defaultHeight,
-  measured
+  measured,
 }: CanvasBoxSizeInput): CanvasBoxSize => {
   if (fill) {
     const w = Math.max(0, measured.width);
@@ -38,6 +38,6 @@ export const resolveCanvasBoxSize = ({
   return {
     width: width ?? defaultWidth,
     height: height ?? defaultHeight,
-    pending: false
+    pending: false,
   };
 };

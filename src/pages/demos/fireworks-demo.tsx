@@ -9,7 +9,13 @@ const FireworksDemo = () => {
 
   return (
     <div className={styles.wrap}>
-      <Fireworks ref={ref} auto={false} width={800} height={500} hint={t('demos.componentCopy.fireworksHint')} />
+      <Fireworks
+        ref={ref}
+        auto={false}
+        width={800}
+        height={500}
+        hint={t('demos.componentCopy.fireworksHint')}
+      />
       <button type="button" className={styles.trigger} onClick={() => ref.current?.launch()}>
         {t('demos.fireworksLaunch')}
       </button>

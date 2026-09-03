@@ -1,4 +1,8 @@
-import { createPhotoClothesline, type PhotoClotheslineController, type PhotoClotheslineOptions } from '../core';
+import {
+  createPhotoClothesline,
+  type PhotoClotheslineController,
+  type PhotoClotheslineOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-clothesline';
@@ -8,7 +12,8 @@ function parseOptions(el: HTMLElement): PhotoClotheslineOptions {
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('photo-width')) options.photoWidth = Number(el.getAttribute('photo-width'));
-  if (el.hasAttribute('photo-height')) options.photoHeight = Number(el.getAttribute('photo-height'));
+  if (el.hasAttribute('photo-height'))
+    options.photoHeight = Number(el.getAttribute('photo-height'));
   if (el.hasAttribute('photo-gap')) options.photoGap = Number(el.getAttribute('photo-gap'));
   if (el.hasAttribute('rope-top')) options.ropeTop = Number(el.getAttribute('rope-top'));
   if (el.hasAttribute('rope-sag')) options.ropeSag = Number(el.getAttribute('rope-sag'));
@@ -22,11 +27,15 @@ function parseOptions(el: HTMLElement): PhotoClotheslineOptions {
   if (el.hasAttribute('rope-color')) options.ropeColor = el.getAttribute('rope-color') ?? undefined;
   if (el.hasAttribute('band-color')) options.bandColor = el.getAttribute('band-color') ?? undefined;
   if (el.hasAttribute('pin-color')) options.pinColor = el.getAttribute('pin-color') ?? undefined;
-  if (el.hasAttribute('frame-color')) options.frameColor = el.getAttribute('frame-color') ?? undefined;
-  if (el.hasAttribute('background')) options.background = el.getAttribute('background') ?? undefined;
+  if (el.hasAttribute('frame-color'))
+    options.frameColor = el.getAttribute('frame-color') ?? undefined;
+  if (el.hasAttribute('background'))
+    options.background = el.getAttribute('background') ?? undefined;
   if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
-  if (el.hasAttribute('show-caption')) options.showCaption = el.getAttribute('show-caption') !== 'false';
-  if (el.hasAttribute('initial-index')) options.initialIndex = Number(el.getAttribute('initial-index'));
+  if (el.hasAttribute('show-caption'))
+    options.showCaption = el.getAttribute('show-caption') !== 'false';
+  if (el.hasAttribute('initial-index'))
+    options.initialIndex = Number(el.getAttribute('initial-index'));
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   return options;
 }
@@ -58,7 +67,7 @@ class CosPhotoClotheslineElement extends HTMLElement {
       'object-fit',
       'show-caption',
       'initial-index',
-      'aria-label'
+      'aria-label',
     ];
   }
 

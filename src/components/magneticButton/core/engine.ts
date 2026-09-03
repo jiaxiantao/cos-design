@@ -2,9 +2,14 @@ import type { MagneticButtonController, MagneticButtonOptions } from './types';
 const P = 'cos-magnetic-button';
 export function createMagneticButton(
   container: HTMLElement,
-  initial: MagneticButtonOptions = {}
+  initial: MagneticButtonOptions = {},
 ): MagneticButtonController {
-  let opts: MagneticButtonOptions = { strength: 0.4, color: '#6366f1', defaultContent: '磁吸按钮', ...initial };
+  let opts: MagneticButtonOptions = {
+    strength: 0.4,
+    color: '#6366f1',
+    defaultContent: '磁吸按钮',
+    ...initial,
+  };
   const wrap = document.createElement('div');
   wrap.className = P;
   const btn = document.createElement('button');
@@ -52,6 +57,6 @@ export function createMagneticButton(
       wrap.removeEventListener('mousemove', onMove);
       wrap.removeEventListener('mouseleave', onLeave);
       wrap.remove();
-    }
+    },
   };
 }

@@ -51,7 +51,7 @@ export function drawWind(scene: WeatherSceneRuntime) {
       streak.x + ux * len * 0.7,
       streak.y + uy * len * 0.7 * 0.45 - waveY,
       endX,
-      endY
+      endY,
     );
     scene.ctx.strokeStyle = `rgba(235, 244, 250, ${alpha})`;
     scene.ctx.lineWidth = streak.width * (0.85 + intensity * 0.2);
@@ -87,7 +87,7 @@ export function drawLightning(scene: WeatherSceneRuntime) {
       sx + (Math.random() - 0.5) * scene.width * 0.2,
       scene.height * 0.92,
       60,
-      6
+      6,
     );
   }
 
@@ -95,7 +95,9 @@ export function drawLightning(scene: WeatherSceneRuntime) {
     scene.state.boltLife -= 1;
     const alpha = scene.state.boltLife / 9;
     scene.ctx.beginPath();
-    scene.state.boltPoints.forEach(([x, y], i) => (i === 0 ? scene.ctx.moveTo(x, y) : scene.ctx.lineTo(x, y)));
+    scene.state.boltPoints.forEach(([x, y], i) =>
+      i === 0 ? scene.ctx.moveTo(x, y) : scene.ctx.lineTo(x, y),
+    );
     scene.ctx.strokeStyle = `rgba(240, 246, 255, ${alpha})`;
     scene.ctx.lineWidth = 2.4;
     scene.ctx.shadowColor = '#bcd7ff';

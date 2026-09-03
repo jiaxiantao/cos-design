@@ -4,7 +4,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 
 export interface CanvasHostState {
@@ -24,7 +24,7 @@ export function setupCanvasHost(
   container: HTMLElement,
   prefix: string,
   defaults: { width: number; height: number },
-  options: { fill?: boolean; width?: number; height?: number }
+  options: { fill?: boolean; width?: number; height?: number },
 ) {
   const root = document.createElement('div');
   root.className = prefix;
@@ -43,7 +43,7 @@ export function setupCanvasHost(
     frameId: 0,
     sizeCleanup: null,
     unbindVisibility: null,
-    unbindMotion: null
+    unbindMotion: null,
   };
 
   const applyLayout = () => {
@@ -85,7 +85,7 @@ export function setupCanvasHost(
         height: opts.height,
         defaultWidth: defaults.width,
         defaultHeight: defaults.height,
-        measured
+        measured,
       });
       state.width = box.width;
       state.height = box.height;

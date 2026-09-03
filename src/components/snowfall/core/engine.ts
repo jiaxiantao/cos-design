@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { SnowfallController, SnowfallOptions } from './types';
 
@@ -22,7 +22,10 @@ interface Flake {
   opacity: number;
 }
 
-export function createSnowfall(container: HTMLElement, initial: SnowfallOptions = {}): SnowfallController {
+export function createSnowfall(
+  container: HTMLElement,
+  initial: SnowfallOptions = {},
+): SnowfallController {
   let options: SnowfallOptions = { fill: false, mode: 'snow', count: 120, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -52,7 +55,7 @@ export function createSnowfall(container: HTMLElement, initial: SnowfallOptions 
       drift: (Math.random() - 0.5) * 0.8,
       rotation: Math.random() * Math.PI * 2,
       rotationSpeed: (Math.random() - 0.5) * 0.04,
-      opacity: Math.random() * 0.6 + 0.4
+      opacity: Math.random() * 0.6 + 0.4,
     };
   };
 
@@ -101,7 +104,7 @@ export function createSnowfall(container: HTMLElement, initial: SnowfallOptions 
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -190,6 +193,6 @@ export function createSnowfall(container: HTMLElement, initial: SnowfallOptions 
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

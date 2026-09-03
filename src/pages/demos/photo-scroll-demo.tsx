@@ -7,7 +7,7 @@ const PHOTO_URLS = [
   'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
   'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85',
   'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85',
-  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85'
+  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85',
 ];
 
 const PhotoScrollDemo = () => {
@@ -26,7 +26,9 @@ const PhotoScrollDemo = () => {
         showCaption
         ariaLabel={t('demos.componentCopy.photoScrollAria')}
       />
-      <p style={{ margin: 0, fontSize: 13, opacity: 0.7 }}>{t('demos.componentCopy.photoScrollHint')}</p>
+      <p style={{ margin: 0, fontSize: 13, opacity: 0.7 }}>
+        {t('demos.componentCopy.photoScrollHint')}
+      </p>
     </div>
   );
 };

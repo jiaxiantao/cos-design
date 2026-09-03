@@ -1,4 +1,8 @@
-import { createAudioVisualizer, type AudioVisualizerController, type AudioVisualizerOptions } from '../core';
+import {
+  createAudioVisualizer,
+  type AudioVisualizerController,
+  type AudioVisualizerOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-audio-visualizer';

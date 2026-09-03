@@ -5,13 +5,13 @@ const P = 'cos-progress-chest';
 
 export function createProgressChest(
   container: HTMLElement,
-  initial: ProgressChestOptions = {}
+  initial: ProgressChestOptions = {},
 ): ProgressChestController {
   let options: ProgressChestOptions = {
     progress: 0,
     label: '开启宝箱',
     openedLabel: '宝箱已开启！',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let opened = false;
@@ -64,7 +64,9 @@ export function createProgressChest(
     pctEl.textContent = `${pct.toFixed(0)}%`;
     chest.classList.toggle(`${P}__chest--open`, isOpen);
     treasure.hidden = !isOpen;
-    labelEl.textContent = isOpen ? (options.openedLabel ?? '宝箱已开启！') : (options.label ?? '开启宝箱');
+    labelEl.textContent = isOpen
+      ? (options.openedLabel ?? '宝箱已开启！')
+      : (options.label ?? '开启宝箱');
     if (isOpen && !opened) {
       opened = true;
       onOpenRef.current?.();
@@ -84,6 +86,6 @@ export function createProgressChest(
       if (destroyed) return;
       destroyed = true;
       root.remove();
-    }
+    },
   };
 }

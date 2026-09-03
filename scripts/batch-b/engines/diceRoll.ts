@@ -8,32 +8,32 @@ const FACE_ROTATIONS: Record<number, { x: number; y: number }> = {
   3: { x: 0, y: -90 },
   4: { x: 0, y: 90 },
   5: { x: -90, y: 0 },
-  6: { x: 90, y: 0 }
+  6: { x: 90, y: 0 },
 };
 
 const DOT_POSITIONS: Record<number, number[][]> = {
   1: [[50, 50]],
   2: [
     [25, 25],
-    [75, 75]
+    [75, 75],
   ],
   3: [
     [25, 25],
     [50, 50],
-    [75, 75]
+    [75, 75],
   ],
   4: [
     [25, 25],
     [75, 25],
     [25, 75],
-    [75, 75]
+    [75, 75],
   ],
   5: [
     [25, 25],
     [75, 25],
     [50, 50],
     [25, 75],
-    [75, 75]
+    [75, 75],
   ],
   6: [
     [25, 25],
@@ -41,17 +41,20 @@ const DOT_POSITIONS: Record<number, number[][]> = {
     [25, 50],
     [75, 50],
     [25, 75],
-    [75, 75]
-  ]
+    [75, 75],
+  ],
 };
 
-export function createDiceRoll(container: HTMLElement, initial: DiceRollOptions = {}): DiceRollController {
+export function createDiceRoll(
+  container: HTMLElement,
+  initial: DiceRollOptions = {},
+): DiceRollController {
   let options: DiceRollOptions = {
     sides: 6,
     rollText: '掷骰子',
     rollingText: '掷骰中...',
     resultPrefix: '点数:',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let rolling = false;
@@ -90,7 +93,9 @@ export function createDiceRoll(container: HTMLElement, initial: DiceRollOptions 
   container.appendChild(root);
 
   const render = () => {
-    rollBtn.textContent = rolling ? (options.rollingText ?? '掷骰中...') : (options.rollText ?? '掷骰子');
+    rollBtn.textContent = rolling
+      ? (options.rollingText ?? '掷骰中...')
+      : (options.rollText ?? '掷骰子');
     rollBtn.disabled = rolling;
     cube.classList.toggle(`${P}__cube--rolling`, rolling);
     cube.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`;
@@ -133,6 +138,6 @@ export function createDiceRoll(container: HTMLElement, initial: DiceRollOptions 
       window.clearTimeout(timer);
       rollBtn.removeEventListener('click', handleRoll);
       root.remove();
-    }
+    },
   };
 }

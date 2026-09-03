@@ -13,7 +13,7 @@ export default defineConfig({
   use: {
     // Demo build uses base `/` (pages build uses `/cos-design/`).
     baseURL: 'http://127.0.0.1:4173',
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
   },
   webServer: {
     command: useCiPreview
@@ -21,7 +21,7 @@ export default defineConfig({
       : 'pnpm build:demo && pnpm exec vite preview --outDir dist-demo --host 127.0.0.1 --port 4173',
     url: 'http://127.0.0.1:4173',
     reuseExistingServer: !process.env.CI,
-    timeout: 300_000
+    timeout: 300_000,
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }]
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
 });

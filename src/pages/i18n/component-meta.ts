@@ -22,465 +22,480 @@ export const componentMetaEn = {
     title: 'Weather Background',
     description:
       'Multiple weather scenes with adjustable rain/snow/fog/hail/smog intensity; optional Open-Meteo live rendering.',
-    tags: ['Canvas', 'Effect', 'API']
+    tags: ['Canvas', 'Effect', 'API'],
   },
   RippleWater: {
     title: 'Ripple Water',
     description: 'Realistic water surface; clicks spawn physically spreading ripples.',
-    tags: ['WebGL', 'Interactive']
+    tags: ['WebGL', 'Interactive'],
   },
   SmokeFog: {
     title: 'Smoke Fog',
     description: 'Canvas noise fog drifts slowly; click the canvas to disperse it outward.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   BubbleField: {
     title: 'Bubble Field',
-    description: 'Deep-sea bubbles rise from the bottom, merge when close, with underwater lighting.',
-    tags: ['Canvas', 'Interactive']
+    description:
+      'Deep-sea bubbles rise from the bottom, merge when close, with underwater lighting.',
+    tags: ['Canvas', 'Interactive'],
   },
   SoapBubbles: {
     title: 'Soap Bubbles',
-    description: 'Iridescent soap bubbles drift across a soft sky; click a bubble to pop it into sparkling droplets.',
-    tags: ['Canvas', 'Interactive']
+    description:
+      'Iridescent soap bubbles drift across a soft sky; click a bubble to pop it into sparkling droplets.',
+    tags: ['Canvas', 'Interactive'],
   },
   DandelionField: {
     title: 'Dandelion Field',
-    description: 'Pointer motion blows seeds like wind; a click bursts a head, then new buds grow in the distance.',
-    tags: ['Canvas', 'Interactive']
+    description:
+      'Pointer motion blows seeds like wind; a click bursts a head, then new buds grow in the distance.',
+    tags: ['Canvas', 'Interactive'],
   },
   LavaBubble: {
     title: 'Lava Bubble',
     description:
       'Lava lake blisters swell and burst at random intervals; click to raise a blister at a point. WebGL height-field crust, cracks, spatters.',
-    tags: ['Canvas', 'Interactive', 'WebGL']
+    tags: ['Canvas', 'Interactive', 'WebGL'],
   },
   InkBloom: {
     title: 'Ink Bloom',
     description:
       'A click drops ink that sinks and blooms in water via buoyancy, vortices, and diffusion; drag gently stirs the plume.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   AuroraVeil: {
     title: 'Aurora Veil',
     description:
       'Silk-like aurora curtains hang over a starfield; the cursor bends them, a click bursts an energy pulse.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   MatrixRain: {
     title: 'Matrix Rain',
     description: 'Classic Matrix-style digital rain background animation.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   MeteorRain: {
     title: 'Meteor Rain',
     description: 'Canvas meteor shower background — great for login and campaign pages.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   ParticleNetwork: {
     title: 'Particle Network',
     description: 'Linked particle network that repels when the mouse approaches.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   Aurora: {
     title: 'Aurora',
     description: 'Flowing gradient light bands for a soft, dreamy atmosphere.',
-    tags: ['CSS', 'Effect']
+    tags: ['CSS', 'Effect'],
   },
   CyberGrid: {
     title: 'Cyber Grid',
     description: 'Tron-style perspective grid that scrolls endlessly.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   Snowfall: {
     title: 'Snowfall',
     description: 'Falling snow or sakura petals; switch with mode.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   Starfield: {
     title: '3D Starfield',
     description: 'Depth-flight starfield flythrough effect.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   Typewriter: {
     title: 'Typewriter',
     description: 'Terminal-style typewriter with multi-copy carousel support.',
-    tags: ['CSS', 'Text']
+    tags: ['CSS', 'Text'],
   },
   NeonText: {
     title: 'Neon Text',
     description: 'Cyberpunk neon glowing text.',
-    tags: ['CSS', 'Effect']
+    tags: ['CSS', 'Effect'],
   },
   GlitchText: {
     title: 'Glitch Text',
     description: 'Cyberpunk glitch flicker text.',
-    tags: ['CSS', 'Text']
+    tags: ['CSS', 'Text'],
   },
   ScrambleText: {
     title: 'Scramble Text',
     description: 'Garbled characters decode letter by letter into the target copy.',
-    tags: ['CSS', 'Text']
+    tags: ['CSS', 'Text'],
   },
   SplitReveal: {
     title: 'Split Reveal',
     description: 'Each letter pops in from one of four directions.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   WaveText: {
     title: 'Wave Text',
     description: 'Text undulates along a sine wave.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   GradientFlow: {
     title: 'Gradient Flow',
     description: 'Modern effect with a gradient flowing across the text.',
-    tags: ['CSS', 'Text']
+    tags: ['CSS', 'Text'],
   },
   BurnAway: {
     title: 'Burn Away',
     description: 'Click to ignite; text burns and peels away.',
-    tags: ['Canvas', 'Text']
+    tags: ['Canvas', 'Text'],
   },
   BarcodeScan: {
     title: 'Barcode Scan',
     description: 'Scan line plus a glitch-style overlay.',
-    tags: ['CSS', 'Effect']
+    tags: ['CSS', 'Effect'],
   },
   TextMorph: {
     title: 'Text Morph',
     description: 'Soft blur morph between two copies — great for banner headline rotation.',
-    tags: ['CSS', 'Text']
+    tags: ['CSS', 'Text'],
   },
   SplitText: {
     title: 'Split Text',
     description: 'Letter-split entrance with fadeUp / scale / rotate / blur modes.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   ShinyText: {
     title: 'Shiny Text',
     description: 'A highlight sweeps across the text for a metallic sheen.',
-    tags: ['CSS', 'Text']
+    tags: ['CSS', 'Text'],
   },
   BlurText: {
     title: 'Blur Text',
     description: 'Text reveals from blur to sharp by word or letter when it enters the viewport.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   CircularText: {
     title: 'Circular Text',
-    description: 'Characters form a ring and keep spinning; hover to speed up, slow down, or pause.',
-    tags: ['CSS', 'Interactive']
+    description:
+      'Characters form a ring and keep spinning; hover to speed up, slow down, or pause.',
+    tags: ['CSS', 'Interactive'],
   },
   TrueFocus: {
     title: 'True Focus',
-    description: 'Words take turns in sharp focus while others blur, with a four-corner focus frame.',
-    tags: ['CSS', 'Animation']
+    description:
+      'Words take turns in sharp focus while others blur, with a four-corner focus frame.',
+    tags: ['CSS', 'Animation'],
   },
   FuzzyText: {
     title: 'Fuzzy Text',
     description: 'Canvas line-jitter text drawing that intensifies on hover.',
-    tags: ['Canvas', 'Text']
+    tags: ['Canvas', 'Text'],
   },
   CurvedLoop: {
     title: 'Curved Loop',
     description: 'Text scrolls along an SVG curve; drag to change direction.',
-    tags: ['SVG', 'Animation']
+    tags: ['SVG', 'Animation'],
   },
   RotatingText: {
     title: 'Rotating Text',
-    description: 'Multi-copy carousel with staggered character slide in/out — ideal for keyword titles.',
-    tags: ['CSS', 'Text']
+    description:
+      'Multi-copy carousel with staggered character slide in/out — ideal for keyword titles.',
+    tags: ['CSS', 'Text'],
   },
   WaveButton: {
     title: 'Wave Button',
     description: 'Interactive button with a water-ripple spread animation.',
-    tags: ['CSS', 'Interactive']
+    tags: ['CSS', 'Interactive'],
   },
   Spotlight: {
     title: 'Spotlight',
     description: 'Cuts a hole in a dark overlay at the mouse to reveal content.',
-    tags: ['CSS', 'Interactive']
+    tags: ['CSS', 'Interactive'],
   },
   MagneticButton: {
     title: 'Magnetic Button',
     description: 'Button magnetically offsets toward the approaching cursor.',
-    tags: ['CSS', 'Interactive']
+    tags: ['CSS', 'Interactive'],
   },
   HolographicCard: {
     title: 'Holographic Card',
     description: '3D card with rainbow reflections when tilted.',
-    tags: ['CSS', '3D']
+    tags: ['CSS', '3D'],
   },
   PhotoAlbum: {
     title: 'Realistic Photo Album',
-    description: 'An open 3D album with paper, spine and dynamic shadows; click either page to browse naturally.',
-    tags: ['CSS', '3D', 'Interactive']
+    description:
+      'An open 3D album with paper, spine and dynamic shadows; click either page to browse naturally.',
+    tags: ['CSS', '3D', 'Interactive'],
   },
   PhotoLantern: {
     title: 'Revolving Lantern',
     description:
       'A Three.js six-sided revolving lantern for image preview — idle clockwise spin, drag with inertia, and a gently swaying inner light.',
-    tags: ['Three.js', '3D', 'Interactive']
+    tags: ['Three.js', '3D', 'Interactive'],
   },
   PhotoClothesline: {
     title: 'Photo Clothesline',
     description:
       'Photos hanging from lanyards on a rope — grab one and fling it in any direction, the band bends along and swings it back on release; drag the empty space to browse.',
-    tags: ['CSS', 'Physics', 'Interactive']
+    tags: ['CSS', 'Physics', 'Interactive'],
   },
   PhotoFilmstrip: {
     title: 'Filmstrip',
-    description: 'A horizontal filmstrip with sprocket holes — drag to scroll with inertia, then snap to a full frame.',
-    tags: ['CSS', 'Interactive']
+    description:
+      'A horizontal filmstrip with sprocket holes — drag to scroll with inertia, then snap to a full frame.',
+    tags: ['CSS', 'Interactive'],
   },
   PhotoPolaroid: {
     title: 'Polaroid Stack',
     description:
       'Scattered polaroids on a desk — drag to rearrange, bring to front, and leave cards where you drop them.',
-    tags: ['CSS', 'Physics', 'Interactive']
+    tags: ['CSS', 'Physics', 'Interactive'],
   },
   PhotoLightbox: {
     title: 'Lightbox Slides',
-    description: 'Translucent slides on a glowing lightbox — drag sideways to switch, snap back under the threshold.',
-    tags: ['CSS', 'Interactive']
+    description:
+      'Translucent slides on a glowing lightbox — drag sideways to switch, snap back under the threshold.',
+    tags: ['CSS', 'Interactive'],
   },
   PhotoCarousel: {
     title: 'Carousel Tray',
-    description: 'Photos standing on a circular tray — drag to orbit with inertia, optional slow idle spin.',
-    tags: ['CSS', '3D', 'Interactive']
+    description:
+      'Photos standing on a circular tray — drag to orbit with inertia, optional slow idle spin.',
+    tags: ['CSS', '3D', 'Interactive'],
   },
   PhotoPrism: {
     title: 'Photo Prism',
-    description: 'A CSS 3D cube with up to six photo faces — drag to tumble with inertia and a gentle idle spin.',
-    tags: ['CSS', '3D', 'Interactive']
+    description:
+      'A CSS 3D cube with up to six photo faces — drag to tumble with inertia and a gentle idle spin.',
+    tags: ['CSS', '3D', 'Interactive'],
   },
   PhotoScroll: {
     title: 'Photo Scroll',
     description:
       'A Chinese handscroll — drag the parchment between wooden rollers; inertia then snaps to the nearest frame.',
-    tags: ['CSS', 'Interactive']
+    tags: ['CSS', 'Interactive'],
   },
   PhotoPostcard: {
     title: 'Travel Postcard',
-    description: 'Flip a postcard for photo vs handwritten note; drag sideways past a threshold to change cards.',
-    tags: ['CSS', '3D', 'Interactive']
+    description:
+      'Flip a postcard for photo vs handwritten note; drag sideways past a threshold to change cards.',
+    tags: ['CSS', '3D', 'Interactive'],
   },
   PhotoViewMaster: {
     title: 'View-Master Disc',
-    description: 'A toy disc viewer — drag to spin photo slots with inertia, snap to a frame, optional idle spin.',
-    tags: ['CSS', 'Interactive']
+    description:
+      'A toy disc viewer — drag to spin photo slots with inertia, snap to a frame, optional idle spin.',
+    tags: ['CSS', 'Interactive'],
   },
   PhotoFridge: {
     title: 'Fridge Magnets',
-    description: 'Photos stuck on a fridge door — drag to rearrange, leave where you drop them with light inertia.',
-    tags: ['CSS', 'Physics', 'Interactive']
+    description:
+      'Photos stuck on a fridge door — drag to rearrange, leave where you drop them with light inertia.',
+    tags: ['CSS', 'Physics', 'Interactive'],
   },
   PhotoTunnel: {
     title: 'Photo Tunnel',
-    description: 'A depth tunnel of photo frames — drag to fly through with inertia, nearest frame stays sharp.',
-    tags: ['CSS', '3D', 'Interactive']
+    description:
+      'A depth tunnel of photo frames — drag to fly through with inertia, nearest frame stays sharp.',
+    tags: ['CSS', '3D', 'Interactive'],
   },
   ClickSpark: {
     title: 'Click Spark',
     description: 'Lightweight particle sparks burst at the click point.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   CursorTrail: {
     title: 'Cursor Trail',
     description: 'Particle light trail follows the mouse.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   LiquidGlass: {
     title: 'Liquid Glass',
     description: 'Apple-style frosted glass panel effect.',
-    tags: ['CSS', 'Effect']
+    tags: ['CSS', 'Effect'],
   },
   Turntable: {
     title: 'Turntable',
     description: 'Interactive prize wheel with customizable rewards.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   Confetti: {
     title: 'Confetti',
     description: 'Canvas confetti burst — perfect for win celebrations.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   Charge: {
     title: 'Charge',
     description: 'Battery charge animation with controlled mode support.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   ScratchCard: {
     title: 'Scratch Card',
     description: 'Scratch off a Canvas coating to reveal the prize.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   SlotMachine: {
     title: 'Slot Machine',
     description: 'Three reels stop and align for a lottery play.',
-    tags: ['CSS', 'Interactive']
+    tags: ['CSS', 'Interactive'],
   },
   DiceRoll: {
     title: 'Dice Roll',
     description: '3D CSS dice tumble to a face value.',
-    tags: ['CSS', '3D']
+    tags: ['CSS', '3D'],
   },
   NineGrid: {
     title: 'Nine Grid',
     description: 'Classic 3×3 lottery grid with optional server targetIndex.',
-    tags: ['CSS', 'Interactive', 'Campaign']
+    tags: ['CSS', 'Interactive', 'Campaign'],
   },
   FlipCard: {
     title: 'Flip Card',
     description: 'Flip a card to reveal a check-in reward.',
-    tags: ['CSS', 'Interactive', 'Campaign']
+    tags: ['CSS', 'Interactive', 'Campaign'],
   },
   RedPacketRain: {
     title: 'Red Packet Rain',
     description: 'Red packets fall from above; click to grab them.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   ProgressChest: {
     title: 'Progress Chest',
     description: 'Chest opens with an animation when progress fills.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   RadarScan: {
     title: 'Radar Scan',
     description: 'Circular radar HUD with scanning blips.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   CanvasClock: {
     title: 'Canvas Clock',
     description: 'Analog clock drawn with Canvas.',
-    tags: ['Canvas', 'Animation']
+    tags: ['Canvas', 'Animation'],
   },
   FlipCounter: {
     title: 'Flip Counter',
     description: 'Mechanical flip-board style number display.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   Countdown: {
     title: 'Countdown',
     description: 'Event deadline countdown with an end callback.',
-    tags: ['CSS', 'Interactive']
+    tags: ['CSS', 'Interactive'],
   },
   CountUp: {
     title: 'Count Up',
     description: 'Eased number growth animation for metric cards and ops dashboards.',
-    tags: ['CSS', 'Data']
+    tags: ['CSS', 'Data'],
   },
   LiquidProgress: {
     title: 'Liquid Progress',
     description: 'Ring progress filled by a wobbling liquid.',
-    tags: ['SVG', 'Animation']
+    tags: ['SVG', 'Animation'],
   },
   AudioVisualizer: {
     title: 'Audio Visualizer',
     description: 'Bar waveform that pulses with audio.',
-    tags: ['Canvas', 'Audio']
+    tags: ['Canvas', 'Audio'],
   },
   Speedometer: {
     title: 'Speedometer',
     description: 'Needle arc gauge animation.',
-    tags: ['SVG', 'Animation']
+    tags: ['SVG', 'Animation'],
   },
   TimelinePulse: {
     title: 'Timeline Pulse',
     description: 'Horizontal timeline with a glowing current node.',
-    tags: ['CSS', 'Animation']
+    tags: ['CSS', 'Animation'],
   },
   OrbitalChart: {
     title: 'Orbital Chart',
     description: 'Orbiting dots on rings that represent proportions.',
-    tags: ['SVG', 'Animation']
+    tags: ['SVG', 'Animation'],
   },
   NetworkGraph: {
     title: 'Network Graph',
     description: 'Force-directed network: drag to layout, hover to highlight neighbors.',
-    tags: ['Canvas', 'Data']
+    tags: ['Canvas', 'Data'],
   },
   NewtonCradle: {
     title: 'Newton Cradle',
     description: 'Classic colliding-ball pendulum animation.',
-    tags: ['CSS', 'Physics']
+    tags: ['CSS', 'Physics'],
   },
   GravityBalls: {
     title: 'Gravity Balls',
     description: 'Balls collide under gravity inside a container.',
-    tags: ['Canvas', 'Physics']
+    tags: ['Canvas', 'Physics'],
   },
   SandFall: {
     title: 'Sand Fall',
     description: 'Hold and draw sand on the canvas; simulate gravity pile-up.',
-    tags: ['Canvas', 'Physics']
+    tags: ['Canvas', 'Physics'],
   },
   SpringMass: {
     title: 'Spring-Mass Grid',
     description: '2D spring-mass grid with fixed corners; drag a node to watch rebound.',
-    tags: ['Canvas', 'Physics']
+    tags: ['Canvas', 'Physics'],
   },
   DoublePendulum: {
     title: 'Double Pendulum',
     description: 'Chaotic double-pendulum trail showing the butterfly effect.',
-    tags: ['Canvas', 'Physics']
+    tags: ['Canvas', 'Physics'],
   },
   MetaballPool: {
     title: 'Metaball Pool',
     description: 'Soft metaballs merge; the mouse pushes the liquid aside.',
-    tags: ['Canvas', 'Physics']
+    tags: ['Canvas', 'Physics'],
   },
   RopeChain: {
     title: 'Rope Chain',
     description: 'Verlet-integrated rope you can drag and swing.',
-    tags: ['Canvas', 'Physics']
+    tags: ['Canvas', 'Physics'],
   },
   DnaHelix: {
     title: 'DNA Helix',
     description: 'Rotating double-helix structure.',
-    tags: ['Canvas', '3D']
+    tags: ['Canvas', '3D'],
   },
   SolarSystem: {
     title: 'Solar System',
     description: 'Planets orbit the sun with a moon around Earth, plus Saturn’s rings.',
-    tags: ['Canvas', 'Astronomy']
+    tags: ['Canvas', 'Astronomy'],
   },
   LorenzAttractor: {
     title: 'Lorenz Attractor',
     description: '3D chaotic butterfly trail with a slow rotation view.',
-    tags: ['Canvas', 'Math']
+    tags: ['Canvas', 'Math'],
   },
   MazeGenerator: {
     title: 'Maze Generator',
     description: 'Live DFS maze generation and drawing.',
-    tags: ['Canvas', 'Algorithm']
+    tags: ['Canvas', 'Algorithm'],
   },
   GameOfLife: {
     title: 'Game of Life',
     description: 'Classic Conway Game of Life with pause, random reset, and click seeding.',
-    tags: ['Canvas', 'Algorithm']
+    tags: ['Canvas', 'Algorithm'],
   },
   Fireworks: {
     title: 'Fireworks',
     description: 'Canvas fireworks with ref-triggered launches.',
-    tags: ['Canvas', 'Interactive']
+    tags: ['Canvas', 'Interactive'],
   },
   ReturnCity: {
     title: 'Return City',
     description: 'Return-portal visual with starfield and light walls.',
-    tags: ['CSS', '3D']
+    tags: ['CSS', '3D'],
   },
   ElectricArc: {
     title: 'Electric Arc',
     description: 'Random lightning connecting two points.',
-    tags: ['Canvas', 'Effect']
+    tags: ['Canvas', 'Effect'],
   },
   PlasmaBall: {
     title: 'Plasma Ball',
     description: 'Electrostatic ball effect; mouse attracts the arcs.',
-    tags: ['Canvas', 'Interactive']
-  }
+    tags: ['Canvas', 'Interactive'],
+  },
 } as const satisfies Record<string, ComponentMetaI18n>;
 
 /** Union of component names that have English meta. */
@@ -525,7 +540,7 @@ const CODE_EXAMPLE_EN: Record<string, string> = {
   "flyleafTitle: '旅行相册'": "flyleafTitle: 'Photo Album'",
   "flyleafSubtitle: '把远方装进这一页'": "flyleafSubtitle: 'Keeping distant places close'",
   "flyleafEndTitle: '完'": "flyleafEndTitle: 'The End'",
-  "flyleafEndSubtitle: '故事暂告一段落'": "flyleafEndSubtitle: 'Thank you for browsing'"
+  "flyleafEndSubtitle: '故事暂告一段落'": "flyleafEndSubtitle: 'Thank you for browsing'",
 };
 
 const CODE_EXAMPLE_PROPS_EN: Partial<Record<ComponentMetaName, string[]>> = {
@@ -543,7 +558,7 @@ const CODE_EXAMPLE_PROPS_EN: Partial<Record<ComponentMetaName, string[]>> = {
     'startText="Start"',
     'spinningText="Spinning..."',
     'jackpotText="🎰 Jackpot!"',
-    'resultPrefix="Result:"'
+    'resultPrefix="Result:"',
   ],
   DiceRoll: ['rollText="Roll dice"', 'rollingText="Rolling..."', 'resultPrefix="Result:"'],
   NineGrid: ['buttonText="Draw"', 'targetIndex={4}'],
@@ -551,30 +566,36 @@ const CODE_EXAMPLE_PROPS_EN: Partial<Record<ComponentMetaName, string[]>> = {
   RedPacketRain: [
     'grabbedLabel="Collected:"',
     'endedText="Red packet rain ended"',
-    'hint="Click red packets to collect them"'
+    'hint="Click red packets to collect them"',
   ],
   ProgressChest: ['label="Auto-filling chest"', 'openedLabel="Chest opened!"'],
   Countdown: [
     "labels={{ days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds' }}",
     'invalidText="Invalid target time"',
-    'endedText="Time\'s up!"'
+    'endedText="Time\'s up!"',
   ],
   NetworkGraph: ['hint="Drag nodes · Hover to view connections"'],
   SandFall: ['hint="Hold the pointer to draw sand"', 'clearText="Clear"'],
   SpringMass: ['hint="Drag grid nodes to see the springs rebound"'],
   GameOfLife: [
-    "labels={{ generation: 'Generation', alive: 'alive', pause: 'Pause', play: 'Play', randomize: 'Randomize' }}"
+    "labels={{ generation: 'Generation', alive: 'alive', pause: 'Pause', play: 'Play', randomize: 'Randomize' }}",
   ],
-  Fireworks: ['hint="Click the canvas to launch fireworks"']
+  Fireworks: ['hint="Click the canvas to launch fireworks"'],
 };
 
-const appendJsxProps = (code: string, props: string[]) => code.replace(/\s*\/>\s*$/, `\n  ${props.join('\n  ')}\n/>`);
+const appendJsxProps = (code: string, props: string[]) =>
+  code.replace(/\s*\/>\s*$/, `\n  ${props.join('\n  ')}\n/>`);
 
 /** Translate the Chinese copy embedded in a demo code example. */
 export function localizeCodeExample(code: string, locale: Locale, componentName?: string): string {
   if (locale === 'zh-CN') return code;
-  const translated = Object.entries(CODE_EXAMPLE_EN).reduce((acc, [zh, en]) => acc.replaceAll(zh, en), code);
-  const props = componentName ? CODE_EXAMPLE_PROPS_EN[componentName as ComponentMetaName] : undefined;
+  const translated = Object.entries(CODE_EXAMPLE_EN).reduce(
+    (acc, [zh, en]) => acc.replaceAll(zh, en),
+    code,
+  );
+  const props = componentName
+    ? CODE_EXAMPLE_PROPS_EN[componentName as ComponentMetaName]
+    : undefined;
   return props ? appendJsxProps(translated, props) : translated;
 }
 
@@ -582,12 +603,16 @@ export function localizeCodeExample(code: string, locale: Locale, componentName?
  * Verify English meta covers every entry in `componentDemos` (and has no extras).
  * Call from tests / CI — `componentDemos` is typed as `ComponentDemoItem[]`, so names widen to `string`.
  */
-export function assertComponentMetaCoverage(demos: ReadonlyArray<{ name: string }> = componentDemos): void {
+export function assertComponentMetaCoverage(
+  demos: ReadonlyArray<{ name: string }> = componentDemos,
+): void {
   const metaNames = new Set(Object.keys(componentMetaEn));
   const demoNames = new Set(demos.map((d) => d.name));
   const missing = [...demoNames].filter((n) => !metaNames.has(n));
   const extras = [...metaNames].filter((n) => !demoNames.has(n));
   if (missing.length > 0 || extras.length > 0) {
-    throw new Error(`componentMetaEn coverage mismatch. missing=[${missing.join(', ')}] extras=[${extras.join(', ')}]`);
+    throw new Error(
+      `componentMetaEn coverage mismatch. missing=[${missing.join(', ')}] extras=[${extras.join(', ')}]`,
+    );
   }
 }

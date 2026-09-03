@@ -9,7 +9,10 @@ interface Blip {
   alpha: number;
 }
 
-export function createRadarScan(container: HTMLElement, initial: RadarScanOptions = {}): RadarScanController {
+export function createRadarScan(
+  container: HTMLElement,
+  initial: RadarScanOptions = {},
+): RadarScanController {
   let options: RadarScanOptions = { size: 300, color: '#22d3ee', blipCount: 5, ...initial };
   let destroyed = false;
   let size = options.size ?? 300;
@@ -33,7 +36,7 @@ export function createRadarScan(container: HTMLElement, initial: RadarScanOption
       blips.push({
         angle: Math.random() * Math.PI * 2,
         dist: Math.random() * 0.7 + 0.15,
-        alpha: Math.random() * 0.5 + 0.5
+        alpha: Math.random() * 0.5 + 0.5,
       });
     }
   };
@@ -148,6 +151,6 @@ export function createRadarScan(container: HTMLElement, initial: RadarScanOption
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

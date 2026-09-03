@@ -1,5 +1,10 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createFlipCard, type FlipCardController, type FlipCardHandle, type FlipCardOptions } from '../core';
+import {
+  createFlipCard,
+  type FlipCardController,
+  type FlipCardHandle,
+  type FlipCardOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { FlipCardHandle, FlipCardOptions, FlipCardProps } from '../core/types';
@@ -12,7 +17,7 @@ const FlipCard = forwardRef<FlipCardHandle, FlipCardOptions>((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     flip: () => ctrlRef.current?.flip(),
-    reset: () => ctrlRef.current?.reset()
+    reset: () => ctrlRef.current?.reset(),
   }));
 
   useEffect(() => {

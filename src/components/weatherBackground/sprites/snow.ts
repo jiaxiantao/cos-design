@@ -34,7 +34,7 @@ const makeCrystalSprite = (radius: number): HTMLCanvasElement => {
   const branches = Array.from({ length: branchPairs }, () => ({
     pos: 0.3 + Math.random() * 0.5,
     len: radius * (0.22 + Math.random() * 0.34),
-    angle: (Math.PI / 3) * (0.8 + Math.random() * 0.45)
+    angle: (Math.PI / 3) * (0.8 + Math.random() * 0.45),
   }));
   const hasTipFork = Math.random() < 0.55;
   const tipLen = radius * (0.14 + Math.random() * 0.12);
@@ -91,12 +91,17 @@ export interface FlakeSpritePool {
 /** 预生成少量雪花贴图供粒子复用（大雪 300 片不再各自一张 canvas） */
 export const createFlakeSpritePool = (): FlakeSpritePool => ({
   dots: [1.2, 1.6, 2.0, 2.3].map((size) => makeDotSprite(size)),
-  crystals: [2.6, 3.2, 3.8, 4.4, 5.0].map((size) => makeCrystalSprite(size * 2.4))
+  crystals: [2.6, 3.2, 3.8, 4.4, 5.0].map((size) => makeCrystalSprite(size * 2.4)),
 });
 
 const pick = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
-export const makeFlake = (width: number, height: number, pool: FlakeSpritePool, y?: number): Flake => {
+export const makeFlake = (
+  width: number,
+  height: number,
+  pool: FlakeSpritePool,
+  y?: number,
+): Flake => {
   const size = 1 + Math.pow(Math.random(), 1.6) * 4.2;
   const isCrystal = size >= 2.4;
   const sprite = isCrystal ? pick(pool.crystals) : pick(pool.dots);
@@ -113,6 +118,6 @@ export const makeFlake = (width: number, height: number, pool: FlakeSpritePool, 
     rotationSpeed: (Math.random() - 0.5) * 0.025,
     opacity: 0.55 + Math.random() * 0.45,
     sprite,
-    drawSize
+    drawSize,
   };
 };

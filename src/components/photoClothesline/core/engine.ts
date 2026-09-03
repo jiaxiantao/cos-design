@@ -6,7 +6,7 @@ import {
   OVERSCROLL_DAMP,
   PHYSICS_STEP_MS,
   PHYSICS_STEP_S,
-  PIN_GRIP
+  PIN_GRIP,
 } from '../constants';
 import { buildLayout, buildPhysics } from '../layout';
 import { clamp, cssSize } from '../math';
@@ -18,7 +18,7 @@ import {
   settleSimulation,
   stepPhysics,
   type SimPaintCache,
-  type SimState
+  type SimState,
 } from '../simulation';
 import type { PhotoClotheslineController, PhotoClotheslineOptions } from './types';
 
@@ -29,13 +29,15 @@ const assignStyle = (el: HTMLElement, style?: Record<string, string | number | u
   for (const [k, v] of Object.entries(style)) {
     if (v == null) continue;
     if (k.startsWith('--')) el.style.setProperty(k, String(v));
-    else (el.style as unknown as Record<string, string>)[k] = typeof v === 'number' ? `${v}px` : String(v);
+    else
+      (el.style as unknown as Record<string, string>)[k] =
+        typeof v === 'number' ? `${v}px` : String(v);
   }
 };
 
 export function createPhotoClothesline(
   container: HTMLElement,
-  initial: PhotoClotheslineOptions = { photos: [] }
+  initial: PhotoClotheslineOptions = { photos: [] },
 ): PhotoClotheslineController {
   let options: PhotoClotheslineOptions = {
     width: '100%',
@@ -60,7 +62,7 @@ export function createPhotoClothesline(
     initialIndex: 0,
     ariaLabel: 'Photo clothesline',
     ...initial,
-    photos: initial.photos ?? []
+    photos: initial.photos ?? [],
   };
   let destroyed = false;
   let viewportSize = { width: 0, height: 0 };
@@ -81,7 +83,7 @@ export function createPhotoClothesline(
     snapTarget: null,
     drag: null,
     impulse: null,
-    buffer: [] as Point2[]
+    buffer: [] as Point2[],
   };
 
   const svgNS = 'http://www.w3.org/2000/svg';
@@ -94,7 +96,12 @@ export function createPhotoClothesline(
   svg.classList.add(`${P}__strings`);
   svg.setAttribute('aria-hidden', 'true');
   const ropePaths: SVGPathElement[] = [];
-  for (const cls of [`${P}__rope-shadow`, `${P}__rope-shadow-core`, `${P}__rope-body`, `${P}__rope-twist`]) {
+  for (const cls of [
+    `${P}__rope-shadow`,
+    `${P}__rope-shadow-core`,
+    `${P}__rope-body`,
+    `${P}__rope-twist`,
+  ]) {
     const path = document.createElementNS(svgNS, 'path');
     path.setAttribute('class', cls);
     svg.appendChild(path);
@@ -123,7 +130,7 @@ export function createPhotoClothesline(
       ropeSag: options.ropeSag ?? 26,
       bandLength: options.bandLength ?? 34,
       maxPull: options.maxPull ?? 110,
-      tilt: options.tilt ?? 5
+      tilt: options.tilt ?? 5,
     });
 
   const currentPhysics = () =>
@@ -132,7 +139,7 @@ export function createPhotoClothesline(
       damping: options.damping ?? 0.16,
       maxPull: options.maxPull ?? 110,
       stiffness: options.stiffness ?? 1,
-      tension: options.tension ?? 0.35
+      tension: options.tension ?? 0.35,
     });
 
   const viewWidth = () => viewport.clientWidth || viewportSize.width;
@@ -143,7 +150,7 @@ export function createPhotoClothesline(
     bandPaths,
     bandGloss,
     knots,
-    cards
+    cards,
   });
 
   const paint = (alpha: number, dt: number) => {
@@ -228,7 +235,9 @@ export function createPhotoClothesline(
     const physics = currentPhysics();
     sim.layout = layout;
     sim.physics = physics;
-    sim.nodes = Array.from({ length: photos.length }, (_, index) => createHangerNode(layout, physics, index));
+    sim.nodes = Array.from({ length: photos.length }, (_, index) =>
+      createHangerNode(layout, physics, index),
+    );
     paintCache.rope = '';
     paintCache.rail = '';
     paintCache.bands = [];
@@ -261,7 +270,9 @@ export function createPhotoClothesline(
 
     cards.forEach((c) => c.remove());
     cards.length = 0;
-    const hasCaption = Boolean(options.showCaption && photos.some((photo) => photo.title || photo.description));
+    const hasCaption = Boolean(
+      options.showCaption && photos.some((photo) => photo.title || photo.description),
+    );
     const clickable = Boolean(options.onPhotoClick);
     photos.forEach((photo, index) => {
       const hanger = document.createElement('div');
@@ -269,7 +280,8 @@ export function createPhotoClothesline(
       hanger.dataset.photoIndex = String(index);
       hanger.tabIndex = 0;
       hanger.setAttribute('role', clickable ? 'button' : 'group');
-      if (photo.title ?? photo.alt) hanger.setAttribute('aria-label', photo.title ?? photo.alt ?? '');
+      if (photo.title ?? photo.alt)
+        hanger.setAttribute('aria-label', photo.title ?? photo.alt ?? '');
       applyHangerStyle(hanger, index);
       const pin = document.createElement('span');
       pin.className = `${P}__pin`;
@@ -379,7 +391,7 @@ export function createPhotoClothesline(
       lastTime: event.timeStamp,
       vx: 0,
       vy: 0,
-      moved: 0
+      moved: 0,
     } satisfies DragState;
     viewport.setPointerCapture(event.pointerId);
     startLoop();
@@ -414,7 +426,8 @@ export function createPhotoClothesline(
     const drag = sim.drag;
     if (!drag || drag.pointerId !== event.pointerId) return;
     sim.drag = null;
-    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+    if (viewport.hasPointerCapture(event.pointerId))
+      viewport.releasePointerCapture(event.pointerId);
     if (drag.mode === 'pan') {
       sim.offsetVelocity = clamp(drag.vx, -MAX_FLING_SPEED, MAX_FLING_SPEED);
     } else if (drag.moved <= CLICK_SLOP_PX && drag.photoIndex >= 0) {
@@ -424,7 +437,7 @@ export function createPhotoClothesline(
       sim.impulse = {
         index: drag.photoIndex,
         vx: clamp(drag.vx, -MAX_RELEASE_SPEED, MAX_RELEASE_SPEED),
-        vy: clamp(drag.vy, -MAX_RELEASE_SPEED, MAX_RELEASE_SPEED)
+        vy: clamp(drag.vy, -MAX_RELEASE_SPEED, MAX_RELEASE_SPEED),
       };
     }
     startLoop();
@@ -438,7 +451,12 @@ export function createPhotoClothesline(
   };
 
   const onWheel = (event: WheelEvent) => {
-    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.shiftKey ? event.deltaY : 0;
+    const delta =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.shiftKey
+          ? event.deltaY
+          : 0;
     if (delta === 0) return;
     const { min, max } = getOffsetBounds(viewWidth(), sim.layout?.railWidth ?? 0);
     if (min >= max) return;
@@ -450,7 +468,9 @@ export function createPhotoClothesline(
   };
 
   const onKeyDown = (event: KeyboardEvent) => {
-    const hanger = (event.target as HTMLElement | null)?.closest?.('[data-photo-index]') as HTMLElement | null;
+    const hanger = (event.target as HTMLElement | null)?.closest?.(
+      '[data-photo-index]',
+    ) as HTMLElement | null;
     const photoIndex = hanger ? Number(hanger.dataset.photoIndex) : -1;
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       const { min, max } = getOffsetBounds(viewWidth(), sim.layout?.railWidth ?? 0);
@@ -492,7 +512,8 @@ export function createPhotoClothesline(
       ? null
       : new ResizeObserver((entries) => {
           const entry = entries[0];
-          if (entry) measure(Math.round(entry.contentRect.width), Math.round(entry.contentRect.height));
+          if (entry)
+            measure(Math.round(entry.contentRect.width), Math.round(entry.contentRect.height));
         });
   ro?.observe(viewport);
 
@@ -527,6 +548,6 @@ export function createPhotoClothesline(
       viewport.removeEventListener('wheel', onWheel);
       viewport.removeEventListener('keydown', onKeyDown);
       root.remove();
-    }
+    },
   };
 }

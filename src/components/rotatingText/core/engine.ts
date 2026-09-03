@@ -6,16 +6,22 @@ const splitChars = (text: string): string[] => {
   const IntlWith = Intl as typeof Intl & {
     Segmenter?: new (
       l: string,
-      o: { granularity: 'grapheme' }
+      o: { granularity: 'grapheme' },
     ) => { segment(i: string): Iterable<{ segment: string }> };
   };
   if (IntlWith.Segmenter) {
-    return Array.from(new IntlWith.Segmenter('en', { granularity: 'grapheme' }).segment(text), (s) => s.segment);
+    return Array.from(
+      new IntlWith.Segmenter('en', { granularity: 'grapheme' }).segment(text),
+      (s) => s.segment,
+    );
   }
   return Array.from(text);
 };
 
-export function createRotatingText(container: HTMLElement, initial: RotatingTextOptions = {}): RotatingTextController {
+export function createRotatingText(
+  container: HTMLElement,
+  initial: RotatingTextOptions = {},
+): RotatingTextController {
   let opts: RotatingTextOptions = {
     texts: DEFAULT_TEXTS,
     interval: 2200,
@@ -24,7 +30,7 @@ export function createRotatingText(container: HTMLElement, initial: RotatingText
     fontSize: 56,
     color: '#0f172a',
     highlightColor: '#38bdf8',
-    ...initial
+    ...initial,
   };
   let index = 0;
   let phase: 'enter' | 'exit' = 'enter';
@@ -52,7 +58,10 @@ export function createRotatingText(container: HTMLElement, initial: RotatingText
     chars.forEach((char, i) => {
       const s = document.createElement('span');
       s.className = `${P}__char ${phase === 'enter' ? `${P}__enter` : `${P}__exit`}`;
-      const delay = phase === 'enter' ? i * (opts.stagger ?? 40) : (chars.length - 1 - i) * (opts.stagger ?? 40);
+      const delay =
+        phase === 'enter'
+          ? i * (opts.stagger ?? 40)
+          : (chars.length - 1 - i) * (opts.stagger ?? 40);
       s.style.animationDelay = `${delay}ms`;
       s.textContent = char === ' ' ? '\u00A0' : char;
       badge.appendChild(s);
@@ -82,7 +91,7 @@ export function createRotatingText(container: HTMLElement, initial: RotatingText
           render();
           schedule();
         },
-        chars.length * (opts.stagger ?? 40) + (opts.duration ?? 420)
+        chars.length * (opts.stagger ?? 40) + (opts.duration ?? 420),
       );
     }, opts.interval ?? 2200);
   };
@@ -102,6 +111,6 @@ export function createRotatingText(container: HTMLElement, initial: RotatingText
       cancelled = true;
       clearTimers();
       root.remove();
-    }
+    },
   };
 }

@@ -6,7 +6,8 @@ const TAG = 'cos-typewriter';
 function parseOptions(el: HTMLElement): TypewriterOptions {
   const options: TypewriterOptions = {};
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('delete-speed')) options.deleteSpeed = Number(el.getAttribute('delete-speed'));
+  if (el.hasAttribute('delete-speed'))
+    options.deleteSpeed = Number(el.getAttribute('delete-speed'));
   if (el.hasAttribute('pause')) options.pause = Number(el.getAttribute('pause'));
   return options;
 }

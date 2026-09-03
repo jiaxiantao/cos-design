@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { CyberGridController, CyberGridOptions } from './types';
 
@@ -11,7 +11,10 @@ const P = 'cos-cyber-grid';
 const DEFAULT_W = 800;
 const DEFAULT_H = 500;
 
-export function createCyberGrid(container: HTMLElement, initial: CyberGridOptions = {}): CyberGridController {
+export function createCyberGrid(
+  container: HTMLElement,
+  initial: CyberGridOptions = {},
+): CyberGridController {
   let options: CyberGridOptions = { fill: false, color: '#00f0ff', speed: 1, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -69,7 +72,7 @@ export function createCyberGrid(container: HTMLElement, initial: CyberGridOption
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -169,6 +172,6 @@ export function createCyberGrid(container: HTMLElement, initial: CyberGridOption
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

@@ -1,13 +1,16 @@
 import type { GlitchTextController, GlitchTextOptions } from './types';
 const P = 'cos-glitch-text';
-export function createGlitchText(container: HTMLElement, initial: GlitchTextOptions = {}): GlitchTextController {
+export function createGlitchText(
+  container: HTMLElement,
+  initial: GlitchTextOptions = {},
+): GlitchTextController {
   let opts: GlitchTextOptions = {
     text: 'GLITCH',
     color: '#f8fafc',
     glitchColor1: '#ff00de',
     glitchColor2: '#00f0ff',
     fontSize: 64,
-    ...initial
+    ...initial,
   };
   const root = document.createElement('div');
   root.className = P;
@@ -32,6 +35,6 @@ export function createGlitchText(container: HTMLElement, initial: GlitchTextOpti
     },
     destroy() {
       root.remove();
-    }
+    },
   };
 }

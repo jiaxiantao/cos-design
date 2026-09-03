@@ -46,7 +46,7 @@ const assignStyle = (el: HTMLElement, style?: Record<string, string | number | u
 
 export function createPhotoPrism(
   container: HTMLElement,
-  initial: PhotoPrismOptions = { photos: [] }
+  initial: PhotoPrismOptions = { photos: [] },
 ): PhotoPrismController {
   let options: PhotoPrismOptions = {
     autoRotate: true,
@@ -55,7 +55,7 @@ export function createPhotoPrism(
     showCaption: true,
     ariaLabel: '照片棱镜',
     ...initial,
-    photos: initial.photos ?? []
+    photos: initial.photos ?? [],
   };
   let destroyed = false;
   let rx = -12;
@@ -93,7 +93,10 @@ export function createPhotoPrism(
   container.appendChild(root);
 
   const facesOf = () =>
-    Array.from({ length: FACE_COUNT }, (_, i) => (options.photos ?? [])[i]) as (PhotoPrismItem | undefined)[];
+    Array.from({ length: FACE_COUNT }, (_, i) => (options.photos ?? [])[i]) as (
+      | PhotoPrismItem
+      | undefined
+    )[];
 
   const renderFaces = () => {
     cube.replaceChildren();
@@ -116,7 +119,9 @@ export function createPhotoPrism(
         ph.setAttribute('aria-hidden', 'true');
         face.appendChild(ph);
       }
-      const hasCaption = Boolean(options.showCaption && photo && (photo.title || photo.description));
+      const hasCaption = Boolean(
+        options.showCaption && photo && (photo.title || photo.description),
+      );
       if (hasCaption && photo) {
         const cap = document.createElement('div');
         cap.className = `${P}__caption`;
@@ -194,7 +199,8 @@ export function createPhotoPrism(
     const dx = e.clientX - lastX;
     const dy = e.clientY - lastY;
     const dt = Math.max(0.008, (e.timeStamp - lastT) / 1000);
-    if (Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY) > CLICK_SLOP_PX) dragMoved = true;
+    if (Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY) > CLICK_SLOP_PX)
+      dragMoved = true;
     const sensitivity = options.dragSensitivity ?? 0.4;
     ry -= dx * sensitivity;
     rx -= dy * sensitivity;
@@ -224,7 +230,9 @@ export function createPhotoPrism(
       /* already released */
     }
     if (wasClick) {
-      const target = (e.target as HTMLElement | null)?.closest?.('[data-face-index]') as HTMLElement | null;
+      const target = (e.target as HTMLElement | null)?.closest?.(
+        '[data-face-index]',
+      ) as HTMLElement | null;
       const raw = target ? Number(target.dataset.faceIndex) : faceIndex;
       const index = Number.isFinite(raw) ? raw : faceIndex;
       const photo = facesOf()[index];
@@ -295,6 +303,6 @@ export function createPhotoPrism(
       root.removeEventListener('pointerup', onPointerUp);
       root.removeEventListener('pointercancel', onPointerCancel);
       root.remove();
-    }
+    },
   };
 }

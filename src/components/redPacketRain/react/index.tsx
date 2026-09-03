@@ -3,7 +3,7 @@ import {
   createRedPacketRain,
   type RedPacketRainController,
   type RedPacketRainHandle,
-  type RedPacketRainOptions
+  type RedPacketRainOptions,
 } from '../core';
 import '../style/index.css';
 
@@ -18,7 +18,7 @@ const RedPacketRain = forwardRef<RedPacketRainHandle, RedPacketRainOptions>((pro
   useImperativeHandle(ref, () => ({
     start: () => ctrlRef.current?.start(),
     stop: () => ctrlRef.current?.stop(),
-    reset: () => ctrlRef.current?.reset()
+    reset: () => ctrlRef.current?.reset(),
   }));
 
   useEffect(() => {

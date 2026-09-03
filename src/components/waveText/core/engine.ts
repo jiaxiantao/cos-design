@@ -1,7 +1,16 @@
 import type { WaveTextController, WaveTextOptions } from './types';
 const P = 'cos-wave-text';
-export function createWaveText(container: HTMLElement, initial: WaveTextOptions = {}): WaveTextController {
-  let opts: WaveTextOptions = { text: 'WAVE', amplitude: 12, color: '#38bdf8', fontSize: 56, ...initial };
+export function createWaveText(
+  container: HTMLElement,
+  initial: WaveTextOptions = {},
+): WaveTextController {
+  let opts: WaveTextOptions = {
+    text: 'WAVE',
+    amplitude: 12,
+    color: '#38bdf8',
+    fontSize: 56,
+    ...initial,
+  };
   const root = document.createElement('div');
   root.className = P;
   const h1 = document.createElement('h1');
@@ -29,6 +38,6 @@ export function createWaveText(container: HTMLElement, initial: WaveTextOptions 
     },
     destroy() {
       root.remove();
-    }
+    },
   };
 }

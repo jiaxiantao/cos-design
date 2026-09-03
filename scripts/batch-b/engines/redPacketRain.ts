@@ -4,7 +4,7 @@ import {
   getRelativePointerPosition,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { RedPacketRainController, RedPacketRainOptions } from './types';
 
@@ -24,7 +24,7 @@ interface Packet {
 
 export function createRedPacketRain(
   container: HTMLElement,
-  initial: RedPacketRainOptions = {}
+  initial: RedPacketRainOptions = {},
 ): RedPacketRainController {
   let options: RedPacketRainOptions = {
     fill: false,
@@ -33,7 +33,7 @@ export function createRedPacketRain(
     grabbedLabel: '已抢:',
     endedText: '红包雨结束',
     hint: '点击红包抢夺',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -117,7 +117,7 @@ export function createRedPacketRain(
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -134,7 +134,7 @@ export function createRedPacketRain(
       speed: Math.random() * 2 + 2,
       rotation: (Math.random() - 0.5) * 0.1,
       amount: [1, 2, 5, 8, 10, 18, 66, 88][Math.floor(Math.random() * 8)],
-      grabbed: false
+      grabbed: false,
     });
   };
 
@@ -273,6 +273,6 @@ export function createRedPacketRain(
       sizeCleanup?.();
       canvas.removeEventListener('pointerdown', onPointer);
       root.remove();
-    }
+    },
   };
 }

@@ -4,7 +4,7 @@ import {
   clamp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { RippleWaterController, RippleWaterOptions } from './types';
 
@@ -138,7 +138,10 @@ const createProgram = (gl: WebGLRenderingContext, vert: string, frag: string) =>
   return program;
 };
 
-export function createRippleWater(container: HTMLElement, initial: RippleWaterOptions = {}): RippleWaterController {
+export function createRippleWater(
+  container: HTMLElement,
+  initial: RippleWaterOptions = {},
+): RippleWaterController {
   let options: RippleWaterOptions = {
     fill: false,
     fromColor: '#52ade3',
@@ -155,7 +158,7 @@ export function createRippleWater(container: HTMLElement, initial: RippleWaterOp
     interactive: true,
     showHint: true,
     hint: '点击水面产生涟漪',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -208,7 +211,7 @@ export function createRippleWater(container: HTMLElement, initial: RippleWaterOp
     drop = {
       x: (e.clientX - rect.left) / rect.width,
       y: 1 - (e.clientY - rect.top) / rect.height,
-      strength: options.rippleStrength ?? 1
+      strength: options.rippleStrength ?? 1,
     };
   };
 
@@ -223,7 +226,7 @@ export function createRippleWater(container: HTMLElement, initial: RippleWaterOp
       antialias: false,
       depth: false,
       stencil: false,
-      premultipliedAlpha: false
+      premultipliedAlpha: false,
     });
     if (!gl) return;
     const program = createProgram(gl, VERT, FRAG);
@@ -387,7 +390,7 @@ export function createRippleWater(container: HTMLElement, initial: RippleWaterOp
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -412,7 +415,8 @@ export function createRippleWater(container: HTMLElement, initial: RippleWaterOp
       const prevH = options.height;
       options = { ...options, ...next };
       syncHint();
-      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH) bindSize();
+      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH)
+        bindSize();
     },
     destroy() {
       if (destroyed) return;
@@ -423,6 +427,6 @@ export function createRippleWater(container: HTMLElement, initial: RippleWaterOp
       sizeCleanup?.();
       canvas.removeEventListener('pointerdown', onPointer);
       root.remove();
-    }
+    },
   };
 }

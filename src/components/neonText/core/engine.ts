@@ -1,7 +1,16 @@
 import type { NeonTextController, NeonTextOptions } from './types';
 const P = 'cos-neon-text';
-export function createNeonText(container: HTMLElement, initial: NeonTextOptions = {}): NeonTextController {
-  let opts: NeonTextOptions = { text: 'NEON', color: '#ff00de', fontSize: 72, flicker: true, ...initial };
+export function createNeonText(
+  container: HTMLElement,
+  initial: NeonTextOptions = {},
+): NeonTextController {
+  let opts: NeonTextOptions = {
+    text: 'NEON',
+    color: '#ff00de',
+    fontSize: 72,
+    flicker: true,
+    ...initial,
+  };
   const root = document.createElement('div');
   root.className = P;
   const h1 = document.createElement('h1');
@@ -27,6 +36,6 @@ export function createNeonText(container: HTMLElement, initial: NeonTextOptions 
     },
     destroy() {
       root.remove();
-    }
+    },
   };
 }

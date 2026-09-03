@@ -1,7 +1,15 @@
 import type { LiquidGlassController, LiquidGlassOptions } from './types';
 const P = 'cos-liquid-glass';
-export function createLiquidGlass(container: HTMLElement, initial: LiquidGlassOptions = {}): LiquidGlassController {
-  let opts: LiquidGlassOptions = { blur: 16, borderRadius: 20, defaultContent: '液态玻璃面板', ...initial };
+export function createLiquidGlass(
+  container: HTMLElement,
+  initial: LiquidGlassOptions = {},
+): LiquidGlassController {
+  let opts: LiquidGlassOptions = {
+    blur: 16,
+    borderRadius: 20,
+    defaultContent: '液态玻璃面板',
+    ...initial,
+  };
   const root = document.createElement('div');
   root.className = P;
   const panel = document.createElement('div');
@@ -36,6 +44,6 @@ export function createLiquidGlass(container: HTMLElement, initial: LiquidGlassOp
     getSlot: () => content,
     destroy() {
       root.remove();
-    }
+    },
   };
 }

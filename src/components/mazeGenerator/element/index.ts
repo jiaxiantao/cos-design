@@ -1,4 +1,8 @@
-import { createMazeGenerator, type MazeGeneratorController, type MazeGeneratorOptions } from '../core';
+import {
+  createMazeGenerator,
+  type MazeGeneratorController,
+  type MazeGeneratorOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-maze-generator';

@@ -4,7 +4,7 @@ import {
   clamp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import { createFieldTexture, createProgram } from '../gl';
 import { createLavaSim, MAX_DPR, SIM } from '../sim';
@@ -15,7 +15,10 @@ const P = 'cos-lava-bubble';
 const DEFAULT_W = 800;
 const DEFAULT_H = 500;
 
-export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOptions = {}): LavaBubbleController {
+export function createLavaBubble(
+  container: HTMLElement,
+  initial: LavaBubbleOptions = {},
+): LavaBubbleController {
   let options: LavaBubbleOptions = {
     fill: false,
     heat: 1,
@@ -24,7 +27,7 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
     activity: 1,
     interactive: true,
     ariaLabel: '熔岩泡背景',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -51,7 +54,7 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
     const rect = canvas.getBoundingClientRect();
     return {
       u: (clientX - rect.left) / Math.max(rect.width, 1),
-      v: 1 - (clientY - rect.top) / Math.max(rect.height, 1)
+      v: 1 - (clientY - rect.top) / Math.max(rect.height, 1),
     };
   };
 
@@ -99,7 +102,7 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
       antialias: false,
       depth: false,
       stencil: false,
-      premultipliedAlpha: false
+      premultipliedAlpha: false,
     });
     if (!gl) return;
     const program = createProgram(gl, VERT, FRAG);
@@ -162,7 +165,7 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
         autoSpawn: options.autoSpawn ?? true,
         activity: options.activity ?? 1,
         click: clickNow,
-        stir: stirForStep
+        stir: stirForStep,
       });
       paint(time);
     };
@@ -193,7 +196,7 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -220,7 +223,8 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
       const prevH = options.height;
       options = { ...options, ...next };
       root.setAttribute('aria-label', options.ariaLabel ?? '熔岩泡背景');
-      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH) bindSize();
+      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH)
+        bindSize();
     },
     destroy() {
       if (destroyed) return;
@@ -233,6 +237,6 @@ export function createLavaBubble(container: HTMLElement, initial: LavaBubbleOpti
       canvas.removeEventListener('pointermove', onPointerMove);
       canvas.removeEventListener('pointerleave', onPointerLeave);
       root.remove();
-    }
+    },
   };
 }

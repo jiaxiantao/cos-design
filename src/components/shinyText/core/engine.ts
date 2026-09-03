@@ -1,6 +1,9 @@
 import type { ShinyTextController, ShinyTextOptions } from './types';
 const P = 'cos-shiny-text';
-export function createShinyText(container: HTMLElement, initial: ShinyTextOptions = {}): ShinyTextController {
+export function createShinyText(
+  container: HTMLElement,
+  initial: ShinyTextOptions = {},
+): ShinyTextController {
   let opts: ShinyTextOptions = {
     text: 'SHINY TEXT',
     speed: 2,
@@ -8,7 +11,7 @@ export function createShinyText(container: HTMLElement, initial: ShinyTextOption
     shineColor: '#ffffff',
     fontSize: 64,
     disabled: false,
-    ...initial
+    ...initial,
   };
   const root = document.createElement('div');
   root.className = P;
@@ -32,6 +35,6 @@ export function createShinyText(container: HTMLElement, initial: ShinyTextOption
     },
     destroy() {
       root.remove();
-    }
+    },
   };
 }

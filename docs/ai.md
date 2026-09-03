@@ -1042,62 +1042,62 @@ const photos = [
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85',
     title: '在路上',
     description: '把远方装进相册',
-    alt: '在路上'
+    alt: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=85',
     title: '山谷晨光',
     description: '风从群山之间吹来',
-    alt: '山谷晨光'
+    alt: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85',
     title: '湖畔',
     description: '安静得只听见水声',
-    alt: '湖畔'
+    alt: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=85',
     title: '林间漫步',
     description: '盛夏留下的绿色记忆',
-    alt: '林间漫步'
+    alt: '林间漫步',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=85',
     title: '日落时分',
     description: '旅程在余晖中继续',
-    alt: '日落时分'
+    alt: '日落时分',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85',
     title: '山脊之上',
     description: '云海在脚下翻涌',
-    alt: '山脊之上'
+    alt: '山脊之上',
   },
   {
     src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
     title: '海边午后',
     description: '浪花一遍遍靠近',
-    alt: '海边午后'
+    alt: '海边午后',
   },
   {
     src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=85',
     title: '雪峰星夜',
     description: '银河落进沉默的山',
-    alt: '雪峰星夜'
+    alt: '雪峰星夜',
   },
   {
     src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=85',
     title: '静湖倒影',
     description: '天空被完整地接住',
-    alt: '静湖倒影'
+    alt: '静湖倒影',
   },
   {
     src: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=85',
     title: '远山薄雾',
     description: '旅途尚未到尽头',
-    alt: '远山薄雾'
-  }
+    alt: '远山薄雾',
+  },
 ];
 
 return (
@@ -1119,7 +1119,7 @@ return (
       flyleafTitle: '旅行相册',
       flyleafSubtitle: '把远方装进这一页',
       flyleafEndTitle: '完',
-      flyleafEndSubtitle: '故事暂告一段落'
+      flyleafEndSubtitle: '故事暂告一段落',
     }}
   />
 );
@@ -1151,33 +1151,33 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
     title: '在路上',
-    alt: '在路上'
+    alt: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
     title: '山谷晨光',
-    alt: '山谷晨光'
+    alt: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
     title: '湖畔',
-    alt: '湖畔'
+    alt: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85',
     title: '林间漫步',
-    alt: '林间漫步'
+    alt: '林间漫步',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85',
     title: '日落时分',
-    alt: '日落时分'
+    alt: '日落时分',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85',
     title: '山脊之上',
-    alt: '山脊之上'
-  }
+    alt: '山脊之上',
+  },
 ];
 
 return (
@@ -1219,43 +1219,43 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85',
     title: '在路上',
-    alt: '在路上'
+    alt: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=85',
     title: '山谷晨光',
-    alt: '山谷晨光'
+    alt: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85',
     title: '湖畔',
-    alt: '湖畔'
+    alt: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=85',
     title: '林间漫步',
-    alt: '林间漫步'
+    alt: '林间漫步',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85',
     title: '日落时分',
-    alt: '日落时分'
+    alt: '日落时分',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=85',
     title: '山脊之上',
-    alt: '山脊之上'
+    alt: '山脊之上',
   },
   {
     src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85',
     title: '海边午后',
-    alt: '海边午后'
+    alt: '海边午后',
   },
   {
     src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85',
     title: '雪峰星夜',
-    alt: '雪峰星夜'
-  }
+    alt: '雪峰星夜',
+  },
 ];
 
 return (
@@ -1306,37 +1306,44 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
     title: '在路上',
-    description: '把远方装进胶卷'
+    description: '把远方装进胶卷',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
     title: '山谷晨光',
-    description: '风从群山之间吹来'
+    description: '风从群山之间吹来',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
     title: '湖畔',
-    description: '安静得只听见水声'
+    description: '安静得只听见水声',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85',
     title: '林间漫步',
-    description: '盛夏留下的绿色记忆'
+    description: '盛夏留下的绿色记忆',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=85',
     title: '日落时分',
-    description: '旅程在余晖中继续'
+    description: '旅程在余晖中继续',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=85',
     title: '山脊之上',
-    description: '云海在脚下翻涌'
-  }
+    description: '云海在脚下翻涌',
+  },
 ];
 
 return (
-  <PhotoFilmstrip photos={photos} height={280} frameWidth={160} frameHeight={120} showCaption ariaLabel="旅行胶卷" />
+  <PhotoFilmstrip
+    photos={photos}
+    height={280}
+    frameWidth={160}
+    frameHeight={120}
+    showCaption
+    ariaLabel="旅行胶卷"
+  />
 );
 ```
 
@@ -1365,32 +1372,39 @@ import { PhotoPolaroid } from 'cos-design';
 const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85',
-    title: '在路上'
+    title: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85',
-    title: '山谷晨光'
+    title: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85',
-    title: '湖畔'
+    title: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85',
-    title: '林间漫步'
+    title: '林间漫步',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85',
-    title: '日落时分'
+    title: '日落时分',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85',
-    title: '山脊之上'
-  }
+    title: '山脊之上',
+  },
 ];
 
 return (
-  <PhotoPolaroid photos={photos} height={420} cardWidth={150} cardHeight={180} showCaption ariaLabel="拍立得照片堆" />
+  <PhotoPolaroid
+    photos={photos}
+    height={420}
+    cardWidth={150}
+    cardHeight={180}
+    showCaption
+    ariaLabel="拍立得照片堆"
+  />
 );
 ```
 
@@ -1420,26 +1434,28 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
     title: '在路上',
-    description: '把远方装进灯箱'
+    description: '把远方装进灯箱',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
     title: '山谷晨光',
-    description: '风从群山之间吹来'
+    description: '风从群山之间吹来',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
     title: '湖畔',
-    description: '安静得只听见水声'
+    description: '安静得只听见水声',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85',
     title: '林间漫步',
-    description: '盛夏留下的绿色记忆'
-  }
+    description: '盛夏留下的绿色记忆',
+  },
 ];
 
-return <PhotoLightbox photos={photos} width={360} height={480} showCaption ariaLabel="灯箱透片预览" />;
+return (
+  <PhotoLightbox photos={photos} width={360} height={480} showCaption ariaLabel="灯箱透片预览" />
+);
 ```
 
 **Props**
@@ -1467,28 +1483,28 @@ import { PhotoCarousel } from 'cos-design';
 const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85',
-    title: '在路上'
+    title: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85',
-    title: '山谷晨光'
+    title: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85',
-    title: '湖畔'
+    title: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85',
-    title: '林间漫步'
+    title: '林间漫步',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85',
-    title: '日落时分'
+    title: '日落时分',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85',
-    title: '山脊之上'
-  }
+    title: '山脊之上',
+  },
 ];
 
 return (
@@ -1529,32 +1545,40 @@ import { PhotoPrism } from 'cos-design';
 const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85',
-    title: '在路上'
+    title: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85',
-    title: '山谷晨光'
+    title: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85',
-    title: '湖畔'
+    title: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85',
-    title: '林间漫步'
+    title: '林间漫步',
   },
   {
     src: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=600&q=85',
-    title: '日落时分'
+    title: '日落时分',
   },
   {
     src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=85',
-    title: '山脊之上'
-  }
+    title: '山脊之上',
+  },
 ];
 
 return (
-  <PhotoPrism photos={photos} width={380} height={380} size={200} autoRotate showCaption ariaLabel="棱镜照片立方" />
+  <PhotoPrism
+    photos={photos}
+    width={380}
+    height={380}
+    size={200}
+    autoRotate
+    showCaption
+    ariaLabel="棱镜照片立方"
+  />
 );
 ```
 
@@ -1584,18 +1608,18 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
     title: '在路上',
-    description: '把远方装进卷轴'
+    description: '把远方装进卷轴',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
     title: '山谷晨光',
-    description: '风从群山之间吹来'
+    description: '风从群山之间吹来',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
     title: '湖畔',
-    description: '安静得只听见水声'
-  }
+    description: '安静得只听见水声',
+  },
 ];
 
 return <PhotoScroll photos={photos} width={520} height={280} showCaption ariaLabel="卷轴照片" />;
@@ -1627,21 +1651,23 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
     title: '在路上',
-    description: '把远方装进明信片'
+    description: '把远方装进明信片',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
     title: '山谷晨光',
-    description: '风从群山之间吹来'
+    description: '风从群山之间吹来',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
     title: '湖畔',
-    description: '安静得只听见水声'
-  }
+    description: '安静得只听见水声',
+  },
 ];
 
-return <PhotoPostcard photos={photos} width={360} height={420} showCaption ariaLabel="旅行明信片" />;
+return (
+  <PhotoPostcard photos={photos} width={360} height={420} showCaption ariaLabel="旅行明信片" />
+);
 ```
 
 **Props**
@@ -1669,23 +1695,32 @@ import { PhotoViewMaster } from 'cos-design';
 const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
-    title: '在路上'
+    title: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
-    title: '山谷晨光'
+    title: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
-    title: '湖畔'
+    title: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85',
-    title: '林间漫步'
-  }
+    title: '林间漫步',
+  },
 ];
 
-return <PhotoViewMaster photos={photos} width={380} height={420} autoRotate showCaption ariaLabel="观景器圆盘" />;
+return (
+  <PhotoViewMaster
+    photos={photos}
+    width={380}
+    height={420}
+    autoRotate
+    showCaption
+    ariaLabel="观景器圆盘"
+  />
+);
 ```
 
 **Props**
@@ -1713,23 +1748,25 @@ import { PhotoFridge } from 'cos-design';
 const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85',
-    title: '在路上'
+    title: '在路上',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=85',
-    title: '山谷晨光'
+    title: '山谷晨光',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=600&q=85',
-    title: '湖畔'
+    title: '湖畔',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=85',
-    title: '林间漫步'
-  }
+    title: '林间漫步',
+  },
 ];
 
-return <PhotoFridge photos={photos} width={420} height={480} showCaption ariaLabel="冰箱磁贴照片墙" />;
+return (
+  <PhotoFridge photos={photos} width={420} height={480} showCaption ariaLabel="冰箱磁贴照片墙" />
+);
 ```
 
 **Props**
@@ -1758,26 +1795,28 @@ const photos = [
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=85',
     title: '在路上',
-    description: '把远方装进隧道'
+    description: '把远方装进隧道',
   },
   {
     src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=85',
     title: '山谷晨光',
-    description: '风从群山之间吹来'
+    description: '风从群山之间吹来',
   },
   {
     src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=85',
     title: '湖畔',
-    description: '安静得只听见水声'
+    description: '安静得只听见水声',
   },
   {
     src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=85',
     title: '林间漫步',
-    description: '盛夏留下的绿色记忆'
-  }
+    description: '盛夏留下的绿色记忆',
+  },
 ];
 
-return <PhotoTunnel photos={photos} width={380} height={480} showCaption ariaLabel="纵深照片隧道" />;
+return (
+  <PhotoTunnel photos={photos} width={380} height={480} showCaption ariaLabel="纵深照片隧道" />
+);
 ```
 
 **Props**

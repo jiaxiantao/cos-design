@@ -1,7 +1,10 @@
 import type { CurvedLoopController, CurvedLoopOptions } from './types';
 const P = 'cos-curved-loop';
 
-export function createCurvedLoop(container: HTMLElement, initial: CurvedLoopOptions = {}): CurvedLoopController {
+export function createCurvedLoop(
+  container: HTMLElement,
+  initial: CurvedLoopOptions = {},
+): CurvedLoopController {
   let opts: CurvedLoopOptions = {
     text: 'COS DESIGN ✦ CURVED LOOP ✦ ',
     speed: 2,
@@ -10,7 +13,7 @@ export function createCurvedLoop(container: HTMLElement, initial: CurvedLoopOpti
     interactive: true,
     color: '#f8fafc',
     fontSize: 56,
-    ...initial
+    ...initial,
   };
   let spacing = 0;
   let offset = 0;
@@ -128,6 +131,6 @@ export function createCurvedLoop(container: HTMLElement, initial: CurvedLoopOpti
       root.removeEventListener('pointerup', endDrag);
       root.removeEventListener('pointerleave', endDrag);
       root.remove();
-    }
+    },
   };
 }

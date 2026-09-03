@@ -5,7 +5,8 @@ const TAG = 'cos-charge';
 
 function parseOptions(el: HTMLElement): ChargeOptions {
   const options: ChargeOptions = {};
-  if (el.hasAttribute('init-quantity')) options.initQuantity = Number(el.getAttribute('init-quantity'));
+  if (el.hasAttribute('init-quantity'))
+    options.initQuantity = Number(el.getAttribute('init-quantity'));
   if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
   if (el.hasAttribute('auto-charge')) options.autoCharge = true;
   if (el.hasAttribute('interval')) options.interval = Number(el.getAttribute('interval'));

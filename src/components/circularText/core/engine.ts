@@ -1,6 +1,9 @@
 import type { CircularTextController, CircularTextOptions } from './types';
 const P = 'cos-circular-text';
-export function createCircularText(container: HTMLElement, initial: CircularTextOptions = {}): CircularTextController {
+export function createCircularText(
+  container: HTMLElement,
+  initial: CircularTextOptions = {},
+): CircularTextController {
   let opts: CircularTextOptions = {
     text: 'COS DESIGN • REACT BITS • ',
     spinDuration: 20,
@@ -8,7 +11,7 @@ export function createCircularText(container: HTMLElement, initial: CircularText
     fontSize: 22,
     radius: 90,
     color: '#f8fafc',
-    ...initial
+    ...initial,
   };
   let hovered = false;
   const root = document.createElement('div');
@@ -82,6 +85,6 @@ export function createCircularText(container: HTMLElement, initial: CircularText
       scaleWrap.removeEventListener('mouseenter', onEnter);
       scaleWrap.removeEventListener('mouseleave', onLeave);
       root.remove();
-    }
+    },
   };
 }

@@ -5,7 +5,7 @@ import {
   lerp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import {
   FLOWER_HEAD_GROW,
@@ -28,9 +28,16 @@ import {
   SEED_SETTLE_SPEED,
   SEED_VY_TRACK,
   WIND_BLOW_GUST_MIN,
-  WIND_BLOW_SPEED_MIN
+  WIND_BLOW_SPEED_MIN,
 } from '../constants';
-import { drawHeadGlow, drawPlantHead, drawRosetteLeaves, drawSeed, drawStem, drawWitheredStub } from '../draw';
+import {
+  drawHeadGlow,
+  drawPlantHead,
+  drawRosetteLeaves,
+  drawSeed,
+  drawStem,
+  drawWitheredStub,
+} from '../draw';
 import { AttachedSeedTracker, PlantFrameCache } from '../frame-cache';
 import {
   buildIntroQueue,
@@ -43,10 +50,15 @@ import {
   rollReleaseDuration,
   sproutLife,
   updateAttachedFluff,
-  updateStemWind
+  updateStemWind,
 } from '../plant';
 import { appendSeedsForPlant, makePappusSprite, puffSeedMotion, seedFallTargetVy } from '../seed';
-import { buildGrassField, buildSceneBackdrop, drawGrassField, updateGrassFieldWind } from '../scene';
+import {
+  buildGrassField,
+  buildSceneBackdrop,
+  drawGrassField,
+  updateGrassFieldWind,
+} from '../scene';
 import { MAX_DPR } from '../types';
 import type { IntroSpawn, Plant, PlantLayout, Seed } from '../types';
 import {
@@ -56,7 +68,7 @@ import {
   hash,
   smoothstep,
   windGustFromSpeed,
-  windVisualStrength
+  windVisualStrength,
 } from '../utils';
 import type { DandelionFieldController, DandelionFieldOptions } from './types';
 
@@ -66,7 +78,7 @@ const DEFAULT_H = 500;
 
 export function createDandelionField(
   container: HTMLElement,
-  initial: DandelionFieldOptions = {}
+  initial: DandelionFieldOptions = {},
 ): DandelionFieldController {
   let options: DandelionFieldOptions = {
     fill: false,
@@ -75,7 +87,7 @@ export function createDandelionField(
     speed: 1,
     interactive: true,
     ariaLabel: '蒲公英播种背景',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -142,7 +154,7 @@ export function createDandelionField(
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured: m
+        measured: m,
       });
       width = box.width;
       height = box.height;
@@ -188,7 +200,7 @@ export function createDandelionField(
       const rect = canvas.getBoundingClientRect();
       return {
         x: (event.clientX - rect.left) * (width / Math.max(rect.width, 1)),
-        y: (event.clientY - rect.top) * (height / Math.max(rect.height, 1))
+        y: (event.clientY - rect.top) * (height / Math.max(rect.height, 1)),
       };
     };
 
@@ -281,14 +293,21 @@ export function createDandelionField(
       const fallDist = Math.max(14, ground - seed.y);
       const duration =
         SEED_FALL_DURATION_MIN +
-        hash(seed.hairPhase * 3.1 + seed.plantId) * (SEED_FALL_DURATION_MAX - SEED_FALL_DURATION_MIN);
+        hash(seed.hairPhase * 3.1 + seed.plantId) *
+          (SEED_FALL_DURATION_MAX - SEED_FALL_DURATION_MIN);
       seed.terminalVy = fallDist / duration;
       seed.vy = seed.terminalVy * (0.22 + hash(seed.hairPhase * 1.9) * 0.22);
       seed.fallFreqA = 0.62 + hash(seed.hairPhase * 4.3) * 1.25;
       seed.fallFreqB = 1.55 + hash(seed.hairPhase * 6.7) * 3.1;
     };
 
-    const detachSeed = (seed: Seed, vx: number, vy: number, spin: number, origin?: { x: number; ground: number }) => {
+    const detachSeed = (
+      seed: Seed,
+      vx: number,
+      vy: number,
+      spin: number,
+      origin?: { x: number; ground: number },
+    ) => {
       seed.attached = false;
       attached.decrement(seed.plantId);
       seed.canGerminate = true;
@@ -300,7 +319,8 @@ export function createDandelionField(
       seed.landed = false;
       seed.landedAt = -1;
       seed.germinateDelay =
-        GERMINATION_DELAY_MIN + hash(seed.hairPhase * 4.1) * (GERMINATION_DELAY_MAX - GERMINATION_DELAY_MIN);
+        GERMINATION_DELAY_MIN +
+        hash(seed.hairPhase * 4.1) * (GERMINATION_DELAY_MAX - GERMINATION_DELAY_MIN);
       seed.germinateChecked = false;
       seed.settleT = 0;
       seed.restGroundY = -1;
@@ -320,7 +340,13 @@ export function createDandelionField(
       seed.settleT = 0.001;
     };
 
-    const updateFlyingSeed = (seed: Seed, dt: number, time: number, rate: number, wind: { x: number; y: number }) => {
+    const updateFlyingSeed = (
+      seed: Seed,
+      dt: number,
+      time: number,
+      rate: number,
+      wind: { x: number; y: number },
+    ) => {
       const sway = Math.sin(time * 1.55 + seed.swayPhase);
       const drift = Math.cos(time * 0.95 + seed.swayPhase * 1.4);
       const targetVy = seedFallTargetVy(seed, time, wind, sway);
@@ -328,7 +354,12 @@ export function createDandelionField(
       seed.vy += (targetVy - seed.vy) * SEED_VY_TRACK;
       const step = dt * 60;
       const windStr = windVisualStrength(wind);
-      seed.vx += (wind.x * (0.022 + windStr * 0.018) + seed.driftBias * 0.014 + sway * 0.011 + drift * 0.006) * step;
+      seed.vx +=
+        (wind.x * (0.022 + windStr * 0.018) +
+          seed.driftBias * 0.014 +
+          sway * 0.011 +
+          drift * 0.006) *
+        step;
       seed.vy += wind.y * (0.032 + windStr * 0.028) * step;
       seed.vx *= 0.992;
       seed.vy = seed.vy * 0.994 + seed.terminalVy * 0.006;
@@ -380,15 +411,25 @@ export function createDandelionField(
 
       const hasOrigin = seed.originX !== undefined && seed.originGround !== undefined;
       const nearParent =
-        hasOrigin && Math.hypot(seed.x - seed.originX!, seed.y - seed.originGround!) < width * NEAR_PARENT_RADIUS;
+        hasOrigin &&
+        Math.hypot(seed.x - seed.originX!, seed.y - seed.originGround!) <
+          width * NEAR_PARENT_RADIUS;
       const chance = nearParent ? GERMINATION_NEAR_CHANCE : GERMINATION_CHANCE;
       if (hash(seed.x * 0.31 + seed.y * 0.17 + seed.hairPhase) > chance) return false;
 
       const spawnX = nearParent
-        ? clamp(seed.originX! + (hash(seed.hairPhase * 2.1) - 0.5) * width * 0.14, width * 0.04, width * 0.96)
+        ? clamp(
+            seed.originX! + (hash(seed.hairPhase * 2.1) - 0.5) * width * 0.14,
+            width * 0.04,
+            width * 0.96,
+          )
         : seed.x;
       const spawnGround = nearParent
-        ? clamp(seed.originGround! + (hash(seed.hairPhase * 3.3) - 0.5) * height * 0.035, height * 0.68, height * 0.93)
+        ? clamp(
+            seed.originGround! + (hash(seed.hairPhase * 3.3) - 0.5) * height * 0.035,
+            height * 0.68,
+            height * 0.93,
+          )
         : ground;
       return spawnPlantAt(spawnX, spawnGround) !== null;
     };
@@ -420,7 +461,9 @@ export function createDandelionField(
 
       const origin = { x: plant.x, ground: plant.ground };
       let due =
-        elapsed >= duration ? attachedSeeds : attachedSeeds.filter((s) => elapsed >= (s.scheduledRelease ?? duration));
+        elapsed >= duration
+          ? attachedSeeds
+          : attachedSeeds.filter((s) => elapsed >= (s.scheduledRelease ?? duration));
       const maxPerFrame = plant.releaseBoost > 0.15 ? 6 : 2;
       if (due.length > maxPerFrame) due = due.slice(0, maxPerFrame);
 
@@ -433,9 +476,13 @@ export function createDandelionField(
         detachSeed(
           seed,
           (Math.cos(burstDir) * sp + wind.x * 0.05 + lateral) * velBoost,
-          (Math.sin(burstDir) * sp * 0.35 + wind.y * 0.05 + 0.03 + hash(seed.hairPhase + i * 0.6) * 0.04) * velBoost,
+          (Math.sin(burstDir) * sp * 0.35 +
+            wind.y * 0.05 +
+            0.03 +
+            hash(seed.hairPhase + i * 0.6) * 0.04) *
+            velBoost,
           (hash(seed.rot + plant.id + i) - 0.5) * 0.022,
-          origin
+          origin,
         );
         seed.scheduledRelease = undefined;
       }
@@ -450,7 +497,9 @@ export function createDandelionField(
     };
 
     const canBurstPuffBall = (plant: Plant) =>
-      (plant.phase === 'mature' || plant.phase === 'puffing') && plant.puffReveal >= 0.85 && attached.has(plant.id);
+      (plant.phase === 'mature' || plant.phase === 'puffing') &&
+      plant.puffReveal >= 0.85 &&
+      attached.has(plant.id);
 
     const finishBurstIfEmpty = (plant: Plant) => {
       if (!plant.releasing) return false;
@@ -587,7 +636,10 @@ export function createDandelionField(
       wind.y = clamp(wind.y * 0.82 + dy * push, -5.5, 5.5);
 
       if (gust >= WIND_BLOW_GUST_MIN && moveSpeed >= WIND_BLOW_SPEED_MIN) {
-        const blowAmount = moveSpeed * 0.018 * clamp((gust - WIND_BLOW_GUST_MIN) / (1 - WIND_BLOW_GUST_MIN), 0.35, 1);
+        const blowAmount =
+          moveSpeed *
+          0.018 *
+          clamp((gust - WIND_BLOW_GUST_MIN) / (1 - WIND_BLOW_GUST_MIN), 0.35, 1);
         const frameCache = new PlantFrameCache();
         for (const plant of plants) {
           if (!canBurstPuffBall(plant)) continue;
@@ -643,14 +695,14 @@ export function createDandelionField(
       sway: 0,
       swayVel: 0,
       lift: 0,
-      liftVel: 0
+      liftVel: 0,
     }));
 
     const paint = (
       staticFrame: boolean,
       time = 0,
       plantsById?: Map<number, Plant>,
-      frameCache = new PlantFrameCache()
+      frameCache = new PlantFrameCache(),
     ) => {
       const idMap = plantsById ?? buildPlantMap();
 
@@ -677,7 +729,12 @@ export function createDandelionField(
           const life = frameCache.get(plant).life;
           const vis = plant.fade * plantDepthAlpha(plant);
           if (attached.get(plant.id) > 0 && life.puff > 0.02) {
-            drawHeadGlow(ctx, head, plant.radius * (0.08 + life.puff * 0.92), life.glow * vis * 0.65);
+            drawHeadGlow(
+              ctx,
+              head,
+              plant.radius * (0.08 + life.puff * 0.92),
+              life.glow * vis * 0.65,
+            );
           }
         }
       }
@@ -702,7 +759,8 @@ export function createDandelionField(
           if (plant.phase === 'flower' && (!life || life.puff <= 0.008)) continue;
           if (plant.phase === 'wither' && plant.puffReveal <= 0.02) continue;
         }
-        const depthFade = seed.attached && plant ? plantDepthAlpha(plant) : 0.58 + seed.depth * 0.42;
+        const depthFade =
+          seed.attached && plant ? plantDepthAlpha(plant) : 0.58 + seed.depth * 0.42;
         const plantFade = seed.attached ? (plant ? plant.fade * depthFade : 0.78) : depthFade;
         const motion = plant ? puffSeedMotion(plant, seed) : { reveal: 1, fluffLen: 1, expand: 1 };
         const reveal = seed.attached && plant ? motion.reveal : 1;
@@ -768,7 +826,8 @@ export function createDandelionField(
       const plantsById = buildPlantMap();
       const snapshot = plants.slice();
       for (const plant of snapshot) {
-        const idle = Math.sin(time * (0.85 + hash(plant.id * 2.3) * 0.35) + plant.swayPhase) * plant.swayAmp;
+        const idle =
+          Math.sin(time * (0.85 + hash(plant.id * 2.3) * 0.35) + plant.swayPhase) * plant.swayAmp;
         updateStemWind(plant, wind, idle, dt);
         updatePlantLifecycle(plant, dt);
       }
@@ -785,7 +844,7 @@ export function createDandelionField(
             offX: windOffX,
             offY: windOffY,
             tiltX,
-            tiltY
+            tiltY,
           } = updateAttachedFluff(seed, plant, wind, time, dt, onPuffBall, plant.radius);
           const scale = onPuffBall ? 1 : 0;
           const { expand } = puffSeedMotion(plant, seed);
@@ -819,7 +878,9 @@ export function createDandelionField(
         }
       }
 
-      seeds = seeds.filter((s) => (s.attached && plantsById.has(s.plantId)) || (!s.attached && s.life > 0));
+      seeds = seeds.filter(
+        (s) => (s.attached && plantsById.has(s.plantId)) || (!s.attached && s.life > 0),
+      );
       paint(false, time, plantsById, frameCache);
     };
 
@@ -853,6 +914,6 @@ export function createDandelionField(
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

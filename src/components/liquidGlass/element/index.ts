@@ -6,7 +6,8 @@ const TAG = 'cos-liquid-glass';
 function parseOptions(el: HTMLElement): LiquidGlassOptions {
   const options: LiquidGlassOptions = {};
   if (el.hasAttribute('blur')) options.blur = Number(el.getAttribute('blur'));
-  if (el.hasAttribute('border-radius')) options.borderRadius = Number(el.getAttribute('border-radius'));
+  if (el.hasAttribute('border-radius'))
+    options.borderRadius = Number(el.getAttribute('border-radius'));
   return options;
 }
 

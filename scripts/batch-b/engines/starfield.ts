@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { StarfieldController, StarfieldOptions } from './types';
 
@@ -17,7 +17,10 @@ const P = 'cos-starfield';
 const DEFAULT_W = 800;
 const DEFAULT_H = 500;
 
-export function createStarfield(container: HTMLElement, initial: StarfieldOptions = {}): StarfieldController {
+export function createStarfield(
+  container: HTMLElement,
+  initial: StarfieldOptions = {},
+): StarfieldController {
   let options: StarfieldOptions = { starCount: 400, speed: 1, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -44,7 +47,7 @@ export function createStarfield(container: HTMLElement, initial: StarfieldOption
       stars.push({
         x: (Math.random() - 0.5) * width,
         y: (Math.random() - 0.5) * height,
-        z: Math.random() * width
+        z: Math.random() * width,
       });
     }
   };
@@ -89,7 +92,7 @@ export function createStarfield(container: HTMLElement, initial: StarfieldOption
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -183,6 +186,6 @@ export function createStarfield(container: HTMLElement, initial: StarfieldOption
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

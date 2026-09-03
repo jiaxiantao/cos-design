@@ -5,9 +5,15 @@ const P = 'cos-liquid-progress';
 
 export function createLiquidProgress(
   container: HTMLElement,
-  initial: LiquidProgressOptions = {}
+  initial: LiquidProgressOptions = {},
 ): LiquidProgressController {
-  let options: LiquidProgressOptions = { value: 0, max: 100, size: 160, color: '#38bdf8', ...initial };
+  let options: LiquidProgressOptions = {
+    value: 0,
+    max: 100,
+    size: 160,
+    color: '#38bdf8',
+    ...initial,
+  };
   let destroyed = false;
   let frame = 0;
   let t = 0;
@@ -87,7 +93,10 @@ export function createLiquidProgress(
       t += 0.04;
       const fillY = 100 - pct();
       const y = fillY + Math.sin(t) * 2;
-      wave.setAttribute('d', `M0,${y} Q25,${y - 4 + Math.sin(t * 1.3) * 3} 50,${y} T100,${y} V100 H0 Z`);
+      wave.setAttribute(
+        'd',
+        `M0,${y} Q25,${y - 4 + Math.sin(t * 1.3) * 3} 50,${y} T100,${y} V100 H0 Z`,
+      );
     }
     frame = requestAnimationFrame(animate);
   };
@@ -109,6 +118,6 @@ export function createLiquidProgress(
       cancelAnimationFrame(frame);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

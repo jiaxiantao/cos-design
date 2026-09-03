@@ -1,5 +1,10 @@
 import { bindVisibilityPause } from '@cos-design/shared';
-import type { NetworkGraphController, NetworkGraphEdge, NetworkGraphNode, NetworkGraphOptions } from './types';
+import type {
+  NetworkGraphController,
+  NetworkGraphEdge,
+  NetworkGraphNode,
+  NetworkGraphOptions,
+} from './types';
 
 const P = 'cos-network-graph';
 const DEFAULT_W = 600;
@@ -14,7 +19,7 @@ const DEFAULT_NODES: NetworkGraphNode[] = [
   { id: 'svelte', label: 'Svelte', color: '#ff3e00' },
   { id: 'ts', label: 'TypeScript', color: '#3178c6' },
   { id: 'vite', label: 'Vite', color: '#bd34fe' },
-  { id: 'next', label: 'Next.js', color: '#f8fafc' }
+  { id: 'next', label: 'Next.js', color: '#f8fafc' },
 ];
 const DEFAULT_EDGES: NetworkGraphEdge[] = [
   { source: 'react', target: 'ts' },
@@ -24,7 +29,7 @@ const DEFAULT_EDGES: NetworkGraphEdge[] = [
   { source: 'vue', target: 'vite' },
   { source: 'angular', target: 'ts' },
   { source: 'svelte', target: 'vite' },
-  { source: 'ts', target: 'vite' }
+  { source: 'ts', target: 'vite' },
 ];
 
 interface InternalNode {
@@ -46,7 +51,7 @@ const DEFAULT_NODES: NetworkGraphNode[] = [
   { id: 'svelte', label: 'Svelte', color: '#ff3e00' },
   { id: 'ts', label: 'TypeScript', color: '#3178c6' },
   { id: 'vite', label: 'Vite', color: '#bd34fe' },
-  { id: 'next', label: 'Next.js', color: '#f8fafc' }
+  { id: 'next', label: 'Next.js', color: '#f8fafc' },
 ];
 
 const DEFAULT_EDGES: NetworkGraphEdge[] = [
@@ -57,7 +62,7 @@ const DEFAULT_EDGES: NetworkGraphEdge[] = [
   { source: 'vue', target: 'vite' },
   { source: 'angular', target: 'ts' },
   { source: 'svelte', target: 'vite' },
-  { source: 'ts', target: 'vite' }
+  { source: 'ts', target: 'vite' },
 ];
 
 const HIT_PAD = 6;
@@ -74,7 +79,11 @@ const mixHex = (hex: string, withColor: string, t: number) => {
             .join('')
         : h;
     if (full.length !== 6) return [148, 163, 184] as const;
-    return [parseInt(full.slice(0, 2), 16), parseInt(full.slice(2, 4), 16), parseInt(full.slice(4, 6), 16)] as const;
+    return [
+      parseInt(full.slice(0, 2), 16),
+      parseInt(full.slice(2, 4), 16),
+      parseInt(full.slice(4, 6), 16),
+    ] as const;
   };
   const [ar, ag, ab] = parse(hex);
   const [br, bg, bb] = parse(withColor);
@@ -122,14 +131,17 @@ interface InternalNode {
   vy: number;
 }
 
-export function createNetworkGraph(container: HTMLElement, initial: NetworkGraphOptions = {}): NetworkGraphController {
+export function createNetworkGraph(
+  container: HTMLElement,
+  initial: NetworkGraphOptions = {},
+): NetworkGraphController {
   let options: NetworkGraphOptions = {
     nodes: DEFAULT_NODES,
     edges: DEFAULT_EDGES,
     linkColor: 'rgb(148 163 184 / 35%)',
     nodeRadius: 20,
     hint: '拖拽节点 · 悬停查看关联',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -196,7 +208,7 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
         return {
           ...existing,
           label: n.label || n.id,
-          color: n.color || '#38bdf8'
+          color: n.color || '#38bdf8',
         };
       }
       return {
@@ -206,7 +218,7 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
         x: width / 2 + Math.cos((i / (options.nodes ?? DEFAULT_NODES).length) * Math.PI * 2) * 140,
         y: height / 2 + Math.sin((i / (options.nodes ?? DEFAULT_NODES).length) * Math.PI * 2) * 120,
         vx: 0,
-        vy: 0
+        vy: 0,
       };
     });
   };
@@ -304,7 +316,7 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
         20,
         width * 0.5,
         height * 0.5,
-        Math.max(width, height) * 0.72
+        Math.max(width, height) * 0.72,
       );
       base.addColorStop(0, '#1a2744');
       base.addColorStop(0.55, '#0f172a');
@@ -328,7 +340,7 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
         Math.min(width, height) * 0.25,
         width / 2,
         height / 2,
-        Math.max(width, height) * 0.7
+        Math.max(width, height) * 0.7,
       );
       vignette.addColorStop(0, 'rgb(0 0 0 / 0%)');
       vignette.addColorStop(1, 'rgb(2 6 23 / 55%)');
@@ -400,7 +412,14 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
 
       ctx.shadowColor = withAlpha(node.color, isFocus || isDrag ? 0.75 : 0.45);
       ctx.shadowBlur = isFocus || isDrag ? 22 : 14;
-      const body = ctx.createRadialGradient(node.x - r * 0.28, node.y - r * 0.32, r * 0.1, node.x, node.y, r);
+      const body = ctx.createRadialGradient(
+        node.x - r * 0.28,
+        node.y - r * 0.32,
+        r * 0.1,
+        node.x,
+        node.y,
+        r,
+      );
       body.addColorStop(0, mixHex(node.color, '#ffffff', 0.55));
       body.addColorStop(0.55, node.color);
       body.addColorStop(1, mixHex(node.color, '#0f172a', 0.35));
@@ -526,7 +545,7 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
       lastX: x,
       lastY: y,
       vx: 0,
-      vy: 0
+      vy: 0,
     };
     node.vx = 0;
     node.vy = 0;
@@ -618,6 +637,6 @@ export function createNetworkGraph(container: HTMLElement, initial: NetworkGraph
       canvas.removeEventListener('pointercancel', handlePointerUp);
       canvas.removeEventListener('pointerleave', handlePointerLeave);
       root.remove();
-    }
+    },
   };
 }

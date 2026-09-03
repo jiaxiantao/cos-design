@@ -39,7 +39,7 @@ export const componentDemos: ComponentDemoItem[] = [
   loading={false}
   width={800}
   height={450}
-/>`
+/>`,
   },
   {
     name: 'RippleWater',
@@ -58,7 +58,7 @@ export const componentDemos: ComponentDemoItem[] = [
   waveAmplitude={1}
   shimmer={1.2}
   rippleStrength={1.2}
-/>`
+/>`,
   },
   {
     name: 'SmokeFog',
@@ -69,7 +69,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { SmokeFog } from 'cos-design';
 
-<SmokeFog width={800} height={500} density={0.5} speed={1} color="#d2d4d8" />`
+<SmokeFog width={800} height={500} density={0.5} speed={1} color="#d2d4d8" />`,
   },
   {
     name: 'BubbleField',
@@ -81,7 +81,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { BubbleField } from 'cos-design';
 
-<BubbleField width={800} height={500} bubbleCount={32} speed={1} />`
+<BubbleField width={800} height={500} bubbleCount={32} speed={1} />`,
   },
   {
     name: 'SoapBubbles',
@@ -93,7 +93,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { SoapBubbles } from 'cos-design';
 
-<SoapBubbles width={800} height={500} count={28} />`
+<SoapBubbles width={800} height={500} count={28} />`,
   },
   {
     name: 'DandelionField',
@@ -105,7 +105,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { DandelionField } from 'cos-design';
 
-<DandelionField width={800} height={500} />`
+<DandelionField width={800} height={500} />`,
   },
   {
     name: 'LavaBubble',
@@ -117,7 +117,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { LavaBubble } from 'cos-design';
 
-<LavaBubble width={800} height={500} autoSpawn activity={1} />`
+<LavaBubble width={800} height={500} autoSpawn activity={1} />`,
   },
   {
     name: 'InkBloom',
@@ -130,7 +130,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { InkBloom } from 'cos-design';
 
-<InkBloom width={800} height={500} />`
+<InkBloom width={800} height={500} />`,
   },
   {
     name: 'AuroraVeil',
@@ -142,7 +142,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { AuroraVeil } from 'cos-design';
 
-<AuroraVeil width={800} height={500} />`
+<AuroraVeil width={800} height={500} />`,
   },
   {
     name: 'MatrixRain',
@@ -153,7 +153,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { MatrixRain } from 'cos-design';
 
-<MatrixRain width={800} height={500} />`
+<MatrixRain width={800} height={500} />`,
   },
   {
     name: 'MeteorRain',
@@ -164,7 +164,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { MeteorRain } from 'cos-design';
 
-<MeteorRain width={800} height={500} />`
+<MeteorRain width={800} height={500} />`,
   },
   {
     name: 'ParticleNetwork',
@@ -175,7 +175,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { ParticleNetwork } from 'cos-design';
 
-<ParticleNetwork width={800} height={500} />`
+<ParticleNetwork width={800} height={500} />`,
   },
   {
     name: 'Aurora',
@@ -186,7 +186,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { Aurora } from 'cos-design';
 
-<Aurora width={800} height={500} />`
+<Aurora width={800} height={500} />`,
   },
   {
     name: 'CyberGrid',
@@ -197,7 +197,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { CyberGrid } from 'cos-design';
 
-<CyberGrid width={800} height={500} />`
+<CyberGrid width={800} height={500} />`,
   },
   {
     name: 'Snowfall',
@@ -208,7 +208,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { Snowfall } from 'cos-design';
 
-<Snowfall mode="sakura" width={800} height={500} />`
+<Snowfall mode="sakura" width={800} height={500} />`,
   },
   {
     name: 'Starfield',
@@ -219,7 +219,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'background' as const,
     codeExample: `import { Starfield } from 'cos-design';
 
-<Starfield width={800} height={500} />`
+<Starfield width={800} height={500} />`,
   },
   {
     name: 'Typewriter',
@@ -230,7 +230,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { Typewriter } from 'cos-design';
 
-<Typewriter texts={['Hello!']} />`
+<Typewriter texts={['Hello!']} />`,
   },
   {
     name: 'NeonText',
@@ -241,7 +241,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { NeonText } from 'cos-design';
 
-<NeonText text="COS DESIGN" color="#00f0ff" />`
+<NeonText text="COS DESIGN" color="#00f0ff" />`,
   },
   {
     name: 'GlitchText',
@@ -252,7 +252,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { GlitchText } from 'cos-design';
 
-<GlitchText text="SYSTEM ERROR" />`
+<GlitchText text="SYSTEM ERROR" />`,
   },
   {
     name: 'ScrambleText',
@@ -263,7 +263,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { ScrambleText } from 'cos-design';
 
-<ScrambleText text="ACCESS GRANTED" />`
+<ScrambleText text="ACCESS GRANTED" />`,
   },
   {
     name: 'SplitReveal',
@@ -274,7 +274,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { SplitReveal } from 'cos-design';
 
-<SplitReveal text="WELCOME" />`
+<SplitReveal text="WELCOME" />`,
   },
   {
     name: 'WaveText',
@@ -285,7 +285,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { WaveText } from 'cos-design';
 
-<WaveText text="WAVE" />`
+<WaveText text="WAVE" />`,
   },
   {
     name: 'GradientFlow',
@@ -296,7 +296,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { GradientFlow } from 'cos-design';
 
-<GradientFlow text="FLOW" />`
+<GradientFlow text="FLOW" />`,
   },
   {
     name: 'BurnAway',
@@ -307,7 +307,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { BurnAway } from 'cos-design';
 
-<BurnAway text="BURN" onComplete={() => {}} />`
+<BurnAway text="BURN" onComplete={() => {}} />`,
   },
   {
     name: 'BarcodeScan',
@@ -318,7 +318,7 @@ export const componentDemos: ComponentDemoItem[] = [
     category: 'text' as const,
     codeExample: `import { BarcodeScan } from 'cos-design';
 
-<BarcodeScan>SCAN ME</BarcodeScan>`
+<BarcodeScan>SCAN ME</BarcodeScan>`,
   },
   {
     name: 'TextMorph',
@@ -330,7 +330,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { TextMorph } from 'cos-design';
 
-<TextMorph texts={['COS DESIGN', 'TEXT MORPH', 'SMOOTH TRANSITION']} />`
+<TextMorph texts={['COS DESIGN', 'TEXT MORPH', 'SMOOTH TRANSITION']} />`,
   },
   {
     name: 'SplitText',
@@ -342,7 +342,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { SplitText } from 'cos-design';
 
-<SplitText text="HELLO" animation="fadeUp" loop />`
+<SplitText text="HELLO" animation="fadeUp" loop />`,
   },
   {
     name: 'ShinyText',
@@ -354,7 +354,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { ShinyText } from 'cos-design';
 
-<ShinyText text="SHINY TEXT" speed={2} />`
+<ShinyText text="SHINY TEXT" speed={2} />`,
   },
   {
     name: 'BlurText',
@@ -366,7 +366,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { BlurText } from 'cos-design';
 
-<BlurText text="BLUR INTO FOCUS" animateBy="words" />`
+<BlurText text="BLUR INTO FOCUS" animateBy="words" />`,
   },
   {
     name: 'CircularText',
@@ -378,7 +378,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { CircularText } from 'cos-design';
 
-<CircularText text="COS DESIGN • REACT BITS • " spinDuration={18} />`
+<CircularText text="COS DESIGN • REACT BITS • " spinDuration={18} />`,
   },
   {
     name: 'TrueFocus',
@@ -390,7 +390,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { TrueFocus } from 'cos-design';
 
-<TrueFocus sentence="True Focus Mode" />`
+<TrueFocus sentence="True Focus Mode" />`,
   },
   {
     name: 'FuzzyText',
@@ -402,7 +402,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { FuzzyText } from 'cos-design';
 
-<FuzzyText text="FUZZY" fontSize={72} />`
+<FuzzyText text="FUZZY" fontSize={72} />`,
   },
   {
     name: 'CurvedLoop',
@@ -414,7 +414,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { CurvedLoop } from 'cos-design';
 
-<CurvedLoop text="COS DESIGN ✦ CURVED LOOP ✦ " speed={2} />`
+<CurvedLoop text="COS DESIGN ✦ CURVED LOOP ✦ " speed={2} />`,
   },
   {
     name: 'RotatingText',
@@ -426,7 +426,7 @@ export const componentDemos: ComponentDemoItem[] = [
     isNew: true,
     codeExample: `import { RotatingText } from 'cos-design';
 
-<RotatingText texts={['React', 'Motion', 'Design']} />`
+<RotatingText texts={['React', 'Motion', 'Design']} />`,
   },
   {
     name: 'PhotoAlbum',
@@ -473,13 +473,14 @@ return (
       flyleafEndSubtitle: '故事暂告一段落'
     }}
   />
-);`
+);`,
   },
   {
     name: 'PhotoLantern',
     path: '/photoLantern',
     title: '走马灯',
-    description: 'Three.js 六面走马灯图片预览：真实 3D 灯体与内光摆动，空闲顺时针自转，拖拽跟手旋转并带惯性。',
+    description:
+      'Three.js 六面走马灯图片预览：真实 3D 灯体与内光摆动，空闲顺时针自转，拖拽跟手旋转并带惯性。',
     tags: ['Three.js', '3D', '交互'],
     category: 'photo' as const,
     isNew: true,
@@ -504,7 +505,7 @@ return (
     showCaption
     ariaLabel="走马灯图片预览"
   />
-);`
+);`,
   },
   {
     name: 'PhotoClothesline',
@@ -547,7 +548,7 @@ return (
     showCaption
     ariaLabel="晾绳照片墙"
   />
-);`
+);`,
   },
   {
     name: 'PhotoFilmstrip',
@@ -577,7 +578,7 @@ return (
     showCaption
     ariaLabel="旅行胶卷"
   />
-);`
+);`,
   },
   {
     name: 'PhotoPolaroid',
@@ -607,7 +608,7 @@ return (
     showCaption
     ariaLabel="拍立得照片堆"
   />
-);`
+);`,
   },
   {
     name: 'PhotoLightbox',
@@ -634,7 +635,7 @@ return (
     showCaption
     ariaLabel="灯箱透片预览"
   />
-);`
+);`,
   },
   {
     name: 'PhotoCarousel',
@@ -665,7 +666,7 @@ return (
     showCaption
     ariaLabel="旋转木马照片托盘"
   />
-);`
+);`,
   },
   {
     name: 'PhotoPrism',
@@ -696,7 +697,7 @@ return (
     showCaption
     ariaLabel="棱镜照片立方"
   />
-);`
+);`,
   },
   {
     name: 'PhotoScroll',
@@ -722,7 +723,7 @@ return (
     showCaption
     ariaLabel="卷轴照片"
   />
-);`
+);`,
   },
   {
     name: 'PhotoPostcard',
@@ -748,13 +749,14 @@ return (
     showCaption
     ariaLabel="旅行明信片"
   />
-);`
+);`,
   },
   {
     name: 'PhotoViewMaster',
     path: '/photoViewMaster',
     title: '观景器圆盘',
-    description: 'View-Master 风格玩具观景器：拖拽旋转圆盘切换画面，松手带惯性并吸附，空闲时可缓慢自转。',
+    description:
+      'View-Master 风格玩具观景器：拖拽旋转圆盘切换画面，松手带惯性并吸附，空闲时可缓慢自转。',
     tags: ['CSS', '交互'],
     category: 'photo' as const,
     isNew: true,
@@ -776,13 +778,14 @@ return (
     showCaption
     ariaLabel="观景器圆盘"
   />
-);`
+);`,
   },
   {
     name: 'PhotoFridge',
     path: '/photoFridge',
     title: '冰箱磁贴墙',
-    description: '冰箱门上的磁贴照片墙：拖拽任意照片置顶并留在原处，松手带轻微惯性，磁铁吸住不回弹。',
+    description:
+      '冰箱门上的磁贴照片墙：拖拽任意照片置顶并留在原处，松手带轻微惯性，磁铁吸住不回弹。',
     tags: ['CSS', '物理', '交互'],
     category: 'photo' as const,
     isNew: true,
@@ -803,13 +806,14 @@ return (
     showCaption
     ariaLabel="冰箱磁贴照片墙"
   />
-);`
+);`,
   },
   {
     name: 'PhotoTunnel',
     path: '/photoTunnel',
     title: '纵深隧道',
-    description: '照片沿 Z 轴叠成隧道：上下拖拽穿行，松手后带惯性并吸附到最近一帧，近处清晰远处虚化。',
+    description:
+      '照片沿 Z 轴叠成隧道：上下拖拽穿行，松手后带惯性并吸附到最近一帧，近处清晰远处虚化。',
     tags: ['CSS', '3D', '交互'],
     category: 'photo' as const,
     isNew: true,
@@ -830,7 +834,7 @@ return (
     showCaption
     ariaLabel="纵深照片隧道"
   />
-);`
+);`,
   },
   {
     name: 'WaveButton',
@@ -841,7 +845,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { WaveButton } from 'cos-design';
 
-<WaveButton text="点我" />`
+<WaveButton text="点我" />`,
   },
   {
     name: 'Spotlight',
@@ -852,7 +856,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { Spotlight } from 'cos-design';
 
-<Spotlight>隐藏内容</Spotlight>`
+<Spotlight>隐藏内容</Spotlight>`,
   },
   {
     name: 'MagneticButton',
@@ -863,7 +867,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { MagneticButton } from 'cos-design';
 
-<MagneticButton>磁吸我</MagneticButton>`
+<MagneticButton>磁吸我</MagneticButton>`,
   },
   {
     name: 'HolographicCard',
@@ -874,7 +878,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { HolographicCard } from 'cos-design';
 
-<HolographicCard title="VIP" subtitle="全息会员卡" />`
+<HolographicCard title="VIP" subtitle="全息会员卡" />`,
   },
   {
     name: 'ClickSpark',
@@ -885,7 +889,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { ClickSpark } from 'cos-design';
 
-<ClickSpark>点击任意位置</ClickSpark>`
+<ClickSpark>点击任意位置</ClickSpark>`,
   },
   {
     name: 'CursorTrail',
@@ -896,7 +900,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { CursorTrail } from 'cos-design';
 
-<CursorTrail width={800} height={500} />`
+<CursorTrail width={800} height={500} />`,
   },
   {
     name: 'LiquidGlass',
@@ -907,7 +911,7 @@ return (
     category: 'interactive' as const,
     codeExample: `import { LiquidGlass } from 'cos-design';
 
-<LiquidGlass>毛玻璃内容</LiquidGlass>`
+<LiquidGlass>毛玻璃内容</LiquidGlass>`,
   },
   {
     name: 'Turntable',
@@ -918,7 +922,7 @@ return (
     category: 'game' as const,
     codeExample: `import { Turntable } from 'cos-design';
 
-<Turntable prizes={[{ label: '一等奖' }]} />`
+<Turntable prizes={[{ label: '一等奖' }]} />`,
   },
   {
     name: 'Confetti',
@@ -929,7 +933,7 @@ return (
     category: 'game' as const,
     codeExample: `import { Confetti } from 'cos-design';
 
-<Confetti auto={false} />`
+<Confetti auto={false} />`,
   },
   {
     name: 'Charge',
@@ -940,7 +944,7 @@ return (
     category: 'game' as const,
     codeExample: `import { Charge } from 'cos-design';
 
-<Charge value={50} autoCharge={false} />`
+<Charge value={50} autoCharge={false} />`,
   },
   {
     name: 'ScratchCard',
@@ -951,7 +955,7 @@ return (
     category: 'game' as const,
     codeExample: `import { ScratchCard } from 'cos-design';
 
-<ScratchCard prize="🎉 恭喜中奖！" />`
+<ScratchCard prize="🎉 恭喜中奖！" />`,
   },
   {
     name: 'SlotMachine',
@@ -962,7 +966,7 @@ return (
     category: 'game' as const,
     codeExample: `import { SlotMachine } from 'cos-design';
 
-<SlotMachine />`
+<SlotMachine />`,
   },
   {
     name: 'DiceRoll',
@@ -973,7 +977,7 @@ return (
     category: 'game' as const,
     codeExample: `import { DiceRoll } from 'cos-design';
 
-<DiceRoll onRoll={(n) => console.log(n)} />`
+<DiceRoll onRoll={(n) => console.log(n)} />`,
   },
   {
     name: 'NineGrid',
@@ -988,7 +992,7 @@ return (
 <NineGrid
   targetIndex={4}
   onDrawEnd={(item, index) => console.log(item, index)}
-/>`
+/>`,
   },
   {
     name: 'FlipCard',
@@ -1004,7 +1008,7 @@ return (
   frontTitle="Day 3"
   backTitle="积分 +20"
   onReveal={() => console.log('revealed')}
-/>`
+/>`,
   },
   {
     name: 'RedPacketRain',
@@ -1015,7 +1019,7 @@ return (
     category: 'game' as const,
     codeExample: `import { RedPacketRain } from 'cos-design';
 
-<RedPacketRain />`
+<RedPacketRain />`,
   },
   {
     name: 'ProgressChest',
@@ -1026,7 +1030,7 @@ return (
     category: 'game' as const,
     codeExample: `import { ProgressChest } from 'cos-design';
 
-<ProgressChest progress={75} />`
+<ProgressChest progress={75} />`,
   },
   {
     name: 'RadarScan',
@@ -1037,7 +1041,7 @@ return (
     category: 'game' as const,
     codeExample: `import { RadarScan } from 'cos-design';
 
-<RadarScan size={280} />`
+<RadarScan size={280} />`,
   },
   {
     name: 'CanvasClock',
@@ -1048,7 +1052,7 @@ return (
     category: 'data' as const,
     codeExample: `import { CanvasClock } from 'cos-design';
 
-<CanvasClock width={400} height={400} />`
+<CanvasClock width={400} height={400} />`,
   },
   {
     name: 'FlipCounter',
@@ -1059,7 +1063,7 @@ return (
     category: 'data' as const,
     codeExample: `import { FlipCounter } from 'cos-design';
 
-<FlipCounter value={12345} digits={5} />`
+<FlipCounter value={12345} digits={5} />`,
   },
   {
     name: 'Countdown',
@@ -1070,7 +1074,7 @@ return (
     category: 'data' as const,
     codeExample: `import { Countdown } from 'cos-design';
 
-<Countdown targetDate="2026-12-31T23:59:59" />`
+<Countdown targetDate="2026-12-31T23:59:59" />`,
   },
   {
     name: 'CountUp',
@@ -1082,7 +1086,7 @@ return (
     isNew: true,
     codeExample: `import { CountUp } from 'cos-design';
 
-<CountUp value={128560} prefix="$" duration={1800} />`
+<CountUp value={128560} prefix="$" duration={1800} />`,
   },
   {
     name: 'LiquidProgress',
@@ -1093,7 +1097,7 @@ return (
     category: 'data' as const,
     codeExample: `import { LiquidProgress } from 'cos-design';
 
-<LiquidProgress value={65} />`
+<LiquidProgress value={65} />`,
   },
   {
     name: 'AudioVisualizer',
@@ -1104,7 +1108,7 @@ return (
     category: 'data' as const,
     codeExample: `import { AudioVisualizer } from 'cos-design';
 
-<AudioVisualizer width={400} height={200} />`
+<AudioVisualizer width={400} height={200} />`,
   },
   {
     name: 'Speedometer',
@@ -1115,7 +1119,7 @@ return (
     category: 'data' as const,
     codeExample: `import { Speedometer } from 'cos-design';
 
-<Speedometer value={72} max={120} label="km/h" />`
+<Speedometer value={72} max={120} label="km/h" />`,
   },
   {
     name: 'TimelinePulse',
@@ -1126,7 +1130,7 @@ return (
     category: 'data' as const,
     codeExample: `import { TimelinePulse } from 'cos-design';
 
-<TimelinePulse steps={['设计','开发','测试','上线']} current={1} />`
+<TimelinePulse steps={['设计','开发','测试','上线']} current={1} />`,
   },
   {
     name: 'OrbitalChart',
@@ -1137,7 +1141,7 @@ return (
     category: 'data' as const,
     codeExample: `import { OrbitalChart } from 'cos-design';
 
-<OrbitalChart data={[{ label: 'A', value: 40, color: '#38bdf8' }]} />`
+<OrbitalChart data={[{ label: 'A', value: 40, color: '#38bdf8' }]} />`,
   },
   {
     name: 'NetworkGraph',
@@ -1149,7 +1153,7 @@ return (
     isNew: true,
     codeExample: `import { NetworkGraph } from 'cos-design';
 
-<NetworkGraph width={600} height={420} />`
+<NetworkGraph width={600} height={420} />`,
   },
   {
     name: 'NewtonCradle',
@@ -1160,7 +1164,7 @@ return (
     category: 'physics' as const,
     codeExample: `import { NewtonCradle } from 'cos-design';
 
-<NewtonCradle ballCount={5} />`
+<NewtonCradle ballCount={5} />`,
   },
   {
     name: 'GravityBalls',
@@ -1171,7 +1175,7 @@ return (
     category: 'physics' as const,
     codeExample: `import { GravityBalls } from 'cos-design';
 
-<GravityBalls width={600} height={400} />`
+<GravityBalls width={600} height={400} />`,
   },
   {
     name: 'SandFall',
@@ -1183,7 +1187,7 @@ return (
     isNew: true,
     codeExample: `import { SandFall } from 'cos-design';
 
-<SandFall width={480} height={400} cellSize={4} />`
+<SandFall width={480} height={400} cellSize={4} />`,
   },
   {
     name: 'SpringMass',
@@ -1195,7 +1199,7 @@ return (
     isNew: true,
     codeExample: `import { SpringMass } from 'cos-design';
 
-<SpringMass width={560} height={400} cols={6} rows={5} />`
+<SpringMass width={560} height={400} cols={6} rows={5} />`,
   },
   {
     name: 'DoublePendulum',
@@ -1206,7 +1210,7 @@ return (
     category: 'physics' as const,
     codeExample: `import { DoublePendulum } from 'cos-design';
 
-<DoublePendulum width={400} height={400} />`
+<DoublePendulum width={400} height={400} />`,
   },
   {
     name: 'MetaballPool',
@@ -1217,7 +1221,7 @@ return (
     category: 'physics' as const,
     codeExample: `import { MetaballPool } from 'cos-design';
 
-<MetaballPool width={500} height={320} />`
+<MetaballPool width={500} height={320} />`,
   },
   {
     name: 'RopeChain',
@@ -1228,7 +1232,7 @@ return (
     category: 'physics' as const,
     codeExample: `import { RopeChain } from 'cos-design';
 
-<RopeChain width={400} height={400} segments={16} />`
+<RopeChain width={400} height={400} segments={16} />`,
   },
   {
     name: 'DnaHelix',
@@ -1239,7 +1243,7 @@ return (
     category: 'science' as const,
     codeExample: `import { DnaHelix } from 'cos-design';
 
-<DnaHelix width={300} height={500} />`
+<DnaHelix width={300} height={500} />`,
   },
   {
     name: 'SolarSystem',
@@ -1250,7 +1254,7 @@ return (
     category: 'science' as const,
     codeExample: `import { SolarSystem } from 'cos-design';
 
-<SolarSystem width={400} height={400} speed={1.2} />`
+<SolarSystem width={400} height={400} speed={1.2} />`,
   },
   {
     name: 'LorenzAttractor',
@@ -1261,7 +1265,7 @@ return (
     category: 'science' as const,
     codeExample: `import { LorenzAttractor } from 'cos-design';
 
-<LorenzAttractor width={400} height={360} />`
+<LorenzAttractor width={400} height={360} />`,
   },
   {
     name: 'MazeGenerator',
@@ -1272,7 +1276,7 @@ return (
     category: 'science' as const,
     codeExample: `import { MazeGenerator } from 'cos-design';
 
-<MazeGenerator width={400} height={400} />`
+<MazeGenerator width={400} height={400} />`,
   },
   {
     name: 'GameOfLife',
@@ -1284,7 +1288,7 @@ return (
     isNew: true,
     codeExample: `import { GameOfLife } from 'cos-design';
 
-<GameOfLife width={560} height={420} cellSize={14} speed={120} />`
+<GameOfLife width={560} height={420} cellSize={14} speed={120} />`,
   },
   {
     name: 'Fireworks',
@@ -1295,7 +1299,7 @@ return (
     category: 'effect' as const,
     codeExample: `import { Fireworks } from 'cos-design';
 
-<Fireworks auto={false} />`
+<Fireworks auto={false} />`,
   },
   {
     name: 'ReturnCity',
@@ -1306,7 +1310,7 @@ return (
     category: 'effect' as const,
     codeExample: `import { ReturnCity } from 'cos-design';
 
-<ReturnCity />`
+<ReturnCity />`,
   },
   {
     name: 'ElectricArc',
@@ -1317,7 +1321,7 @@ return (
     category: 'effect' as const,
     codeExample: `import { ElectricArc } from 'cos-design';
 
-<ElectricArc width={400} height={200} />`
+<ElectricArc width={400} height={200} />`,
   },
   {
     name: 'PlasmaBall',
@@ -1328,6 +1332,6 @@ return (
     category: 'effect' as const,
     codeExample: `import { PlasmaBall } from 'cos-design';
 
-<PlasmaBall width={320} height={320} />`
-  }
+<PlasmaBall width={320} height={320} />`,
+  },
 ];

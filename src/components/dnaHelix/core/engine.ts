@@ -3,8 +3,17 @@ import type { DnaHelixController, DnaHelixOptions } from './types';
 
 const P = 'cos-dna-helix';
 
-export function createDnaHelix(container: HTMLElement, initial: DnaHelixOptions = {}): DnaHelixController {
-  let options: DnaHelixOptions = { width: 200, height: 360, speed: 1, color: '#38bdf8', ...initial };
+export function createDnaHelix(
+  container: HTMLElement,
+  initial: DnaHelixOptions = {},
+): DnaHelixController {
+  let options: DnaHelixOptions = {
+    width: 200,
+    height: 360,
+    speed: 1,
+    color: '#38bdf8',
+    ...initial,
+  };
   let destroyed = false;
   let frameId = 0;
   let t = 0;
@@ -95,6 +104,6 @@ export function createDnaHelix(container: HTMLElement, initial: DnaHelixOptions 
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

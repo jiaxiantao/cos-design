@@ -6,13 +6,16 @@ const CIRCLE_TOP = 10;
 const CIRCLE_SIZE = 300;
 const MERGE_FROM_TOP = CIRCLE_TOP + CIRCLE_SIZE - 52;
 
-export function createCharge(container: HTMLElement, initial: ChargeOptions = {}): ChargeController {
+export function createCharge(
+  container: HTMLElement,
+  initial: ChargeOptions = {},
+): ChargeController {
   let opts: ChargeOptions = {
     initQuantity: 0,
     autoCharge: true,
     interval: 500,
     step: 0.01,
-    ...initial
+    ...initial,
   };
   let innerQuantity = clamp(opts.initQuantity ?? 0, 0, 100);
   const isControlled = () => opts.value !== undefined;
@@ -83,7 +86,8 @@ export function createCharge(container: HTMLElement, initial: ChargeOptions = {}
       opts = { ...opts, ...n };
       if (n.onChange !== undefined) onChangeRef.current = n.onChange;
       if (n.onComplete !== undefined) onCompleteRef.current = n.onComplete;
-      if (n.initQuantity !== undefined && !isControlled()) innerQuantity = clamp(n.initQuantity, 0, 100);
+      if (n.initQuantity !== undefined && !isControlled())
+        innerQuantity = clamp(n.initQuantity, 0, 100);
       render();
       startCharge();
     },
@@ -91,6 +95,6 @@ export function createCharge(container: HTMLElement, initial: ChargeOptions = {}
       if (chargeTimer) clearInterval(chargeTimer);
       resizeObs?.disconnect();
       root.remove();
-    }
+    },
   };
 }

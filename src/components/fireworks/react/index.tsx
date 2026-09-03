@@ -13,7 +13,7 @@ const Fireworks = forwardRef<FireworksHandle, FireworksOptions>((props, ref) => 
   propsRef.current = props;
 
   useImperativeHandle(ref, () => ({
-    launch: (x) => ctrlRef.current?.launch(x)
+    launch: (x) => ctrlRef.current?.launch(x),
   }));
 
   useEffect(() => {

@@ -6,7 +6,9 @@ import { FlipCard } from '@cos-design/flip-card';
 import { NineGrid } from '@cos-design/nine-grid';
 import type { ConfettiHandle } from '@cos-design/confetti';
 
-const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), {
+  ssr: false,
+});
 
 /**
  * Primary campaign chain for this example:
@@ -38,8 +40,8 @@ export function CampaignFlow() {
       <p className="eyebrow">Primary flow</p>
       <h2>Check-in → nine-grid draw</h2>
       <p>
-        One forkable chain: FlipCard unlocks NineGrid. Button stays <code>aria-busy</code> while drawing — call{' '}
-        <code>reset()</code> only when you intentionally allow another draw.
+        One forkable chain: FlipCard unlocks NineGrid. Button stays <code>aria-busy</code> while
+        drawing — call <code>reset()</code> only when you intentionally allow another draw.
       </p>
       <FlipCard
         frontTitle="Day 3"

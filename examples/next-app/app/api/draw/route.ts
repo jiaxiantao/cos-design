@@ -8,6 +8,6 @@ export async function GET(request: Request) {
   return NextResponse.json({
     targetIndex,
     cells,
-    prizeHint: `Server drew index ${targetIndex} (of ${cells})`
+    prizeHint: `Server drew index ${targetIndex} (of ${cells})`,
   });
 }

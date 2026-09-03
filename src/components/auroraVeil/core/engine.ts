@@ -5,7 +5,7 @@ import {
   lerp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { AuroraVeilController, AuroraVeilOptions } from './types';
 
@@ -81,13 +81,14 @@ const parseRgb = (hex: string, fallback: [number, number, number]): [number, num
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 };
 
-const mixRgb = (a: [number, number, number], b: [number, number, number], t: number): [number, number, number] => [
-  lerp(a[0], b[0], t),
-  lerp(a[1], b[1], t),
-  lerp(a[2], b[2], t)
-];
+const mixRgb = (
+  a: [number, number, number],
+  b: [number, number, number],
+  t: number,
+): [number, number, number] => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
 
-const brighten = (c: [number, number, number], amount: number) => mixRgb(c, [255, 255, 255], amount / 255);
+const brighten = (c: [number, number, number], amount: number) =>
+  mixRgb(c, [255, 255, 255], amount / 255);
 
 const verticalFade = (yNorm: number) => {
   const top = clamp(yNorm / 0.035, 0, 1);
@@ -97,7 +98,10 @@ const verticalFade = (yNorm: number) => {
 
 const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
-export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOptions = {}): AuroraVeilController {
+export function createAuroraVeil(
+  container: HTMLElement,
+  initial: AuroraVeilOptions = {},
+): AuroraVeilController {
   let options: AuroraVeilOptions = {
     fill: false,
     colors: DEFAULT_COLORS,
@@ -105,7 +109,7 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
     speed: 1,
     interactive: true,
     ariaLabel: '极光帷幕背景',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -169,7 +173,7 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -197,7 +201,7 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
         depth: hash(i + 19),
         color,
         glow: brighten(color, 62),
-        sheets: 2 + Math.floor(hash(i + 17) * 2)
+        sheets: 2 + Math.floor(hash(i + 17) * 2),
       });
     }
     veils.sort((a, b) => a.depth - b.depth);
@@ -211,14 +215,22 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
         a: 0.08 + depth * 0.48,
         tw: hash(i * 6.1),
         depth,
-        warm: hash(i * 2.7) > 0.82
+        warm: hash(i * 2.7) > 0.82,
       });
     }
     burstLevel = 0;
     flash = 0;
     time = 0;
     const mid = { x: width * 0.5, y: height * 0.5 };
-    Object.assign(pointer, { x: mid.x, y: mid.y, sx: mid.x, sy: mid.y, vx: 0, svx: 0, active: false });
+    Object.assign(pointer, {
+      x: mid.x,
+      y: mid.y,
+      sx: mid.x,
+      sy: mid.y,
+      vx: 0,
+      svx: 0,
+      active: false,
+    });
   };
 
   const startLoop = () => {
@@ -259,7 +271,7 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
       const rect = canvas.getBoundingClientRect();
       return {
         x: (event.clientX - rect.left) * (width / Math.max(rect.width, 1)),
-        y: (event.clientY - rect.top) * (height / Math.max(rect.height, 1))
+        y: (event.clientY - rect.top) * (height / Math.max(rect.height, 1)),
       };
     };
 
@@ -325,7 +337,9 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
 
       const wave =
         Math.sin(y * veil.freq + time * 0.28 + veil.phase + flow * yNorm * 3.8) * veil.amp +
-        Math.sin(y * veil.freq * 1.55 + time * 0.17 + veil.phase * 1.15 + flow * yNorm * 2) * veil.amp * 0.42 +
+        Math.sin(y * veil.freq * 1.55 + time * 0.17 + veil.phase * 1.15 + flow * yNorm * 2) *
+          veil.amp *
+          0.42 +
         Math.sin(y * veil.freq * 0.38 + time * 0.11 + sheet * 0.65) * veil.amp * 0.18;
 
       const drift =
@@ -405,7 +419,7 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
       burst: number,
       coreScale: number,
       alphaScale: number,
-      time: number
+      time: number,
     ) => {
       traceSmoothRibbon(ctx2d, profile);
       const [r, g, b] = veil.color;
@@ -416,7 +430,12 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
       const edge = 0.1 * alphaScale * depthFade;
       const shimmer = 0.9 + 0.1 * Math.sin(time * 0.65 + veil.phase);
 
-      const horiz = ctx2d.createLinearGradient(veil.x - veil.width * 2.4, 0, veil.x + veil.width * 2.4, 0);
+      const horiz = ctx2d.createLinearGradient(
+        veil.x - veil.width * 2.4,
+        0,
+        veil.x + veil.width * 2.4,
+        0,
+      );
       horiz.addColorStop(0, `rgb(${r} ${g} ${b} / 0%)`);
       horiz.addColorStop(0.34, `rgb(${r} ${g} ${b} / ${edge})`);
       horiz.addColorStop(0.5, `rgb(${gr} ${gg} ${gb} / ${core * coreScale * shimmer})`);
@@ -449,7 +468,12 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
       ctx.fillStyle = sky;
       ctx.fillRect(0, 0, width, height);
 
-      const milky = ctx.createLinearGradient(width * 0.1, height * 0.05, width * 0.9, height * 0.35);
+      const milky = ctx.createLinearGradient(
+        width * 0.1,
+        height * 0.05,
+        width * 0.9,
+        height * 0.35,
+      );
       milky.addColorStop(0, 'rgb(0 0 0 / 0%)');
       milky.addColorStop(0.45, 'rgb(50 65 95 / 6%)');
       milky.addColorStop(0.55, 'rgb(60 75 110 / 7%)');
@@ -457,7 +481,14 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
       ctx.fillStyle = milky;
       ctx.fillRect(0, 0, width, height);
 
-      const nebula = ctx.createRadialGradient(width * 0.52, height * 0.1, 0, width * 0.48, height * 0.22, height * 0.7);
+      const nebula = ctx.createRadialGradient(
+        width * 0.52,
+        height * 0.1,
+        0,
+        width * 0.48,
+        height * 0.22,
+        height * 0.7,
+      );
       nebula.addColorStop(0, 'rgb(35 55 90 / 8%)');
       nebula.addColorStop(1, 'rgb(0 0 0 / 0%)');
       ctx.fillStyle = nebula;
@@ -465,7 +496,9 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
 
       for (const star of stars) {
         const yNorm = star.y / height;
-        const tw = staticFrame ? 1 : 0.5 + 0.5 * Math.sin(time * (0.65 + star.depth) + star.tw * 10);
+        const tw = staticFrame
+          ? 1
+          : 0.5 + 0.5 * Math.sin(time * (0.65 + star.depth) + star.tw * 10);
         const alpha = star.a * tw * verticalFade(yNorm);
         if (alpha < 0.02) continue;
 
@@ -504,7 +537,7 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
         height * 0.14,
         width * 0.5,
         height * 0.5,
-        height * 0.98
+        height * 0.98,
       );
       vignette.addColorStop(0, 'rgb(0 0 0 / 0%)');
       vignette.addColorStop(1, 'rgb(0 0 0 / 42%)');
@@ -530,7 +563,15 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
           coreLeftBuf[i] = lerp(profile.left[i], cx, 0.58);
           coreRightBuf[i] = lerp(profile.right[i], cx, 0.58);
         }
-        fillRibbon(gctx, veil, { left: coreLeftBuf, right: coreRightBuf }, burstLevel, 1.35, 0.52, time);
+        fillRibbon(
+          gctx,
+          veil,
+          { left: coreLeftBuf, right: coreRightBuf },
+          burstLevel,
+          1.35,
+          0.52,
+          time,
+        );
       }
 
       ctx.save();
@@ -637,6 +678,6 @@ export function createAuroraVeil(container: HTMLElement, initial: AuroraVeilOpti
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

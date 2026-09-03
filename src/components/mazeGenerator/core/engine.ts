@@ -10,7 +10,7 @@ type Cell = Record<WallKey, boolean> & { visited: boolean };
 
 export function createMazeGenerator(
   container: HTMLElement,
-  initial: MazeGeneratorOptions = {}
+  initial: MazeGeneratorOptions = {},
 ): MazeGeneratorController {
   let options: MazeGeneratorOptions = { cellSize: 20, ...initial };
   let destroyed = false;
@@ -43,8 +43,8 @@ export function createMazeGenerator(
         right: true,
         bottom: true,
         left: true,
-        visited: false
-      }))
+        visited: false,
+      })),
     );
 
     const stack: [number, number][] = [[0, 0]];
@@ -53,9 +53,14 @@ export function createMazeGenerator(
       [0, -1, 'top'],
       [1, 0, 'right'],
       [0, 1, 'bottom'],
-      [-1, 0, 'left']
+      [-1, 0, 'left'],
     ];
-    const opposite: Record<WallKey, WallKey> = { top: 'bottom', right: 'left', bottom: 'top', left: 'right' };
+    const opposite: Record<WallKey, WallKey> = {
+      top: 'bottom',
+      right: 'left',
+      bottom: 'top',
+      left: 'right',
+    };
 
     while (stack.length) {
       const [cx, cy] = stack[stack.length - 1];
@@ -180,6 +185,6 @@ export function createMazeGenerator(
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

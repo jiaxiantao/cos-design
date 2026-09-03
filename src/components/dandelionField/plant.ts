@@ -23,10 +23,18 @@ import {
   STEM_WIND_LIFT,
   STEM_WIND_STIFF,
   FLUFF_WIND_DRAG,
-  FLUFF_WIND_DRAG_Y
+  FLUFF_WIND_DRAG_Y,
 } from './constants';
 import type { HeadLifecycle, IntroSpawn, Plant, PlantLayout, Seed } from './types';
-import { depthFromGround, easeInOutCubic, easeOutCubic, hash, smoothstep, softSat, windVisualStrength } from './utils';
+import {
+  depthFromGround,
+  easeInOutCubic,
+  easeOutCubic,
+  hash,
+  smoothstep,
+  softSat,
+  windVisualStrength,
+} from './utils';
 
 export const sproutLife = (stemLenRatio = 0, phaseTime = 0) => ({
   phase: 'sprout' as const,
@@ -37,7 +45,7 @@ export const sproutLife = (stemLenRatio = 0, phaseTime = 0) => ({
   leafScale: stemLenRatio > 0 ? 0.08 + stemLenRatio * 0.92 : 0.08,
   fade: stemLenRatio > 0 ? Math.min(1, stemLenRatio * 1.35) : 0,
   wilt: 0,
-  stemBrown: 0
+  stemBrown: 0,
 });
 
 export const matureLife = () => ({
@@ -49,20 +57,27 @@ export const matureLife = () => ({
   leafScale: 1,
   fade: 1,
   wilt: 0,
-  stemBrown: 0
+  stemBrown: 0,
 });
 
-export const rollMatureHold = () => MATURE_HOLD_MIN + Math.random() * (MATURE_HOLD_MAX - MATURE_HOLD_MIN);
+export const rollMatureHold = () =>
+  MATURE_HOLD_MIN + Math.random() * (MATURE_HOLD_MAX - MATURE_HOLD_MIN);
 
 export const rollReleaseDuration = (plantId: number) =>
   RELEASE_DURATION_MIN + hash(plantId * 5.1) * (RELEASE_DURATION_MAX - RELEASE_DURATION_MIN);
 
-export const buildIntroQueue = (count: number, width: number, height: number, baseSeedCount: number): IntroSpawn[] =>
+export const buildIntroQueue = (
+  count: number,
+  width: number,
+  height: number,
+  baseSeedCount: number,
+): IntroSpawn[] =>
   scatterPlantLayouts(count, width, height, baseSeedCount)
     .map((layout, i) => ({
-      at: i === 0 ? 0 : (i / Math.max(count - 1, 1)) * INTRO_DURATION + (Math.random() - 0.5) * 0.28,
+      at:
+        i === 0 ? 0 : (i / Math.max(count - 1, 1)) * INTRO_DURATION + (Math.random() - 0.5) * 0.28,
       layout,
-      spawned: false
+      spawned: false,
     }))
     .sort((a, b) => a.at - b.at);
 
@@ -73,7 +88,7 @@ export const placeSeed = (i: number, n: number, radius: number) => {
   return {
     lx: Math.cos(theta) * r * radius,
     ly: y * radius * 0.52,
-    lz: Math.sin(theta) * r * radius * 0.38
+    lz: Math.sin(theta) * r * radius * 0.38,
   };
 };
 
@@ -92,7 +107,7 @@ export const puffBallHeadAt = (puff: number): HeadLifecycle => {
     wilt: 0,
     receptacle: 1 - smoothstep(0.5, 0.95, p) * 0.32,
     puff: p,
-    glow: smoothstep(0.08, 0.42, p) * (1 - smoothstep(0.82, 1, p) * 0.45)
+    glow: smoothstep(0.08, 0.42, p) * (1 - smoothstep(0.82, 1, p) * 0.45),
   };
 };
 
@@ -148,7 +163,8 @@ export const headLifecycle = (plant: Plant): HeadLifecycle => {
   return { budSize: 0, budOpen: 0, bloom: 0, wilt: 0, receptacle: 0, puff: 0, glow: 0 };
 };
 
-export const stemBendSeed = (id: number, x: number) => Math.imul(id, 7919) ^ Math.imul(Math.round(x * 127.1), 104729);
+export const stemBendSeed = (id: number, x: number) =>
+  Math.imul(id, 7919) ^ Math.imul(Math.round(x * 127.1), 104729);
 
 export const stemBendTraits = (seed: number) => {
   const mag1 = 0.24 + hash(seed + 23.1) * 0.42;
@@ -157,7 +173,7 @@ export const stemBendTraits = (seed: number) => {
     stemBendX: (hash(seed + 37.9) - 0.5) * mag1 * 2.5,
     stemBendY: (hash(seed + 41.7) - 0.5) * mag1 * 1.55,
     stemBend2X: (hash(seed + 63.4) - 0.5) * mag2 * 2.6,
-    stemBend2Y: (hash(seed + 67.2) - 0.5) * mag2 * 1.35
+    stemBend2Y: (hash(seed + 67.2) - 0.5) * mag2 * 1.35,
   };
 };
 
@@ -182,7 +198,12 @@ export const stemTipOffsetX = (plant: Plant, rise: number, curveT: number) => {
 };
 
 /** 茎干风摆：弹簧阻尼追随风向，底部硬、顶部软（在 stemWindOffset 体现） */
-export const updateStemWind = (plant: Plant, wind: { x: number; y: number }, idle: number, dt: number) => {
+export const updateStemWind = (
+  plant: Plant,
+  wind: { x: number; y: number },
+  idle: number,
+  dt: number,
+) => {
   const targetX = wind.x * (1.28 + hash(plant.id * 5.1) * 0.88) + idle * 0.2;
   const targetY = wind.y * (0.58 + hash(plant.id * 7.3) * 0.32);
 
@@ -190,7 +211,8 @@ export const updateStemWind = (plant: Plant, wind: { x: number; y: number }, idl
   plant.sway += plant.swayVel * dt;
   plant.sway = clamp(plant.sway, -4.2, 4.2);
 
-  plant.liftVel += ((targetY - plant.windLift) * STEM_LIFT_STIFF - plant.liftVel * STEM_WIND_DAMP) * dt;
+  plant.liftVel +=
+    ((targetY - plant.windLift) * STEM_LIFT_STIFF - plant.liftVel * STEM_WIND_DAMP) * dt;
   plant.windLift += plant.liftVel * dt;
   plant.windLift = clamp(plant.windLift, -1.6, 1.6);
 };
@@ -203,7 +225,7 @@ export const updateAttachedFluff = (
   time: number,
   dt: number,
   onPuffBall: boolean,
-  plantRadius: number
+  plantRadius: number,
 ) => {
   const maxR = Math.max(plantRadius * 0.52, 1);
   const radial = clamp(Math.hypot(seed.lx, seed.ly) / maxR, 0, 1);
@@ -233,13 +255,14 @@ export const updateAttachedFluff = (
 
   const flutterAmp = (0.012 + windMag * 0.028) * puff;
   const flutterX = Math.sin(time * (2.6 + seed.hairPhase * 0.25) + seed.swayPhase) * flutterAmp;
-  const flutterY = Math.sin(time * (2.35 + seed.hairPhase * 0.31) + seed.swayPhase * 1.18) * flutterAmp * 1.12;
+  const flutterY =
+    Math.sin(time * (2.35 + seed.hairPhase * 0.31) + seed.swayPhase * 1.18) * flutterAmp * 1.12;
 
   return {
     offX: seed.fluffOx + flutterX,
     offY: seed.fluffOy + flutterY,
     tiltX: seed.fluffOx * 0.42 + flutterX * 0.6,
-    tiltY: seed.fluffOy * 0.42 + flutterY * 0.6
+    tiltY: seed.fluffOy * 0.42 + flutterY * 0.6,
   };
 };
 
@@ -279,11 +302,11 @@ export const stemCurveGeometry = (plant: Plant) => {
   const head = { x: baseX + tipDx + windDx, y: baseY - rise + windDy };
   const cp1 = {
     x: baseX + windDx * 0.04,
-    y: baseY - rise * STEM_BASE_VERTICAL + windDy * 0.03
+    y: baseY - rise * STEM_BASE_VERTICAL + windDy * 0.03,
   };
   const cp2 = {
     x: baseX + tipDx * 0.74 + windDx * 0.48,
-    y: baseY - rise * 0.84 + windDy * 0.12
+    y: baseY - rise * 0.84 + windDy * 0.12,
   };
 
   if (plant.phase !== 'wither') {
@@ -295,12 +318,15 @@ export const stemCurveGeometry = (plant: Plant) => {
   const droopY = rise * 0.34 * t + windDy;
   return {
     base,
-    cp1: { x: baseX + windDx * 0.08, y: baseY - rise * STEM_BASE_VERTICAL * (1 - t * 0.15) + windDy * 0.06 },
+    cp1: {
+      x: baseX + windDx * 0.08,
+      y: baseY - rise * STEM_BASE_VERTICAL * (1 - t * 0.15) + windDy * 0.06,
+    },
     cp2: {
       x: baseX + wiltDx * 0.62,
-      y: baseY - rise * 0.78 + droopY * 0.28
+      y: baseY - rise * 0.78 + droopY * 0.28,
     },
-    head: { x: baseX + wiltDx, y: baseY - rise + droopY }
+    head: { x: baseX + wiltDx, y: baseY - rise + droopY },
   };
 };
 
@@ -309,14 +335,19 @@ export const buildPlantTraits = (
   ground: number,
   height: number,
   baseSeedCount: number,
-  id: number
+  id: number,
 ): PlantLayout => {
   const depth = depthFromGround(ground, height);
   const sizeJitter = 0.82 + hash(id + 11.7) * 0.38;
   const scale = clamp(0.48 + depth * 0.62 + (hash(id + 5.3) - 0.5) * 0.16, 0.42, 1.38) * sizeJitter;
-  const stem = height * (0.1 + hash(id + 9.4) * 0.26 + depth * 0.1) * (0.68 + hash(id + 13.2) * 0.62);
+  const stem =
+    height * (0.1 + hash(id + 9.4) * 0.26 + depth * 0.1) * (0.68 + hash(id + 13.2) * 0.62);
   const radius = (8 + hash(id + 2.8) * 16) * scale;
-  const seedQuota = clamp(Math.round(baseSeedCount * (0.55 + hash(id + 17.5) * 0.75) * (0.75 + scale * 0.35)), 20, 96);
+  const seedQuota = clamp(
+    Math.round(baseSeedCount * (0.55 + hash(id + 17.5) * 0.75) * (0.75 + scale * 0.35)),
+    20,
+    96,
+  );
   return {
     x,
     ground,
@@ -326,7 +357,7 @@ export const buildPlantTraits = (
     ...stemBendTraits(stemBendSeed(id, x)),
     depth,
     scale,
-    seedQuota
+    seedQuota,
   };
 };
 
@@ -357,7 +388,7 @@ export const makePlant = (layout: PlantLayout, id: number, life: PlantLife): Pla
   releaseElapsed: 0,
   releaseSeedTotal: 0,
   releasing: false,
-  releaseBoost: 0
+  releaseBoost: 0,
 });
 
 /** 随机散布位置，保证最小间距，避免均匀排布 */
@@ -365,7 +396,7 @@ export const scatterPlantLayouts = (
   count: number,
   width: number,
   height: number,
-  baseSeedCount: number
+  baseSeedCount: number,
 ): PlantLayout[] => {
   const marginX = width * 0.05;
   const slots: { x: number; depth: number }[] = [];
@@ -374,24 +405,32 @@ export const scatterPlantLayouts = (
   for (let attempt = 0; attempt < count * 50 && slots.length < count; attempt++) {
     const x = marginX + Math.random() * (width - marginX * 2);
     const depth = clamp(0.08 + Math.random() * 0.92, 0, 1);
-    const ok = slots.every((s) => Math.abs(s.x - x) > minGap * (0.65 + (1 - Math.abs(s.depth - depth)) * 0.35));
+    const ok = slots.every(
+      (s) => Math.abs(s.x - x) > minGap * (0.65 + (1 - Math.abs(s.depth - depth)) * 0.35),
+    );
     if (ok) slots.push({ x, depth });
   }
 
   while (slots.length < count) {
     slots.push({
       x: marginX + Math.random() * (width - marginX * 2),
-      depth: Math.random()
+      depth: Math.random(),
     });
   }
 
   return slots.map(({ x, depth }) => {
     const sizeJitter = 0.82 + Math.random() * 0.38;
-    const scale = clamp(0.48 + depth * 0.62 + (Math.random() - 0.5) * 0.16, 0.42, 1.38) * sizeJitter;
+    const scale =
+      clamp(0.48 + depth * 0.62 + (Math.random() - 0.5) * 0.16, 0.42, 1.38) * sizeJitter;
     const ground = height * (0.66 + depth * 0.24 + (Math.random() - 0.5) * 0.035);
-    const stem = height * (0.1 + Math.random() * 0.26 + depth * 0.1) * (0.68 + Math.random() * 0.62);
+    const stem =
+      height * (0.1 + Math.random() * 0.26 + depth * 0.1) * (0.68 + Math.random() * 0.62);
     const radius = (8 + Math.random() * 16) * scale;
-    const seedQuota = clamp(Math.round(baseSeedCount * (0.55 + Math.random() * 0.75) * (0.75 + scale * 0.35)), 20, 96);
+    const seedQuota = clamp(
+      Math.round(baseSeedCount * (0.55 + Math.random() * 0.75) * (0.75 + scale * 0.35)),
+      20,
+      96,
+    );
     return {
       x,
       ground,
@@ -401,7 +440,7 @@ export const scatterPlantLayouts = (
       ...randomStemBendTraits(),
       depth,
       scale,
-      seedQuota
+      seedQuota,
     };
   });
 };

@@ -8,8 +8,17 @@ const polar = (cx: number, cy: number, r: number, deg: number) => {
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 };
 
-export function createSpeedometer(container: HTMLElement, initial: SpeedometerOptions = {}): SpeedometerController {
-  let options: SpeedometerOptions = { value: 0, max: 100, label: 'SPEED', color: '#f97316', ...initial };
+export function createSpeedometer(
+  container: HTMLElement,
+  initial: SpeedometerOptions = {},
+): SpeedometerController {
+  let options: SpeedometerOptions = {
+    value: 0,
+    max: 100,
+    label: 'SPEED',
+    color: '#f97316',
+    ...initial,
+  };
   let destroyed = false;
 
   const root = document.createElement('div');
@@ -100,6 +109,6 @@ export function createSpeedometer(container: HTMLElement, initial: SpeedometerOp
       if (destroyed) return;
       destroyed = true;
       root.remove();
-    }
+    },
   };
 }

@@ -21,10 +21,15 @@ import { FlipCard } from '@cos-design/flip-card';
 import { NineGrid, type NineGridHandle } from '@cos-design/nine-grid';
 import type { ConfettiHandle } from '@cos-design/confetti';
 
-const WeatherBackground = dynamic(() => import('@cos-design/weather-background').then((m) => m.WeatherBackground), {
-  ssr: false
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  {
+    ssr: false,
+  },
+);
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), {
+  ssr: false,
 });
-const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
 
 export function Campaign() {
   const gridRef = useRef<NineGridHandle>(null);
@@ -43,7 +48,11 @@ export function Campaign() {
         <WeatherBackground fill weather="partlyCloudy" live={false} />
       </section>
       <FlipCard onReveal={() => setCheckedIn(true)} />
-      <NineGrid ref={gridRef} disabled={!checkedIn} onDrawEnd={() => confettiRef.current?.burst()} />
+      <NineGrid
+        ref={gridRef}
+        disabled={!checkedIn}
+        onDrawEnd={() => confettiRef.current?.burst()}
+      />
       <div style={{ height: 280 }}>
         <Confetti ref={confettiRef} fill auto={false} />
       </div>
@@ -74,7 +83,9 @@ import dynamic from 'next/dynamic';
 import { ScratchCard } from '@cos-design/scratch-card';
 import type { FireworksHandle } from '@cos-design/fireworks';
 
-const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), { ssr: false });
+const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), {
+  ssr: false,
+});
 
 export function ScratchCelebrate() {
   const fireworksRef = useRef<FireworksHandle>(null);
@@ -84,8 +95,21 @@ export function ScratchCelebrate() {
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         <Fireworks ref={fireworksRef} fill auto={false} />
       </div>
-      <div style={{ position: 'relative', zIndex: 1, display: 'grid', placeItems: 'center', minHeight: '100vh' }}>
-        <ScratchCard prize="🎉 50% OFF" width={320} height={200} onReveal={() => fireworksRef.current?.launch()} />
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          display: 'grid',
+          placeItems: 'center',
+          minHeight: '100vh',
+        }}
+      >
+        <ScratchCard
+          prize="🎉 50% OFF"
+          width={320}
+          height={200}
+          onReveal={() => fireworksRef.current?.launch()}
+        />
       </div>
     </div>
   );
@@ -109,7 +133,9 @@ import dynamic from 'next/dynamic';
 import { Turntable, type TurntableHandle } from '@cos-design/turntable';
 import type { ConfettiHandle } from '@cos-design/confetti';
 
-const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), {
+  ssr: false,
+});
 
 export function WheelDraw() {
   const wheelRef = useRef<TurntableHandle>(null);
@@ -155,7 +181,15 @@ import { NeonText } from '@cos-design/neon-text';
 
 export function LaunchHero() {
   return (
-    <section style={{ position: 'relative', minHeight: '100vh', display: 'grid', placeItems: 'center', gap: 24 }}>
+    <section
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+        gap: 24,
+      }}
+    >
       <Aurora fill />
       <NeonText text="GRAND OPENING" />
       <Countdown targetDate={new Date('2026-12-31T23:59:59')} />

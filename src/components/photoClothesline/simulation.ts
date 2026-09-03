@@ -11,7 +11,7 @@ import {
   SPIN_DRIVE,
   SPIN_INPUT_RATE,
   SPIN_K,
-  SWING_K
+  SWING_K,
 } from './constants';
 import { clamp, softPull } from './math';
 import {
@@ -21,7 +21,7 @@ import {
   type HangerNode,
   type Layout,
   type Physics,
-  type Point2
+  type Point2,
 } from './model';
 import { buildRopeD } from './ropePath';
 
@@ -60,7 +60,7 @@ const takeBuffer = (buffer: Point2[], size: number) => {
 
 export const getOffsetBounds = (viewWidth: number, railWidth: number) => ({
   min: Math.min(0, viewWidth - railWidth),
-  max: 0
+  max: 0,
 });
 
 /**
@@ -72,7 +72,7 @@ export const paintSimulation = (
   targets: SimPaintTargets,
   cache: SimPaintCache,
   alpha: number,
-  dt: number
+  dt: number,
 ) => {
   const { layout, physics, nodes } = state;
   if (!layout || !physics) return;

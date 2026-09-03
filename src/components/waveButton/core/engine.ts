@@ -1,6 +1,9 @@
 import type { WaveButtonController, WaveButtonOptions } from './types';
 const P = 'cos-wave-button';
-export function createWaveButton(container: HTMLElement, initial: WaveButtonOptions = {}): WaveButtonController {
+export function createWaveButton(
+  container: HTMLElement,
+  initial: WaveButtonOptions = {},
+): WaveButtonController {
   let opts: WaveButtonOptions = { text: '点我试试', color: '#38bdf8', ...initial };
   const root = document.createElement('div');
   root.className = P;
@@ -12,7 +15,7 @@ export function createWaveButton(container: HTMLElement, initial: WaveButtonOpti
   btn.append(
     Object.assign(document.createElement('span'), { className: `${P}__wave` }),
     Object.assign(document.createElement('span'), { className: `${P}__wave` }),
-    label
+    label,
   );
   root.appendChild(btn);
   container.appendChild(root);
@@ -37,6 +40,6 @@ export function createWaveButton(container: HTMLElement, initial: WaveButtonOpti
     getButton: () => btn,
     destroy() {
       root.remove();
-    }
+    },
   };
 }

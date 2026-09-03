@@ -1,5 +1,10 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createBurnAway, type BurnAwayController, type BurnAwayHandle, type BurnAwayOptions } from '../core';
+import {
+  createBurnAway,
+  type BurnAwayController,
+  type BurnAwayHandle,
+  type BurnAwayOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { BurnAwayHandle, BurnAwayOptions, BurnAwayProps } from '../core/types';
@@ -11,7 +16,7 @@ const BurnAway = forwardRef<BurnAwayHandle, BurnAwayOptions>((props, ref) => {
   propsRef.current = props;
 
   useImperativeHandle(ref, () => ({
-    ignite: () => ctrlRef.current?.ignite()
+    ignite: () => ctrlRef.current?.ignite(),
   }));
 
   useEffect(() => {

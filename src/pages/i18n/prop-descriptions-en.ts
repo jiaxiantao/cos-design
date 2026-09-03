@@ -78,10 +78,13 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   红包雨结束提示: 'Red-packet rain ended message',
   后缀: 'Suffix',
   画布操作提示: 'Canvas usage hint',
-  '画布高度（与 width 取较小值作为正方形边长）': 'Canvas height (min with width used as square side)',
-  '画布宽度（与 height 取较小值作为正方形边长）': 'Canvas width (min with height used as square side)',
+  '画布高度（与 width 取较小值作为正方形边长）':
+    'Canvas height (min with width used as square side)',
+  '画布宽度（与 height 取较小值作为正方形边长）':
+    'Canvas width (min with height used as square side)',
   画布无障碍标签: 'Canvas aria-label',
-  '画布无障碍标签；不传时使用默认中文描述': 'Canvas aria-label; falls back to default Chinese copy when omitted',
+  '画布无障碍标签；不传时使用默认中文描述':
+    'Canvas aria-label; falls back to default Chinese copy when omitted',
   '环境波浪强度 0~2，默认 1': 'Ambient wave strength 0–2, default 1',
   '环境波浪速度 0~3，默认 1': 'Ambient wave speed 0–3, default 1',
   环绕文字: 'Surrounding text',
@@ -115,7 +118,8 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   '涟漪传播速度 0.3~0.7，默认 0.5': 'Ripple propagation speed 0.3–0.7, default 0.5',
   涟漪高光色: 'Ripple highlight color',
   '涟漪落点半径（仿真格点 2~12），默认 6': 'Ripple drop radius (sim grid 2–12), default 6',
-  '涟漪衰减 0.9~0.999，越大越持久，默认 0.985': 'Ripple decay 0.9–0.999 (higher lasts longer), default 0.985',
+  '涟漪衰减 0.9~0.999，越大越持久，默认 0.985':
+    'Ripple decay 0.9–0.999 (higher lasts longer), default 0.985',
   晾绳上的照片列表: 'Photos hanging on the clothesline',
   '列密度 0~1，默认 0.6': 'Column density 0–1, default 0.6',
   '流星数量，默认 8': 'Meteor count, default 8',
@@ -246,7 +250,8 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   照片说明: 'Photo description',
   '照片随机倾角幅度（度）': 'Random photo tilt range (deg)',
   照片填充方式: 'Photo object-fit',
-  '照片吊带长度（px），越长摆动幅度越大、周期越慢': 'Photo lanyard length (px); longer swings wider and slower',
+  '照片吊带长度（px），越长摆动幅度越大、周期越慢':
+    'Photo lanyard length (px); longer swings wider and slower',
   '照片被拖离静止位的最大距离（px），越小吊带越快绷紧':
     'Max distance a photo can be dragged from its rest spot (px); smaller pulls the lanyard taut sooner',
   '遮罩颜色，默认 rgba(0,0,0,0.85)': 'Mask color, default rgba(0,0,0,0.85)',
@@ -274,8 +279,10 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   组件高度: 'Component height',
   组件宽度: 'Component width',
   '最少位数（左侧补零），默认 4': 'Minimum digits (zero-padded), default 4',
-  '9 个奖品格子（不足补齐、超出截断）': 'Exactly 9 prize cells (padded if short, truncated if long)',
-  '指定下一次抽中的索引 0–8（服务端开奖）；不传则随机': 'Next winning index 0–8 (server draw); omit for random',
+  '9 个奖品格子（不足补齐、超出截断）':
+    'Exactly 9 prize cells (padded if short, truncated if long)',
+  '指定下一次抽中的索引 0–8（服务端开奖）；不传则随机':
+    'Next winning index 0–8 (server draw); omit for random',
   抽奖结束回调: 'Draw-finished callback',
   抽奖进行中的按钮文案: 'Button label while drawing/spinning',
   禁用交互: 'Disable interaction',
@@ -296,7 +303,8 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
     'Whether click launches; defaults to auto (auto=false does not capture pointers)',
   '画布操作提示；非 interactive 时不展示': 'Canvas hint; hidden when not interactive',
   'live 模式解析出真实天气后回调': 'Callback after live weather is resolved',
-  '为 true 时铺满父容器（父级需有明确高度）': 'When true, fills the parent (parent needs an explicit height)',
+  '为 true 时铺满父容器（父级需有明确高度）':
+    'When true, fills the parent (parent needs an explicit height)',
   光带颜色列表: 'Aurora band color list',
   '光带数量，默认 6': 'Band count, default 6',
   '是否响应指针交互，默认 true': 'Respond to pointer input, default true',
@@ -305,14 +313,16 @@ export const PROP_DESCRIPTION_EN: Record<string, string> = {
   裂纹发光颜色: 'Crack glow color',
   '裂纹蔓延速度倍率 0~3，默认 1': 'Crack spread speed 0–3, default 1',
   '热度 0~2，默认 1': 'Heat 0–2, default 1',
-  '是否自动在表面随机鼓起气泡，默认 true': 'Auto-spawn blisters at random on the surface, default true',
+  '是否自动在表面随机鼓起气泡，默认 true':
+    'Auto-spawn blisters at random on the surface, default true',
   '自动鼓起活跃度 0~2，默认 1': 'Auto-spawn activity 0–2, default 1',
-  '是否响应指针交互（点击鼓起），默认 true': 'Respond to pointer (click to raise a blister), default true',
+  '是否响应指针交互（点击鼓起），默认 true':
+    'Respond to pointer (click to raise a blister), default true',
   '气泡数量 8~80，默认 28': 'Bubble count 8–80, default 28',
   '飘动速度倍率 0~3，默认 1': 'Drift speed multiplier 0–3, default 1',
   '是否响应点击爆裂，默认 true': 'Respond to click-to-pop, default true',
   墨水色: 'Ink color',
-  '扩散速度倍率 0~3，默认 1': 'Bloom speed 0–3, default 1'
+  '扩散速度倍率 0~3，默认 1': 'Bloom speed 0–3, default 1',
 };
 
 export const localizePropDescription = (description: string, locale: string) => {

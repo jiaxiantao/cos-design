@@ -2,7 +2,13 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next, useTranslation } from 'react-i18next';
 import { resources } from './resources';
-import { DEFAULT_LOCALE, LOCALE_STORAGE_KEY, normalizeLocale, SUPPORTED_LOCALES, type Locale } from './types';
+import {
+  DEFAULT_LOCALE,
+  LOCALE_STORAGE_KEY,
+  normalizeLocale,
+  SUPPORTED_LOCALES,
+  type Locale,
+} from './types';
 
 void i18n
   .use(LanguageDetector)
@@ -19,9 +25,9 @@ void i18n
       lookupQuerystring: 'lang',
       lookupLocalStorage: LOCALE_STORAGE_KEY,
       caches: ['localStorage'],
-      convertDetectedLanguage: normalizeLocale
+      convertDetectedLanguage: normalizeLocale,
     },
-    react: { useSuspense: false }
+    react: { useSuspense: false },
   });
 
 const syncDocumentLang = (lng: string) => {
@@ -39,7 +45,7 @@ export const useLocale = () => {
     locale: normalizeLocale(instance.language),
     setLocale: (locale: Locale) => {
       void instance.changeLanguage(locale);
-    }
+    },
   };
 };
 

@@ -7,7 +7,8 @@ function parseOptions(el: HTMLElement): BurnAwayOptions {
   const options: BurnAwayOptions = {};
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
   if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('completed-text')) options.completedText = el.getAttribute('completed-text') ?? undefined;
+  if (el.hasAttribute('completed-text'))
+    options.completedText = el.getAttribute('completed-text') ?? undefined;
   options.onComplete = () => el.dispatchEvent(new CustomEvent('complete', { bubbles: true }));
   return options;
 }

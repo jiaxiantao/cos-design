@@ -5,7 +5,7 @@ const enUS: typeof zhCN = {
   language: {
     label: 'Language',
     'zh-CN': '中文',
-    'en-US': 'English'
+    'en-US': 'English',
   },
   layout: {
     brandTagline: 'Visual effect component library',
@@ -16,7 +16,7 @@ const enUS: typeof zhCN = {
     sidebarTitle: 'Browse by category',
     navHome: 'Overview',
     navCatalog: 'Catalog',
-    navQuickstart: 'Quick Start'
+    navQuickstart: 'Quick Start',
   },
   home: {
     eyebrow: 'React Visual Effect Library',
@@ -32,27 +32,27 @@ const enUS: typeof zhCN = {
     features: [
       {
         title: 'Ready out of the box',
-        desc: 'Import components right after install, with auto-injected styles and full TypeScript types.'
+        desc: 'Import components right after install, with auto-injected styles and full TypeScript types.',
       },
       {
         title: 'Flexible package granularity',
-        desc: 'Install everything with cos-design or only the pieces you need from @cos-design/*.'
+        desc: 'Install everything with cos-design or only the pieces you need from @cos-design/*.',
       },
       {
         title: 'Covers broad scenarios',
-        desc: 'From ambient backgrounds to campaign mechanics, from dashboards to physics and algorithm visuals.'
+        desc: 'From ambient backgrounds to campaign mechanics, from dashboards to physics and algorithm visuals.',
       },
       {
         title: 'Playable online',
-        desc: 'Every component ships with a live demo, instant prop previewing, and copyable examples.'
-      }
+        desc: 'Every component ships with a live demo, instant prop previewing, and copyable examples.',
+      },
     ],
     scenariosTitle: 'Built for these scenarios',
     scenarios: [
       { title: 'Campaign pages', desc: 'Turntables, scratch cards, fireworks celebrations' },
       { title: 'Brand landings', desc: 'Aurora backgrounds, neon headlines, holographic cards' },
       { title: 'Dashboard visuals', desc: 'Flip counters, countdowns, liquid progress' },
-      { title: 'Creative showcases', desc: 'Newton cradle, maze generation, Game of Life' }
+      { title: 'Creative showcases', desc: 'Newton cradle, maze generation, Game of Life' },
     ],
     categoriesTitle: 'Component categories',
     viewAll: 'View all →',
@@ -61,8 +61,9 @@ const enUS: typeof zhCN = {
     ctaQuickstart: 'Read quick start',
     ctaCatalog: 'Open catalog',
     aiTitle: 'Build with AI',
-    aiDesc: 'Cursor, Claude Code, Copilot, Codex, and more — copy a rule or sample prompt to get started.',
-    aiCta: 'Open AI integration guide →'
+    aiDesc:
+      'Cursor, Claude Code, Copilot, Codex, and more — copy a rule or sample prompt to get started.',
+    aiCta: 'Open AI integration guide →',
   },
   catalog: {
     title: 'Component catalog',
@@ -71,7 +72,7 @@ const enUS: typeof zhCN = {
     homeLabel: 'Project overview',
     homeText: 'Back to the homepage to see what cos-design can do',
     quickstartLabel: 'Getting started',
-    quickstartText: 'Open quick start — installation, usage, and tips'
+    quickstartText: 'Open quick start — installation, usage, and tips',
   },
   component: {
     backToCatalog: '← Back to catalog',
@@ -80,7 +81,7 @@ const enUS: typeof zhCN = {
     copyInstall: 'Copy install',
     copyForAi: 'Copy for AI',
     copied: 'Copied',
-    demoNotConfigured: 'Demo is not configured yet'
+    demoNotConfigured: 'Demo is not configured yet',
   },
   quickstart: {
     eyebrow: 'Quick Start',
@@ -101,7 +102,7 @@ const enUS: typeof zhCN = {
       { name: 'OpenCode', hint: 'Skill → ~/.config/opencode/skills/cos-design' },
       { name: 'TRAE', hint: 'Import .trae/skills/cos-design or marketplace' },
       { name: 'Qoder', hint: 'Copy .qoder/rules/cos-design.md into your app' },
-      { name: 'Context7', hint: 'Say: use library /jiaxiantao/cos-design' }
+      { name: 'Context7', hint: 'Say: use library /jiaxiantao/cos-design' },
     ],
     aiCopyRule: 'Copy project rule',
     aiCopyPrompt: 'Copy sample prompt',
@@ -112,14 +113,17 @@ const enUS: typeof zhCN = {
     aiResourceRecipes: 'Campaign recipes',
     aiResourceDiscovery: 'Multi-tool guide',
     aiResourceContext7: 'Context7 docs',
-    aiComponentHint: 'Every component page has “Copy for AI” — install command + example in one prompt.',
+    aiComponentHint:
+      'Every component page has “Copy for AI” — install command + example in one prompt.',
     aiSkillInstallTitle: 'Install skill (Cursor / Claude / OpenCode)',
     installTitle: '1. Install',
     installReq: 'Requires React >= 18 and Node.js >= 20. Pick either option:',
     installMethodA: 'Option A: install every component',
-    installMethodADesc: 'Best for quick trials and pages that mix several components. The API stays the same.',
+    installMethodADesc:
+      'Best for quick trials and pages that mix several components. The API stays the same.',
     installMethodB: 'Option B: install a single component',
-    installMethodBDesc: 'Download only what you use. Naming rule: camelCase source directory → kebab-case npm package.',
+    installMethodBDesc:
+      'Download only what you use. Naming rule: camelCase source directory → kebab-case npm package.',
     namingDir: 'Source directory',
     namingPkg: 'npm package',
     sharedHintBefore: 'Components that rely on shared utilities pull in ',
@@ -139,79 +143,91 @@ const enUS: typeof zhCN = {
       {
         label: 'Backgrounds',
         desc: 'Full-screen atmosphere and particle scenes',
-        examples: 'MatrixRain, Aurora, Starfield'
+        examples: 'MatrixRain, Aurora, Starfield',
       },
-      { label: 'Text effects', desc: 'Headline and banner animations', examples: 'Typewriter, NeonText, ScrambleText' },
+      {
+        label: 'Text effects',
+        desc: 'Headline and banner animations',
+        examples: 'Typewriter, NeonText, ScrambleText',
+      },
       {
         label: 'Photo preview',
         desc: 'Object-metaphor photo browsers',
-        examples: 'PhotoAlbum, PhotoLantern, PhotoFilmstrip'
+        examples: 'PhotoAlbum, PhotoLantern, PhotoFilmstrip',
       },
       {
         label: 'Interactive toys',
         desc: 'Playful mouse and touch feedback',
-        examples: 'WaveButton, Spotlight, MagneticButton'
+        examples: 'WaveButton, Spotlight, MagneticButton',
       },
-      { label: 'Campaign games', desc: 'Lottery and event mechanics', examples: 'Turntable, ScratchCard, Charge' },
+      {
+        label: 'Campaign games',
+        desc: 'Lottery and event mechanics',
+        examples: 'Turntable, ScratchCard, Charge',
+      },
       {
         label: 'Data decorations',
         desc: 'Dashboards and time displays',
-        examples: 'FlipCounter, Countdown, LiquidProgress'
+        examples: 'FlipCounter, Countdown, LiquidProgress',
       },
-      { label: 'Physics', desc: 'Gravity, springs, and collisions', examples: 'NewtonCradle, SandFall, SpringMass' },
+      {
+        label: 'Physics',
+        desc: 'Gravity, springs, and collisions',
+        examples: 'NewtonCradle, SandFall, SpringMass',
+      },
       {
         label: 'Science & algorithms',
         desc: 'Astronomy, chaos, and algorithm visuals',
-        examples: 'SolarSystem, GameOfLife, MazeGenerator'
+        examples: 'SolarSystem, GameOfLife, MazeGenerator',
       },
       {
         label: 'Visual effects',
         desc: 'Fireworks, arcs, and visual experiments',
-        examples: 'Fireworks, ElectricArc, PlasmaBall'
-      }
+        examples: 'Fireworks, ElectricArc, PlasmaBall',
+      },
     ],
     notesTitle: '4. Things to know',
     notes: [
       {
         title: 'No manual CSS import',
-        desc: 'Styles are injected with the component, so everything works right after install.'
+        desc: 'Styles are injected with the component, so everything works right after install.',
       },
       {
         title: 'Two installation modes',
-        desc: 'cos-design installs everything; @cos-design/<kebab-name> installs a single component. Components that depend on @cos-design/shared pull it in automatically.'
+        desc: 'cos-design installs everything; @cos-design/<kebab-name> installs a single component. Components that depend on @cos-design/shared pull it in automatically.',
       },
       {
         title: 'Package names are kebab-case',
-        desc: 'The weatherBackground directory maps to @cos-design/weather-background (npm requires lowercase names).'
+        desc: 'The weatherBackground directory maps to @cos-design/weather-background (npm requires lowercase names).',
       },
       {
         title: 'Render canvas components on the client',
-        desc: 'In SSR frameworks such as Next.js use dynamic(..., { ssr: false }) to avoid window / canvas errors.'
+        desc: 'In SSR frameworks such as Next.js use dynamic(..., { ssr: false }) to avoid window / canvas errors.',
       },
       {
         title: 'Keep animation density in check',
-        desc: 'Aim for one strong background plus a few focal interactions; avoid several full-screen canvases at once.'
+        desc: 'Aim for one strong background plus a few focal interactions; avoid several full-screen canvases at once.',
       },
       {
         title: 'Give containers explicit sizes',
-        desc: 'Canvas components need width / height, and the parent needs a visible height, otherwise nothing renders.'
+        desc: 'Canvas components need width / height, and the parent needs a visible height, otherwise nothing renders.',
       },
       {
         title: 'Automatic power saving',
-        desc: 'Most canvas components pause requestAnimationFrame when the tab is hidden.'
+        desc: 'Most canvas components pause requestAnimationFrame when the tab is hidden.',
       },
       {
         title: 'Microphone permission',
-        desc: 'AudioVisualizer requests the microphone when useMic is true; serve over HTTPS and tell users first.'
+        desc: 'AudioVisualizer requests the microphone when useMic is true; serve over HTTPS and tell users first.',
       },
       {
         title: 'Imperative triggers',
-        desc: 'Fireworks and Confetti expose launch / burst through a ref, ideal for button-triggered celebrations.'
+        desc: 'Fireworks and Confetti expose launch / burst through a ref, ideal for button-triggered celebrations.',
       },
       {
         title: 'TypeScript out of the box',
-        desc: 'Every component exports its props type, e.g. import { Turntable, type TurntableProps } from "cos-design".'
-      }
+        desc: 'Every component exports its props type, e.g. import { Turntable, type TurntableProps } from "cos-design".',
+      },
     ],
     patternsTitle: '5. Common patterns',
     patternSsr: 'Disable SSR in Next.js',
@@ -266,15 +282,15 @@ const Fireworks = dynamic(
 // );`,
       localDev: `git clone https://github.com/jiaxiantao/cos-design.git
 cd cos-design && npm run setup && pnpm dev
-# Open http://localhost:4000`
-    }
+# Open http://localhost:4000`,
+    },
   },
   liveDemo: {
     editorTitle: 'Edit code · Live preview',
     reset: 'Reset',
     copy: 'Copy',
     copied: 'Copied',
-    hint: 'Components are already injected into scope, so you can write JSX directly and see instant updates.'
+    hint: 'Components are already injected into scope, so you can write JSX directly and see instant updates.',
   },
   propsTable: {
     title: 'Props',
@@ -290,7 +306,7 @@ cd cos-design && npm run setup && pnpm dev
     empty: '—',
     typesTitle: 'Custom types',
     typesCount: '{{value}}',
-    typesDesc: 'TypeScript interfaces referenced by the props above, with their fields.'
+    typesDesc: 'TypeScript interfaces referenced by the props above, with their fields.',
   },
   backgroundDemo: {
     switchLabel: 'Sample content',
@@ -318,10 +334,11 @@ cd cos-design && npm run setup && pnpm dev
       Aurora: 'Aurora sweeping across the sky',
       CyberGrid: 'Step onto the neon grid',
       Snowfall: 'Petals and snowflakes falling together',
-      Starfield: 'Fly through an endless starfield'
+      Starfield: 'Fly through an endless starfield',
     },
     subtitles: {
-      WeatherBackground: 'Switch between rain, snow, sun, and fog—great for campaign and brand scenes',
+      WeatherBackground:
+        'Switch between rain, snow, sun, and fog—great for campaign and brand scenes',
       RippleWater: 'Click to splash on a realistic water surface',
       SmokeFog: 'Noise-driven fog that drifts slowly and clears on click',
       BubbleField: 'Nearby bubbles merge, with underwater light and shadow',
@@ -336,46 +353,46 @@ cd cos-design && npm run setup && pnpm dev
       Aurora: 'Layered color bands drifting slowly',
       CyberGrid: 'A perspective grid stretching forward',
       Snowfall: 'Supports both snowflake and sakura modes',
-      Starfield: 'A depth-flight journey through the stars'
-    }
+      Starfield: 'A depth-flight journey through the stars',
+    },
   },
   categories: {
     background: {
       label: 'Backgrounds',
-      description: 'Canvas / CSS animated backgrounds and particle scenes'
+      description: 'Canvas / CSS animated backgrounds and particle scenes',
     },
     text: {
       label: 'Text effects',
-      description: 'Headline, banner, and terminal-style text animations'
+      description: 'Headline, banner, and terminal-style text animations',
     },
     photo: {
       label: 'Photo preview',
-      description: 'Object-metaphor photo browsers — album, lantern, clothesline, and more'
+      description: 'Object-metaphor photo browsers — album, lantern, clothesline, and more',
     },
     interactive: {
       label: 'Interactive toys',
-      description: 'Playful components driven by mouse and touch'
+      description: 'Playful components driven by mouse and touch',
     },
     game: {
       label: 'Campaign games',
-      description: 'Lottery, celebration, and event page mechanics'
+      description: 'Lottery, celebration, and event page mechanics',
     },
     data: {
       label: 'Data decorations',
-      description: 'Dashboards, gauges, and time data displays'
+      description: 'Dashboards, gauges, and time data displays',
     },
     physics: {
       label: 'Physics',
-      description: 'Gravity, springs, collisions, and other real physics'
+      description: 'Gravity, springs, collisions, and other real physics',
     },
     science: {
       label: 'Science & algorithms',
-      description: 'Astronomy, chaos, cellular automata, and algorithm visuals'
+      description: 'Astronomy, chaos, cellular automata, and algorithm visuals',
     },
     effect: {
       label: 'Visual effects',
-      description: 'Fireworks, arcs, portals, and other visual experiments'
-    }
+      description: 'Fireworks, arcs, portals, and other visual experiments',
+    },
   },
   demos: {
     clickSpark: 'Click anywhere to create sparks',
@@ -396,7 +413,7 @@ cd cos-design && npm run setup && pnpm dev
         days: 'Days',
         hours: 'Hours',
         minutes: 'Minutes',
-        seconds: 'Seconds'
+        seconds: 'Seconds',
       },
       countdownInvalid: 'Invalid target time',
       countdownEnded: "Time's up!",
@@ -415,7 +432,7 @@ cd cos-design && npm run setup && pnpm dev
         alive: 'alive',
         pause: 'Pause',
         play: 'Play',
-        randomize: 'Randomize'
+        randomize: 'Randomize',
       },
       networkGraphHint: 'Drag nodes · Hover to view connections',
       particleNetworkHint: 'Move the pointer or touch to interact with particles',
@@ -427,7 +444,7 @@ cd cos-design && npm run setup && pnpm dev
         flyleafTitle: 'Photo Album',
         flyleafSubtitle: 'Keeping distant places close',
         flyleafEndTitle: 'The End',
-        flyleafEndSubtitle: 'Thank you for browsing'
+        flyleafEndSubtitle: 'Thank you for browsing',
       },
       photoAlbumPhotos: [
         { title: 'On the Road', description: 'Keeping distant places close' },
@@ -439,7 +456,7 @@ cd cos-design && npm run setup && pnpm dev
         { title: 'Afternoon Shore', description: 'Waves returning again and again' },
         { title: 'Snow Peak Night', description: 'The Milky Way over quiet mountains' },
         { title: 'Lake Reflection', description: 'The sky held whole in still water' },
-        { title: 'Misty Horizon', description: 'The road still has farther to go' }
+        { title: 'Misty Horizon', description: 'The road still has farther to go' },
       ],
       photoLanternAria: 'Revolving lantern photo preview',
       photoLanternHint: 'Drag left or right to spin · Inertia on release · Idle clockwise rotation',
@@ -449,14 +466,16 @@ cd cos-design && npm run setup && pnpm dev
         { title: 'By the Lake', description: 'Still enough to hear the water' },
         { title: 'Forest Walk', description: 'A green memory from midsummer' },
         { title: 'At Sunset', description: 'The journey continues in the afterglow' },
-        { title: 'Above the Ridge', description: 'A sea of clouds rolling below' }
+        { title: 'Above the Ridge', description: 'A sea of clouds rolling below' },
       ],
       photoClotheslineAria: 'Travel photos on a clothesline',
-      photoClotheslineHint: 'Grab a photo and fling it any direction · Drag the empty space to browse',
+      photoClotheslineHint:
+        'Grab a photo and fling it any direction · Drag the empty space to browse',
       photoFilmstripAria: 'Travel filmstrip',
       photoFilmstripHint: 'Drag to scroll the film · Snaps to a frame on release',
       photoPolaroidAria: 'Polaroid photo stack',
-      photoPolaroidHint: 'Drag to rearrange · Click to bring forward · Cards stay where you drop them',
+      photoPolaroidHint:
+        'Drag to rearrange · Click to bring forward · Cards stay where you drop them',
       photoLightboxAria: 'Lightbox slide preview',
       photoLightboxHint: 'Drag a slide sideways to change · Snaps back if under the threshold',
       photoCarouselAria: 'Carousel photo tray',
@@ -487,12 +506,23 @@ cd cos-design && npm run setup && pnpm dev
       slotResult: 'Result:',
       smokeAria: 'Smoke background; click to disperse',
       springMassHint: 'Drag grid nodes to see the springs rebound',
-      turntablePrizes: ['First prize', 'Second prize', 'Third prize', 'Try again', 'Coupon', 'One more spin'],
+      turntablePrizes: [
+        'First prize',
+        'Second prize',
+        'Third prize',
+        'Try again',
+        'Coupon',
+        'One more spin',
+      ],
       turntableStart: 'Spin',
       turntableSpinning: 'Spinning...',
       turntableResult: 'You won: ',
-      typewriterTexts: ['Hello, cos-design!', 'Welcome to the component library ✨', 'Build something fun 🚀'],
-      waveButton: 'Try it'
+      typewriterTexts: [
+        'Hello, cos-design!',
+        'Welcome to the component library ✨',
+        'Build something fun 🚀',
+      ],
+      waveButton: 'Try it',
     },
     weather: {
       liveToggle: '📍 Live weather (Open-Meteo)',
@@ -517,14 +547,16 @@ cd cos-design && npm run setup && pnpm dev
         'Live weather is enabled. Sliders show read-only local time, wind, and intensity for {{city}}. Disable live weather or pick a weather type above to adjust manually.',
       statusLocating: 'Getting your location… (permission required)',
       statusFetching: 'Fetching live weather for {{city}}…',
-      statusSuccess: '{{city}}: {{weather}} · {{time}} · Wind level {{wind}} ({{speed}} km/h){{extra}} · WMO {{code}}',
+      statusSuccess:
+        '{{city}}: {{weather}} · {{time}} · Wind level {{wind}} ({{speed}} km/h){{extra}} · WMO {{code}}',
       statusTime: 'Local time {{time}}',
       statusDay: '☀️ Day',
       statusNight: '🌙 Night',
       statusError: 'Could not fetch live weather. Switched back to manual controls.',
       canvasAria: '{{weather}} weather background with wind level {{wind}}',
       loading: 'Loading weather…',
-      summary: '{{city}} · Time {{time}} · {{wind}}{{extra}} · Day and night follow local sunrise and sunset',
+      summary:
+        '{{city}} · Time {{time}} · {{wind}}{{extra}} · Day and night follow local sunrise and sunset',
       options: {
         sunny: '☀️ Sunny',
         partlyCloudy: '⛅ Partly cloudy',
@@ -535,7 +567,7 @@ cd cos-design && npm run setup && pnpm dev
         sleet: '🌧️❄️ Sleet',
         hail: '🧊 Hail',
         fog: '🌫️ Fog',
-        smog: '😷 Smog'
+        smog: '😷 Smog',
       },
       cities: {
         beijing: 'Beijing',
@@ -548,7 +580,7 @@ cd cos-design && npm run setup && pnpm dev
         tokyo: 'Tokyo',
         london: 'London',
         newYork: 'New York',
-        sydney: 'Sydney'
+        sydney: 'Sydney',
       },
       windLevels: [
         'Calm',
@@ -563,7 +595,7 @@ cd cos-design && npm run setup && pnpm dev
         'Strong gale',
         'Storm',
         'Violent storm',
-        'Hurricane'
+        'Hurricane',
       ],
       levels: {
         format: '{{level}} · {{label}}',
@@ -571,10 +603,10 @@ cd cos-design && npm run setup && pnpm dev
         snow: ['Snow grains', 'Light snow', 'Moderate snow', 'Heavy snow', 'Blizzard'],
         hail: ['Small hail', 'Dense hail', 'Large hail'],
         fog: ['Mist', 'Moderate fog', 'Dense fog'],
-        smog: ['Light smog', 'Moderate smog', 'Heavy smog']
-      }
-    }
-  }
+        smog: ['Light smog', 'Moderate smog', 'Heavy smog'],
+      },
+    },
+  },
 };
 
 export default enUS;

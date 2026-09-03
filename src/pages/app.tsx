@@ -21,7 +21,11 @@ const App = () => {
               <Route path="catalog" element={<CatalogPage />} />
               <Route path="quickstart" element={<QuickstartPage />} />
               {componentDemos.map((item) => (
-                <Route key={item.path} path={item.path.replace(/^\//, '')} element={<ComponentPage />} />
+                <Route
+                  key={item.path}
+                  path={item.path.replace(/^\//, '')}
+                  element={<ComponentPage />}
+                />
               ))}
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />

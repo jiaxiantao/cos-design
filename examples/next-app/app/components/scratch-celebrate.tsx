@@ -5,7 +5,9 @@ import dynamic from 'next/dynamic';
 import { ScratchCard } from '@cos-design/scratch-card';
 import type { FireworksHandle } from '@cos-design/fireworks';
 
-const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), { ssr: false });
+const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), {
+  ssr: false,
+});
 
 export function ScratchCelebrate() {
   const ref = useRef<FireworksHandle>(null);

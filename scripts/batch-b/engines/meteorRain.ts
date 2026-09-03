@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { MeteorRainController, MeteorRainOptions } from './types';
 
@@ -19,7 +19,10 @@ interface Meteor {
   opacity: number;
 }
 
-export function createMeteorRain(container: HTMLElement, initial: MeteorRainOptions = {}): MeteorRainController {
+export function createMeteorRain(
+  container: HTMLElement,
+  initial: MeteorRainOptions = {},
+): MeteorRainController {
   let options: MeteorRainOptions = { fill: false, meteorCount: 8, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -48,7 +51,7 @@ export function createMeteorRain(container: HTMLElement, initial: MeteorRainOpti
         y: Math.random() * height * 0.5,
         length: Math.random() * 60 + 40,
         speed: Math.random() * 6 + 4,
-        opacity: Math.random() * 0.5 + 0.3
+        opacity: Math.random() * 0.5 + 0.3,
       });
     }
   };
@@ -92,7 +95,7 @@ export function createMeteorRain(container: HTMLElement, initial: MeteorRainOpti
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -174,6 +177,6 @@ export function createMeteorRain(container: HTMLElement, initial: MeteorRainOpti
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

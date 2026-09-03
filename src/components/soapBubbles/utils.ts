@@ -24,9 +24,9 @@ export const buildBubbleVisual = (seed: number, depth: number): BubbleVisual => 
     shadeAmt: 0.06 + hash01(seed + 2.3) * 0.08,
     rimPeak: 0.36 + hash01(seed + 3.1) * 0.28,
     specBright: 0.68 + hash01(seed + 9.2) * 0.28,
-    hash01
+    hash01,
   },
   filmBias: hash01(seed + 11.6),
   envAmt: 0.06 + hash01(seed + 13.3) * 0.09,
-  envRgb: hash01(seed + 23) > 0.5 ? [35, 70, 55] : [40, 65, 95]
+  envRgb: hash01(seed + 23) > 0.5 ? [35, 70, 55] : [40, 65, 95],
 });

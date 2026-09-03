@@ -12,7 +12,8 @@ function parseOptions(el: HTMLElement): LavaBubbleOptions {
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
   if (el.hasAttribute('auto-spawn')) options.autoSpawn = el.getAttribute('auto-spawn') !== 'false';
   if (el.hasAttribute('activity')) options.activity = Number(el.getAttribute('activity'));
-  if (el.hasAttribute('interactive')) options.interactive = el.getAttribute('interactive') !== 'false';
+  if (el.hasAttribute('interactive'))
+    options.interactive = el.getAttribute('interactive') !== 'false';
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   return options;
 }
@@ -21,7 +22,17 @@ class CosLavaBubbleElement extends HTMLElement {
   private ctrl: LavaBubbleController | null = null;
 
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'heat', 'speed', 'auto-spawn', 'activity', 'interactive', 'aria-label'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'heat',
+      'speed',
+      'auto-spawn',
+      'activity',
+      'interactive',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {

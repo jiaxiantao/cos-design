@@ -5,7 +5,11 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { demoComponents } from '../config/demo-components';
 import BackgroundDemoContent from './background-demo-content';
 import FillStage from './fill-stage';
-import { useBackgroundDemoCopy, useLocalizedCategories, useLocalizedComponentDemos } from '../i18n/hooks';
+import {
+  useBackgroundDemoCopy,
+  useLocalizedCategories,
+  useLocalizedComponentDemos,
+} from '../i18n/hooks';
 import LiveDemoPlayground from './live-demo';
 import PropsTable from './props-table';
 import styles from './style/component-page.module.less';
@@ -63,7 +67,7 @@ const ComponentPage = () => {
       clearTimeout(installTimerRef.current);
       clearTimeout(aiTimerRef.current);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -126,7 +130,7 @@ const ComponentPage = () => {
       `- Demo: ${demoUrl}`,
       '- AI index: https://jiaxiantao.github.io/cos-design/llms.txt',
       '- Context7: /jiaxiantao/cos-design',
-      ''
+      '',
     ].join('\n');
   };
 
@@ -158,7 +162,10 @@ const ComponentPage = () => {
             <Link to="/catalog" className={styles.back}>
               {t('component.backToCatalog')}
             </Link>
-            <span className={styles.categoryTag} style={{ '--tag-color': categoryMeta.accent } as CSSProperties}>
+            <span
+              className={styles.categoryTag}
+              style={{ '--tag-color': categoryMeta.accent } as CSSProperties}
+            >
               {categoryMeta.label}
             </span>
             <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>

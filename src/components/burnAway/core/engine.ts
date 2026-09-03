@@ -11,7 +11,10 @@ interface Particle {
   size: number;
 }
 
-export function createBurnAway(container: HTMLElement, initial: BurnAwayOptions = {}): BurnAwayController {
+export function createBurnAway(
+  container: HTMLElement,
+  initial: BurnAwayOptions = {},
+): BurnAwayController {
   let opts: BurnAwayOptions = { text: 'BURN', fontSize: 64, completedText: 'Gone.', ...initial };
   let burning = false;
   let done = false;
@@ -89,7 +92,7 @@ export function createBurnAway(container: HTMLElement, initial: BurnAwayOptions 
             vy: -Math.random() * 3 - 1,
             life: 1,
             maxLife: 0.6 + Math.random() * 0.6,
-            size: 2 + Math.random() * 3
+            size: 2 + Math.random() * 3,
           });
         }
       }
@@ -155,6 +158,6 @@ export function createBurnAway(container: HTMLElement, initial: BurnAwayOptions 
       cancelAnimationFrame(frameId);
       trigger.removeEventListener('click', ignite);
       root.remove();
-    }
+    },
   };
 }

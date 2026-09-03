@@ -60,9 +60,12 @@ Also in the catalog: `Turntable`, `SlotMachine`, `RedPacketRain`, `DiceRoll`, `C
 ```tsx
 import dynamic from 'next/dynamic';
 
-const WeatherBackground = dynamic(() => import('@cos-design/weather-background').then((m) => m.WeatherBackground), {
-  ssr: false
-});
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  {
+    ssr: false,
+  },
+);
 
 export function HeroAtmosphere() {
   return <WeatherBackground weather="partlyCloudy" width={1200} height={640} live={false} />;

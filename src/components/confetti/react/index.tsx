@@ -1,5 +1,10 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createConfetti, type ConfettiController, type ConfettiHandle, type ConfettiOptions } from '../core';
+import {
+  createConfetti,
+  type ConfettiController,
+  type ConfettiHandle,
+  type ConfettiOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { ConfettiHandle, ConfettiOptions, ConfettiProps } from '../core/types';
@@ -11,7 +16,7 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiOptions>((props, ref) => {
   propsRef.current = props;
 
   useImperativeHandle(ref, () => ({
-    burst: () => ctrlRef.current?.burst()
+    burst: () => ctrlRef.current?.burst(),
   }));
 
   useEffect(() => {

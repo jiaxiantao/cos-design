@@ -22,7 +22,7 @@ const makeHailSprite = (radius: number): HTMLCanvasElement => {
 
   const mid = (a: { x: number; y: number }, b: { x: number; y: number }) => ({
     x: (a.x + b.x) / 2,
-    y: (a.y + b.y) / 2
+    y: (a.y + b.y) / 2,
   });
 
   c.beginPath();
@@ -61,7 +61,7 @@ const makeHailSprite = (radius: number): HTMLCanvasElement => {
       radius * (0.1 + Math.random() * 0.08),
       dentAngle,
       0,
-      Math.PI * 2
+      Math.PI * 2,
     );
     c.fillStyle = 'rgba(105, 135, 165, 0.28)';
     c.fill();
@@ -78,7 +78,15 @@ const makeHailSprite = (radius: number): HTMLCanvasElement => {
   }
 
   c.beginPath();
-  c.ellipse(cx - radius * 0.34, cy - radius * 0.36, radius * 0.24, radius * 0.17, -0.35, 0, Math.PI * 2);
+  c.ellipse(
+    cx - radius * 0.34,
+    cy - radius * 0.36,
+    radius * 0.24,
+    radius * 0.17,
+    -0.35,
+    0,
+    Math.PI * 2,
+  );
   c.fillStyle = 'rgba(255, 255, 255, 0.78)';
   c.fill();
 
@@ -98,7 +106,7 @@ export const resetHailstone = (
   pool: HTMLCanvasElement[],
   spawnAbove = true,
   sizeRange?: { min: number; max: number },
-  speedMul = 1
+  speedMul = 1,
 ) => {
   const minR = sizeRange?.min ?? 1.4;
   const maxR = sizeRange?.max ?? 4.8;
@@ -125,7 +133,7 @@ export const makeHailstone = (
   height: number,
   pool: HTMLCanvasElement[],
   sizeRange?: { min: number; max: number },
-  speedMul = 1
+  speedMul = 1,
 ): Hailstone => {
   const h: Hailstone = {
     x: 0,
@@ -143,7 +151,7 @@ export const makeHailstone = (
     sprite: pool[0],
     drawSize: 2 * 2.8 + 4,
     rotation: 0,
-    rotationSpeed: 0
+    rotationSpeed: 0,
   };
   resetHailstone(h, width, height, pool, Math.random() < 0.72, sizeRange, speedMul);
   return h;

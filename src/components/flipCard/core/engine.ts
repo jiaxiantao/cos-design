@@ -2,7 +2,10 @@ import type { FlipCardController, FlipCardOptions } from './types';
 
 const P = 'cos-flip-card';
 
-export function createFlipCard(container: HTMLElement, initial: FlipCardOptions = {}): FlipCardController {
+export function createFlipCard(
+  container: HTMLElement,
+  initial: FlipCardOptions = {},
+): FlipCardController {
   let options: FlipCardOptions = {
     frontTitle: '签到翻牌',
     frontSubtitle: '点击翻开今日奖励',
@@ -10,7 +13,7 @@ export function createFlipCard(container: HTMLElement, initial: FlipCardOptions 
     backSubtitle: '积分 +20',
     defaultFlipped: false,
     disabled: false,
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let uncontrolled = options.defaultFlipped ?? false;
@@ -92,6 +95,6 @@ export function createFlipCard(container: HTMLElement, initial: FlipCardOptions 
       if (destroyed) return;
       destroyed = true;
       root.remove();
-    }
+    },
   };
 }

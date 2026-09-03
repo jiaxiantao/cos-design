@@ -3,14 +3,17 @@ import type { TextMorphController, TextMorphOptions } from './types';
 const P = 'cos-text-morph';
 const DEFAULT_TEXTS = ['COS DESIGN', 'TEXT MORPH', 'SMOOTH TRANSITION'];
 
-export function createTextMorph(container: HTMLElement, initial: TextMorphOptions = {}): TextMorphController {
+export function createTextMorph(
+  container: HTMLElement,
+  initial: TextMorphOptions = {},
+): TextMorphController {
   let opts: TextMorphOptions = {
     texts: DEFAULT_TEXTS,
     interval: 2200,
     duration: 680,
     fontSize: 64,
     color: '#f8fafc',
-    ...initial
+    ...initial,
   };
   let index = 0;
   let progress = 0;
@@ -86,6 +89,6 @@ export function createTextMorph(container: HTMLElement, initial: TextMorphOption
       clearTimeout(timerId);
       cancelAnimationFrame(frameId);
       root.remove();
-    }
+    },
   };
 }

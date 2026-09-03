@@ -5,7 +5,7 @@ import {
   computeDayCycle,
   resolveSkyByDayCycle,
   type DayCycleState,
-  type DayCycleTimes
+  type DayCycleTimes,
 } from '../day-cycle';
 import {
   DEFAULT_RAIN_LEVEL,
@@ -13,12 +13,17 @@ import {
   intensifyRainConfig,
   intensifySnowCount,
   supportsRainLevel,
-  supportsSnowLevel
+  supportsSnowLevel,
 } from '../precipitation';
 import { DEFAULT_FOG_LEVEL, fogBankAlphaScale, intensifyFogConfig, supportsFogLevel } from '../fog';
 import { DEFAULT_HAIL_LEVEL, hailSpec as resolveHailSpec, supportsHailLevel } from '../hail-level';
 import type { HailIntensitySpec } from '../hail-level';
-import { DEFAULT_SMOG_LEVEL, intensifySmogConfig, smogBankAlphaScale, supportsSmogLevel } from '../smog';
+import {
+  DEFAULT_SMOG_LEVEL,
+  intensifySmogConfig,
+  smogBankAlphaScale,
+  supportsSmogLevel,
+} from '../smog';
 import { windStreakSpec } from '../wind';
 import { makeCloud, makeFogSprite } from '../sprites/cloud';
 import { makeMoonSprite, makeSunSprite } from '../sprites/celestial';
@@ -38,7 +43,7 @@ import type {
   Star,
   WeatherConfig,
   WeatherSceneParams,
-  WindStreak
+  WindStreak,
 } from '../types';
 
 export interface WeatherSceneLayout {
@@ -66,7 +71,9 @@ const fogColor = (weather: string, night: boolean): string => {
   return weather === 'smog' ? '168, 155, 126' : '226, 232, 238';
 };
 
-export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout & { state: SceneState } {
+export function createSceneState(
+  params: WeatherSceneParams,
+): WeatherSceneLayout & { state: SceneState } {
   const {
     ctx,
     width,
@@ -80,7 +87,7 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
     snowLevel = DEFAULT_SNOW_LEVEL,
     hailLevel = DEFAULT_HAIL_LEVEL,
     fogLevel = DEFAULT_FOG_LEVEL,
-    smogLevel = DEFAULT_SMOG_LEVEL
+    smogLevel = DEFAULT_SMOG_LEVEL,
   } = params;
   const baseCfg = CONFIGS[activeWeather];
   const cfg: WeatherConfig = (() => {
@@ -93,7 +100,7 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
         ...next,
         snowCount: intensifySnowCount(snowLevel),
         fogBanks: snowLevel >= 7 ? Math.max(next.fogBanks, 3) : next.fogBanks,
-        haze: snowLevel >= 7 ? Math.max(next.haze, 0.12) : next.haze
+        haze: snowLevel >= 7 ? Math.max(next.haze, 0.12) : next.haze,
       };
     }
     if (supportsFogLevel(activeWeather)) {
@@ -111,7 +118,11 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
   const cycle = times ? computeDayCycle(atMs, times) : null;
   const night = cycle ? !cycle.isDay : false;
 
-  const sky = cycle ? resolveSkyByDayCycle(cfg.sky, nightCfg.sky, cycle) : night ? nightCfg.sky : cfg.sky;
+  const sky = cycle
+    ? resolveSkyByDayCycle(cfg.sky, nightCfg.sky, cycle)
+    : night
+      ? nightCfg.sky
+      : cfg.sky;
   const cloudRgb = night ? toNightCloudColor(cfg.cloudColor) : cfg.cloudColor;
 
   const sunR = Math.min(width, height) * 0.09;
@@ -130,7 +141,7 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
     { dx: -0.32, dy: 0.08, r: 0.17 },
     { dx: 0.24, dy: -0.22, r: 0.12 },
     { dx: 0.04, dy: 0.34, r: 0.1 },
-    { dx: 0.36, dy: 0.24, r: 0.07 }
+    { dx: 0.36, dy: 0.24, r: 0.07 },
   ];
 
   const sunSprite = makeSunSprite(cfg, sunR);
@@ -145,12 +156,12 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
         y: Math.random() * height * 0.72,
         r: 0.4 + Math.random() * 1.1,
         phase: Math.random() * Math.PI * 2,
-        speed: 0.015 + Math.random() * 0.035
+        speed: 0.015 + Math.random() * 0.035,
       }))
     : [];
 
   const clouds: Cloud[] = Array.from({ length: cfg.cloudCount }, () =>
-    makeCloud(width, height, cfg.cloudSpread, cloudRgb, cfg.cloudAlpha)
+    makeCloud(width, height, cfg.cloudSpread, cloudRgb, cfg.cloudAlpha),
   );
 
   const drops: Drop[] = cfg.rain
@@ -158,7 +169,7 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
         x: Math.random() * (width + 160) - 80,
         y: Math.random() * height,
         len: 8 + Math.random() * 10,
-        speed: cfg.rain!.speed * (0.75 + Math.random() * 0.5)
+        speed: cfg.rain!.speed * (0.75 + Math.random() * 0.5),
       }))
     : [];
 
@@ -176,14 +187,16 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
         ? fogBankAlphaScale(fogLevel)
         : supportsSmogLevel(activeWeather)
           ? smogBankAlphaScale(smogLevel)
-          : 1)
+          : 1),
   }));
 
   const fogSprite = cfg.fogBanks > 0 ? makeFogSprite(fogColor(activeWeather, night)) : null;
 
   const flakePool = cfg.snowCount > 0 ? createFlakeSpritePool() : null;
   const flakes: Flake[] =
-    flakePool != null ? Array.from({ length: cfg.snowCount }, () => makeFlake(width, height, flakePool)) : [];
+    flakePool != null
+      ? Array.from({ length: cfg.snowCount }, () => makeFlake(width, height, flakePool))
+      : [];
 
   const hailIntensity = supportsHailLevel(activeWeather) ? resolveHailSpec(hailLevel) : null;
   const hailPool = hailIntensity != null ? createHailSpritePool() : null;
@@ -195,8 +208,8 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
             height,
             hailPool,
             { min: hailIntensity.sizeMin, max: hailIntensity.sizeMax },
-            hailIntensity.speedMul
-          )
+            hailIntensity.speedMul,
+          ),
         )
       : [];
 
@@ -211,7 +224,7 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
       wave: Math.random() * Math.PI * 2,
       alpha: 0.1 + Math.random() * 0.28,
       width: 0.5 + Math.random() * 1.1,
-      phase: Math.random() * Math.PI * 2
+      phase: Math.random() * Math.PI * 2,
     }));
   })();
 
@@ -253,8 +266,8 @@ export function createSceneState(params: WeatherSceneParams): WeatherSceneLayout
       flashAlpha,
       boltLife,
       boltPoints,
-      nextStrike
-    }
+      nextStrike,
+    },
   };
 }
 
@@ -279,7 +292,7 @@ export function applyDayCycleToScene(
     cfg: WeatherConfig;
     activeWeather: import('../types').WeatherType;
   },
-  nowMs?: number
+  nowMs?: number,
 ) {
   if (!scene.dayCycleTimes) return;
 

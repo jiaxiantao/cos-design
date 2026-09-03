@@ -6,7 +6,10 @@ const DEFAULT_COLORS = ['#00ff87', '#60efff', '#7b2ff7', '#f107a3'];
 const DEFAULT_W = 800;
 const DEFAULT_H = 500;
 
-export function createAurora(container: HTMLElement, initial: AuroraOptions = {}): AuroraController {
+export function createAurora(
+  container: HTMLElement,
+  initial: AuroraOptions = {},
+): AuroraController {
   let options: AuroraOptions = { fill: false, colors: DEFAULT_COLORS, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -44,7 +47,7 @@ export function createAurora(container: HTMLElement, initial: AuroraOptions = {}
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -90,6 +93,6 @@ export function createAurora(container: HTMLElement, initial: AuroraOptions = {}
       unbindVisibility?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

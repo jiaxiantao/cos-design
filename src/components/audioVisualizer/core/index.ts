@@ -1,2 +1,6 @@
 export { createAudioVisualizer } from './engine';
-export type { AudioVisualizerController, AudioVisualizerOptions, AudioVisualizerProps } from './types';
+export type {
+  AudioVisualizerController,
+  AudioVisualizerOptions,
+  AudioVisualizerProps,
+} from './types';

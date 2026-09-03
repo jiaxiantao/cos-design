@@ -1,6 +1,9 @@
 import type { SpotlightController, SpotlightOptions } from './types';
 const P = 'cos-spotlight';
-export function createSpotlight(container: HTMLElement, initial: SpotlightOptions = {}): SpotlightController {
+export function createSpotlight(
+  container: HTMLElement,
+  initial: SpotlightOptions = {},
+): SpotlightController {
   let opts: SpotlightOptions = { radius: 120, dimColor: 'rgba(0, 0, 0, 0.85)', ...initial };
   const root = document.createElement('div');
   root.className = P;
@@ -41,6 +44,6 @@ export function createSpotlight(container: HTMLElement, initial: SpotlightOption
     destroy() {
       root.removeEventListener('mousemove', onMove);
       root.remove();
-    }
+    },
   };
 }

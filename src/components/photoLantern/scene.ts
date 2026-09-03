@@ -37,7 +37,7 @@ export interface LanternSceneApi {
     photos: (PhotoLanternItem | undefined)[],
     silhouette: boolean,
     objectFit: string,
-    showCaption: boolean
+    showCaption: boolean,
   ) => void;
   render: () => void;
   dispose: () => void;
@@ -75,7 +75,7 @@ const createHexCap = (radius: number, depth: number, y: number, material: THREE.
     bevelEnabled: true,
     bevelThickness: 0.025,
     bevelSize: 0.02,
-    bevelSegments: 3
+    bevelSegments: 3,
   });
   geo.rotateX(-Math.PI / 2);
   const mesh = new THREE.Mesh(geo, material);
@@ -85,7 +85,10 @@ const createHexCap = (radius: number, depth: number, y: number, material: THREE.
   return mesh;
 };
 
-export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSceneOptions): LanternSceneApi => {
+export const createLanternScene = (
+  canvas: HTMLCanvasElement,
+  options: LanternSceneOptions,
+): LanternSceneApi => {
   const scene = new THREE.Scene();
   if (options.background) {
     try {
@@ -105,7 +108,7 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
     canvas,
     antialias: true,
     alpha: true,
-    powerPreference: 'high-performance'
+    powerPreference: 'high-performance',
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(options.width, options.height, false);
@@ -154,10 +157,12 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
       bevelEnabled: true,
       bevelThickness: 0.012,
       bevelSize: 0.01,
-      bevelSegments: 2
-    }
+      bevelSegments: 2,
+    },
   );
-  const lipGeo = new THREE.ShapeGeometry(createFramedRect(photoW + 0.05, photoH + 0.05, 0.028, photoW, photoH, 0.02));
+  const lipGeo = new THREE.ShapeGeometry(
+    createFramedRect(photoW + 0.05, photoH + 0.05, 0.028, photoW, photoH, 0.02),
+  );
 
   for (let i = 0; i < FACE_COUNT; i++) {
     const angle = i * FACE_ANGLE;
@@ -181,7 +186,7 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
       toneMapped: false,
       side: THREE.FrontSide,
       transparent: true,
-      opacity: 1
+      opacity: 1,
     });
     const photoMesh = new THREE.Mesh(photoGeo, photoMat);
     photoMesh.position.z = 0.032;
@@ -228,17 +233,22 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
   bulb.castShadow = false;
   rotor.add(bulb);
 
-  bulb.add(new THREE.Mesh(new THREE.SphereGeometry(0.07, 24, 24), new THREE.MeshBasicMaterial({ color: 0xfff8f0 })));
+  bulb.add(
+    new THREE.Mesh(
+      new THREE.SphereGeometry(0.07, 24, 24),
+      new THREE.MeshBasicMaterial({ color: 0xfff8f0 }),
+    ),
+  );
 
   const bulbMid = new THREE.Mesh(
     new THREE.SphereGeometry(0.14, 24, 24),
-    new THREE.MeshBasicMaterial({ color: lightColor, transparent: true, opacity: 0.35 })
+    new THREE.MeshBasicMaterial({ color: lightColor, transparent: true, opacity: 0.35 }),
   );
   bulb.add(bulbMid);
 
   const bulbHalo = new THREE.Mesh(
     new THREE.SphereGeometry(0.32, 24, 24),
-    new THREE.MeshBasicMaterial({ color: lightColor, transparent: true, opacity: 0.12 })
+    new THREE.MeshBasicMaterial({ color: lightColor, transparent: true, opacity: 0.12 }),
   );
   bulb.add(bulbHalo);
 
@@ -254,8 +264,8 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
       map: softShadowTex,
       transparent: true,
       depthWrite: false,
-      opacity: 1
-    })
+      opacity: 1,
+    }),
   );
   shadow.rotation.x = -Math.PI / 2;
   shadow.position.y = -panelH / 2 - 0.42;
@@ -266,7 +276,10 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
 
   const textureCache = new Map<string, THREE.Texture>();
   const composedCache = new Map<string, THREE.CanvasTexture>();
-  const waiters = new Map<string, { resolve: Array<(t: THREE.Texture) => void>; reject: Array<() => void> }>();
+  const waiters = new Map<
+    string,
+    { resolve: Array<(t: THREE.Texture) => void>; reject: Array<() => void> }
+  >();
 
   let pendingLoads = 0;
   let readySent = false;
@@ -324,7 +337,7 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
         waiters.delete(src);
         q?.reject.forEach((fn) => fn());
         trackLoadEnd();
-      }
+      },
     );
   };
 
@@ -341,7 +354,7 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
     photos: (PhotoLanternItem | undefined)[],
     silhouette: boolean,
     objectFit: string,
-    showCaption: boolean
+    showCaption: boolean,
   ) => {
     panels.forEach((panel, i) => {
       const mat = panel.material as THREE.MeshBasicMaterial;
@@ -359,7 +372,11 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
         let display = composedCache.get(cacheKey);
         if (!display) {
           if (showCaption && (title || description) && baseTexture.image) {
-            display = composeCaptionTexture(baseTexture.image as CanvasImageSource, title, description);
+            display = composeCaptionTexture(
+              baseTexture.image as CanvasImageSource,
+              title,
+              description,
+            );
             composedCache.set(cacheKey, display);
           } else {
             display = baseTexture as THREE.CanvasTexture;
@@ -388,7 +405,7 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
       loadTexture(
         photo.src,
         (texture) => paint(texture, readySent),
-        () => clearPhotoMap(mat, panel)
+        () => clearPhotoMap(mat, panel),
       );
     });
   };
@@ -456,7 +473,7 @@ export const createLanternScene = (canvas: HTMLCanvasElement, options: LanternSc
       composedCache.clear();
       waiters.clear();
       renderer.dispose();
-    }
+    },
   };
 };
 

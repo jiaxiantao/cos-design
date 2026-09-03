@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createProgressChest, type ProgressChestController, type ProgressChestOptions } from '../core';
+import {
+  createProgressChest,
+  type ProgressChestController,
+  type ProgressChestOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { ProgressChestOptions, ProgressChestProps } from '../core/types';

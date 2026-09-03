@@ -1,8 +1,16 @@
 import { frameDamp, terminalRiseForRadius } from './utils';
 import type { Bubble } from './types';
 
-export const createSeabedBubble = (id: number, width: number, height: number, speed: number, deep = false): Bubble => {
-  const radius = deep ? 2.5 + Math.random() * 9 : 4 + Math.random() * (Math.random() < 0.25 ? 18 : 10);
+export const createSeabedBubble = (
+  id: number,
+  width: number,
+  height: number,
+  speed: number,
+  deep = false,
+): Bubble => {
+  const radius = deep
+    ? 2.5 + Math.random() * 9
+    : 4 + Math.random() * (Math.random() < 0.25 ? 18 : 10);
   const margin = radius + 8;
   const terminalRise = terminalRiseForRadius(radius, speed);
   const aspect = radius < 10 ? 0.985 + Math.random() * 0.02 : 0.96 + Math.random() * 0.03;
@@ -32,13 +40,13 @@ export const createSeabedBubble = (id: number, width: number, height: number, sp
     mode3: 0,
     mode3Vel: 0,
     mode3Phase: Math.random() * Math.PI * 2,
-    settle: 0
+    settle: 0,
   };
 };
 
 const ambientFlow = (x: number, y: number, time: number) => ({
   x: Math.sin(y * 0.009 + time * 0.48) * 0.12 + Math.cos(x * 0.006 - time * 0.32) * 0.09,
-  y: Math.cos(x * 0.008 + time * 0.38) * 0.05
+  y: Math.cos(x * 0.008 + time * 0.38) * 0.05,
 });
 
 export const integrateBubbleMotion = (
@@ -46,7 +54,7 @@ export const integrateBubbleMotion = (
   time: number,
   height: number,
   speedScale: number,
-  frameScale: number
+  frameScale: number,
 ) => {
   const depth = Math.min(1, Math.max(0, bubble.y / height));
   const depthBoost = 1 + (1 - depth) * 0.12;
@@ -85,7 +93,7 @@ export const samplePointerFlow = (
   py: number,
   pvx: number,
   pvy: number,
-  pSpeed: number
+  pSpeed: number,
 ) => {
   const dx = bx - px;
   const dy = by - py;
@@ -154,7 +162,7 @@ export const exciteBubbleFromFlow = (
   strainAngle: number,
   excite: number,
   fx: number,
-  fy: number
+  fy: number,
 ) => {
   if (strain < 0.02 && excite < 0.02) return;
 

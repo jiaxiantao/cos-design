@@ -14,7 +14,7 @@ import {
   supportsRainLevel,
   supportsSmogLevel,
   supportsSnowLevel,
-  type WeatherType
+  type WeatherType,
 } from '@/components';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +33,7 @@ const WEATHER_OPTIONS: WeatherType[] = [
   'sleet',
   'hail',
   'fog',
-  'smog'
+  'smog',
 ];
 
 const CITY_OPTIONS: { id: string; coords: { latitude: number; longitude: number } }[] = [
@@ -47,7 +47,7 @@ const CITY_OPTIONS: { id: string; coords: { latitude: number; longitude: number 
   { id: 'tokyo', coords: { latitude: 35.6762, longitude: 139.6503 } },
   { id: 'london', coords: { latitude: 51.5074, longitude: -0.1278 } },
   { id: 'newYork', coords: { latitude: 40.7128, longitude: -74.006 } },
-  { id: 'sydney', coords: { latitude: -33.8688, longitude: 151.2093 } }
+  { id: 'sydney', coords: { latitude: -33.8688, longitude: 151.2093 } },
 ];
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -71,7 +71,7 @@ const buttonStyle = (active: boolean): React.CSSProperties => ({
   color: active ? '#e8eaef' : '#8b92a8',
   fontSize: 13,
   cursor: 'pointer',
-  transition: 'all 0.2s'
+  transition: 'all 0.2s',
 });
 
 const sliderRowStyle: React.CSSProperties = {
@@ -84,14 +84,14 @@ const sliderRowStyle: React.CSSProperties = {
   padding: '8px 12px',
   borderRadius: 12,
   background: 'rgba(255, 255, 255, 0.04)',
-  border: '1px solid rgba(255, 255, 255, 0.08)'
+  border: '1px solid rgba(255, 255, 255, 0.08)',
 };
 
 const sliderLabelStyle: React.CSSProperties = {
   minWidth: 72,
   color: '#aeb6c8',
   fontSize: 13,
-  flexShrink: 0
+  flexShrink: 0,
 };
 
 const sliderValueStyle: React.CSSProperties = {
@@ -99,14 +99,14 @@ const sliderValueStyle: React.CSSProperties = {
   color: '#e8eaef',
   fontSize: 13,
   textAlign: 'right',
-  flexShrink: 0
+  flexShrink: 0,
 };
 
 const rangeStyle: React.CSSProperties = {
   flex: 1,
   minWidth: 160,
   accentColor: '#8b5cf6',
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 const WeatherBackgroundDemo = () => {
@@ -129,20 +129,30 @@ const WeatherBackgroundDemo = () => {
   const backgroundCopy = useBackgroundDemoCopy('WeatherBackground');
   const liveState = useLiveWeather(liveEnabled, liveEnabled ? city.coords : undefined);
 
-  const activeWeather = normalizeWeatherType(liveEnabled && liveState.weather ? liveState.weather : weather);
-  const liveLoading = liveEnabled && (liveState.status === 'locating' || liveState.status === 'fetching');
+  const activeWeather = normalizeWeatherType(
+    liveEnabled && liveState.weather ? liveState.weather : weather,
+  );
+  const liveLoading =
+    liveEnabled && (liveState.status === 'locating' || liveState.status === 'fetching');
 
-  const liveClockHm = liveEnabled ? formatLocalHm(liveState.current?.timezone, liveState.current?.localTime) : null;
+  const liveClockHm = liveEnabled
+    ? formatLocalHm(liveState.current?.timezone, liveState.current?.localTime)
+    : null;
   void liveClockTick;
 
-  const liveWindLevel = liveEnabled && liveState.current ? kmhToWindLevel(liveState.current.windSpeed) : null;
+  const liveWindLevel =
+    liveEnabled && liveState.current ? kmhToWindLevel(liveState.current.windSpeed) : null;
   const displayTime = liveClockHm ?? sceneTime;
   const displayWindLevel = liveWindLevel ?? windLevel;
-  const displayRainLevel = liveEnabled && liveState.rainLevel != null ? liveState.rainLevel : rainLevel;
-  const displaySnowLevel = liveEnabled && liveState.snowLevel != null ? liveState.snowLevel : snowLevel;
-  const displayHailLevel = liveEnabled && liveState.hailLevel != null ? liveState.hailLevel : hailLevel;
+  const displayRainLevel =
+    liveEnabled && liveState.rainLevel != null ? liveState.rainLevel : rainLevel;
+  const displaySnowLevel =
+    liveEnabled && liveState.snowLevel != null ? liveState.snowLevel : snowLevel;
+  const displayHailLevel =
+    liveEnabled && liveState.hailLevel != null ? liveState.hailLevel : hailLevel;
   const displayFogLevel = liveEnabled && liveState.fogLevel != null ? liveState.fogLevel : fogLevel;
-  const displaySmogLevel = liveEnabled && liveState.smogLevel != null ? liveState.smogLevel : smogLevel;
+  const displaySmogLevel =
+    liveEnabled && liveState.smogLevel != null ? liveState.smogLevel : smogLevel;
   const timeMinutes = timeToMinutes(displayTime);
   const showRainSlider = supportsRainLevel(activeWeather);
   const showSnowSlider = supportsSnowLevel(activeWeather);
@@ -150,7 +160,8 @@ const WeatherBackgroundDemo = () => {
   const showFogSlider = supportsFogLevel(activeWeather);
   const showSmogSlider = supportsSmogLevel(activeWeather);
 
-  const weatherLabel = (type: WeatherType) => t(`demos.weather.options.${type}`, { defaultValue: type });
+  const weatherLabel = (type: WeatherType) =>
+    t(`demos.weather.options.${type}`, { defaultValue: type });
 
   /** 档位文案统一为 `档位 · 名称`，名称按当前语言取词表 */
   const levelLabel = (kind: 'rain' | 'snow' | 'hail' | 'fog' | 'smog', level: number) => {
@@ -211,7 +222,7 @@ const WeatherBackgroundDemo = () => {
           wind: kmhToWindLevel(c?.windSpeed ?? 0),
           speed: c?.windSpeed,
           extra,
-          code: c?.weatherCode
+          code: c?.weatherCode,
         });
       }
       case 'error':
@@ -225,7 +236,12 @@ const WeatherBackgroundDemo = () => {
     <div className={styles.root}>
       <div className={styles.stage}>
         <FillStage
-          overlay={<BackgroundDemoContent headline={backgroundCopy.headline} subtitle={backgroundCopy.subtitle} />}
+          overlay={
+            <BackgroundDemoContent
+              headline={backgroundCopy.headline}
+              subtitle={backgroundCopy.subtitle}
+            />
+          }
         >
           <WeatherBackground
             weather={activeWeather}
@@ -242,7 +258,7 @@ const WeatherBackgroundDemo = () => {
             loading={liveLoading}
             ariaLabel={t('demos.weather.canvasAria', {
               weather: weatherLabel(activeWeather),
-              wind: displayWindLevel
+              wind: displayWindLevel,
             })}
             loadingText={t('demos.weather.loading')}
           />
@@ -261,8 +277,8 @@ const WeatherBackgroundDemo = () => {
               showSnowSlider ? ` · ${levelLabel('snow', snowLevel)}` : '',
               showHailSlider ? ` · ${levelLabel('hail', hailLevel)}` : '',
               showFogSlider ? ` · ${levelLabel('fog', fogLevel)}` : '',
-              showSmogSlider ? ` · ${levelLabel('smog', smogLevel)}` : ''
-            ].join('')
+              showSmogSlider ? ` · ${levelLabel('smog', smogLevel)}` : '',
+            ].join(''),
           })}
         </p>
       )}
@@ -299,7 +315,7 @@ const WeatherBackgroundDemo = () => {
         className={styles.sliders}
         style={{
           opacity: liveEnabled ? 0.85 : 1,
-          pointerEvents: liveEnabled ? 'none' : 'auto'
+          pointerEvents: liveEnabled ? 'none' : 'auto',
         }}
       >
         <label style={sliderRowStyle}>
@@ -417,7 +433,9 @@ const WeatherBackgroundDemo = () => {
             <span style={sliderValueStyle}>{levelLabel('smog', displaySmogLevel)}</span>
           </label>
         )}
-        {liveEnabled && <p className={styles.hint}>{t('demos.weather.liveHint', { city: cityLabel })}</p>}
+        {liveEnabled && (
+          <p className={styles.hint}>{t('demos.weather.liveHint', { city: cityLabel })}</p>
+        )}
       </div>
 
       <div className={styles.toolbar}>

@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { ParticleNetworkController, ParticleNetworkOptions } from './types';
 
@@ -21,7 +21,7 @@ interface Particle {
 
 export function createParticleNetwork(
   container: HTMLElement,
-  initial: ParticleNetworkOptions = {}
+  initial: ParticleNetworkOptions = {},
 ): ParticleNetworkController {
   let options: ParticleNetworkOptions = {
     fill: false,
@@ -30,7 +30,7 @@ export function createParticleNetwork(
     repelRadius: 150,
     color: '#38bdf8',
     hint: '移动鼠标或手指与粒子互动',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -62,7 +62,7 @@ export function createParticleNetwork(
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 1.2,
         vy: (Math.random() - 0.5) * 1.2,
-        radius: Math.random() * 2 + 1
+        radius: Math.random() * 2 + 1,
       });
     }
   };
@@ -107,7 +107,7 @@ export function createParticleNetwork(
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -233,6 +233,6 @@ export function createParticleNetwork(
       canvas.removeEventListener('touchmove', onTouchMove);
       canvas.removeEventListener('touchend', resetPointer);
       root.remove();
-    }
+    },
   };
 }

@@ -1,4 +1,8 @@
-import { createRedPacketRain, type RedPacketRainController, type RedPacketRainOptions } from '../core';
+import {
+  createRedPacketRain,
+  type RedPacketRainController,
+  type RedPacketRainOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-red-packet-rain';

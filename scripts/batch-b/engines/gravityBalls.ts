@@ -15,7 +15,10 @@ interface Ball {
   color: string;
 }
 
-export function createGravityBalls(container: HTMLElement, initial: GravityBallsOptions = {}): GravityBallsController {
+export function createGravityBalls(
+  container: HTMLElement,
+  initial: GravityBallsOptions = {},
+): GravityBallsController {
   let options: GravityBallsOptions = { ballCount: 12, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -42,7 +45,7 @@ export function createGravityBalls(container: HTMLElement, initial: GravityBalls
         vx: (Math.random() - 0.5) * 4,
         vy: Math.random() * 2,
         r: Math.random() * 10 + 8,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)]
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
       });
     }
   };
@@ -160,6 +163,6 @@ export function createGravityBalls(container: HTMLElement, initial: GravityBalls
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

@@ -2,8 +2,17 @@ import type { TypewriterController, TypewriterOptions } from './types';
 const P = 'cos-typewriter';
 const DEFAULT_TEXTS = ['Hello, cos-design!', '欢迎来到组件库 ✨', 'Build something fun 🚀'];
 
-export function createTypewriter(container: HTMLElement, initial: TypewriterOptions = {}): TypewriterController {
-  let opts: TypewriterOptions = { texts: DEFAULT_TEXTS, speed: 100, deleteSpeed: 50, pause: 2000, ...initial };
+export function createTypewriter(
+  container: HTMLElement,
+  initial: TypewriterOptions = {},
+): TypewriterController {
+  let opts: TypewriterOptions = {
+    texts: DEFAULT_TEXTS,
+    speed: 100,
+    deleteSpeed: 50,
+    pause: 2000,
+    ...initial,
+  };
   let displayText = '';
   let textIndex = 0;
   let isDeleting = false;
@@ -49,9 +58,14 @@ export function createTypewriter(container: HTMLElement, initial: TypewriterOpti
         tick();
       }, 0);
     } else {
-      displayText = isDeleting ? current.slice(0, displayText.length - 1) : current.slice(0, displayText.length + 1);
+      displayText = isDeleting
+        ? current.slice(0, displayText.length - 1)
+        : current.slice(0, displayText.length + 1);
       textNode.data = displayText;
-      timerId = window.setTimeout(tick, isDeleting ? (opts.deleteSpeed ?? 50) : (opts.speed ?? 100));
+      timerId = window.setTimeout(
+        tick,
+        isDeleting ? (opts.deleteSpeed ?? 50) : (opts.speed ?? 100),
+      );
     }
   };
 
@@ -71,6 +85,6 @@ export function createTypewriter(container: HTMLElement, initial: TypewriterOpti
       cancelled = true;
       if (timerId) clearTimeout(timerId);
       root.remove();
-    }
+    },
   };
 }

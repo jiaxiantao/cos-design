@@ -2,7 +2,12 @@ import type { DayCycleTimes } from './day-cycle';
 import type { WeatherType } from './types';
 import { fogLevelFromVisibility, fogLevelFromWmo, type FogLevel } from './fog';
 import { hailLevelFromWmo, type HailLevel } from './hail-level';
-import { normalizeWeatherType, rainLevelFromWmo, snowLevelFromWmo, type PrecipLevel } from './precipitation';
+import {
+  normalizeWeatherType,
+  rainLevelFromWmo,
+  snowLevelFromWmo,
+  type PrecipLevel,
+} from './precipitation';
 import { smogLevelFromVisibility, type SmogLevel } from './smog';
 
 export interface OpenMeteoCurrent {
@@ -86,7 +91,7 @@ const WMO_MAP: Record<number, WeatherType> = {
   86: 'snow',
   95: 'thunderstorm',
   96: 'hail',
-  99: 'hail'
+  99: 'hail',
 };
 
 /** Open-Meteo / WMO 精简天气码 → WeatherType */
@@ -103,7 +108,7 @@ export const IDLE_LIVE_WEATHER: LiveWeatherState = {
   smogLevel: null,
   status: 'idle',
   error: null,
-  current: null
+  current: null,
 };
 
 const LOCATING_STATE: LiveWeatherState = { ...IDLE_LIVE_WEATHER, status: 'locating' };
@@ -133,18 +138,22 @@ const parseLocalHm = (value: unknown): string | null => {
  * 按 IANA 时区取当前当地 HH:mm（用于实况滑块随时钟走动）。
  * 时区无效时回退到 observationLocalTime。
  */
-export const formatLocalHm = (timeZone: string | null | undefined, fallbackHm?: string | null): string | null => {
+export const formatLocalHm = (
+  timeZone: string | null | undefined,
+  fallbackHm?: string | null,
+): string | null => {
   if (timeZone) {
     try {
       const parts = new Intl.DateTimeFormat('en-GB', {
         timeZone,
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false
+        hour12: false,
       }).formatToParts(new Date());
       const hour = parts.find((p) => p.type === 'hour')?.value;
       const minute = parts.find((p) => p.type === 'minute')?.value;
-      if (hour != null && minute != null) return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
+      if (hour != null && minute != null)
+        return `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}`;
     } catch {
       // invalid timeZone
     }
@@ -153,7 +162,9 @@ export const formatLocalHm = (timeZone: string | null | undefined, fallbackHm?: 
 };
 
 /** 从实况结果取出日弧用的日出日落；缺省时返回 null */
-export const getDayCycleTimesFromLive = (current: OpenMeteoCurrent | null): DayCycleTimes | null => {
+export const getDayCycleTimesFromLive = (
+  current: OpenMeteoCurrent | null,
+): DayCycleTimes | null => {
   if (!current?.sunrise || !current?.sunset) return null;
   return { sunrise: current.sunrise, sunset: current.sunset };
 };
@@ -161,17 +172,21 @@ export const getDayCycleTimesFromLive = (current: OpenMeteoCurrent | null): DayC
 const errorState = (error: string): LiveWeatherState => ({
   ...IDLE_LIVE_WEATHER,
   status: 'error',
-  error
+  error,
 });
 
-export const fetchLiveWeather = async (lat: number, lon: number, signal?: AbortSignal): Promise<LiveWeatherState> => {
+export const fetchLiveWeather = async (
+  lat: number,
+  lon: number,
+  signal?: AbortSignal,
+): Promise<LiveWeatherState> => {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
     current: 'weather_code,wind_speed_10m,is_day,visibility',
     daily: 'sunrise,sunset',
     timezone: 'auto',
-    forecast_days: '1'
+    forecast_days: '1',
   });
   const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { signal });
   if (!res.ok) throw new Error(`Open-Meteo 请求失败（HTTP ${res.status}）`);
@@ -189,8 +204,10 @@ export const fetchLiveWeather = async (lat: number, lon: number, signal?: AbortS
   const rainLevel = rainLevelFromWmo(code);
   const snowLevel = snowLevelFromWmo(code);
   const visibilityRaw = data?.current?.visibility;
-  const visibility = visibilityRaw != null && Number.isFinite(Number(visibilityRaw)) ? Number(visibilityRaw) : null;
-  const fogLevel = weather === 'fog' ? (fogLevelFromVisibility(visibility) ?? fogLevelFromWmo(code) ?? 2) : null;
+  const visibility =
+    visibilityRaw != null && Number.isFinite(Number(visibilityRaw)) ? Number(visibilityRaw) : null;
+  const fogLevel =
+    weather === 'fog' ? (fogLevelFromVisibility(visibility) ?? fogLevelFromWmo(code) ?? 2) : null;
   const hailLevel = weather === 'hail' ? (hailLevelFromWmo(code) ?? 2) : null;
   const smogLevel = weather === 'smog' ? (smogLevelFromVisibility(visibility) ?? 2) : null;
 
@@ -218,8 +235,8 @@ export const fetchLiveWeather = async (lat: number, lon: number, signal?: AbortS
       hailLevel,
       smogLevel,
       sunrise,
-      sunset
-    }
+      sunset,
+    },
   };
 };
 
@@ -230,7 +247,7 @@ export const fetchLiveWeather = async (lat: number, lon: number, signal?: AbortS
 export const subscribeLiveWeather = (
   enabled: boolean,
   coords: LiveWeatherCoords | undefined,
-  onState: (state: LiveWeatherState) => void
+  onState: (state: LiveWeatherState) => void,
 ): (() => void) => {
   if (!enabled) {
     onState(IDLE_LIVE_WEATHER);
@@ -279,7 +296,7 @@ export const subscribeLiveWeather = (
       if (cancelled) return;
       onState(errorState(geoErr.message || '定位失败'));
     },
-    { timeout: 10000, maximumAge: 10 * 60 * 1000 }
+    { timeout: 10000, maximumAge: 10 * 60 * 1000 },
   );
 
   return () => {
@@ -289,13 +306,17 @@ export const subscribeLiveWeather = (
 };
 
 /** 拉取指定经纬度当日日出日落（Open-Meteo daily） */
-export const fetchSunTimes = async (lat: number, lon: number, signal?: AbortSignal): Promise<DayCycleTimes | null> => {
+export const fetchSunTimes = async (
+  lat: number,
+  lon: number,
+  signal?: AbortSignal,
+): Promise<DayCycleTimes | null> => {
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lon),
     daily: 'sunrise,sunset',
     timezone: 'auto',
-    forecast_days: '1'
+    forecast_days: '1',
   });
   const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { signal });
   if (!res.ok) return null;
@@ -308,7 +329,7 @@ export const fetchSunTimes = async (lat: number, lon: number, signal?: AbortSign
 
 export const subscribeSunTimes = (
   coords: LiveWeatherCoords | undefined,
-  onTimes: (times: DayCycleTimes | null) => void
+  onTimes: (times: DayCycleTimes | null) => void,
 ): (() => void) => {
   if (!isValidCoords(coords)) {
     onTimes(null);

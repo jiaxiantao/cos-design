@@ -1,4 +1,8 @@
-import { createParticleNetwork, type ParticleNetworkController, type ParticleNetworkOptions } from '../core';
+import {
+  createParticleNetwork,
+  type ParticleNetworkController,
+  type ParticleNetworkOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-particle-network';

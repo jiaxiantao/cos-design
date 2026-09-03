@@ -27,17 +27,20 @@ const calcTimeLeft = (targetMs: number): TimeLeft => {
     days: Math.floor(seconds / 86400),
     hours: Math.floor((seconds % 86400) / 3600),
     minutes: Math.floor((seconds % 3600) / 60),
-    seconds: seconds % 60
+    seconds: seconds % 60,
   };
 };
 
-export function createCountdown(container: HTMLElement, initial: CountdownOptions): CountdownController {
+export function createCountdown(
+  container: HTMLElement,
+  initial: CountdownOptions,
+): CountdownController {
   let options: CountdownOptions = {
     showLabels: true,
     color: '#f472b6',
     invalidText: '无效的目标时间',
     endedText: '时间到！',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let timer = 0;
@@ -64,7 +67,8 @@ export function createCountdown(container: HTMLElement, initial: CountdownOption
   root.append(invalidEl, endedEl);
   container.appendChild(root);
 
-  const targetMs = () => (options.targetDate !== undefined ? parseTarget(options.targetDate) : Number.NaN);
+  const targetMs = () =>
+    options.targetDate !== undefined ? parseTarget(options.targetDate) : Number.NaN;
   const isValid = () => !Number.isNaN(targetMs());
 
   const render = () => {
@@ -130,6 +134,6 @@ export function createCountdown(container: HTMLElement, initial: CountdownOption
       destroyed = true;
       window.clearInterval(timer);
       root.remove();
-    }
+    },
   };
 }

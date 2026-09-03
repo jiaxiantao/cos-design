@@ -9,14 +9,17 @@ interface TrailPoint {
   life: number;
 }
 
-export function createCursorTrail(container: HTMLElement, initial: CursorTrailOptions = {}): CursorTrailController {
+export function createCursorTrail(
+  container: HTMLElement,
+  initial: CursorTrailOptions = {},
+): CursorTrailController {
   let options: CursorTrailOptions = {
     color: '#38bdf8',
     length: 20,
     width: 800,
     height: 400,
     hint: '移动鼠标查看粒子轨迹',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? 800;
@@ -108,6 +111,6 @@ export function createCursorTrail(container: HTMLElement, initial: CursorTrailOp
       unbindVisibility?.();
       canvas.removeEventListener('mousemove', onMove);
       root.remove();
-    }
+    },
   };
 }

@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createMazeGenerator, type MazeGeneratorController, type MazeGeneratorOptions } from '../core';
+import {
+  createMazeGenerator,
+  type MazeGeneratorController,
+  type MazeGeneratorOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { MazeGeneratorOptions, MazeGeneratorProps } from '../core/types';

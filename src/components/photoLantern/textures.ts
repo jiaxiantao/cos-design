@@ -70,14 +70,25 @@ export const createWoodGrainTexture = (base: string, vein: string, size = 512) =
   return texture;
 };
 
-export const createWoodMap = (base: string, vein: string, repeatX: number, repeatY: number, anisotropy: number) => {
+export const createWoodMap = (
+  base: string,
+  vein: string,
+  repeatX: number,
+  repeatY: number,
+  anisotropy: number,
+) => {
   const map = createWoodGrainTexture(base, vein);
   map.repeat.set(repeatX, repeatY);
   map.anisotropy = anisotropy;
   return map;
 };
 
-export const fitTexture = (texture: THREE.Texture, objectFit: string, panelAspect: number, anisotropy: number) => {
+export const fitTexture = (
+  texture: THREE.Texture,
+  objectFit: string,
+  panelAspect: number,
+  anisotropy: number,
+) => {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = anisotropy;
   texture.wrapS = THREE.ClampToEdgeWrapping;
@@ -104,14 +115,15 @@ export const fitTexture = (texture: THREE.Texture, objectFit: string, panelAspec
   }
 };
 
-const CAPTION_FONT = '"PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif';
+const CAPTION_FONT =
+  '"PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif';
 
 const imageSize = (source: CanvasImageSource) => {
   if ('naturalWidth' in source) {
     const img = source as HTMLImageElement;
     return {
       w: img.naturalWidth || img.width,
-      h: img.naturalHeight || img.height
+      h: img.naturalHeight || img.height,
     };
   }
   const canvas = source as HTMLCanvasElement;
@@ -122,7 +134,7 @@ const imageSize = (source: CanvasImageSource) => {
 export const composeCaptionTexture = (
   source: CanvasImageSource,
   title?: string,
-  description?: string
+  description?: string,
 ): THREE.CanvasTexture => {
   const { w: iw, h: ih } = imageSize(source);
   const w = Math.max(512, iw || 1024);

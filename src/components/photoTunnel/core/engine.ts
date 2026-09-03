@@ -27,7 +27,7 @@ const assignStyle = (el: HTMLElement, style?: Record<string, string | number | u
 
 export function createPhotoTunnel(
   container: HTMLElement,
-  initial: PhotoTunnelOptions = { photos: [] }
+  initial: PhotoTunnelOptions = { photos: [] },
 ): PhotoTunnelController {
   let options: PhotoTunnelOptions = {
     depthStep: 180,
@@ -39,7 +39,7 @@ export function createPhotoTunnel(
     initialIndex: 0,
     ariaLabel: '纵深照片隧道',
     ...initial,
-    photos: initial.photos ?? []
+    photos: initial.photos ?? [],
   };
   let destroyed = false;
   let progress = options.initialIndex ?? 0;
@@ -115,7 +115,9 @@ export function createPhotoTunnel(
     captionEl = null;
     const photos = photosOf();
     const activePhoto = photos[activeIndex];
-    const show = Boolean(options.showCaption && activePhoto && (activePhoto.title || activePhoto.description));
+    const show = Boolean(
+      options.showCaption && activePhoto && (activePhoto.title || activePhoto.description),
+    );
     const captionAria =
       show && activePhoto?.title
         ? `，当前：${activePhoto.title}${activePhoto.description ? `，${activePhoto.description}` : ''}`
@@ -220,7 +222,8 @@ export function createPhotoTunnel(
     const stepDy = event.clientY - lastY;
     const dt = Math.max(0.008, (event.timeStamp - lastT) / 1000);
     const sensitivity = options.dragSensitivity ?? 0.008;
-    const dragDelta = Math.abs(stepDy) >= Math.abs(stepDx) ? -stepDy * sensitivity : -stepDx * sensitivity;
+    const dragDelta =
+      Math.abs(stepDy) >= Math.abs(stepDx) ? -stepDy * sensitivity : -stepDx * sensitivity;
     const instantVelocity = dragDelta / dt;
     const alpha = 1 - Math.exp(-dt / VELOCITY_SMOOTH_TAU);
     velocity = velocity + (instantVelocity - velocity) * alpha;
@@ -357,6 +360,6 @@ export function createPhotoTunnel(
       stage.removeEventListener('pointerup', onPointerUp);
       stage.removeEventListener('pointercancel', onPointerCancel);
       root.remove();
-    }
+    },
   };
 }

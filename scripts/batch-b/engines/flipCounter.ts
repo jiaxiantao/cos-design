@@ -5,7 +5,10 @@ const P = 'cos-flip-counter';
 const padDigits = (value: number, digits: number) =>
   Math.max(0, Math.floor(value)).toString().padStart(digits, '0').slice(-digits);
 
-export function createFlipCounter(container: HTMLElement, initial: FlipCounterOptions): FlipCounterController {
+export function createFlipCounter(
+  container: HTMLElement,
+  initial: FlipCounterOptions,
+): FlipCounterController {
   let options: FlipCounterOptions = { digits: 4, color: '#38bdf8', duration: 600, ...initial };
   let destroyed = false;
   const digitStates: { prev: string; current: string; flipping: boolean; timer: number }[] = [];
@@ -79,7 +82,8 @@ export function createFlipCounter(container: HTMLElement, initial: FlipCounterOp
     digitEls = [];
     const digits = options.digits ?? 4;
     const chars = padDigits(options.value, digits).split('');
-    while (digitStates.length < chars.length) digitStates.push({ prev: '0', current: '0', flipping: false, timer: 0 });
+    while (digitStates.length < chars.length)
+      digitStates.push({ prev: '0', current: '0', flipping: false, timer: 0 });
     digitStates.length = chars.length;
 
     chars.forEach((char, i) => {
@@ -114,6 +118,6 @@ export function createFlipCounter(container: HTMLElement, initial: FlipCounterOp
       destroyed = true;
       digitStates.forEach((s) => window.clearTimeout(s.timer));
       root.remove();
-    }
+    },
   };
 }

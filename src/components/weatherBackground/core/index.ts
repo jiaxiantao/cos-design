@@ -3,7 +3,7 @@ export type {
   WeatherBackgroundController,
   WeatherBackgroundOptions,
   WeatherBackgroundProps,
-  WeatherType
+  WeatherType,
 } from './types';
 
 export {
@@ -15,9 +15,14 @@ export {
   isValidCoords,
   mapWmoCodeToWeatherType,
   subscribeLiveWeather,
-  subscribeSunTimes
+  subscribeSunTimes,
 } from '../live-weather-core';
-export type { LiveWeatherCoords, LiveWeatherState, LiveWeatherStatus, OpenMeteoCurrent } from '../live-weather-core';
+export type {
+  LiveWeatherCoords,
+  LiveWeatherState,
+  LiveWeatherStatus,
+  OpenMeteoCurrent,
+} from '../live-weather-core';
 
 export {
   DEFAULT_FOG_LEVEL,
@@ -28,7 +33,7 @@ export {
   fogLevelFromWmo,
   formatFogLevel,
   intensifyFogConfig,
-  supportsFogLevel
+  supportsFogLevel,
 } from '../fog';
 export type { FogLevel } from '../fog';
 
@@ -39,7 +44,7 @@ export {
   formatHailLevel,
   hailLevelFromWmo,
   hailSpec,
-  supportsHailLevel
+  supportsHailLevel,
 } from '../hail-level';
 export type { HailIntensitySpec, HailLevel } from '../hail-level';
 
@@ -51,7 +56,7 @@ export {
   intensifySmogConfig,
   smogBankAlphaScale,
   smogLevelFromVisibility,
-  supportsSmogLevel
+  supportsSmogLevel,
 } from '../smog';
 export type { SmogLevel } from '../smog';
 
@@ -77,7 +82,7 @@ export {
   snowLevelFromWeather,
   snowLevelFromWmo,
   supportsRainLevel,
-  supportsSnowLevel
+  supportsSnowLevel,
 } from '../precipitation';
 export type { PrecipLevel } from '../precipitation';
 
@@ -88,6 +93,6 @@ export {
   sampleWindField,
   visualWindLevel,
   windLevelToKmh,
-  windStreakSpec
+  windStreakSpec,
 } from '../wind';
 export type { WindFieldSample, WindMotion } from '../wind';

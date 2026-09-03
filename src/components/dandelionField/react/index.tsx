@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createDandelionField, type DandelionFieldController, type DandelionFieldOptions } from '../core';
+import {
+  createDandelionField,
+  type DandelionFieldController,
+  type DandelionFieldOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { DandelionFieldOptions, DandelionFieldProps } from '../core/types';

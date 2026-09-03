@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { ConfettiController, ConfettiOptions } from './types';
 
@@ -45,13 +45,22 @@ const createParticles = (width: number, height: number, count: number): Particle
       width: Math.random() * 8 + 4,
       height: Math.random() * 6 + 3,
       alpha: 1,
-      gravity: Math.random() * 0.15 + 0.12
+      gravity: Math.random() * 0.15 + 0.12,
     };
   });
 };
 
-export function createConfetti(container: HTMLElement, initial: ConfettiOptions = {}): ConfettiController {
-  let options: ConfettiOptions = { fill: false, auto: true, particleCount: 120, hint: '点击画布再次喷射', ...initial };
+export function createConfetti(
+  container: HTMLElement,
+  initial: ConfettiOptions = {},
+): ConfettiController {
+  let options: ConfettiOptions = {
+    fill: false,
+    auto: true,
+    particleCount: 120,
+    hint: '点击画布再次喷射',
+    ...initial,
+  };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
   let height = options.height ?? DEFAULT_H;
@@ -129,7 +138,7 @@ export function createConfetti(container: HTMLElement, initial: ConfettiOptions 
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -213,6 +222,6 @@ export function createConfetti(container: HTMLElement, initial: ConfettiOptions 
       sizeCleanup?.();
       canvas.removeEventListener('pointerdown', onPointerDown);
       root.remove();
-    }
+    },
   };
 }

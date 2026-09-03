@@ -5,7 +5,10 @@ const P = 'cos-count-up';
 const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 
 const formatValue = (value: number, decimals: number) =>
-  value.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  value.toLocaleString('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
 
 export function createCountUp(container: HTMLElement, initial: CountUpOptions): CountUpController {
   let options: CountUpOptions = {
@@ -15,7 +18,7 @@ export function createCountUp(container: HTMLElement, initial: CountUpOptions): 
     prefix: '',
     suffix: '',
     color: '#34d399',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let frameId = 0;
@@ -40,11 +43,11 @@ export function createCountUp(container: HTMLElement, initial: CountUpOptions): 
     const prefix = options.prefix ?? '';
     const suffix = options.suffix ?? '';
     const candidates = [options.start ?? 0, options.value].map(
-      (item) => `${prefix}${formatValue(item, decimals)}${suffix}`
+      (item) => `${prefix}${formatValue(item, decimals)}${suffix}`,
     );
     return candidates.reduce(
       (longest, current) => (current.length > longest.length ? current : longest),
-      candidates[0]
+      candidates[0],
     );
   };
 
@@ -89,6 +92,6 @@ export function createCountUp(container: HTMLElement, initial: CountUpOptions): 
       destroyed = true;
       cancelAnimationFrame(frameId);
       root.remove();
-    }
+    },
   };
 }

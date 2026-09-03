@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createPhotoViewMaster, type PhotoViewMasterController, type PhotoViewMasterOptions } from '../core';
+import {
+  createPhotoViewMaster,
+  type PhotoViewMasterController,
+  type PhotoViewMasterOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { PhotoViewMasterOptions, PhotoViewMasterProps } from '../core/types';

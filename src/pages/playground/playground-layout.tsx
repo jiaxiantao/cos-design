@@ -17,7 +17,14 @@ const GitHubIcon = () => (
 );
 
 const SearchIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden
+  >
     <circle cx="11" cy="11" r="7" />
     <path d="M20 20l-3.5-3.5" />
   </svg>
@@ -47,7 +54,10 @@ const PlaygroundLayout = () => {
   const [localeMenuOpen, setLocaleMenuOpen] = useState(false);
   const localeMenuRef = useRef<HTMLDivElement>(null);
 
-  const currentDemo = useMemo(() => componentDemos.find((item) => item.path === pathname), [componentDemos, pathname]);
+  const currentDemo = useMemo(
+    () => componentDemos.find((item) => item.path === pathname),
+    [componentDemos, pathname],
+  );
 
   const activeCategory = currentDemo?.category ?? expandedCategory;
 
@@ -74,7 +84,10 @@ const PlaygroundLayout = () => {
   }, [localeMenuOpen]);
 
   const categoryCounts = useMemo(() => {
-    const counts = Object.fromEntries(categories.map((c) => [c.id, 0])) as Record<ComponentCategory, number>;
+    const counts = Object.fromEntries(categories.map((c) => [c.id, 0])) as Record<
+      ComponentCategory,
+      number
+    >;
     componentDemos.forEach((item) => {
       counts[item.category] += 1;
     });
@@ -89,7 +102,7 @@ const PlaygroundLayout = () => {
         item.name.toLowerCase().includes(q) ||
         item.title.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||
-        item.tags.some((tag) => tag.toLowerCase().includes(q))
+        item.tags.some((tag) => tag.toLowerCase().includes(q)),
     );
   }, [componentDemos, query]);
 
@@ -122,8 +135,12 @@ const PlaygroundLayout = () => {
         </div>
 
         <div className={styles.stats}>
-          <span className={styles.statBadge}>{t('layout.componentCount', { value: componentDemos.length })}</span>
-          <span className={styles.statBadge}>{t('layout.categoryCount', { value: categories.length })}</span>
+          <span className={styles.statBadge}>
+            {t('layout.componentCount', { value: componentDemos.length })}
+          </span>
+          <span className={styles.statBadge}>
+            {t('layout.categoryCount', { value: categories.length })}
+          </span>
           <div ref={localeMenuRef} className={styles.localeSwitch}>
             <button
               type="button"
@@ -183,7 +200,10 @@ const PlaygroundLayout = () => {
           <p className={styles.sidebarTitle}>{t('layout.sidebarTitle')}</p>
           <nav className={styles.categoryNav}>
             <div className={styles.navLinks}>
-              <Link to="/" className={`${styles.navLink} ${pathname === '/' ? styles.navLinkActive : ''}`}>
+              <Link
+                to="/"
+                className={`${styles.navLink} ${pathname === '/' ? styles.navLinkActive : ''}`}
+              >
                 {t('layout.navHome')}
               </Link>
               <Link

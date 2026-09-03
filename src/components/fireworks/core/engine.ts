@@ -4,7 +4,7 @@ import {
   getRelativePointerPosition,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { FireworksController, FireworksOptions } from './types';
 
@@ -49,12 +49,15 @@ const createExplosion = (x: number, y: number, color: string): Particle[] => {
       vy: Math.sin(angle) * speed,
       alpha: 1,
       color: Math.random() > 0.3 ? color : randomColor(),
-      decay: Math.random() * 0.015 + 0.01
+      decay: Math.random() * 0.015 + 0.01,
     };
   });
 };
 
-export function createFireworks(container: HTMLElement, initialOptions: FireworksOptions = {}): FireworksController {
+export function createFireworks(
+  container: HTMLElement,
+  initialOptions: FireworksOptions = {},
+): FireworksController {
   let options: FireworksOptions = { auto: true, ...initialOptions };
   let destroyed = false;
 
@@ -92,7 +95,7 @@ export function createFireworks(container: HTMLElement, initialOptions: Firework
       color: randomColor(),
       exploded: false,
       particles: [],
-      age: 0
+      age: 0,
     });
     active = true;
   };
@@ -241,7 +244,7 @@ export function createFireworks(container: HTMLElement, initialOptions: Firework
         height: options.height,
         defaultWidth: DEFAULT_WIDTH,
         defaultHeight: DEFAULT_HEIGHT,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -296,6 +299,6 @@ export function createFireworks(container: HTMLElement, initialOptions: Firework
       unbindMotion?.();
       sizeObserverCleanup?.();
       root.remove();
-    }
+    },
   };
 }

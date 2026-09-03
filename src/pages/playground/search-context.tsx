@@ -10,7 +10,9 @@ const PlaygroundSearchContext = createContext<PlaygroundSearchContextValue | nul
 export const PlaygroundSearchProvider = ({ children }: { children: ReactNode }) => {
   const [query, setQuery] = useState('');
   const value = useMemo(() => ({ query, setQuery }), [query]);
-  return <PlaygroundSearchContext.Provider value={value}>{children}</PlaygroundSearchContext.Provider>;
+  return (
+    <PlaygroundSearchContext.Provider value={value}>{children}</PlaygroundSearchContext.Provider>
+  );
 };
 
 export const usePlaygroundSearch = () => {

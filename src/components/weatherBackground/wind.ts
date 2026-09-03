@@ -65,7 +65,7 @@ export const sampleWindField = (
   t: number,
   motion: Pick<WindMotion, 'gustiness' | 'wander'>,
   x = 0,
-  y = 0
+  y = 0,
 ): WindFieldSample => {
   const g = motion.gustiness;
   const w = motion.wander;
@@ -98,7 +98,7 @@ export const sampleWindField = (
     intensity,
     angle,
     ux: Math.cos(angle),
-    uy: Math.sin(angle)
+    uy: Math.sin(angle),
   };
 };
 
@@ -110,12 +110,13 @@ export const windStreakSpec = (level: number): { count: number; alphaMul: number
   const t = Math.min(1, Math.pow(lv / 9, 1.15));
   return {
     count: Math.floor(3 + t * t * 50),
-    alphaMul: 0.1 + t * 0.9
+    alphaMul: 0.1 + t * 0.9,
   };
 };
 
 /** 风级 → 典型 km/h */
-export const windLevelToKmh = (level: number): number => LEVEL_TO_KMH[clampWindLevel(level)] ?? REFERENCE_WIND_KMH;
+export const windLevelToKmh = (level: number): number =>
+  LEVEL_TO_KMH[clampWindLevel(level)] ?? REFERENCE_WIND_KMH;
 
 /** km/h → 蒲福风级 */
 export const kmhToWindLevel = (kmh: number): number => {
@@ -156,11 +157,15 @@ export const buildWindMotion = (speedKmh: number): WindMotion => {
     streak: 0.55 + horizontal * 0.95,
     streakVisibility: alphaMul,
     gustiness,
-    wander
+    wander,
   };
 };
 
-export const resolveWindKmh = (options: { live: boolean; windLevel: number; liveWindKmh?: number | null }): number => {
+export const resolveWindKmh = (options: {
+  live: boolean;
+  windLevel: number;
+  liveWindKmh?: number | null;
+}): number => {
   if (options.live && options.liveWindKmh != null && Number.isFinite(options.liveWindKmh)) {
     return Math.max(0, options.liveWindKmh);
   }

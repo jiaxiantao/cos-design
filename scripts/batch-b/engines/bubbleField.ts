@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import { createPointerState, FRAME_MS, MAX_DPR } from '../constants';
 import { createSnowSprite, drawDynamicBackground, drawStaticBackground } from '../background';
@@ -13,7 +13,7 @@ import {
   exciteBubbleFromFlow,
   integrateBubbleMotion,
   integrateSurfaceModes,
-  samplePointerFlow
+  samplePointerFlow,
 } from '../physics';
 import { drawBubble, drawMergingPair } from '../render';
 import { frameDamp } from '../utils';
@@ -24,14 +24,17 @@ const P = 'cos-bubble-field';
 const DEFAULT_W = 800;
 const DEFAULT_H = 500;
 
-export function createBubbleField(container: HTMLElement, initial: BubbleFieldOptions = {}): BubbleFieldController {
+export function createBubbleField(
+  container: HTMLElement,
+  initial: BubbleFieldOptions = {},
+): BubbleFieldController {
   let options: BubbleFieldOptions = {
     fill: false,
     bubbleCount: 36,
     speed: 1,
     color: '#7dd3fc',
     interactive: true,
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -117,7 +120,7 @@ export function createBubbleField(container: HTMLElement, initial: BubbleFieldOp
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -260,22 +263,39 @@ export function createBubbleField(container: HTMLElement, initial: BubbleFieldOp
           const angle = Math.atan2(bubble.vy, bubble.vx);
           bubble.streamStretch = Math.min(
             0.85,
-            bubble.streamStretch * frameDamp(0.9, frameScale) + Math.min(0.35, (slip - 0.55) * 0.08) * frameScale
+            bubble.streamStretch * frameDamp(0.9, frameScale) +
+              Math.min(0.35, (slip - 0.55) * 0.08) * frameScale,
           );
           bubble.streamAngle =
-            bubble.streamAngle * frameDamp(0.85, frameScale) + angle * (1 - frameDamp(0.85, frameScale));
+            bubble.streamAngle * frameDamp(0.85, frameScale) +
+            angle * (1 - frameDamp(0.85, frameScale));
         }
       } else {
         integrateSurfaceModes(bubble, frameScale);
       }
 
       if (isInteractive && pointer.active && pointer.speed > 0.2 && !mergingIds.has(bubble.id)) {
-        const flow = samplePointerFlow(bubble.x, bubble.y, pointer.x, pointer.y, pointer.vx, pointer.vy, pointer.speed);
+        const flow = samplePointerFlow(
+          bubble.x,
+          bubble.y,
+          pointer.x,
+          pointer.y,
+          pointer.vx,
+          pointer.vy,
+          pointer.speed,
+        );
         if (flow.excite > 0.01 || Math.hypot(flow.fx, flow.fy) > 0.01) {
           const inertia = 1 / (0.75 + bubble.radius * 0.035);
           bubble.vx += flow.fx * inertia * frameScale;
           bubble.vy += flow.fy * inertia * 0.82 * frameScale;
-          exciteBubbleFromFlow(bubble, flow.strain, flow.strainAngle, flow.excite, flow.fx, flow.fy);
+          exciteBubbleFromFlow(
+            bubble,
+            flow.strain,
+            flow.strainAngle,
+            flow.excite,
+            flow.fx,
+            flow.fy,
+          );
         }
       }
 
@@ -301,7 +321,19 @@ export function createBubbleField(container: HTMLElement, initial: BubbleFieldOp
     for (const merge of merges) {
       const pose = merge.pose ?? resolveMergePose(merge);
       const alpha = Math.min(0.9, 0.55 + pose.absorb * 0.2);
-      drawMergingPair(ctx, pose.ax, pose.ay, pose.ar, pose.bx, pose.by, pose.br, tint, width, height, alpha);
+      drawMergingPair(
+        ctx,
+        pose.ax,
+        pose.ay,
+        pose.ar,
+        pose.bx,
+        pose.by,
+        pose.br,
+        tint,
+        width,
+        height,
+        alpha,
+      );
     }
 
     const drawOrder = [...bubbles].sort((a, b) => b.y - a.y);
@@ -346,6 +378,6 @@ export function createBubbleField(container: HTMLElement, initial: BubbleFieldOp
       destroyed = true;
       cleanup();
       root.remove();
-    }
+    },
   };
 }

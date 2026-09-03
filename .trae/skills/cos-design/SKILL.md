@@ -68,9 +68,12 @@ export function SuccessPage() {
 
 ```tsx
 import dynamic from 'next/dynamic';
-const WeatherBackground = dynamic(() => import('@cos-design/weather-background').then((m) => m.WeatherBackground), {
-  ssr: false
-});
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  {
+    ssr: false,
+  },
+);
 export function Hero() {
   return (
     <div style={{ height: '100vh' }}>

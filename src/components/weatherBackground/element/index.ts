@@ -1,4 +1,8 @@
-import { createWeatherBackground, type WeatherBackgroundController, type WeatherBackgroundOptions } from '../core';
+import {
+  createWeatherBackground,
+  type WeatherBackgroundController,
+  type WeatherBackgroundOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-weather-background';
@@ -9,7 +13,8 @@ function parseOptions(el: HTMLElement): WeatherBackgroundOptions {
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('fill')) options.fill = true;
   if (el.hasAttribute('weather'))
-    options.weather = (el.getAttribute('weather') ?? undefined) as WeatherBackgroundOptions['weather'];
+    options.weather = (el.getAttribute('weather') ??
+      undefined) as WeatherBackgroundOptions['weather'];
   if (el.hasAttribute('time')) options.time = el.getAttribute('time') ?? undefined;
   if (el.hasAttribute('live')) options.live = el.getAttribute('live') !== 'false';
   if (el.hasAttribute('latitude')) options.latitude = Number(el.getAttribute('latitude'));
@@ -22,7 +27,8 @@ function parseOptions(el: HTMLElement): WeatherBackgroundOptions {
   if (el.hasAttribute('smog-level')) options.smogLevel = Number(el.getAttribute('smog-level'));
   if (el.hasAttribute('loading')) options.loading = el.getAttribute('loading') !== 'false';
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('loading-text')) options.loadingText = el.getAttribute('loading-text') ?? undefined;
+  if (el.hasAttribute('loading-text'))
+    options.loadingText = el.getAttribute('loading-text') ?? undefined;
   return options;
 }
 
@@ -47,7 +53,7 @@ class CosWeatherBackgroundElement extends HTMLElement {
       'smog-level',
       'loading',
       'aria-label',
-      'loading-text'
+      'loading-text',
     ];
   }
 

@@ -5,7 +5,8 @@ const TAG = 'cos-flip-card';
 
 function parseOptions(_el: HTMLElement): FlipCardOptions {
   const options: FlipCardOptions = {};
-  if (_el.hasAttribute('front-title')) options.frontTitle = _el.getAttribute('front-title') ?? undefined;
+  if (_el.hasAttribute('front-title'))
+    options.frontTitle = _el.getAttribute('front-title') ?? undefined;
   if (_el.hasAttribute('disabled')) options.disabled = true;
   return options;
 }

@@ -2,7 +2,10 @@ import type { SplitRevealController, SplitRevealOptions } from './types';
 const P = 'cos-split-reveal';
 const DIRECTIONS = ['fromTop', 'fromBottom', 'fromLeft', 'fromRight'] as const;
 const dirClass = (d: string) => `${P}__${d.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
-export function createSplitReveal(container: HTMLElement, initial: SplitRevealOptions = {}): SplitRevealController {
+export function createSplitReveal(
+  container: HTMLElement,
+  initial: SplitRevealOptions = {},
+): SplitRevealController {
   let opts: SplitRevealOptions = { text: 'REVEAL', delay: 80, color: '#f8fafc', ...initial };
   const root = document.createElement('div');
   root.className = P;
@@ -30,6 +33,6 @@ export function createSplitReveal(container: HTMLElement, initial: SplitRevealOp
     },
     destroy() {
       root.remove();
-    }
+    },
   };
 }

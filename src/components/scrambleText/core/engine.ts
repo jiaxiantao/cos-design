@@ -1,8 +1,16 @@
 import type { ScrambleTextController, ScrambleTextOptions } from './types';
 const P = 'cos-scramble-text';
 const DEFAULT_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
-export function createScrambleText(container: HTMLElement, initial: ScrambleTextOptions = {}): ScrambleTextController {
-  let opts: ScrambleTextOptions = { text: 'DECRYPTED', duration: 2000, charset: DEFAULT_CHARSET, ...initial };
+export function createScrambleText(
+  container: HTMLElement,
+  initial: ScrambleTextOptions = {},
+): ScrambleTextController {
+  let opts: ScrambleTextOptions = {
+    text: 'DECRYPTED',
+    duration: 2000,
+    charset: DEFAULT_CHARSET,
+    ...initial,
+  };
   let frameId = 0;
   let start = 0;
   let cancelled = false;
@@ -62,6 +70,6 @@ export function createScrambleText(container: HTMLElement, initial: ScrambleText
       cancelled = true;
       cancelAnimationFrame(frameId);
       root.remove();
-    }
+    },
   };
 }

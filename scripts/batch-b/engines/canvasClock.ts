@@ -3,7 +3,10 @@ import type { CanvasClockController, CanvasClockOptions } from './types';
 
 const P = 'cos-canvas-clock';
 
-export function createCanvasClock(container: HTMLElement, initial: CanvasClockOptions = {}): CanvasClockController {
+export function createCanvasClock(
+  container: HTMLElement,
+  initial: CanvasClockOptions = {},
+): CanvasClockController {
   let options: CanvasClockOptions = { width: 400, height: 400, ...initial };
   let destroyed = false;
   let frameId = 0;
@@ -139,6 +142,6 @@ export function createCanvasClock(container: HTMLElement, initial: CanvasClockOp
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

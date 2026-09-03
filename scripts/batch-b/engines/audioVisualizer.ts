@@ -7,7 +7,7 @@ const DEFAULT_H = 120;
 
 export function createAudioVisualizer(
   container: HTMLElement,
-  initial: AudioVisualizerOptions = {}
+  initial: AudioVisualizerOptions = {},
 ): AudioVisualizerController {
   let options: AudioVisualizerOptions = { barCount: 32, useMic: false, ...initial };
   let destroyed = false;
@@ -141,6 +141,6 @@ export function createAudioVisualizer(
       unbindVisibility?.();
       teardownMic();
       root.remove();
-    }
+    },
   };
 }

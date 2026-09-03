@@ -7,10 +7,13 @@ const DEFAULT_DATA: OrbitalChartItem[] = [
   { label: 'A', value: 30, color: '#38bdf8' },
   { label: 'B', value: 25, color: '#a78bfa' },
   { label: 'C', value: 20, color: '#f472b6' },
-  { label: 'D', value: 25, color: '#4ade80' }
+  { label: 'D', value: 25, color: '#4ade80' },
 ];
 
-export function createOrbitalChart(container: HTMLElement, initial: OrbitalChartOptions = {}): OrbitalChartController {
+export function createOrbitalChart(
+  container: HTMLElement,
+  initial: OrbitalChartOptions = {},
+): OrbitalChartController {
   let options: OrbitalChartOptions = { data: DEFAULT_DATA, size: 240, ...initial };
   let destroyed = false;
   let frameId = 0;
@@ -129,6 +132,6 @@ export function createOrbitalChart(container: HTMLElement, initial: OrbitalChart
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

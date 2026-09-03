@@ -21,11 +21,20 @@ const PLANETS: Omit<Body, 'angle'>[] = [
   { name: 'Mars', radius: 0, orbit: 98, speed: 2.4, color: '#f87171', size: 4 },
   { name: 'Jupiter', radius: 0, orbit: 130, speed: 1.6, color: '#fb923c', size: 12 },
   { name: 'Saturn', radius: 0, orbit: 160, speed: 1.2, color: '#fcd34d', size: 10 },
-  { name: 'Moon', radius: 0, orbit: 14, speed: 8, color: '#cbd5e1', size: 2, parent: 2 }
+  { name: 'Moon', radius: 0, orbit: 14, speed: 8, color: '#cbd5e1', size: 2, parent: 2 },
 ];
 
-export function createSolarSystem(container: HTMLElement, initial: SolarSystemOptions = {}): SolarSystemController {
-  let options: SolarSystemOptions = { width: 400, height: 400, speed: 1, showOrbits: true, ...initial };
+export function createSolarSystem(
+  container: HTMLElement,
+  initial: SolarSystemOptions = {},
+): SolarSystemController {
+  let options: SolarSystemOptions = {
+    width: 400,
+    height: 400,
+    speed: 1,
+    showOrbits: true,
+    ...initial,
+  };
   let destroyed = false;
   let frameId = 0;
   let paused = typeof document !== 'undefined' ? document.hidden : false;
@@ -34,7 +43,7 @@ export function createSolarSystem(container: HTMLElement, initial: SolarSystemOp
   const stars = Array.from({ length: 80 }, () => ({
     x: Math.random(),
     y: Math.random(),
-    alpha: Math.random() * 0.6
+    alpha: Math.random() * 0.6,
   }));
 
   const root = document.createElement('div');
@@ -118,7 +127,15 @@ export function createSolarSystem(container: HTMLElement, initial: SolarSystemOp
 
       if (body.name === 'Saturn') {
         ctx.beginPath();
-        ctx.ellipse(x, y, body.size * scale * 1.8, body.size * scale * 0.5, body.angle * 0.3, 0, Math.PI * 2);
+        ctx.ellipse(
+          x,
+          y,
+          body.size * scale * 1.8,
+          body.size * scale * 0.5,
+          body.angle * 0.3,
+          0,
+          Math.PI * 2,
+        );
         ctx.strokeStyle = 'rgba(252, 211, 77, 0.5)';
         ctx.lineWidth = 1.5;
         ctx.stroke();
@@ -155,6 +172,6 @@ export function createSolarSystem(container: HTMLElement, initial: SolarSystemOp
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

@@ -3,7 +3,7 @@ import {
   bindVisibilityPause,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { MatrixRainController, MatrixRainOptions } from './types';
 
@@ -12,7 +12,10 @@ const CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*アイウエオカ�
 const DEFAULT_W = 800;
 const DEFAULT_H = 500;
 
-export function createMatrixRain(container: HTMLElement, initial: MatrixRainOptions = {}): MatrixRainController {
+export function createMatrixRain(
+  container: HTMLElement,
+  initial: MatrixRainOptions = {},
+): MatrixRainController {
   let options: MatrixRainOptions = {
     fill: false,
     density: 0.6,
@@ -20,7 +23,7 @@ export function createMatrixRain(container: HTMLElement, initial: MatrixRainOpti
     showOverlay: true,
     title: 'MATRIX',
     subtitle: '数字雨效果',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -104,7 +107,7 @@ export function createMatrixRain(container: HTMLElement, initial: MatrixRainOpti
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -181,6 +184,6 @@ export function createMatrixRain(container: HTMLElement, initial: MatrixRainOpti
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

@@ -1,10 +1,24 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createWeatherBackground, type WeatherBackgroundController, type WeatherBackgroundOptions } from '../core';
+import {
+  createWeatherBackground,
+  type WeatherBackgroundController,
+  type WeatherBackgroundOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { WeatherBackgroundOptions, WeatherBackgroundProps } from '../core/types';
-export { formatLocalHm, mapWmoCodeToWeatherType, useLiveWeather, useSunTimes } from '../live-weather';
-export type { LiveWeatherCoords, LiveWeatherState, LiveWeatherStatus, OpenMeteoCurrent } from '../live-weather';
+export {
+  formatLocalHm,
+  mapWmoCodeToWeatherType,
+  useLiveWeather,
+  useSunTimes,
+} from '../live-weather';
+export type {
+  LiveWeatherCoords,
+  LiveWeatherState,
+  LiveWeatherStatus,
+  OpenMeteoCurrent,
+} from '../live-weather';
 
 const WeatherBackground = forwardRef<unknown, WeatherBackgroundOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);

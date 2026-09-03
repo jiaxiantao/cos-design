@@ -1,4 +1,8 @@
-import { createPhotoViewMaster, type PhotoViewMasterController, type PhotoViewMasterOptions } from '../core';
+import {
+  createPhotoViewMaster,
+  type PhotoViewMasterController,
+  type PhotoViewMasterOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-view-master';
@@ -9,12 +13,17 @@ function parseOptions(el: HTMLElement): PhotoViewMasterOptions {
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('disc-size')) options.discSize = Number(el.getAttribute('disc-size'));
   if (el.hasAttribute('peep-size')) options.peepSize = Number(el.getAttribute('peep-size'));
-  if (el.hasAttribute('drag-sensitivity')) options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
+  if (el.hasAttribute('drag-sensitivity'))
+    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('auto-rotate')) options.autoRotate = el.getAttribute('auto-rotate') !== 'false';
-  if (el.hasAttribute('auto-rotate-speed')) options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
-  if (el.hasAttribute('show-caption')) options.showCaption = el.getAttribute('show-caption') !== 'false';
-  if (el.hasAttribute('initial-index')) options.initialIndex = Number(el.getAttribute('initial-index'));
+  if (el.hasAttribute('auto-rotate'))
+    options.autoRotate = el.getAttribute('auto-rotate') !== 'false';
+  if (el.hasAttribute('auto-rotate-speed'))
+    options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
+  if (el.hasAttribute('show-caption'))
+    options.showCaption = el.getAttribute('show-caption') !== 'false';
+  if (el.hasAttribute('initial-index'))
+    options.initialIndex = Number(el.getAttribute('initial-index'));
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   return options;
 }
@@ -34,7 +43,7 @@ class CosPhotoViewMasterElement extends HTMLElement {
       'auto-rotate-speed',
       'show-caption',
       'initial-index',
-      'aria-label'
+      'aria-label',
     ];
   }
 

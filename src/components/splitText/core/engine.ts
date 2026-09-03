@@ -1,6 +1,9 @@
 import type { SplitTextController, SplitTextOptions } from './types';
 const P = 'cos-split-text';
-export function createSplitText(container: HTMLElement, initial: SplitTextOptions = {}): SplitTextController {
+export function createSplitText(
+  container: HTMLElement,
+  initial: SplitTextOptions = {},
+): SplitTextController {
   let opts: SplitTextOptions = {
     text: 'SPLIT TEXT',
     animation: 'fadeUp',
@@ -10,7 +13,7 @@ export function createSplitText(container: HTMLElement, initial: SplitTextOption
     loopPause: 2400,
     fontSize: 56,
     color: '#f8fafc',
-    ...initial
+    ...initial,
   };
   let visible = true;
   let hideTimer = 0;
@@ -64,7 +67,7 @@ export function createSplitText(container: HTMLElement, initial: SplitTextOption
           render();
           showTimer = window.setTimeout(cycle, Math.max(opts.duration ?? 500, 600));
         },
-        totalDuration() + (opts.loopPause ?? 2400)
+        totalDuration() + (opts.loopPause ?? 2400),
       );
     };
     cycle();
@@ -83,6 +86,6 @@ export function createSplitText(container: HTMLElement, initial: SplitTextOption
       cancelled = true;
       clearTimers();
       root.remove();
-    }
+    },
   };
 }

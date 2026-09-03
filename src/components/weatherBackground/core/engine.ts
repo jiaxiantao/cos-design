@@ -2,8 +2,17 @@ import { observeElementSize, resolveCanvasBoxSize } from '@cos-design/shared';
 import { approximateDayCycleTimes, computeDayCycle, resolveSceneTimeMs } from '../day-cycle';
 import { DEFAULT_FOG_LEVEL } from '../fog';
 import { DEFAULT_HAIL_LEVEL } from '../hail-level';
-import { IDLE_LIVE_WEATHER, subscribeLiveWeather, type LiveWeatherState } from '../live-weather-core';
-import { DEFAULT_RAIN_LEVEL, DEFAULT_SNOW_LEVEL, normalizeWeatherType, resolveSceneWeather } from '../precipitation';
+import {
+  IDLE_LIVE_WEATHER,
+  subscribeLiveWeather,
+  type LiveWeatherState,
+} from '../live-weather-core';
+import {
+  DEFAULT_RAIN_LEVEL,
+  DEFAULT_SNOW_LEVEL,
+  normalizeWeatherType,
+  resolveSceneWeather,
+} from '../precipitation';
 import { createWeatherScene } from '../scene/create-weather-scene';
 import { DEFAULT_SMOG_LEVEL } from '../smog';
 import { buildWindMotion, DEFAULT_WIND_LEVEL, resolveWindKmh } from '../wind';
@@ -15,7 +24,7 @@ const DEFAULT_H = 450;
 
 export function createWeatherBackground(
   container: HTMLElement,
-  initial: WeatherBackgroundOptions = {}
+  initial: WeatherBackgroundOptions = {},
 ): WeatherBackgroundController {
   let options: WeatherBackgroundOptions = {
     fill: false,
@@ -30,7 +39,7 @@ export function createWeatherBackground(
     smogLevel: DEFAULT_SMOG_LEVEL,
     loading: false,
     loadingText: '天气加载中…',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -78,7 +87,8 @@ export function createWeatherBackground(
     loadingLabel.textContent = options.loadingText ?? '天气加载中…';
     canvas.setAttribute(
       'aria-label',
-      options.ariaLabel ?? `天气背景：${activeWeather}${activeNight ? '（夜间）' : ''}，${windLevel}级风`
+      options.ariaLabel ??
+        `天气背景：${activeWeather}${activeNight ? '（夜间）' : ''}，${windLevel}级风`,
     );
   };
 
@@ -94,18 +104,28 @@ export function createWeatherBackground(
 
     const live = Boolean(options.live);
     const activeWeather = normalizeWeatherType(
-      live && liveState.weather ? liveState.weather : (options.weather ?? 'partlyCloudy')
+      live && liveState.weather ? liveState.weather : (options.weather ?? 'partlyCloudy'),
     );
     const effectiveRainLevel =
-      live && liveState.rainLevel != null ? liveState.rainLevel : (options.rainLevel ?? DEFAULT_RAIN_LEVEL);
+      live && liveState.rainLevel != null
+        ? liveState.rainLevel
+        : (options.rainLevel ?? DEFAULT_RAIN_LEVEL);
     const effectiveSnowLevel =
-      live && liveState.snowLevel != null ? liveState.snowLevel : (options.snowLevel ?? DEFAULT_SNOW_LEVEL);
+      live && liveState.snowLevel != null
+        ? liveState.snowLevel
+        : (options.snowLevel ?? DEFAULT_SNOW_LEVEL);
     const effectiveFogLevel =
-      live && liveState.fogLevel != null ? liveState.fogLevel : (options.fogLevel ?? DEFAULT_FOG_LEVEL);
+      live && liveState.fogLevel != null
+        ? liveState.fogLevel
+        : (options.fogLevel ?? DEFAULT_FOG_LEVEL);
     const effectiveHailLevel =
-      live && liveState.hailLevel != null ? liveState.hailLevel : (options.hailLevel ?? DEFAULT_HAIL_LEVEL);
+      live && liveState.hailLevel != null
+        ? liveState.hailLevel
+        : (options.hailLevel ?? DEFAULT_HAIL_LEVEL);
     const effectiveSmogLevel =
-      live && liveState.smogLevel != null ? liveState.smogLevel : (options.smogLevel ?? DEFAULT_SMOG_LEVEL);
+      live && liveState.smogLevel != null
+        ? liveState.smogLevel
+        : (options.smogLevel ?? DEFAULT_SMOG_LEVEL);
     const sceneWeather = resolveSceneWeather(activeWeather, effectiveRainLevel, effectiveSnowLevel);
     const sceneTimeMs = resolveSceneTimeMs(options.time);
     const liveSunrise = liveState.current?.sunrise ?? null;
@@ -115,10 +135,16 @@ export function createWeatherBackground(
       live && liveSunrise != null && liveSunset != null
         ? { sunrise: liveSunrise, sunset: liveSunset }
         : approximateDayCycleTimes(sceneTimeMs);
-    const windKmh = resolveWindKmh({ live, windLevel: options.windLevel ?? DEFAULT_WIND_LEVEL, liveWindKmh });
+    const windKmh = resolveWindKmh({
+      live,
+      windLevel: options.windLevel ?? DEFAULT_WIND_LEVEL,
+      liveWindKmh,
+    });
     const windMotion = buildWindMotion(windKmh);
     const activeNight =
-      live && liveState.current ? !liveState.current.isDay : !computeDayCycle(sceneTimeMs, dayCycleTimes).isDay;
+      live && liveState.current
+        ? !liveState.current.isDay
+        : !computeDayCycle(sceneTimeMs, dayCycleTimes).isDay;
 
     syncOverlay(activeWeather, activeNight, windMotion.level);
 
@@ -136,7 +162,7 @@ export function createWeatherBackground(
       snowLevel: effectiveSnowLevel,
       fogLevel: effectiveFogLevel,
       hailLevel: effectiveHailLevel,
-      smogLevel: effectiveSmogLevel
+      smogLevel: effectiveSmogLevel,
     });
   };
 
@@ -156,7 +182,7 @@ export function createWeatherBackground(
         liveState = state;
         if (state.weather) onLiveWeatherRef.current?.(normalizeWeatherType(state.weather));
         rebuildScene();
-      }
+      },
     );
   };
 
@@ -177,7 +203,7 @@ export function createWeatherBackground(
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -195,8 +221,13 @@ export function createWeatherBackground(
       options = { ...options, ...next };
       onLiveWeatherRef.current = options.onLiveWeather;
       const liveChanged =
-        prev.live !== options.live || prev.latitude !== options.latitude || prev.longitude !== options.longitude;
-      const sizeChanged = prev.fill !== options.fill || prev.width !== options.width || prev.height !== options.height;
+        prev.live !== options.live ||
+        prev.latitude !== options.latitude ||
+        prev.longitude !== options.longitude;
+      const sizeChanged =
+        prev.fill !== options.fill ||
+        prev.width !== options.width ||
+        prev.height !== options.height;
       if (sizeChanged) bindSize();
       if (liveChanged) bindLive();
       else if (!sizeChanged) rebuildScene();
@@ -208,6 +239,6 @@ export function createWeatherBackground(
       liveUnsub?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

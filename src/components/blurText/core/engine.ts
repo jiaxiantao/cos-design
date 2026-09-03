@@ -1,6 +1,9 @@
 import type { BlurTextController, BlurTextOptions } from './types';
 const P = 'cos-blur-text';
-export function createBlurText(container: HTMLElement, initial: BlurTextOptions = {}): BlurTextController {
+export function createBlurText(
+  container: HTMLElement,
+  initial: BlurTextOptions = {},
+): BlurTextController {
   let opts: BlurTextOptions = {
     text: 'BLUR TEXT',
     animateBy: 'words',
@@ -9,7 +12,7 @@ export function createBlurText(container: HTMLElement, initial: BlurTextOptions 
     duration: 500,
     fontSize: 56,
     color: '#f8fafc',
-    ...initial
+    ...initial,
   };
   let inView = false;
   let done = false;
@@ -24,7 +27,8 @@ export function createBlurText(container: HTMLElement, initial: BlurTextOptions 
   root.appendChild(pEl);
   container.appendChild(root);
 
-  const getElements = () => (opts.animateBy === 'words' ? (opts.text ?? '').split(' ') : (opts.text ?? '').split(''));
+  const getElements = () =>
+    opts.animateBy === 'words' ? (opts.text ?? '').split(' ') : (opts.text ?? '').split('');
 
   const render = () => {
     pEl.style.fontSize = `${opts.fontSize ?? 56}px`;
@@ -65,7 +69,7 @@ export function createBlurText(container: HTMLElement, initial: BlurTextOptions 
         scheduleComplete();
       }
     },
-    { threshold: 0.15 }
+    { threshold: 0.15 },
   );
   observer.observe(root);
   render();
@@ -82,6 +86,6 @@ export function createBlurText(container: HTMLElement, initial: BlurTextOptions 
       observer?.disconnect();
       if (completeTimer) window.clearTimeout(completeTimer);
       root.remove();
-    }
+    },
   };
 }

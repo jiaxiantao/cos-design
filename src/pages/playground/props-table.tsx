@@ -3,7 +3,7 @@ import {
   componentProps,
   componentRelatedTypes,
   type ComponentPropDoc,
-  type ComponentTypeDoc
+  type ComponentTypeDoc,
 } from '../config/component-props';
 import { useLocale } from '../i18n';
 import { localizePropDescription } from '../i18n/prop-descriptions-en';
@@ -45,7 +45,7 @@ const PropRows = ({
   rows,
   locale,
   empty,
-  showDefault
+  showDefault,
 }: {
   rows: ComponentPropDoc[];
   locale: string;
@@ -76,7 +76,9 @@ const PropRows = ({
             </td>
             {showDefault ? (
               <td>
-                <code className={styles.propDefault}>{formatDefault(prop.default, empty, hideCjkDefaults)}</code>
+                <code className={styles.propDefault}>
+                  {formatDefault(prop.default, empty, hideCjkDefaults)}
+                </code>
               </td>
             ) : null}
             <td className={styles.propDesc}>{description || empty}</td>

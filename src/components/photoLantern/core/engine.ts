@@ -44,7 +44,7 @@ const assignStyle = (el: HTMLElement, style?: Record<string, string | number | u
 
 export function createPhotoLantern(
   container: HTMLElement,
-  initial: PhotoLanternOptions = { photos: [] }
+  initial: PhotoLanternOptions = { photos: [] },
 ): PhotoLanternController {
   let options: PhotoLanternOptions = {
     autoRotate: true,
@@ -63,7 +63,7 @@ export function createPhotoLantern(
     initialAngle: 0,
     ariaLabel: '走马灯图片预览',
     ...initial,
-    photos: initial.photos ?? []
+    photos: initial.photos ?? [],
   };
   let destroyed = false;
   let angle = options.initialAngle ?? 0;
@@ -92,7 +92,10 @@ export function createPhotoLantern(
   container.appendChild(root);
 
   const facesOf = () =>
-    Array.from({ length: FACE_COUNT }, (_, i) => (options.photos ?? [])[i]) as (PhotoLanternItem | undefined)[];
+    Array.from({ length: FACE_COUNT }, (_, i) => (options.photos ?? [])[i]) as (
+      | PhotoLanternItem
+      | undefined
+    )[];
 
   const applyRootStyle = () => {
     root.style.width = cssSize(options.width ?? DEFAULT_W);
@@ -130,7 +133,7 @@ export function createPhotoLantern(
       objectFit: options.objectFit || 'cover',
       background: hexBackground(options.background),
       initialAngleDeg: angle,
-      onReady: () => canvas.classList.add(`${P}__canvas-ready`)
+      onReady: () => canvas.classList.add(`${P}__canvas-ready`),
     });
   };
 
@@ -276,7 +279,7 @@ export function createPhotoLantern(
           facesOf(),
           options.silhouette ?? false,
           options.objectFit || 'cover',
-          options.showCaption ?? false
+          options.showCaption ?? false,
         );
       }
       syncCaptionAria();
@@ -294,6 +297,6 @@ export function createPhotoLantern(
       root.removeEventListener('pointerup', onPointerUp);
       root.removeEventListener('pointercancel', onPointerCancel);
       root.remove();
-    }
+    },
   };
 }

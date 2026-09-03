@@ -4,9 +4,15 @@ import {
   clamp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
-import { drawDroplet, drawMergeShadows, drawMergingSoapPair, drawPop, drawSoapBubble } from '../draw-bubble';
+import {
+  drawDroplet,
+  drawMergeShadows,
+  drawMergingSoapPair,
+  drawPop,
+  drawSoapBubble,
+} from '../draw-bubble';
 import { drawSoapCastShadow, resolveSceneLighting } from '../lighting';
 import { mergeBusyIds, resolveMergePose, sceneLightPos, type ActiveMerge } from '../merge';
 import { drawSoapSky } from '../sky';
@@ -41,18 +47,21 @@ const spawnBubble = (w: number, h: number, id: number, fromBottom = true): Bubbl
     gustT: rand(0.3, 1.8),
     drift: rand(-28, 28),
     swayT: rand(0.4, 2.2),
-    coolT: fromBottom ? rand(0.15, 0.55) : rand(0.4, 1.1)
+    coolT: fromBottom ? rand(0.15, 0.55) : rand(0.4, 1.1),
   };
 };
 
-export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOptions = {}): SoapBubblesController {
+export function createSoapBubbles(
+  container: HTMLElement,
+  initial: SoapBubblesOptions = {},
+): SoapBubblesController {
   let options: SoapBubblesOptions = {
     fill: false,
     count: 28,
     speed: 1,
     interactive: true,
     ariaLabel: '肥皂泡背景',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -92,7 +101,7 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
     const rect = canvas.getBoundingClientRect();
     clickPos = {
       x: ((e.clientX - rect.left) / Math.max(rect.width, 1)) * width,
-      y: ((e.clientY - rect.top) / Math.max(rect.height, 1)) * height
+      y: ((e.clientY - rect.top) / Math.max(rect.height, 1)) * height,
     };
   };
 
@@ -135,7 +144,7 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
           r: rand(1.4, 3.2) * (0.55 + b.depth * 0.5),
           life: 0.45 + rand() * 0.35,
           maxLife: 0.8,
-          kind: 1
+          kind: 1,
         });
       }
       const mistN = 28 + Math.floor(b.r * 0.9);
@@ -150,7 +159,7 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
           r: rand(0.6, 1.8) * (0.5 + b.depth * 0.4),
           life: 0.25 + rand() * 0.4,
           maxLife: 0.65,
-          kind: 0
+          kind: 0,
         });
       }
     };
@@ -277,8 +286,14 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
           } else {
             const primary = a.r >= b.r ? a : b;
             const secondary = a.r >= b.r ? b : a;
-            const targetRadius = Math.min(MAX_BUBBLE_R, Math.cbrt(primary.r ** 3 + secondary.r ** 3));
-            const touchDist = Math.max(0.5, Math.hypot(secondary.x - primary.x, secondary.y - primary.y));
+            const targetRadius = Math.min(
+              MAX_BUBBLE_R,
+              Math.cbrt(primary.r ** 3 + secondary.r ** 3),
+            );
+            const touchDist = Math.max(
+              0.5,
+              Math.hypot(secondary.x - primary.x, secondary.y - primary.y),
+            );
             merges.push({
               primaryId: primary.id,
               secondaryId: secondary.id,
@@ -294,7 +309,7 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
               sharedVx: (primary.vx + secondary.vx) * 0.5,
               sharedVy: (primary.vy + secondary.vy) * 0.5,
               depth: Math.max(primary.depth, secondary.depth),
-              seed: primary.seed
+              seed: primary.seed,
             });
             busyIds.add(primary.id);
             busyIds.add(secondary.id);
@@ -397,7 +412,9 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
         const primary = findBubble(merge.primaryId);
         const secondary = findBubble(merge.secondaryId);
         if (!primary) continue;
-        drawMergingSoapPair(ctx, pose, time, primary, secondary, merge.progress, lightX, lightY, { skipShadow: true });
+        drawMergingSoapPair(ctx, pose, time, primary, secondary, merge.progress, lightX, lightY, {
+          skipShadow: true,
+        });
       }
       for (let i = droplets.length - 1; i >= 0; i--) {
         const d = droplets[i];
@@ -435,7 +452,7 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured
+        measured,
       });
       width = box.width;
       height = box.height;
@@ -460,7 +477,8 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
       const prevH = options.height;
       options = { ...options, ...next };
       root.setAttribute('aria-label', options.ariaLabel ?? '肥皂泡背景');
-      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH) bindSize();
+      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH)
+        bindSize();
     },
     destroy() {
       if (destroyed) return;
@@ -471,6 +489,6 @@ export function createSoapBubbles(container: HTMLElement, initial: SoapBubblesOp
       sizeCleanup?.();
       canvas.removeEventListener('pointerdown', onPointer);
       root.remove();
-    }
+    },
   };
 }

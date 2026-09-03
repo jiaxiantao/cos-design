@@ -6,10 +6,15 @@ import {
   isValidCoords,
   subscribeLiveWeather,
   type LiveWeatherCoords,
-  type LiveWeatherState
+  type LiveWeatherState,
 } from './live-weather-core';
 
-export type { LiveWeatherCoords, LiveWeatherState, LiveWeatherStatus, OpenMeteoCurrent } from './live-weather-core';
+export type {
+  LiveWeatherCoords,
+  LiveWeatherState,
+  LiveWeatherStatus,
+  OpenMeteoCurrent,
+} from './live-weather-core';
 export {
   fetchLiveWeather,
   fetchSunTimes,
@@ -19,7 +24,7 @@ export {
   isValidCoords,
   mapWmoCodeToWeatherType,
   subscribeLiveWeather,
-  subscribeSunTimes
+  subscribeSunTimes,
 } from './live-weather-core';
 
 /**
@@ -45,11 +50,16 @@ export const useLiveWeather = (enabled = true, coords?: LiveWeatherCoords): Live
   if (prevKey !== requestKey) {
     setPrevKey(requestKey);
     setState((prev) =>
-      enabled && prev.weather ? { ...initialState, weather: prev.weather, current: prev.current } : initialState
+      enabled && prev.weather
+        ? { ...initialState, weather: prev.weather, current: prev.current }
+        : initialState,
     );
   }
 
-  useEffect(() => subscribeLiveWeather(enabled, coords, setState), [coords, enabled, latitude, longitude]);
+  useEffect(
+    () => subscribeLiveWeather(enabled, coords, setState),
+    [coords, enabled, latitude, longitude],
+  );
 
   return state;
 };

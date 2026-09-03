@@ -4,7 +4,7 @@ import {
   clamp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { SmokeFogController, SmokeFogOptions } from './types';
 
@@ -122,11 +122,13 @@ const parseHex = (hex: string, fallback: RGB): RGB => {
 const mixRgb = (a: RGB, b: RGB, t: number): RGB => [
   Math.round(a[0] + (b[0] - a[0]) * t),
   Math.round(a[1] + (b[1] - a[1]) * t),
-  Math.round(a[2] + (b[2] - a[2]) * t)
+  Math.round(a[2] + (b[2] - a[2]) * t),
 ];
 
 const rgbCss = (rgb: RGB, alpha = 1) =>
-  alpha >= 1 ? `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})` : `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]} / ${alpha})`;
+  alpha >= 1
+    ? `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})`
+    : `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]} / ${alpha})`;
 
 const resolveBackground = (input: string | [string, string, string]): [string, string, string] => {
   if (Array.isArray(input) && input.length >= 3) {
@@ -181,7 +183,8 @@ const makeSmokeSprite = (seed: number, tint: RGB): HTMLCanvasElement => {
   return cv;
 };
 
-const createSpritePool = (tint: RGB) => Array.from({ length: SPRITE_POOL }, (_, i) => makeSmokeSprite(i + 1, tint));
+const createSpritePool = (tint: RGB) =>
+  Array.from({ length: SPRITE_POOL }, (_, i) => makeSmokeSprite(i + 1, tint));
 
 /**
  * 烟团只从底部出生。
@@ -212,7 +215,7 @@ const spawnPuff = (width: number, height: number, progress = 0): SmokePuff => {
     receptivity: 0.5 + Math.random() * 0.85,
     mass: 0.5 + Math.random() * 0.9,
     phase: Math.random() * Math.PI * 2,
-    warmth: Math.random()
+    warmth: Math.random(),
   };
 };
 
@@ -238,7 +241,10 @@ const heightDensity = (y: number, height: number) => {
   return 0.22 + Math.pow(t, 1.15) * 0.78;
 };
 
-export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions = {}): SmokeFogController {
+export function createSmokeFog(
+  container: HTMLElement,
+  initial: SmokeFogOptions = {},
+): SmokeFogController {
   let options: SmokeFogOptions = {
     fill: false,
     density: 0.5,
@@ -248,7 +254,7 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
     disperseStrength: 1,
     disperseRadius: 1,
     interactive: true,
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -287,7 +293,8 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
       canvas.setAttribute('role', 'img');
       canvas.setAttribute('aria-label', options.ariaLabel);
     }
-    if (options.interactive !== undefined) canvas.style.cursor = options.interactive ? 'pointer' : 'default';
+    if (options.interactive !== undefined)
+      canvas.style.cursor = options.interactive ? 'pointer' : 'default';
   };
 
   const bindSize = () => {
@@ -308,7 +315,7 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured: m
+        measured: m,
       });
       width = box.width;
       height = box.height;
@@ -359,7 +366,14 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
       const base = parseHex(bottom, [14, 15, 20]);
       const glowRgb = mixRgb(base, [255, 255, 255], 0.22);
       // 远处环境光，避免死黑
-      const glow = ctx.createRadialGradient(width * 0.5, height * 0.75, 0, width * 0.5, height, width * 0.55);
+      const glow = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.75,
+        0,
+        width * 0.5,
+        height,
+        width * 0.55,
+      );
       glow.addColorStop(0, rgbCss(glowRgb, 0.35));
       glow.addColorStop(1, rgbCss(base, 0));
       ctx.fillStyle = glow;
@@ -470,7 +484,8 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
         puff.y += puff.vy * motion;
         puff.rotation += (puff.spin + puff.vx * 0.002) * motion;
         puff.age += puff.ageSpeed * motion;
-        const grow = puff.birthSize + (puff.maxSize - puff.birthSize) * Math.min(1, puff.age * 1.15);
+        const grow =
+          puff.birthSize + (puff.maxSize - puff.birthSize) * Math.min(1, puff.age * 1.15);
         puff.size += (grow - puff.size) * 0.04;
 
         // 上升途中逐渐变淡；被吹散后慢一点回填，避免“啪”一下又聚回来
@@ -493,7 +508,8 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
         if (fade <= 0.01) continue;
 
         const sprite = liveSprites[puff.sprite];
-        const drawGrow = puff.birthSize + (puff.maxSize - puff.birthSize) * Math.min(1, puff.age * 1.15);
+        const drawGrow =
+          puff.birthSize + (puff.maxSize - puff.birthSize) * Math.min(1, puff.age * 1.15);
         const size = puff.size + (drawGrow - puff.size) * 0.35;
         const w = size;
         const h = size * puff.stretch;
@@ -554,6 +570,6 @@ export function createSmokeFog(container: HTMLElement, initial: SmokeFogOptions 
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

@@ -1,4 +1,8 @@
-import { createHolographicCard, type HolographicCardController, type HolographicCardOptions } from '../core';
+import {
+  createHolographicCard,
+  type HolographicCardController,
+  type HolographicCardOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-holographic-card';

@@ -13,14 +13,17 @@ const hexToRgb = (hex: string): [number, number, number] => {
   return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
 };
 
-export function createSandFall(container: HTMLElement, initial: SandFallOptions = {}): SandFallController {
+export function createSandFall(
+  container: HTMLElement,
+  initial: SandFallOptions = {},
+): SandFallController {
   let options: SandFallOptions = {
     cellSize: 4,
     colors: DEFAULT_COLORS,
     spawnRate: 3,
     hint: '按住鼠标绘制沙粒',
     clearText: 'Clear',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -207,6 +210,6 @@ export function createSandFall(container: HTMLElement, initial: SandFallOptions 
       canvas.removeEventListener('touchmove', onTouchMove);
       canvas.removeEventListener('touchend', onMouseUp);
       root.remove();
-    }
+    },
   };
 }

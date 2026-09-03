@@ -3,5 +3,5 @@ export type {
   PhotoViewMasterController,
   PhotoViewMasterItem,
   PhotoViewMasterOptions,
-  PhotoViewMasterProps
+  PhotoViewMasterProps,
 } from './types';

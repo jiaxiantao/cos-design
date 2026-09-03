@@ -1,6 +1,9 @@
 import type { TrueFocusController, TrueFocusOptions } from './types';
 const P = 'cos-true-focus';
-export function createTrueFocus(container: HTMLElement, initial: TrueFocusOptions = {}): TrueFocusController {
+export function createTrueFocus(
+  container: HTMLElement,
+  initial: TrueFocusOptions = {},
+): TrueFocusController {
   let opts: TrueFocusOptions = {
     sentence: 'True Focus',
     separator: ' ',
@@ -12,7 +15,7 @@ export function createTrueFocus(container: HTMLElement, initial: TrueFocusOption
     pauseBetweenAnimations: 1,
     fontSize: 48,
     color: '#f8fafc',
-    ...initial
+    ...initial,
   };
   let currentIndex = 0;
   let lastActiveIndex = 0;
@@ -89,7 +92,7 @@ export function createTrueFocus(container: HTMLElement, initial: TrueFocusOption
         currentIndex = (currentIndex + 1) % words.length;
         render();
       },
-      ((opts.animationDuration ?? 0.5) + (opts.pauseBetweenAnimations ?? 1)) * 1000
+      ((opts.animationDuration ?? 0.5) + (opts.pauseBetweenAnimations ?? 1)) * 1000,
     );
   };
 
@@ -106,6 +109,6 @@ export function createTrueFocus(container: HTMLElement, initial: TrueFocusOption
     destroy() {
       if (intervalId) clearInterval(intervalId);
       root.remove();
-    }
+    },
   };
 }

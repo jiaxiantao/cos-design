@@ -32,7 +32,11 @@ const CountdownDemo = () => {
     <C.Countdown
       targetDate={target}
       color="#f472b6"
-      labels={t('demos.componentCopy.countdownLabels', { returnObjects: true }) as C.CountdownProps['labels']}
+      labels={
+        t('demos.componentCopy.countdownLabels', {
+          returnObjects: true,
+        }) as C.CountdownProps['labels']
+      }
       invalidText={t('demos.componentCopy.countdownInvalid')}
       endedText={t('demos.componentCopy.countdownEnded')}
     />
@@ -93,7 +97,7 @@ type LocalizedDemoName =
 const LocalizedComponentDemo = ({
   name,
   width,
-  height
+  height,
 }: {
   name: LocalizedDemoName;
   width?: number;
@@ -104,7 +108,9 @@ const LocalizedComponentDemo = ({
 
   switch (name) {
     case 'BurnAway':
-      return <C.BurnAway text="COS DESIGN" fontSize={56} completedText={t(`${key}.burnAwayCompleted`)} />;
+      return (
+        <C.BurnAway text="COS DESIGN" fontSize={56} completedText={t(`${key}.burnAwayCompleted`)} />
+      );
     case 'Confetti':
       return <C.Confetti auto={false} hint={t(`${key}.confettiHint`)} />;
     case 'CursorTrail':
@@ -133,13 +139,23 @@ const LocalizedComponentDemo = ({
         <C.GameOfLife
           width={width ?? 560}
           height={height ?? 420}
-          labels={t(`${key}.gameOfLifeLabels`, { returnObjects: true }) as C.GameOfLifeProps['labels']}
+          labels={
+            t(`${key}.gameOfLifeLabels`, { returnObjects: true }) as C.GameOfLifeProps['labels']
+          }
         />
       );
     case 'NetworkGraph':
-      return <C.NetworkGraph width={width ?? 640} height={height ?? 420} hint={t(`${key}.networkGraphHint`)} />;
+      return (
+        <C.NetworkGraph
+          width={width ?? 640}
+          height={height ?? 420}
+          hint={t(`${key}.networkGraphHint`)}
+        />
+      );
     case 'ParticleNetwork':
-      return <C.ParticleNetwork width={width} height={height} hint={t(`${key}.particleNetworkHint`)} />;
+      return (
+        <C.ParticleNetwork width={width} height={height} hint={t(`${key}.particleNetworkHint`)} />
+      );
     case 'RedPacketRain':
       return (
         <C.RedPacketRain
@@ -160,7 +176,9 @@ const LocalizedComponentDemo = ({
         />
       );
     case 'ScratchCard':
-      return <C.ScratchCard prize={t(`${key}.scratchPrize`)} coverText={t(`${key}.scratchCover`)} />;
+      return (
+        <C.ScratchCard prize={t(`${key}.scratchPrize`)} coverText={t(`${key}.scratchCover`)} />
+      );
     case 'SlotMachine':
       return (
         <C.SlotMachine
@@ -173,9 +191,17 @@ const LocalizedComponentDemo = ({
     case 'SmokeFog':
       return <C.SmokeFog width={width} height={height} ariaLabel={t(`${key}.smokeAria`)} />;
     case 'SpringMass':
-      return <C.SpringMass width={width ?? 560} height={height ?? 380} hint={t(`${key}.springMassHint`)} />;
+      return (
+        <C.SpringMass
+          width={width ?? 560}
+          height={height ?? 380}
+          hint={t(`${key}.springMassHint`)}
+        />
+      );
     case 'Turntable': {
-      const prizes = (t(`${key}.turntablePrizes`, { returnObjects: true }) as string[]).map((label) => ({ label }));
+      const prizes = (t(`${key}.turntablePrizes`, { returnObjects: true }) as string[]).map(
+        (label) => ({ label }),
+      );
       return (
         <C.Turntable
           prizes={prizes}
@@ -186,7 +212,9 @@ const LocalizedComponentDemo = ({
       );
     }
     case 'Typewriter':
-      return <C.Typewriter texts={t(`${key}.typewriterTexts`, { returnObjects: true }) as string[]} />;
+      return (
+        <C.Typewriter texts={t(`${key}.typewriterTexts`, { returnObjects: true }) as string[]} />
+      );
     case 'WaveButton':
       return <C.WaveButton text={t(`${key}.waveButton`)} />;
   }
@@ -262,7 +290,7 @@ export const demoComponents: Record<string, React.ReactNode> = {
       data={[
         { label: 'React', value: 40, color: '#38bdf8' },
         { label: 'Canvas', value: 30, color: '#a78bfa' },
-        { label: 'CSS', value: 30, color: '#f472b6' }
+        { label: 'CSS', value: 30, color: '#f472b6' },
       ]}
     />
   ),
@@ -321,5 +349,5 @@ export const demoComponents: Record<string, React.ReactNode> = {
   Typewriter: <LocalizedComponentDemo name="Typewriter" />,
   WaveButton: <LocalizedComponentDemo name="WaveButton" />,
   WaveText: <C.WaveText text="WAVE TEXT" fontSize={48} />,
-  WeatherBackground: <WeatherBackgroundDemo />
+  WeatherBackground: <WeatherBackgroundDemo />,
 };

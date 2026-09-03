@@ -11,12 +11,12 @@ const displace = (
   x2: number,
   y2: number,
   roughness: number,
-  depth: number
+  depth: number,
 ): [number, number][] => {
   if (depth <= 0)
     return [
       [x1, y1],
-      [x2, y2]
+      [x2, y2],
     ];
   const mx = (x1 + x2) / 2;
   const my = (y1 + y2) / 2;
@@ -31,7 +31,10 @@ const displace = (
   return [...left.slice(0, -1), ...right];
 };
 
-export function createElectricArc(container: HTMLElement, initial: ElectricArcOptions = {}): ElectricArcController {
+export function createElectricArc(
+  container: HTMLElement,
+  initial: ElectricArcOptions = {},
+): ElectricArcController {
   let options: ElectricArcOptions = { color: '#67e8f9', ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -103,7 +106,7 @@ export function createElectricArc(container: HTMLElement, initial: ElectricArcOp
 
     for (const [x, y] of [
       [x1, y1],
-      [x2, y2]
+      [x2, y2],
     ]) {
       ctx.beginPath();
       ctx.arc(x, y, 6, 0, Math.PI * 2);
@@ -131,6 +134,6 @@ export function createElectricArc(container: HTMLElement, initial: ElectricArcOp
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

@@ -21,29 +21,29 @@ export default defineConfig(({ mode }) => {
             outDir: 'packages/cos-design/dist',
             rollupTypes: false,
             copyDtsFiles: true,
-            entryRoot: '.'
-          })
+            entryRoot: '.',
+          }),
         ]
       : [react()],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
-        '@cos-design/shared': resolve(__dirname, 'packages/shared/src/index.ts')
-      }
+        '@cos-design/shared': resolve(__dirname, 'packages/shared/src/index.ts'),
+      },
     },
     css: {
       modules: {
-        generateScopedName: 'cos-[local]-[hash:base64:5]'
+        generateScopedName: 'cos-[local]-[hash:base64:5]',
       },
       preprocessorOptions: {
         less: {
-          javascriptEnabled: true
-        }
-      }
+          javascriptEnabled: true,
+        },
+      },
     },
     server: {
       port: 4000,
-      open: true
+      open: true,
     },
     build: isLib
       ? {
@@ -51,7 +51,7 @@ export default defineConfig(({ mode }) => {
             entry: resolve(__dirname, 'src/index.ts'),
             name: 'CosDesign',
             formats: ['es', 'cjs'],
-            fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs')
+            fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
           },
           rollupOptions: {
             external: ['react', 'react-dom', 'react/jsx-runtime', 'three'],
@@ -60,21 +60,21 @@ export default defineConfig(({ mode }) => {
               globals: {
                 react: 'React',
                 'react-dom': 'ReactDOM',
-                three: 'THREE'
-              }
-            }
+                three: 'THREE',
+              },
+            },
           },
           outDir: 'packages/cos-design/dist',
-          emptyOutDir: true
+          emptyOutDir: true,
         }
       : isPages
         ? {
             outDir: 'dist-pages',
-            emptyOutDir: true
+            emptyOutDir: true,
           }
         : {
             outDir: 'dist-demo',
-            emptyOutDir: true
-          }
+            emptyOutDir: true,
+          },
   };
 });

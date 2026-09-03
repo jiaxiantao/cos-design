@@ -6,7 +6,9 @@ const DEFAULT_W = 560;
 const DEFAULT_H = 420;
 
 const createGrid = (rows: number, cols: number, density: number) =>
-  Array.from({ length: rows }, () => Array.from({ length: cols }, () => (Math.random() < density ? 1 : 0)));
+  Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => (Math.random() < density ? 1 : 0)),
+  );
 
 const nextGeneration = (grid: number[][]) => {
   const rows = grid.length;
@@ -31,14 +33,17 @@ const nextGeneration = (grid: number[][]) => {
   return next;
 };
 
-export function createGameOfLife(container: HTMLElement, initial: GameOfLifeOptions = {}): GameOfLifeController {
+export function createGameOfLife(
+  container: HTMLElement,
+  initial: GameOfLifeOptions = {},
+): GameOfLifeController {
   let options: GameOfLifeOptions = {
     cellSize: 14,
     speed: 120,
     density: 0.28,
     aliveColor: '#a3e635',
     gridColor: 'rgb(148 163 184 / 14%)',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -83,7 +88,7 @@ export function createGameOfLife(container: HTMLElement, initial: GameOfLifeOpti
     alive: options.labels?.alive ?? 'alive',
     pause: options.labels?.pause ?? 'Pause',
     play: options.labels?.play ?? 'Play',
-    randomize: options.labels?.randomize ?? 'Randomize'
+    randomize: options.labels?.randomize ?? 'Randomize',
   });
 
   const initGrid = () => {
@@ -145,7 +150,7 @@ export function createGameOfLife(container: HTMLElement, initial: GameOfLifeOpti
           0,
           x + cellSize / 2,
           y + cellSize / 2,
-          cellSize * 0.8
+          cellSize * 0.8,
         );
         glow.addColorStop(0, 'rgb(255 255 255 / 28%)');
         glow.addColorStop(1, 'transparent');
@@ -182,7 +187,9 @@ export function createGameOfLife(container: HTMLElement, initial: GameOfLifeOpti
     const col = Math.floor((clientX - rect.left) / cellSize);
     const row = Math.floor((clientY - rect.top) / cellSize);
     if (row < 0 || row >= rows || col < 0 || col >= cols) return;
-    grid = grid.map((line, ri) => (ri === row ? line.map((cell, ci) => (ci === col ? (cell ? 0 : 1) : cell)) : line));
+    grid = grid.map((line, ri) =>
+      ri === row ? line.map((cell, ci) => (ci === col ? (cell ? 0 : 1) : cell)) : line,
+    );
     generation++;
     render();
   };
@@ -238,6 +245,6 @@ export function createGameOfLife(container: HTMLElement, initial: GameOfLifeOpti
       window.clearInterval(evolveTimer);
       unbindVisibility?.();
       root.remove();
-    }
+    },
   };
 }

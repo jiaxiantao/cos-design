@@ -2,9 +2,13 @@ import type { HolographicCardController, HolographicCardOptions } from './types'
 const P = 'cos-holographic-card';
 export function createHolographicCard(
   container: HTMLElement,
-  initial: HolographicCardOptions = {}
+  initial: HolographicCardOptions = {},
 ): HolographicCardController {
-  let opts: HolographicCardOptions = { title: '全息卡片', subtitle: '移动鼠标体验 3D 效果', ...initial };
+  let opts: HolographicCardOptions = {
+    title: '全息卡片',
+    subtitle: '移动鼠标体验 3D 效果',
+    ...initial,
+  };
   const root = document.createElement('div');
   root.className = `${P}__wrap`;
   const card = document.createElement('div');
@@ -73,6 +77,6 @@ export function createHolographicCard(
       card.removeEventListener('mousemove', onMove);
       card.removeEventListener('mouseleave', onLeave);
       root.remove();
-    }
+    },
   };
 }

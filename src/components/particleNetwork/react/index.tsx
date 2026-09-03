@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createParticleNetwork, type ParticleNetworkController, type ParticleNetworkOptions } from '../core';
+import {
+  createParticleNetwork,
+  type ParticleNetworkController,
+  type ParticleNetworkOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { ParticleNetworkOptions, ParticleNetworkProps } from '../core/types';

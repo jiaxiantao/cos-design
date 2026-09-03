@@ -41,7 +41,7 @@ const assignStyle = (el: HTMLElement, style?: Record<string, string | number | u
 
 export function createPhotoViewMaster(
   container: HTMLElement,
-  initial: PhotoViewMasterOptions = { photos: [] }
+  initial: PhotoViewMasterOptions = { photos: [] },
 ): PhotoViewMasterController {
   let options: PhotoViewMasterOptions = {
     dragSensitivity: 0.45,
@@ -52,7 +52,7 @@ export function createPhotoViewMaster(
     initialIndex: 0,
     ariaLabel: '观景器',
     ...initial,
-    photos: initial.photos ?? []
+    photos: initial.photos ?? [],
   };
   let destroyed = false;
   let angle = 0;
@@ -170,7 +170,9 @@ export function createPhotoViewMaster(
       }
     }
     const captionAria =
-      show && front?.title ? `，当前：${front.title}${front.description ? `，${front.description}` : ''}` : '';
+      show && front?.title
+        ? `，当前：${front.title}${front.description ? `，${front.description}` : ''}`
+        : '';
     root.setAttribute('aria-label', (options.ariaLabel ?? '观景器') + captionAria);
   };
 
@@ -343,6 +345,6 @@ export function createPhotoViewMaster(
       root.removeEventListener('pointerup', onPointerUp);
       root.removeEventListener('pointercancel', onPointerCancel);
       root.remove();
-    }
+    },
   };
 }

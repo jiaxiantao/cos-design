@@ -1,4 +1,8 @@
-import { bindPrefersReducedMotion, bindVisibilityPause, prefersReducedMotion } from '@cos-design/shared';
+import {
+  bindPrefersReducedMotion,
+  bindVisibilityPause,
+  prefersReducedMotion,
+} from '@cos-design/shared';
 import { sampleWindField } from '../wind';
 import { drawClouds, drawFog, drawHaze } from './draw-atmosphere';
 import { drawLightning, drawWind } from './draw-effects';
@@ -41,7 +45,7 @@ export function createWeatherScene(params: WeatherSceneParams): () => void {
     activeNight: layout.dayCycle ? !layout.dayCycle.isDay : activeNight,
     windMotion,
     windField: sampleWindField(0, windMotion),
-    ...layout
+    ...layout,
   };
 
   if (scene.dayCycleTimes) {

@@ -2,7 +2,10 @@ import type { ReturnCityController, ReturnCityOptions } from './types';
 
 const P = 'cos-return-city';
 
-export function createReturnCity(container: HTMLElement, initial: ReturnCityOptions = {}): ReturnCityController {
+export function createReturnCity(
+  container: HTMLElement,
+  initial: ReturnCityOptions = {},
+): ReturnCityController {
   let options: ReturnCityOptions = { glassCount: 8, glassRadius: 150, ...initial };
   let destroyed = false;
   const timeouts: number[] = [];
@@ -70,6 +73,6 @@ export function createReturnCity(container: HTMLElement, initial: ReturnCityOpti
       destroyed = true;
       clearAll();
       root.remove();
-    }
+    },
   };
 }

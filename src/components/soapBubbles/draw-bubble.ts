@@ -1,6 +1,17 @@
 import { drawSoapIridescence, filmColor, softBlob } from './film';
-import { drawSoapCastShadow, paintBlobShading, paintSphereShading, resolveSceneLighting } from './lighting';
-import { buildMergePath, mergeEndFade, mergeStartFade, type ActiveMerge, type MergePose } from './merge';
+import {
+  drawSoapCastShadow,
+  paintBlobShading,
+  paintSphereShading,
+  resolveSceneLighting,
+} from './lighting';
+import {
+  buildMergePath,
+  mergeEndFade,
+  mergeStartFade,
+  type ActiveMerge,
+  type MergePose,
+} from './merge';
 import type { Bubble, Droplet } from './types';
 import { TWO_PI } from './types';
 import { bubbleAlpha, buildBubbleVisual, hash01 } from './utils';
@@ -16,7 +27,7 @@ const drawEnvReflection = (
   seed: number,
   envAmt: number,
   envRgb: [number, number, number],
-  scale = 1
+  scale = 1,
 ) => {
   const envAng = toLight + Math.PI + (hash01(seed + 19.2) - 0.5) * 0.3;
   const envR = 0.32 + hash01(seed + 20.1) * 0.2;
@@ -28,7 +39,7 @@ const drawEnvReflection = (
     R * (0.28 + hash01(seed + 22) * 0.18) * scale,
     envAng,
     envRgb,
-    envAmt
+    envAmt,
   );
 };
 
@@ -41,7 +52,7 @@ export const drawSoapBubble = (
   time: number,
   lightX: number,
   lightY: number,
-  opts?: { alphaScale?: number; skipShadow?: boolean }
+  opts?: { alphaScale?: number; skipShadow?: boolean },
 ) => {
   const breathe = Math.sin(time * 1.8 * b.wobble + b.phase);
   const squashX = 1 + breathe * 0.05;
@@ -85,7 +96,7 @@ export const drawMergingSoapPair = (
   mergeProgress: number,
   lightX: number,
   lightY: number,
-  opts?: { skipShadow?: boolean }
+  opts?: { skipShadow?: boolean },
 ) => {
   const { ax, ay, ar, bx, by, br, absorb } = pose;
   const mass = Math.max(1, ar + br);
@@ -98,18 +109,18 @@ export const drawMergingSoapPair = (
   if (startFade > 0.02 && secondary) {
     drawSoapBubble(ctx, { ...primary, x: ax, y: ay, r: ar }, time, lightX, lightY, {
       skipShadow: true,
-      alphaScale: startFade
+      alphaScale: startFade,
     });
     drawSoapBubble(ctx, { ...secondary, x: bx, y: by, r: br }, time, lightX, lightY, {
       skipShadow: true,
-      alphaScale: startFade
+      alphaScale: startFade,
     });
   }
 
   if (endFade > 0.02) {
     drawSoapBubble(ctx, { ...primary, x: mx, y: my, r: ar }, time, lightX, lightY, {
       skipShadow: true,
-      alphaScale: endFade
+      alphaScale: endFade,
     });
   }
 
@@ -145,7 +156,7 @@ export const drawMergingSoapPair = (
     shadeR * 0.24,
     envAng,
     envRgb,
-    envAmt * metaFade
+    envAmt * metaFade,
   );
   ctx.restore();
   ctx.restore();
@@ -159,7 +170,7 @@ export const drawMergeShadows = (
   primary: Bubble,
   secondary: Bubble | undefined,
   lightX: number,
-  lightY: number
+  lightY: number,
 ) => {
   const mass = Math.max(1, pose.ar + pose.br);
   const mx = (pose.ax * pose.ar + pose.bx * pose.br) / mass;
@@ -182,7 +193,15 @@ export const drawMergeShadows = (
   if (metaFade > 0.02) {
     const meta = buildMergePath(pose.ax, pose.ay, pose.ar, pose.bx, pose.by, pose.br);
     const light = resolveSceneLighting(meta.cx, meta.cy, lightX, lightY);
-    drawSoapCastShadow(ctx, meta.cx, meta.cy, meta.radius * 0.85, light, primary.depth, alpha * metaFade);
+    drawSoapCastShadow(
+      ctx,
+      meta.cx,
+      meta.cy,
+      meta.radius * 0.85,
+      light,
+      primary.depth,
+      alpha * metaFade,
+    );
   }
 };
 
@@ -221,7 +240,13 @@ export const drawPop = (ctx: CanvasRenderingContext2D, b: Bubble) => {
     const flash = 1 - p / 0.2;
     ctx.globalAlpha = flash * 0.35;
     ctx.beginPath();
-    ctx.arc(Math.cos(b.popAng) * b.r * 0.7, Math.sin(b.popAng) * b.r * 0.7, b.r * 0.15 * flash, 0, TWO_PI);
+    ctx.arc(
+      Math.cos(b.popAng) * b.r * 0.7,
+      Math.sin(b.popAng) * b.r * 0.7,
+      b.r * 0.15 * flash,
+      0,
+      TWO_PI,
+    );
     ctx.fillStyle = 'rgba(255,255,255,0.8)';
     ctx.fill();
   }

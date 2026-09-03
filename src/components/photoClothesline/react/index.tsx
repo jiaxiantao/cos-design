@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createPhotoClothesline, type PhotoClotheslineController, type PhotoClotheslineOptions } from '../core';
+import {
+  createPhotoClothesline,
+  type PhotoClotheslineController,
+  type PhotoClotheslineOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { PhotoClotheslineOptions, PhotoClotheslineProps } from '../core/types';

@@ -11,8 +11,17 @@ interface Ball {
   r: number;
 }
 
-export function createMetaballPool(container: HTMLElement, initial: MetaballPoolOptions = {}): MetaballPoolController {
-  let options: MetaballPoolOptions = { width: 400, height: 300, ballCount: 5, color: '#38bdf8', ...initial };
+export function createMetaballPool(
+  container: HTMLElement,
+  initial: MetaballPoolOptions = {},
+): MetaballPoolController {
+  let options: MetaballPoolOptions = {
+    width: 400,
+    height: 300,
+    ballCount: 5,
+    color: '#38bdf8',
+    ...initial,
+  };
   let destroyed = false;
   let frameId = 0;
   let paused = typeof document !== 'undefined' ? document.hidden : false;
@@ -36,7 +45,7 @@ export function createMetaballPool(container: HTMLElement, initial: MetaballPool
       y: Math.random() * (height - 80) + 40,
       vx: (Math.random() - 0.5) * 2,
       vy: (Math.random() - 0.5) * 2,
-      r: 28 + Math.random() * 18
+      r: 28 + Math.random() * 18,
     }));
   };
 
@@ -179,7 +188,14 @@ export function createMetaballPool(container: HTMLElement, initial: MetaballPool
     ctx.globalCompositeOperation = 'source-over';
 
     for (const b of balls) {
-      const grad = ctx.createRadialGradient(b.x - b.r * 0.3, b.y - b.r * 0.3, 0, b.x, b.y, b.r * 0.6);
+      const grad = ctx.createRadialGradient(
+        b.x - b.r * 0.3,
+        b.y - b.r * 0.3,
+        0,
+        b.x,
+        b.y,
+        b.r * 0.6,
+      );
       grad.addColorStop(0, 'rgba(255,255,255,0.5)');
       grad.addColorStop(1, 'rgba(56,189,248,0)');
       ctx.beginPath();
@@ -207,7 +223,8 @@ export function createMetaballPool(container: HTMLElement, initial: MetaballPool
       const prevH = options.height;
       options = { ...options, ...next };
       applyLayout();
-      if (options.ballCount !== prevCount || options.width !== prevW || options.height !== prevH) spawnBalls();
+      if (options.ballCount !== prevCount || options.width !== prevW || options.height !== prevH)
+        spawnBalls();
     },
     destroy() {
       if (destroyed) return;
@@ -219,6 +236,6 @@ export function createMetaballPool(container: HTMLElement, initial: MetaballPool
       canvas.removeEventListener('touchmove', handleTouch);
       canvas.removeEventListener('touchend', onLeave);
       root.remove();
-    }
+    },
   };
 }

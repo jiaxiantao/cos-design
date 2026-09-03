@@ -27,7 +27,9 @@ const FillStage = ({ children, overlay }: FillStageProps) => {
       // 优先用父级宽度，避免 flex 居中时自身被内容宽度（如默认 800）回缩
       const width = Math.max(1, Math.floor(parent?.clientWidth || el.clientWidth));
       const height = Math.max(1, Math.floor(el.clientHeight));
-      setSize((prev) => (prev.width === width && prev.height === height ? prev : { width, height }));
+      setSize((prev) =>
+        prev.width === width && prev.height === height ? prev : { width, height },
+      );
     };
 
     update();
@@ -37,14 +39,16 @@ const FillStage = ({ children, overlay }: FillStageProps) => {
     return () => ro.disconnect();
   }, []);
 
-  const child = React.Children.toArray(children).find((node): node is ReactElement => React.isValidElement(node));
+  const child = React.Children.toArray(children).find((node): node is ReactElement =>
+    React.isValidElement(node),
+  );
 
   return (
     <div ref={ref} className={styles.fillStage}>
       {child && size.width > 0
         ? React.cloneElement(child as ReactElement<Record<string, unknown>>, {
             width: size.width,
-            height: size.height
+            height: size.height,
           })
         : null}
       {overlay}

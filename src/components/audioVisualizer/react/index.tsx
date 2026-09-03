@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createAudioVisualizer, type AudioVisualizerController, type AudioVisualizerOptions } from '../core';
+import {
+  createAudioVisualizer,
+  type AudioVisualizerController,
+  type AudioVisualizerOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { AudioVisualizerOptions, AudioVisualizerProps } from '../core/types';

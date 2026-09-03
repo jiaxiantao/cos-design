@@ -40,7 +40,13 @@ test.describe('playground smoke', () => {
     await expect(page.locator('canvas').first()).toBeVisible();
   });
 
-  for (const path of ['/soapBubbles', '/dandelionField', '/lavaBubble', '/inkBloom', '/auroraVeil'] as const) {
+  for (const path of [
+    '/soapBubbles',
+    '/dandelionField',
+    '/lavaBubble',
+    '/inkBloom',
+    '/auroraVeil',
+  ] as const) {
     test(`${path} canvas mounts`, async ({ page }) => {
       await gotoZh(page, path);
       await expect(page.locator('canvas').first()).toBeVisible();

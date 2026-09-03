@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createLiquidProgress, type LiquidProgressController, type LiquidProgressOptions } from '../core';
+import {
+  createLiquidProgress,
+  type LiquidProgressController,
+  type LiquidProgressOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { LiquidProgressOptions, LiquidProgressProps } from '../core/types';

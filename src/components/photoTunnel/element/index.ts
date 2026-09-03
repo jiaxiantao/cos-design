@@ -8,12 +8,17 @@ function parseOptions(el: HTMLElement): PhotoTunnelOptions {
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('depth-step')) options.depthStep = Number(el.getAttribute('depth-step'));
-  if (el.hasAttribute('drag-sensitivity')) options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
+  if (el.hasAttribute('drag-sensitivity'))
+    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('auto-advance')) options.autoAdvance = el.getAttribute('auto-advance') !== 'false';
-  if (el.hasAttribute('auto-advance-speed')) options.autoAdvanceSpeed = Number(el.getAttribute('auto-advance-speed'));
-  if (el.hasAttribute('show-caption')) options.showCaption = el.getAttribute('show-caption') !== 'false';
-  if (el.hasAttribute('initial-index')) options.initialIndex = Number(el.getAttribute('initial-index'));
+  if (el.hasAttribute('auto-advance'))
+    options.autoAdvance = el.getAttribute('auto-advance') !== 'false';
+  if (el.hasAttribute('auto-advance-speed'))
+    options.autoAdvanceSpeed = Number(el.getAttribute('auto-advance-speed'));
+  if (el.hasAttribute('show-caption'))
+    options.showCaption = el.getAttribute('show-caption') !== 'false';
+  if (el.hasAttribute('initial-index'))
+    options.initialIndex = Number(el.getAttribute('initial-index'));
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   return options;
 }
@@ -32,7 +37,7 @@ class CosPhotoTunnelElement extends HTMLElement {
       'auto-advance-speed',
       'show-caption',
       'initial-index',
-      'aria-label'
+      'aria-label',
     ];
   }
 

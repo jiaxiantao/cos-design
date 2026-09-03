@@ -3,13 +3,13 @@ import type { TimelinePulseController, TimelinePulseOptions } from './types';
 const P = 'cos-timeline-pulse';
 export function createTimelinePulse(
   container: HTMLElement,
-  initial: TimelinePulseOptions = {}
+  initial: TimelinePulseOptions = {},
 ): TimelinePulseController {
   let opts: TimelinePulseOptions = {
     steps: ['Start', 'Process', 'Review', 'Done'],
     current: 0,
     color: '#22d3ee',
-    ...initial
+    ...initial,
   };
   const root = document.createElement('div');
   root.className = P;
@@ -53,6 +53,6 @@ export function createTimelinePulse(
     },
     destroy() {
       root.remove();
-    }
+    },
   };
 }

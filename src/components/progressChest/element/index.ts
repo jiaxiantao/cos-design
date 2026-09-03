@@ -1,4 +1,8 @@
-import { createProgressChest, type ProgressChestController, type ProgressChestOptions } from '../core';
+import {
+  createProgressChest,
+  type ProgressChestController,
+  type ProgressChestOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-progress-chest';

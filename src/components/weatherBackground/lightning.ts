@@ -4,12 +4,12 @@ export function displaceBolt(
   x2: number,
   y2: number,
   rough: number,
-  depth: number
+  depth: number,
 ): [number, number][] {
   if (depth <= 0)
     return [
       [x1, y1],
-      [x2, y2]
+      [x2, y2],
     ];
   const mx = (x1 + x2) / 2 + (Math.random() - 0.5) * rough;
   const my = (y1 + y2) / 2;

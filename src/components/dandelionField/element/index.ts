@@ -1,4 +1,8 @@
-import { createDandelionField, type DandelionFieldController, type DandelionFieldOptions } from '../core';
+import {
+  createDandelionField,
+  type DandelionFieldController,
+  type DandelionFieldOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-dandelion-field';

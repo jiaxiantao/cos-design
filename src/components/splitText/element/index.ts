@@ -6,7 +6,8 @@ const TAG = 'cos-split-text';
 function parseOptions(el: HTMLElement): SplitTextOptions {
   const options: SplitTextOptions = {};
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('animation')) options.animation = el.getAttribute('animation') as SplitTextOptions['animation'];
+  if (el.hasAttribute('animation'))
+    options.animation = el.getAttribute('animation') as SplitTextOptions['animation'];
   if (el.hasAttribute('stagger')) options.stagger = Number(el.getAttribute('stagger'));
   if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
   if (el.hasAttribute('loop')) options.loop = true;

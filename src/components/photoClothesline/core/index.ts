@@ -3,5 +3,5 @@ export type {
   PhotoClotheslineController,
   PhotoClotheslineItem,
   PhotoClotheslineOptions,
-  PhotoClotheslineProps
+  PhotoClotheslineProps,
 } from './types';

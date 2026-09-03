@@ -6,7 +6,8 @@ const TAG = 'cos-circular-text';
 function parseOptions(el: HTMLElement): CircularTextOptions {
   const options: CircularTextOptions = {};
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('spin-duration')) options.spinDuration = Number(el.getAttribute('spin-duration'));
+  if (el.hasAttribute('spin-duration'))
+    options.spinDuration = Number(el.getAttribute('spin-duration'));
   if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
   if (el.hasAttribute('radius')) options.radius = Number(el.getAttribute('radius'));
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;

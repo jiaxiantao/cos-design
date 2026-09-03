@@ -9,11 +9,18 @@ interface Arc {
   speed: number;
 }
 
-const displace = (x1: number, y1: number, x2: number, y2: number, rough: number, depth: number): [number, number][] => {
+const displace = (
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  rough: number,
+  depth: number,
+): [number, number][] => {
   if (depth <= 0)
     return [
       [x1, y1],
-      [x2, y2]
+      [x2, y2],
     ];
   const mx = (x1 + x2) / 2;
   const my = (y1 + y2) / 2;
@@ -28,8 +35,17 @@ const displace = (x1: number, y1: number, x2: number, y2: number, rough: number,
   return [...left.slice(0, -1), ...right];
 };
 
-export function createPlasmaBall(container: HTMLElement, initial: PlasmaBallOptions = {}): PlasmaBallController {
-  let options: PlasmaBallOptions = { width: 320, height: 320, color: '#a78bfa', arcCount: 8, ...initial };
+export function createPlasmaBall(
+  container: HTMLElement,
+  initial: PlasmaBallOptions = {},
+): PlasmaBallController {
+  let options: PlasmaBallOptions = {
+    width: 320,
+    height: 320,
+    color: '#a78bfa',
+    arcCount: 8,
+    ...initial,
+  };
   let destroyed = false;
   let frameId = 0;
   let paused = typeof document !== 'undefined' ? document.hidden : false;
@@ -49,7 +65,7 @@ export function createPlasmaBall(container: HTMLElement, initial: PlasmaBallOpti
     arcs = Array.from({ length: arcCount }, (_, i) => ({
       angle: (i / arcCount) * Math.PI * 2,
       length: 0.6 + Math.random() * 0.35,
-      speed: 0.02 + Math.random() * 0.03
+      speed: 0.02 + Math.random() * 0.03,
     }));
   };
 
@@ -175,6 +191,6 @@ export function createPlasmaBall(container: HTMLElement, initial: PlasmaBallOpti
       canvas.removeEventListener('touchmove', handleTouch);
       canvas.removeEventListener('touchend', onLeave);
       root.remove();
-    }
+    },
   };
 }

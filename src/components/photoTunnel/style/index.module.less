@@ -40,7 +40,13 @@
   pointer-events: none;
   background:
     radial-gradient(ellipse 68% 58% at 50% 46%, transparent 0%, var(--tunnel-vignette) 100%),
-    linear-gradient(180deg, rgb(0 0 0 / 35%) 0%, transparent 22%, transparent 78%, rgb(0 0 0 / 42%) 100%);
+    linear-gradient(
+      180deg,
+      rgb(0 0 0 / 35%) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgb(0 0 0 / 42%) 100%
+    );
   z-index: 2;
 }
 
@@ -48,7 +54,11 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 55% 42% at 50% 50%, rgb(14 18 24 / 0%) 0%, rgb(14 18 24 / 38%) 100%);
+  background: radial-gradient(
+    ellipse 55% 42% at 50% 50%,
+    rgb(14 18 24 / 0%) 0%,
+    rgb(14 18 24 / 38%) 100%
+  );
   z-index: 1;
 }
 

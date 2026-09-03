@@ -7,8 +7,10 @@ function parseOptions(el: HTMLElement): GlitchTextOptions {
   const options: GlitchTextOptions = {};
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('glitch-color1')) options.glitchColor1 = el.getAttribute('glitch-color1') ?? undefined;
-  if (el.hasAttribute('glitch-color2')) options.glitchColor2 = el.getAttribute('glitch-color2') ?? undefined;
+  if (el.hasAttribute('glitch-color1'))
+    options.glitchColor1 = el.getAttribute('glitch-color1') ?? undefined;
+  if (el.hasAttribute('glitch-color2'))
+    options.glitchColor2 = el.getAttribute('glitch-color2') ?? undefined;
   if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
   return options;
 }

@@ -12,7 +12,10 @@ interface Spark {
   size: number;
 }
 
-export function createClickSpark(container: HTMLElement, initial: ClickSparkOptions = {}): ClickSparkController {
+export function createClickSpark(
+  container: HTMLElement,
+  initial: ClickSparkOptions = {},
+): ClickSparkController {
   let options: ClickSparkOptions = { color: '#fbbf24', count: 16, ...initial };
   let destroyed = false;
   let frameId = 0;
@@ -58,7 +61,7 @@ export function createClickSpark(container: HTMLElement, initial: ClickSparkOpti
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         alpha: 1,
-        size: Math.random() * 3 + 2
+        size: Math.random() * 3 + 2,
       });
     }
   };
@@ -127,6 +130,6 @@ export function createClickSpark(container: HTMLElement, initial: ClickSparkOpti
       resizeObs?.disconnect();
       root.removeEventListener('click', onClick);
       root.remove();
-    }
+    },
   };
 }

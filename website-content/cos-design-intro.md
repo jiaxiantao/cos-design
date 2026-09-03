@@ -219,7 +219,7 @@ import { NeonText } from 'cos-design';
 import dynamic from 'next/dynamic';
 
 const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
-  ssr: false
+  ssr: false,
 });
 ```
 

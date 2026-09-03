@@ -10,7 +10,8 @@ function parseOptions(el: HTMLElement): SoapBubblesOptions {
   if (el.hasAttribute('fill')) options.fill = true;
   if (el.hasAttribute('count')) options.count = Number(el.getAttribute('count'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('interactive')) options.interactive = el.getAttribute('interactive') !== 'false';
+  if (el.hasAttribute('interactive'))
+    options.interactive = el.getAttribute('interactive') !== 'false';
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   return options;
 }

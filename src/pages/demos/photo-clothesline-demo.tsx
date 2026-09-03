@@ -11,7 +11,7 @@ const PHOTO_URLS = [
   'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85',
   'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85',
   'https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=900&q=85',
-  'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=85'
+  'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=85',
 ];
 
 const PhotoClotheslineDemo = () => {
@@ -23,8 +23,14 @@ const PhotoClotheslineDemo = () => {
 
   return (
     <div style={{ width: '100%', display: 'grid', gap: 12, justifyItems: 'center' }}>
-      <PhotoClothesline photos={photos} height={480} ariaLabel={t('demos.componentCopy.photoClotheslineAria')} />
-      <p style={{ margin: 0, fontSize: 13, opacity: 0.7 }}>{t('demos.componentCopy.photoClotheslineHint')}</p>
+      <PhotoClothesline
+        photos={photos}
+        height={480}
+        ariaLabel={t('demos.componentCopy.photoClotheslineAria')}
+      />
+      <p style={{ margin: 0, fontSize: 13, opacity: 0.7 }}>
+        {t('demos.componentCopy.photoClotheslineHint')}
+      </p>
     </div>
   );
 };

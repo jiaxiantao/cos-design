@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createMagneticButton, type MagneticButtonController, type MagneticButtonOptions } from '../core';
+import {
+  createMagneticButton,
+  type MagneticButtonController,
+  type MagneticButtonOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { MagneticButtonOptions, MagneticButtonProps } from '../core/types';

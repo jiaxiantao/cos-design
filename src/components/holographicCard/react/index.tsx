@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createHolographicCard, type HolographicCardController, type HolographicCardOptions } from '../core';
+import {
+  createHolographicCard,
+  type HolographicCardController,
+  type HolographicCardOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { HolographicCardOptions, HolographicCardProps } from '../core/types';

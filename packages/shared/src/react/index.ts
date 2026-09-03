@@ -13,7 +13,7 @@ export interface UseElementSizeOptions {
 /** 观察元素尺寸（clientWidth / clientHeight） */
 export const useElementSize = <T extends Element>(
   ref: RefObject<T | null>,
-  options: UseElementSizeOptions = {}
+  options: UseElementSizeOptions = {},
 ): ElementSize => {
   const { enabled = true } = options;
   const [size, setSize] = useState<ElementSize>({ width: 0, height: 0 });
@@ -54,7 +54,7 @@ export const useCanvasBox = ({
   width: widthProp,
   height: heightProp,
   defaultWidth,
-  defaultHeight
+  defaultHeight,
 }: UseCanvasBoxOptions): UseCanvasBoxResult => {
   const hostRef = useRef<HTMLDivElement>(null);
   const measured = useElementSize(hostRef, { enabled: fill });
@@ -64,7 +64,7 @@ export const useCanvasBox = ({
     height: heightProp,
     defaultWidth,
     defaultHeight,
-    measured
+    measured,
   });
   const hostStyle: CSSProperties = fill ? { width: '100%', height: '100%' } : { width, height };
 

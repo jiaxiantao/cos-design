@@ -114,10 +114,10 @@ export const restChainPoint = (
   layout: Layout | null,
   physics: Physics | null,
   index: number,
-  point: number
+  point: number,
 ): Point2 => ({
   x: layout?.pinXs[index] ?? 0,
-  y: (layout?.anchorYs[index] ?? 0) + (physics?.segLength ?? 0) * point
+  y: (layout?.anchorYs[index] ?? 0) + (physics?.segLength ?? 0) * point,
 });
 
 export const createChain = (layout: Layout, physics: Physics, index: number): ChainPoint[] =>
@@ -131,7 +131,7 @@ export const createChain = (layout: Layout, physics: Physics, index: number): Ch
       sx: rest.x,
       sy: rest.y,
       rx: rest.x,
-      ry: rest.y
+      ry: rest.y,
     };
   });
 
@@ -149,11 +149,16 @@ export const createHangerNode = (layout: Layout, physics: Physics, index: number
     ropeVy: 0,
     sRot: baseRot,
     sSpin: 0,
-    sRopeY: 0
+    sRopeY: 0,
   };
 };
 
-export const resetHangerNode = (node: HangerNode, layout: Layout | null, physics: Physics | null, index: number) => {
+export const resetHangerNode = (
+  node: HangerNode,
+  layout: Layout | null,
+  physics: Physics | null,
+  index: number,
+) => {
   node.chain.forEach((point, order) => {
     const rest = restChainPoint(layout, physics, index, order);
     point.x = rest.x;

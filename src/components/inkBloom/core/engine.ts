@@ -4,7 +4,7 @@ import {
   clamp,
   observeElementSize,
   prefersReducedMotion,
-  resolveCanvasBoxSize
+  resolveCanvasBoxSize,
 } from '@cos-design/shared';
 import type { InkBloomController, InkBloomOptions } from './types';
 
@@ -65,14 +65,17 @@ const fbm = (x: number, y: number) => {
  * 滴入浓墨靠浮力/涡旋/扩散自然晕开；溶开后质量转入染色场，点击越多背景越深。
  */
 
-export function createInkBloom(container: HTMLElement, initial: InkBloomOptions = {}): InkBloomController {
+export function createInkBloom(
+  container: HTMLElement,
+  initial: InkBloomOptions = {},
+): InkBloomController {
   let options: InkBloomOptions = {
     fill: false,
     inkColor: '#0c0e12',
     speed: 1,
     interactive: true,
     ariaLabel: '墨染清水背景',
-    ...initial
+    ...initial,
   };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -106,7 +109,8 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
       canvas.setAttribute('role', 'img');
       canvas.setAttribute('aria-label', options.ariaLabel);
     }
-    if (options.interactive !== undefined) canvas.style.cursor = options.interactive ? 'pointer' : 'default';
+    if (options.interactive !== undefined)
+      canvas.style.cursor = options.interactive ? 'pointer' : 'default';
   };
 
   const bindSize = () => {
@@ -126,7 +130,7 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
         height: options.height,
         defaultWidth: DEFAULT_W,
         defaultHeight: DEFAULT_H,
-        measured: m
+        measured: m,
       });
       width = box.width;
       height = box.height;
@@ -172,7 +176,8 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
     let lastTs = 0;
     let time = 0;
 
-    const idx = (x: number, y: number) => clamp(Math.floor(x), 0, simW - 1) + clamp(Math.floor(y), 0, simH - 1) * simW;
+    const idx = (x: number, y: number) =>
+      clamp(Math.floor(x), 0, simW - 1) + clamp(Math.floor(y), 0, simH - 1) * simW;
 
     const sample = (field: Float32Array, x: number, y: number) => {
       const x0 = clamp(x, 0, simW - 1.001);
@@ -194,7 +199,7 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
       const rect = canvas.getBoundingClientRect();
       return {
         x: ((clientX - rect.left) / Math.max(rect.width, 1)) * simW,
-        y: ((clientY - rect.top) / Math.max(rect.height, 1)) * simH
+        y: ((clientY - rect.top) / Math.max(rect.height, 1)) * simH,
       };
     };
 
@@ -308,7 +313,13 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
     canvas.addEventListener('pointerup', onUp);
     canvas.addEventListener('pointercancel', onUp);
 
-    const advect = (src: Float32Array, dst: Float32Array, u: Float32Array, v: Float32Array, dt: number) => {
+    const advect = (
+      src: Float32Array,
+      dst: Float32Array,
+      u: Float32Array,
+      v: Float32Array,
+      dt: number,
+    ) => {
       for (let y = 0; y < simH; y++) {
         for (let x = 0; x < simW; x++) {
           const i = x + y * simW;
@@ -394,7 +405,7 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
         8,
         width * 0.5,
         height * 0.52,
-        Math.max(width, height) * 0.78
+        Math.max(width, height) * 0.78,
       );
       water.addColorStop(0, c0);
       water.addColorStop(0.4, c1);
@@ -573,6 +584,6 @@ export function createInkBloom(container: HTMLElement, initial: InkBloomOptions 
       unbindMotion?.();
       sizeCleanup?.();
       root.remove();
-    }
+    },
   };
 }

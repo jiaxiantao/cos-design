@@ -1,5 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { createTimelinePulse, type TimelinePulseController, type TimelinePulseOptions } from '../core';
+import {
+  createTimelinePulse,
+  type TimelinePulseController,
+  type TimelinePulseOptions,
+} from '../core';
 import '../style/index.css';
 
 export type { TimelinePulseOptions, TimelinePulseProps } from '../core/types';

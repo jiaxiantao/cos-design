@@ -1,7 +1,10 @@
 import type { FuzzyTextController, FuzzyTextOptions } from './types';
 const P = 'cos-fuzzy-text';
 
-export function createFuzzyText(container: HTMLElement, initial: FuzzyTextOptions = {}): FuzzyTextController {
+export function createFuzzyText(
+  container: HTMLElement,
+  initial: FuzzyTextOptions = {},
+): FuzzyTextController {
   let opts: FuzzyTextOptions = {
     text: 'FUZZY',
     fontSize: 72,
@@ -11,7 +14,7 @@ export function createFuzzyText(container: HTMLElement, initial: FuzzyTextOption
     hoverIntensity: 0.5,
     enableHover: true,
     fuzzRange: 30,
-    ...initial
+    ...initial,
   };
   let frameId = 0;
   let cancelled = false;
@@ -118,6 +121,6 @@ export function createFuzzyText(container: HTMLElement, initial: FuzzyTextOption
       cancelled = true;
       cleanup?.();
       root.remove();
-    }
+    },
   };
 }

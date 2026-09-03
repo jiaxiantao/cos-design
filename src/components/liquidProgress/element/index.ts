@@ -1,4 +1,8 @@
-import { createLiquidProgress, type LiquidProgressController, type LiquidProgressOptions } from '../core';
+import {
+  createLiquidProgress,
+  type LiquidProgressController,
+  type LiquidProgressOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-liquid-progress';

@@ -13,7 +13,10 @@ interface Point {
   pinned: boolean;
 }
 
-export function createRopeChain(container: HTMLElement, initial: RopeChainOptions = {}): RopeChainController {
+export function createRopeChain(
+  container: HTMLElement,
+  initial: RopeChainOptions = {},
+): RopeChainController {
   let options: RopeChainOptions = { segments: 16, color: '#38bdf8', gravity: 0.4, ...initial };
   let destroyed = false;
   let width = options.width ?? DEFAULT_W;
@@ -45,7 +48,7 @@ export function createRopeChain(container: HTMLElement, initial: RopeChainOption
         y: startY + i * segLen,
         prevX: startX,
         prevY: startY + i * segLen,
-        pinned: i === 0
+        pinned: i === 0,
       });
     }
   };
@@ -219,6 +222,6 @@ export function createRopeChain(container: HTMLElement, initial: RopeChainOption
       canvas.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', onUp);
       root.remove();
-    }
+    },
   };
 }

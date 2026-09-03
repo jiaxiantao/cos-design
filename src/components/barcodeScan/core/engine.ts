@@ -1,7 +1,15 @@
 import type { BarcodeScanController, BarcodeScanOptions } from './types';
 const P = 'cos-barcode-scan';
-export function createBarcodeScan(container: HTMLElement, initial: BarcodeScanOptions = {}): BarcodeScanController {
-  let opts: BarcodeScanOptions = { scanColor: '#22c55e', speed: 2.5, defaultContent: 'SCAN ME', ...initial };
+export function createBarcodeScan(
+  container: HTMLElement,
+  initial: BarcodeScanOptions = {},
+): BarcodeScanController {
+  let opts: BarcodeScanOptions = {
+    scanColor: '#22c55e',
+    speed: 2.5,
+    defaultContent: 'SCAN ME',
+    ...initial,
+  };
   const root = document.createElement('div');
   root.className = P;
   const content = document.createElement('div');
@@ -46,6 +54,6 @@ export function createBarcodeScan(container: HTMLElement, initial: BarcodeScanOp
     getSlot: () => content,
     destroy() {
       root.remove();
-    }
+    },
   };
 }

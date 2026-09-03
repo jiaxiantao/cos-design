@@ -1,4 +1,8 @@
-import { createTimelinePulse, type TimelinePulseController, type TimelinePulseOptions } from '../core';
+import {
+  createTimelinePulse,
+  type TimelinePulseController,
+  type TimelinePulseOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-timeline-pulse';

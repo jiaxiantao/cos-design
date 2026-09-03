@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   eslint: {
     // Example app is consumed standalone; skip monorepo ESLint during `next build`.
-    ignoreDuringBuilds: true
+    ignoreDuringBuilds: true,
   },
   transpilePackages: [
     '@cos-design/weather-background',
@@ -15,8 +15,8 @@ const nextConfig: NextConfig = {
     '@cos-design/confetti',
     '@cos-design/flip-card',
     '@cos-design/nine-grid',
-    '@cos-design/shared'
-  ]
+    '@cos-design/shared',
+  ],
 };
 
 export default nextConfig;

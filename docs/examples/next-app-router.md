@@ -21,9 +21,12 @@ Canvas / WebGL components must not run on the server:
 import dynamic from 'next/dynamic';
 import { NeonText } from '@cos-design/neon-text';
 
-const WeatherBackground = dynamic(() => import('@cos-design/weather-background').then((m) => m.WeatherBackground), {
-  ssr: false
-});
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  {
+    ssr: false,
+  },
+);
 
 export function CampaignHero() {
   return (
@@ -35,7 +38,7 @@ export function CampaignHero() {
           inset: 0,
           display: 'grid',
           placeItems: 'center',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
         }}
       >
         <NeonText text="GRAND OPENING" />
@@ -55,7 +58,9 @@ import dynamic from 'next/dynamic';
 import { ScratchCard } from '@cos-design/scratch-card';
 import type { FireworksHandle } from '@cos-design/fireworks';
 
-const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), { ssr: false });
+const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), {
+  ssr: false,
+});
 
 export function ScratchCelebrate() {
   const ref = useRef<FireworksHandle>(null);
