@@ -1,14 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createLavaBubble, type LavaBubbleController, type LavaBubbleOptions } from '../core';
 import '../style/index.css';
 
-export type { LavaBubbleOptions, LavaBubbleProps } from '../core/types';
+export type { LavaBubbleOptions } from '../core/types';
 
 const LavaBubble = forwardRef<unknown, LavaBubbleOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<LavaBubbleController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -24,8 +27,8 @@ const LavaBubble = forwardRef<unknown, LavaBubbleOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-lavaBubble-host" />;
 });

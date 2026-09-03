@@ -1,13 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  createSlotMachine,
-  type SlotMachineController,
-  type SlotMachineHandle,
-  type SlotMachineOptions,
-} from '../core';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
+import { createSlotMachine, type SlotMachineController, type SlotMachineOptions } from '../core';
+import type { SlotMachineHandle } from '../core/types';
 import '../style/index.css';
 
-export type { SlotMachineHandle, SlotMachineOptions, SlotMachineProps } from '../core/types';
+export type { SlotMachineOptions, SlotMachineHandle } from '../core/types';
 
 const SlotMachine = forwardRef<SlotMachineHandle, SlotMachineOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -15,9 +12,11 @@ const SlotMachine = forwardRef<SlotMachineHandle, SlotMachineOptions>((props, re
   const propsRef = useRef(props);
   propsRef.current = props;
 
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
   useImperativeHandle(ref, () => ({
-    spin: (results?: string[]) => ctrlRef.current?.spin(results),
-    reset: () => ctrlRef.current?.reset(),
+    spin: (...args: any[]) => (ctrlRef.current as any)?.spin?.(...args),
+    reset: (...args: any[]) => (ctrlRef.current as any)?.reset?.(...args),
   }));
 
   useEffect(() => {
@@ -32,8 +31,8 @@ const SlotMachine = forwardRef<SlotMachineHandle, SlotMachineOptions>((props, re
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-slotMachine-host" />;
 });

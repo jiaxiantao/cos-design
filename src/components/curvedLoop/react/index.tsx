@@ -1,14 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createCurvedLoop, type CurvedLoopController, type CurvedLoopOptions } from '../core';
 import '../style/index.css';
 
-export type { CurvedLoopOptions, CurvedLoopProps } from '../core/types';
+export type { CurvedLoopOptions } from '../core/types';
 
 const CurvedLoop = forwardRef<unknown, CurvedLoopOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<CurvedLoopController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -24,8 +27,8 @@ const CurvedLoop = forwardRef<unknown, CurvedLoopOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-curvedLoop-host" />;
 });

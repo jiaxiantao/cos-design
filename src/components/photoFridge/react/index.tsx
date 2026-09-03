@@ -1,14 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createPhotoFridge, type PhotoFridgeController, type PhotoFridgeOptions } from '../core';
 import '../style/index.css';
 
-export type { PhotoFridgeOptions, PhotoFridgeProps } from '../core/types';
+export type { PhotoFridgeOptions } from '../core/types';
 
 const PhotoFridge = forwardRef<unknown, PhotoFridgeOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<PhotoFridgeController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -24,8 +27,8 @@ const PhotoFridge = forwardRef<unknown, PhotoFridgeOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-photoFridge-host" />;
 });

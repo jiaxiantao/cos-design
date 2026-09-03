@@ -5,6 +5,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import type { RedPacketRainController, RedPacketRainOptions } from './types';
 
@@ -79,13 +80,11 @@ export function createRedPacketRain(
   };
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill),
+      width: width,
+      height: height,
+    });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     syncHud();

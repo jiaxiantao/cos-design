@@ -4,6 +4,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import { createPointerState, FRAME_MS, MAX_DPR } from '../constants';
 import { createSnowSprite, drawDynamicBackground, drawStaticBackground } from '../background';
@@ -82,13 +83,11 @@ export function createBubbleField(
   };
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill),
+      width: width,
+      height: height,
+    });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
   };

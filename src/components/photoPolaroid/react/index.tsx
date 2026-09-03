@@ -1,4 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import {
   createPhotoPolaroid,
   type PhotoPolaroidController,
@@ -6,13 +7,15 @@ import {
 } from '../core';
 import '../style/index.css';
 
-export type { PhotoPolaroidOptions, PhotoPolaroidProps } from '../core/types';
+export type { PhotoPolaroidOptions } from '../core/types';
 
 const PhotoPolaroid = forwardRef<unknown, PhotoPolaroidOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<PhotoPolaroidController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -28,8 +31,8 @@ const PhotoPolaroid = forwardRef<unknown, PhotoPolaroidOptions>((props, ref) => 
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-photoPolaroid-host" />;
 });

@@ -28,15 +28,19 @@ export function createBarcodeScan(
   container.appendChild(root);
 
   const mountSlot = () => {
-    content.replaceChildren();
     if (opts.slotElement) {
-      content.appendChild(opts.slotElement);
-    } else {
-      const ph = document.createElement('span');
-      ph.className = `${P}__placeholder`;
-      ph.textContent = opts.defaultContent ?? 'SCAN ME';
-      content.appendChild(ph);
+      if (opts.slotElement.parentElement !== content) {
+        content.replaceChildren();
+        content.appendChild(opts.slotElement);
+      }
+      return;
     }
+    // React/Vue portals own the children — do not clear existing nodes
+    if (content.childNodes.length > 0) return;
+    const ph = document.createElement('span');
+    ph.className = `${root.className}__placeholder`;
+    ph.textContent = opts.defaultContent ?? 'SCAN ME';
+    content.replaceChildren(ph);
   };
 
   const render = () => {

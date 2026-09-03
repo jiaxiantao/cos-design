@@ -1,14 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createCursorTrail, type CursorTrailController, type CursorTrailOptions } from '../core';
 import '../style/index.css';
 
-export type { CursorTrailOptions, CursorTrailProps } from '../core/types';
+export type { CursorTrailOptions } from '../core/types';
 
 const CursorTrail = forwardRef<unknown, CursorTrailOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<CursorTrailController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -24,8 +27,8 @@ const CursorTrail = forwardRef<unknown, CursorTrailOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-cursorTrail-host" />;
 });

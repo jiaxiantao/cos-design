@@ -1,13 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  createConfetti,
-  type ConfettiController,
-  type ConfettiHandle,
-  type ConfettiOptions,
-} from '../core';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
+import { createConfetti, type ConfettiController, type ConfettiOptions } from '../core';
+import type { ConfettiHandle } from '../core/types';
 import '../style/index.css';
 
-export type { ConfettiHandle, ConfettiOptions, ConfettiProps } from '../core/types';
+export type { ConfettiOptions, ConfettiHandle } from '../core/types';
 
 const Confetti = forwardRef<ConfettiHandle, ConfettiOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -15,8 +12,10 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiOptions>((props, ref) => {
   const propsRef = useRef(props);
   propsRef.current = props;
 
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
   useImperativeHandle(ref, () => ({
-    burst: () => ctrlRef.current?.burst(),
+    burst: (...args: any[]) => (ctrlRef.current as any)?.burst?.(...args),
   }));
 
   useEffect(() => {
@@ -31,8 +30,8 @@ const Confetti = forwardRef<ConfettiHandle, ConfettiOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-confetti-host" />;
 });

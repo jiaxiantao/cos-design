@@ -5,6 +5,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import type { FireworksController, FireworksOptions } from './types';
 
@@ -102,13 +103,7 @@ export function createFireworks(
 
   const applyHostLayout = () => {
     const fill = options.fill ?? false;
-    if (fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, { fill: Boolean(fill), width: width, height: height });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
   };
@@ -272,13 +267,22 @@ export function createFireworks(
   });
 
   const update = (next: Partial<FireworksOptions>) => {
+    const prev = options;
     options = { ...options, ...next };
     if (next.onComplete !== undefined) {
       onCompleteRef.current = next.onComplete;
     }
-    bindSizeObserver();
-    syncInteractive();
-    setupAutoTimer();
+    const sizeChanged =
+      prev.fill !== options.fill || prev.width !== options.width || prev.height !== options.height;
+    const lookChanged =
+      prev.auto !== options.auto ||
+      prev.interactive !== options.interactive ||
+      prev.hint !== options.hint;
+    if (sizeChanged) bindSizeObserver();
+    if (lookChanged) {
+      syncInteractive();
+      setupAutoTimer();
+    }
   };
 
   bindSizeObserver();

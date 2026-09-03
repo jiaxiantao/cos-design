@@ -17,6 +17,12 @@ export function createReturnCity(
   const glassWrap = document.createElement('div');
   glassWrap.className = `${P}__glass-wrap`;
   root.appendChild(glassWrap);
+  container.style.width = '100%';
+  container.style.height = '100%';
+  container.style.minHeight = '360px';
+  root.style.width = '100%';
+  root.style.height = '100%';
+  root.style.minHeight = '360px';
   container.appendChild(root);
 
   const clearAll = () => {

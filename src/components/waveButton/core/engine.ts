@@ -20,6 +20,30 @@ export function createWaveButton(
   root.appendChild(btn);
   container.appendChild(root);
 
+  const applyButtonProps = () => {
+    const rest = opts.buttonProps ?? {};
+    for (const [key, value] of Object.entries(rest)) {
+      if (key === 'className' || key === 'style' || key === 'children') continue;
+      if (key.startsWith('on') && typeof value === 'function') {
+        const event = key.slice(2).toLowerCase();
+        // replace prior listener for this prop key via dataset marker
+        const marker = `cosWave${key}`;
+        const prev = (btn as unknown as Record<string, EventListener | undefined>)[marker];
+        if (prev) btn.removeEventListener(event, prev);
+        btn.addEventListener(event, value as EventListener);
+        (btn as unknown as Record<string, EventListener>)[marker] = value as EventListener;
+        continue;
+      }
+      if (value == null || value === false) {
+        btn.removeAttribute(key === 'disabled' ? 'disabled' : key);
+      } else if (value === true) {
+        btn.setAttribute(key, '');
+      } else {
+        btn.setAttribute(key, String(value));
+      }
+    }
+  };
+
   const render = () => {
     label.textContent = opts.text ?? '点我试试';
     btn.style.setProperty('--wave-color', opts.color ?? '#38bdf8');
@@ -29,6 +53,7 @@ export function createWaveButton(
         if (v != null) btn.style.setProperty(k.replace(/([A-Z])/g, '-$1').toLowerCase(), String(v));
       });
     }
+    applyButtonProps();
   };
   render();
 

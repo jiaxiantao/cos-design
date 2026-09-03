@@ -5,6 +5,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import { createFieldTexture, createProgram } from '../gl';
 import { createLavaSim, MAX_DPR, SIM } from '../sim';
@@ -79,19 +80,20 @@ export function createLavaBubble(
   };
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill),
+      width: width,
+      height: height,
+    });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     root.setAttribute('aria-label', options.ariaLabel ?? '熔岩泡背景');
   };
 
+  let lastGlSize = { w: 0, h: 0 };
   const setupGl = () => {
+    if (lastGlSize.w === width && lastGlSize.h === height && glCleanup) return;
+    lastGlSize = { w: width, h: height };
     glCleanup?.();
     glCleanup = null;
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);

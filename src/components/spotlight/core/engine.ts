@@ -22,10 +22,19 @@ export function createSpotlight(
   root.addEventListener('mousemove', onMove);
 
   const mountSlot = () => {
-    if (opts.slotElement && !content.contains(opts.slotElement)) {
-      content.replaceChildren();
-      content.appendChild(opts.slotElement);
+    if (opts.slotElement) {
+      if (opts.slotElement.parentElement !== content) {
+        content.replaceChildren();
+        content.appendChild(opts.slotElement);
+      }
+      return;
     }
+    // React/Vue portals own the children — do not clear existing nodes
+    if (content.childNodes.length > 0) return;
+    const ph = document.createElement('span');
+    ph.className = `${root.className}__placeholder`;
+    ph.textContent = (opts as { defaultContent?: string }).defaultContent ?? '';
+    content.replaceChildren(ph);
   };
 
   const render = () => {

@@ -1,4 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import {
   createTimelinePulse,
   type TimelinePulseController,
@@ -6,13 +7,15 @@ import {
 } from '../core';
 import '../style/index.css';
 
-export type { TimelinePulseOptions, TimelinePulseProps } from '../core/types';
+export type { TimelinePulseOptions } from '../core/types';
 
 const TimelinePulse = forwardRef<unknown, TimelinePulseOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<TimelinePulseController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -28,8 +31,8 @@ const TimelinePulse = forwardRef<unknown, TimelinePulseOptions>((props, ref) => 
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-timelinePulse-host" />;
 });

@@ -1,4 +1,9 @@
-import { bindVisibilityPause, observeElementSize, resolveCanvasBoxSize } from '@cos-design/shared';
+import {
+  bindVisibilityPause,
+  observeElementSize,
+  resolveCanvasBoxSize,
+  applyCanvasHostBox,
+} from '@cos-design/shared';
 import type { AuroraController, AuroraOptions } from './types';
 
 const P = 'cos-aurora';
@@ -24,15 +29,15 @@ export function createAurora(
   container.appendChild(root);
 
   const applyLayout = () => {
-    if (options.fill ?? false) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
+    if (!(options.fill ?? false)) {
       width = options.width ?? DEFAULT_W;
       height = options.height ?? DEFAULT_H;
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
     }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill ?? false),
+      width,
+      height,
+    });
   };
 
   const bindSize = () => {
@@ -83,9 +88,15 @@ export function createAurora(
 
   return {
     update(next) {
+      const prev = options;
       options = { ...options, ...next };
-      bindSize();
-      renderBands();
+      const sizeChanged =
+        prev.fill !== options.fill ||
+        prev.width !== options.width ||
+        prev.height !== options.height;
+      const colorsChanged = JSON.stringify(prev.colors) !== JSON.stringify(options.colors);
+      if (sizeChanged) bindSize();
+      if (sizeChanged || colorsChanged) renderBands();
     },
     destroy() {
       if (destroyed) return;

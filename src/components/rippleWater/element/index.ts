@@ -23,7 +23,10 @@ function parseOptions(el: HTMLElement): RippleWaterOptions {
   if (el.hasAttribute('damping')) options.damping = Number(el.getAttribute('damping'));
   if (el.hasAttribute('spread')) options.spread = Number(el.getAttribute('spread'));
   options.fill = el.hasAttribute('fill');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   options.showHint = el.hasAttribute('show-hint');
   return options;
 }

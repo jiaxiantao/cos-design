@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Element adapters: FlipCard / NineGrid / ScratchCard emit `reveal` / `draw-end` CustomEvents
 - Regenerate all Vue/Element adapters from `core/types.ts` (attr parsing, boolean clear, on\* → events, photos/prizes JS props)
 - Playground Element mounts use kebab-case attributes
+- **Runtime parity with 3.x**: fill sizes the adapter host (`applyCanvasHostBox`); React/Vue adapters update only when options change (fingerprint); slotted components use portals/`Teleport`; reduce-motion no longer starts a second rAF loop; `@cos-design/shared` default entry is framework-free again
 
 ### Breaking
 

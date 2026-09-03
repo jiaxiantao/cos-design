@@ -1,13 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  createFlipCard,
-  type FlipCardController,
-  type FlipCardHandle,
-  type FlipCardOptions,
-} from '../core';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
+import { createFlipCard, type FlipCardController, type FlipCardOptions } from '../core';
+import type { FlipCardHandle } from '../core/types';
 import '../style/index.css';
 
-export type { FlipCardHandle, FlipCardOptions, FlipCardProps } from '../core/types';
+export type { FlipCardOptions, FlipCardHandle } from '../core/types';
 
 const FlipCard = forwardRef<FlipCardHandle, FlipCardOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -15,9 +12,11 @@ const FlipCard = forwardRef<FlipCardHandle, FlipCardOptions>((props, ref) => {
   const propsRef = useRef(props);
   propsRef.current = props;
 
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
   useImperativeHandle(ref, () => ({
-    flip: () => ctrlRef.current?.flip(),
-    reset: () => ctrlRef.current?.reset(),
+    flip: (...args: any[]) => (ctrlRef.current as any)?.flip?.(...args),
+    reset: (...args: any[]) => (ctrlRef.current as any)?.reset?.(...args),
   }));
 
   useEffect(() => {
@@ -32,8 +31,8 @@ const FlipCard = forwardRef<FlipCardHandle, FlipCardOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-flipCard-host" />;
 });

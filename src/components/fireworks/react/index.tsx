@@ -1,20 +1,19 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createFireworks, type FireworksController, type FireworksOptions } from '../core';
-import type { FireworksHandle } from '../core/types';
 import '../style/index.css';
 
-export type { FireworksHandle, FireworksOptions, FireworksProps } from '../core/types';
+export type { FireworksOptions } from '../core/types';
 
-const Fireworks = forwardRef<FireworksHandle, FireworksOptions>((props, ref) => {
+const Fireworks = forwardRef<unknown, FireworksOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<FireworksController | null>(null);
   const propsRef = useRef(props);
-
   propsRef.current = props;
 
-  useImperativeHandle(ref, () => ({
-    launch: (x) => ctrlRef.current?.launch(x),
-  }));
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
+  useImperativeHandle(ref, () => ({}));
 
   useEffect(() => {
     const host = hostRef.current;
@@ -28,8 +27,8 @@ const Fireworks = forwardRef<FireworksHandle, FireworksOptions>((props, ref) => 
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-fireworks-host" />;
 });

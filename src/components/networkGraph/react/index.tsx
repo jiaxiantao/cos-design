@@ -1,14 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createNetworkGraph, type NetworkGraphController, type NetworkGraphOptions } from '../core';
 import '../style/index.css';
 
-export type { NetworkGraphOptions, NetworkGraphProps } from '../core/types';
+export type { NetworkGraphOptions } from '../core/types';
 
 const NetworkGraph = forwardRef<unknown, NetworkGraphOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<NetworkGraphController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -24,8 +27,8 @@ const NetworkGraph = forwardRef<unknown, NetworkGraphOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-networkGraph-host" />;
 });

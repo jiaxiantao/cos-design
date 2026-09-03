@@ -19,12 +19,18 @@ export function createMagneticButton(
   container.appendChild(wrap);
 
   const mountSlot = () => {
-    btn.replaceChildren();
     if (opts.slotElement) {
-      btn.appendChild(opts.slotElement);
-    } else {
-      btn.textContent = opts.defaultContent ?? '磁吸按钮';
+      if (opts.slotElement.parentElement !== btn) {
+        btn.replaceChildren();
+        btn.appendChild(opts.slotElement);
+      }
+      return;
     }
+    // React/Vue portals own the children — do not clear existing nodes
+    if (btn.childNodes.length > 0) return;
+    const ph = document.createElement('span');
+    ph.textContent = opts.defaultContent ?? '磁吸按钮';
+    btn.replaceChildren(ph);
   };
 
   const onMove = (e: MouseEvent) => {

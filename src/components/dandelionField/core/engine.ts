@@ -6,6 +6,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import {
   FLOWER_HEAD_GROW,
@@ -124,13 +125,7 @@ export function createDandelionField(
   container.appendChild(root);
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = String(width) + 'px';
-      root.style.height = String(height) + 'px';
-    }
+    applyCanvasHostBox(container, root, { fill: Boolean(options.fill), width, height });
     canvas.style.width = String(width) + 'px';
     canvas.style.height = String(height) + 'px';
     canvas.setAttribute('role', 'img');

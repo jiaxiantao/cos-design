@@ -83,6 +83,8 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
         const key = `../../components/${dir}/core/index.ts`;
         const loader = coreModules[key];
         if (!loader) throw new Error(`Core module not found for ${exportName}`);
+        // Core entry does not inject CSS — load shared component styles for preview
+        await import(`../../components/${dir}/style/index.css`);
         const mod = (await loader()) as Record<string, unknown>;
         if (cancelled) return;
         const factory = mod[`create${exportName}`];

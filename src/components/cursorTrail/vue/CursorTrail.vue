@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createCursorTrail, type CursorTrailController, type CursorTrailOptions } from '../core';
 import '../style/index.css';
@@ -17,9 +18,8 @@ onMounted(() => {
 });
 
 watch(
-  () => ({ ...props }),
+  () => optionsFingerprint(props),
   () => ctrl?.update(toOptions()),
-  { deep: true },
 );
 
 onUnmounted(() => {

@@ -1,43 +1,44 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createSpotlight, type SpotlightController, type SpotlightOptions } from '../core';
 import '../style/index.css';
 
-export type { SpotlightOptions, SpotlightProps } from '../core/types';
+export type { SpotlightOptions } from '../core/types';
 
 type SlotProps = SpotlightOptions & { children?: React.ReactNode };
 
 const Spotlight = forwardRef<unknown, SlotProps>(({ children, ...props }, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
-  const slotRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<SpotlightController | null>(null);
   const propsRef = useRef(props);
+  const [slotEl, setSlotEl] = useState<HTMLElement | null>(null);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
   useEffect(() => {
     const host = hostRef.current;
-    const slot = slotRef.current;
-    if (!host || !slot) return;
-    const ctrl = createSpotlight(host, { ...propsRef.current, slotElement: slot });
+    if (!host) return;
+    const ctrl = createSpotlight(host, propsRef.current);
     ctrlRef.current = ctrl;
+    setSlotEl(typeof ctrl.getSlot === 'function' ? ctrl.getSlot() : null);
     return () => {
       ctrl.destroy();
       ctrlRef.current = null;
+      setSlotEl(null);
     };
   }, []);
 
   useEffect(() => {
-    const slot = slotRef.current;
-    if (!slot) return;
-    ctrlRef.current?.update({ ...props, slotElement: slot });
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return (
     <div ref={hostRef} className="cos-spotlight-host">
-      <div ref={slotRef} style={{ display: 'contents' }}>
-        {children}
-      </div>
+      {slotEl && children != null ? createPortal(children, slotEl) : null}
     </div>
   );
 });

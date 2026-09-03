@@ -9,8 +9,14 @@ function parseOptions(el: HTMLElement): FireworksOptions {
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   options.fill = el.hasAttribute('fill');
-  options.auto = el.hasAttribute('auto');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('auto')) {
+    const raw = el.getAttribute('auto');
+    options.auto = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   options.onComplete = (...args: unknown[]) => {
     el.dispatchEvent(
       new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),

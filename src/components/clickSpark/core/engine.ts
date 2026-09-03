@@ -36,8 +36,10 @@ export function createClickSpark(
   root.append(canvas, content, hintEl);
   container.appendChild(root);
 
-  if (options.slotElement) {
+  if (options.slotElement && options.slotElement.parentElement !== content) {
     content.appendChild(options.slotElement);
+    hintEl.hidden = true;
+  } else if (content.childNodes.length > 0) {
     hintEl.hidden = true;
   }
 
@@ -110,6 +112,7 @@ export function createClickSpark(
   tick();
 
   return {
+    getSlot: () => content,
     update(next) {
       if (next.slotElement !== undefined && next.slotElement !== options.slotElement) {
         content.innerHTML = '';

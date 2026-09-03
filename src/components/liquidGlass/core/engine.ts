@@ -21,12 +21,19 @@ export function createLiquidGlass(
   container.appendChild(root);
 
   const mountSlot = () => {
-    content.replaceChildren();
     if (opts.slotElement) {
-      content.appendChild(opts.slotElement);
-    } else {
-      content.textContent = opts.defaultContent ?? '液态玻璃面板';
+      if (opts.slotElement.parentElement !== content) {
+        content.replaceChildren();
+        content.appendChild(opts.slotElement);
+      }
+      return;
     }
+    // React/Vue portals own the children — do not clear existing nodes
+    if (content.childNodes.length > 0) return;
+    const ph = document.createElement('span');
+    ph.className = `${root.className}__placeholder`;
+    ph.textContent = (opts as { defaultContent?: string }).defaultContent ?? '';
+    content.replaceChildren(ph);
   };
 
   const render = () => {

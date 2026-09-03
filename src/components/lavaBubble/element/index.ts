@@ -13,7 +13,10 @@ function parseOptions(el: HTMLElement): LavaBubbleOptions {
   if (el.hasAttribute('activity')) options.activity = Number(el.getAttribute('activity'));
   options.fill = el.hasAttribute('fill');
   options.autoSpawn = el.hasAttribute('auto-spawn');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   return options;
 }
 

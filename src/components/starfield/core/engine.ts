@@ -4,6 +4,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import type { StarfieldController, StarfieldOptions } from './types';
 
@@ -54,13 +55,7 @@ export function createStarfield(
 
   const applyLayout = () => {
     const fill = options.fill ?? false;
-    if (fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, { fill: Boolean(fill), width: width, height: height });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
   };
@@ -164,7 +159,6 @@ export function createStarfield(
   unbindMotion = bindPrefersReducedMotion((value) => {
     reduced = value;
     if (reduced) paintStatic();
-    else tick();
   });
 
   bindSize();
@@ -174,8 +168,13 @@ export function createStarfield(
 
   return {
     update(next) {
+      const prev = options;
       options = { ...options, ...next };
-      bindSize();
+      const sizeChanged =
+        prev.fill !== options.fill ||
+        prev.width !== options.width ||
+        prev.height !== options.height;
+      if (sizeChanged) bindSize();
       if (reduced) paintStatic();
     },
     destroy() {

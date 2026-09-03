@@ -1,23 +1,19 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  createBurnAway,
-  type BurnAwayController,
-  type BurnAwayHandle,
-  type BurnAwayOptions,
-} from '../core';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
+import { createBurnAway, type BurnAwayController, type BurnAwayOptions } from '../core';
 import '../style/index.css';
 
-export type { BurnAwayHandle, BurnAwayOptions, BurnAwayProps } from '../core/types';
+export type { BurnAwayOptions } from '../core/types';
 
-const BurnAway = forwardRef<BurnAwayHandle, BurnAwayOptions>((props, ref) => {
+const BurnAway = forwardRef<unknown, BurnAwayOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<BurnAwayController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
 
-  useImperativeHandle(ref, () => ({
-    ignite: () => ctrlRef.current?.ignite(),
-  }));
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
+  useImperativeHandle(ref, () => ({}));
 
   useEffect(() => {
     const host = hostRef.current;
@@ -31,8 +27,8 @@ const BurnAway = forwardRef<BurnAwayHandle, BurnAwayOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-burnAway-host" />;
 });

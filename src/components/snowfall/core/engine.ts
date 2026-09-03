@@ -4,6 +4,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import type { SnowfallController, SnowfallOptions } from './types';
 
@@ -66,13 +67,11 @@ export function createSnowfall(
   };
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill),
+      width: width,
+      height: height,
+    });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
   };
@@ -171,7 +170,6 @@ export function createSnowfall(
   unbindMotion = bindPrefersReducedMotion((v) => {
     reduced = v;
     if (reduced) paintFrame(false);
-    else tick();
   });
 
   bindSize();
@@ -181,8 +179,13 @@ export function createSnowfall(
 
   return {
     update(next) {
+      const prev = options;
       options = { ...options, ...next };
-      bindSize();
+      const sizeChanged =
+        prev.fill !== options.fill ||
+        prev.width !== options.width ||
+        prev.height !== options.height;
+      if (sizeChanged) bindSize();
       if (reduced) paintFrame(false);
     },
     destroy() {

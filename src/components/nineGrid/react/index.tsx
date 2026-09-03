@@ -1,13 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  createNineGrid,
-  type NineGridController,
-  type NineGridHandle,
-  type NineGridOptions,
-} from '../core';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
+import { createNineGrid, type NineGridController, type NineGridOptions } from '../core';
+import type { NineGridHandle } from '../core/types';
 import '../style/index.css';
 
-export type { NineGridHandle, NineGridOptions, NineGridProps } from '../core/types';
+export type { NineGridOptions, NineGridHandle } from '../core/types';
 
 const NineGrid = forwardRef<NineGridHandle, NineGridOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -15,9 +12,11 @@ const NineGrid = forwardRef<NineGridHandle, NineGridOptions>((props, ref) => {
   const propsRef = useRef(props);
   propsRef.current = props;
 
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
   useImperativeHandle(ref, () => ({
-    draw: (targetIndex?: number) => ctrlRef.current?.draw(targetIndex),
-    reset: () => ctrlRef.current?.reset(),
+    draw: (...args: any[]) => (ctrlRef.current as any)?.draw?.(...args),
+    reset: (...args: any[]) => (ctrlRef.current as any)?.reset?.(...args),
   }));
 
   useEffect(() => {
@@ -32,8 +31,8 @@ const NineGrid = forwardRef<NineGridHandle, NineGridOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-nineGrid-host" />;
 });

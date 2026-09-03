@@ -18,7 +18,10 @@ function parseOptions(el: HTMLElement): SmokeFogOptions {
   if (el.hasAttribute('disperse-radius'))
     options.disperseRadius = Number(el.getAttribute('disperse-radius'));
   options.fill = el.hasAttribute('fill');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   return options;
 }
 

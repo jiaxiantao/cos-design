@@ -11,7 +11,10 @@ function parseOptions(el: HTMLElement): CurvedLoopOptions {
   if (el.hasAttribute('curve-amount'))
     options.curveAmount = Number(el.getAttribute('curve-amount'));
   if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('direction')) {
     try {
       options.direction = JSON.parse(

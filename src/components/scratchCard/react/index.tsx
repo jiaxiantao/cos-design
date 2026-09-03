@@ -1,13 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  createScratchCard,
-  type ScratchCardController,
-  type ScratchCardHandle,
-  type ScratchCardOptions,
-} from '../core';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
+import { createScratchCard, type ScratchCardController, type ScratchCardOptions } from '../core';
+import type { ScratchCardHandle } from '../core/types';
 import '../style/index.css';
 
-export type { ScratchCardHandle, ScratchCardOptions, ScratchCardProps } from '../core/types';
+export type { ScratchCardOptions, ScratchCardHandle } from '../core/types';
 
 const ScratchCard = forwardRef<ScratchCardHandle, ScratchCardOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -15,9 +12,11 @@ const ScratchCard = forwardRef<ScratchCardHandle, ScratchCardOptions>((props, re
   const propsRef = useRef(props);
   propsRef.current = props;
 
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
+
   useImperativeHandle(ref, () => ({
-    reset: () => ctrlRef.current?.reset(),
-    reveal: () => ctrlRef.current?.reveal(),
+    reset: (...args: any[]) => (ctrlRef.current as any)?.reset?.(...args),
+    reveal: (...args: any[]) => (ctrlRef.current as any)?.reveal?.(...args),
   }));
 
   useEffect(() => {
@@ -32,8 +31,8 @@ const ScratchCard = forwardRef<ScratchCardHandle, ScratchCardOptions>((props, re
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-scratchCard-host" />;
 });

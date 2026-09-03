@@ -1,4 +1,4 @@
-import { observeElementSize, resolveCanvasBoxSize } from '@cos-design/shared';
+import { observeElementSize, resolveCanvasBoxSize, applyCanvasHostBox } from '@cos-design/shared';
 import { approximateDayCycleTimes, computeDayCycle, resolveSceneTimeMs } from '../day-cycle';
 import { DEFAULT_FOG_LEVEL } from '../fog';
 import { DEFAULT_HAIL_LEVEL } from '../hail-level';
@@ -68,13 +68,11 @@ export function createWeatherBackground(
   container.appendChild(root);
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill),
+      width: width,
+      height: height,
+    });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
   };
@@ -229,8 +227,12 @@ export function createWeatherBackground(
         prev.width !== options.width ||
         prev.height !== options.height;
       if (sizeChanged) bindSize();
-      if (liveChanged) bindLive();
-      else if (!sizeChanged) rebuildScene();
+      else if (liveChanged) bindLive();
+      else {
+        const fp = (o: typeof options) =>
+          JSON.stringify(o, (_k, v) => (typeof v === 'function' ? undefined : v));
+        if (fp(prev) !== fp(options)) rebuildScene();
+      }
     },
     destroy() {
       if (destroyed) return;

@@ -5,6 +5,7 @@ export interface ClickSparkOptions {
 }
 
 export interface ClickSparkController {
+  getSlot(): HTMLElement;
   update(options: Partial<ClickSparkOptions>): void;
   destroy(): void;
 }

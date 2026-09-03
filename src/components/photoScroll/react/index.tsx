@@ -1,14 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createPhotoScroll, type PhotoScrollController, type PhotoScrollOptions } from '../core';
 import '../style/index.css';
 
-export type { PhotoScrollOptions, PhotoScrollProps } from '../core/types';
+export type { PhotoScrollOptions } from '../core/types';
 
 const PhotoScroll = forwardRef<unknown, PhotoScrollOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<PhotoScrollController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -24,8 +27,8 @@ const PhotoScroll = forwardRef<unknown, PhotoScrollOptions>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-photoScroll-host" />;
 });

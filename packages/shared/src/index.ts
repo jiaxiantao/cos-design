@@ -8,8 +8,7 @@ export type { PointerPosition } from './pointer';
 export type { PhotoItem, PhotoIndexChangeHandler, PhotoFaceChangeHandler } from './photo';
 export { resolveCanvasBoxSize } from './canvas-box';
 export type { CanvasBoxSizeInput, CanvasBoxSize } from './canvas-box';
+export { applyCanvasHostBox, optionsFingerprint, optionsVisualChanged } from './host-layout';
 
-/** @deprecated v4: import from `@cos-design/shared/react` */
-export { useElementSize, useCanvasBox } from './react';
-/** @deprecated v4: import types from `@cos-design/shared/react` */
-export type { UseElementSizeOptions, UseCanvasBoxOptions, UseCanvasBoxResult } from './react';
+// React hooks live at `@cos-design/shared/react` only — keep the default entry framework-free
+// so Core / Web Components do not pull React.

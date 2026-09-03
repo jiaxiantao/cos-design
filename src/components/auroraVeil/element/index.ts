@@ -11,7 +11,10 @@ function parseOptions(el: HTMLElement): AuroraVeilOptions {
   if (el.hasAttribute('band-count')) options.bandCount = Number(el.getAttribute('band-count'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
   options.fill = el.hasAttribute('fill');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('colors')) {
     try {
       options.colors = JSON.parse(

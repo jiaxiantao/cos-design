@@ -1,4 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import {
   createMazeGenerator,
   type MazeGeneratorController,
@@ -6,13 +7,15 @@ import {
 } from '../core';
 import '../style/index.css';
 
-export type { MazeGeneratorOptions, MazeGeneratorProps } from '../core/types';
+export type { MazeGeneratorOptions } from '../core/types';
 
 const MazeGenerator = forwardRef<unknown, MazeGeneratorOptions>((props, ref) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<MazeGeneratorController | null>(null);
   const propsRef = useRef(props);
   propsRef.current = props;
+
+  const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -28,8 +31,8 @@ const MazeGenerator = forwardRef<unknown, MazeGeneratorOptions>((props, ref) => 
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(props);
-  }, [props]);
+    ctrlRef.current?.update(propsRef.current);
+  }, [optionsKey]);
 
   return <div ref={hostRef} className="cos-mazeGenerator-host" />;
 });

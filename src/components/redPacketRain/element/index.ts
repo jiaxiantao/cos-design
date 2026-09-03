@@ -17,7 +17,10 @@ function parseOptions(el: HTMLElement): RedPacketRainOptions {
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
   options.fill = el.hasAttribute('fill');
-  options.auto = el.hasAttribute('auto');
+  if (el.hasAttribute('auto')) {
+    const raw = el.getAttribute('auto');
+    options.auto = raw !== 'false' && raw !== '0';
+  }
   options.onGrab = (...args: unknown[]) => {
     el.dispatchEvent(
       new CustomEvent('grab', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),

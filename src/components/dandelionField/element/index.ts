@@ -16,7 +16,10 @@ function parseOptions(el: HTMLElement): DandelionFieldOptions {
   if (el.hasAttribute('seed-count')) options.seedCount = Number(el.getAttribute('seed-count'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
   options.fill = el.hasAttribute('fill');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   return options;
 }
 

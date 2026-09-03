@@ -73,7 +73,14 @@ export function createTypewriter(
 
   return {
     update(n) {
+      const prev = opts;
       opts = { ...opts, ...n };
+      const changed =
+        prev.speed !== opts.speed ||
+        prev.deleteSpeed !== opts.deleteSpeed ||
+        prev.pause !== opts.pause ||
+        JSON.stringify(prev.texts) !== JSON.stringify(opts.texts);
+      if (!changed) return;
       displayText = '';
       textIndex = 0;
       isDeleting = false;

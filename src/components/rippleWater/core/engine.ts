@@ -5,6 +5,7 @@ import {
   observeElementSize,
   prefersReducedMotion,
   resolveCanvasBoxSize,
+  applyCanvasHostBox,
 } from '@cos-design/shared';
 import type { RippleWaterController, RippleWaterOptions } from './types';
 
@@ -192,13 +193,11 @@ export function createRippleWater(
   };
 
   const applyLayout = () => {
-    if (options.fill) {
-      root.style.width = '100%';
-      root.style.height = '100%';
-    } else {
-      root.style.width = `${width}px`;
-      root.style.height = `${height}px`;
-    }
+    applyCanvasHostBox(container, root, {
+      fill: Boolean(options.fill),
+      width: width,
+      height: height,
+    });
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     syncHint();
@@ -215,7 +214,10 @@ export function createRippleWater(
     };
   };
 
+  let lastGlSize = { w: 0, h: 0 };
   const setupGl = () => {
+    if (lastGlSize.w === width && lastGlSize.h === height && glCleanup) return;
+    lastGlSize = { w: width, h: height };
     glCleanup?.();
     glCleanup = null;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);

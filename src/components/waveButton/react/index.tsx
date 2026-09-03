@@ -1,4 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { optionsFingerprint } from '@cos-design/shared';
 import { createWaveButton, type WaveButtonController, type WaveButtonOptions } from '../core';
 import '../style/index.css';
 
@@ -11,8 +12,14 @@ const WaveButton = forwardRef<HTMLButtonElement, BtnProps>(
     const hostRef = useRef<HTMLDivElement>(null);
     const ctrlRef = useRef<WaveButtonController | null>(null);
     const btnRef = useRef<HTMLButtonElement | null>(null);
-    const propsRef = useRef({ text, color, className, style, buttonProps: rest });
-    propsRef.current = { text, color, className, style, buttonProps: rest };
+    const options = { text, color, className, style, buttonProps: rest };
+    const propsRef = useRef(options);
+    propsRef.current = options;
+
+    const optionsKey = useMemo(
+      () => optionsFingerprint({ text, color, className, style }),
+      [text, color, className, style],
+    );
 
     useImperativeHandle(ref, () => btnRef.current as HTMLButtonElement);
 
@@ -32,7 +39,7 @@ const WaveButton = forwardRef<HTMLButtonElement, BtnProps>(
     useEffect(() => {
       ctrlRef.current?.update(propsRef.current);
       btnRef.current = ctrlRef.current?.getButton() ?? null;
-    }, [text, color, className, style, rest]);
+    }, [optionsKey, rest]);
 
     return <div ref={hostRef} className="cos-waveButton-host" />;
   },

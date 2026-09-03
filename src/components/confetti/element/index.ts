@@ -11,8 +11,14 @@ function parseOptions(el: HTMLElement): ConfettiOptions {
   if (el.hasAttribute('particle-count'))
     options.particleCount = Number(el.getAttribute('particle-count'));
   options.fill = el.hasAttribute('fill');
-  options.auto = el.hasAttribute('auto');
-  options.interactive = el.hasAttribute('interactive');
+  if (el.hasAttribute('auto')) {
+    const raw = el.getAttribute('auto');
+    options.auto = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('interactive')) {
+    const raw = el.getAttribute('interactive');
+    options.interactive = raw !== 'false' && raw !== '0';
+  }
   options.onComplete = (...args: unknown[]) => {
     el.dispatchEvent(
       new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
