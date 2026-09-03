@@ -14,7 +14,7 @@
   border: 1px solid rgb(255 255 255 / 8%);
   border-radius: 20px;
   background: #12141c;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .header {
@@ -160,6 +160,15 @@
   line-height: 1.5;
 }
 
+.frameworkDemoHint {
+  margin: 12px 0 0;
+  padding: 0 4px;
+  color: #8b92a8;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .snippetPanel {
   margin: 16px 20px 0;
   border: 1px solid rgb(255 255 255 / 8%);
@@ -222,9 +231,6 @@
   > * {
     width: 100%;
     min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }
 
@@ -232,11 +238,14 @@
   display: block;
   min-height: 480px;
   padding: 0;
-  overflow: hidden;
+
+  /* Weather demo mounts stage + debugger controls in one tree — do not clip */
+  overflow: visible;
 
   > :first-child {
     width: 100%;
     min-height: 480px;
+    display: block;
   }
 }
 

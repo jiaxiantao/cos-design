@@ -18,11 +18,22 @@ type FrameworkPreviewProps = {
   exportName: string;
   codeExample: string;
   fill?: boolean;
+  /** Injected by FillStage — pixel box for background previews */
+  width?: number;
+  height?: number;
 };
 
-const FrameworkPreview = ({ framework, exportName, codeExample, fill }: FrameworkPreviewProps) => {
+const FrameworkPreview = ({
+  framework,
+  exportName,
+  codeExample,
+  fill,
+  width,
+  height,
+}: FrameworkPreviewProps) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const sized = Boolean(fill && width && height && width > 0 && height > 0);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -36,7 +47,20 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
       setError(null);
       host.replaceChildren();
       const dir = exportNameToDir(exportName);
-      const props = parseExampleProps(exportName, codeExample);
+      const parsed = parseExampleProps(exportName, codeExample);
+      // Prefer FillStage / fill host sizing over example fixed canvas size
+      const props: Record<string, unknown> = { ...parsed };
+      if (sized || fill) {
+        delete props.width;
+        delete props.height;
+        props.fill = true;
+      }
+
+      const boxStyle: Partial<CSSStyleDeclaration> = sized
+        ? { width: `${width}px`, height: `${height}px` }
+        : fill
+          ? { width: '100%', height: '100%', minHeight: '480px' }
+          : { width: 'auto', height: 'auto' };
 
       try {
         if (framework === 'vue') {
@@ -46,8 +70,7 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
           const mod = await loader();
           if (cancelled) return;
           const mountEl = document.createElement('div');
-          mountEl.style.width = fill ? '100%' : 'auto';
-          mountEl.style.height = fill ? '100%' : 'auto';
+          Object.assign(mountEl.style, boxStyle);
           host.appendChild(mountEl);
           vueApp = createApp(mod.default, props);
           vueApp.mount(mountEl);
@@ -62,12 +85,10 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
           if (cancelled) return;
           const tag = toElementTag(exportName);
           const el = document.createElement(tag);
-          if (fill) {
-            el.style.width = '100%';
-            el.style.height = '100%';
-            el.setAttribute('fill', '');
-          }
+          Object.assign(el.style, boxStyle);
+          if (props.fill) el.setAttribute('fill', '');
           for (const [k, v] of Object.entries(props)) {
+            if (k === 'fill') continue;
             const attr = toAttrName(k);
             if (typeof v === 'boolean') {
               if (v) el.setAttribute(attr, '');
@@ -83,7 +104,6 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
         const key = `../../components/${dir}/core/index.ts`;
         const loader = coreModules[key];
         if (!loader) throw new Error(`Core module not found for ${exportName}`);
-        // Core entry does not inject CSS — load shared component styles for preview
         await import(`../../components/${dir}/style/index.css`);
         const mod = (await loader()) as Record<string, unknown>;
         if (cancelled) return;
@@ -92,12 +112,11 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
           throw new Error(`create${exportName} not exported`);
         }
         const mountEl = document.createElement('div');
-        mountEl.style.width = fill ? '100%' : 'auto';
-        mountEl.style.height = fill ? '100%' : 'auto';
+        Object.assign(mountEl.style, boxStyle);
         host.appendChild(mountEl);
         const ctrl = (
           factory as (el: HTMLElement, opts?: Record<string, unknown>) => { destroy?: () => void }
-        )(mountEl, fill ? { ...props, fill: true } : props);
+        )(mountEl, props);
         destroyCore = () => ctrl.destroy?.();
       } catch (err) {
         if (!cancelled) {
@@ -116,14 +135,27 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
       destroyCore = null;
       host.replaceChildren();
     };
-  }, [framework, exportName, codeExample, fill]);
+  }, [framework, exportName, codeExample, fill, width, height, sized]);
 
   return (
-    <div style={{ width: '100%', minHeight: fill ? '100%' : undefined }}>
+    <div
+      style={{
+        width: sized ? `${width}px` : '100%',
+        height: sized ? `${height}px` : fill ? '100%' : undefined,
+        minHeight: fill && !sized ? 480 : undefined,
+      }}
+    >
       {error ? (
         <p style={{ color: '#fecaca', padding: 16, margin: 0 }}>{error}</p>
       ) : (
-        <div ref={hostRef} style={{ width: '100%', height: fill ? '100%' : undefined }} />
+        <div
+          ref={hostRef}
+          style={{
+            width: '100%',
+            height: fill || sized ? '100%' : undefined,
+            minHeight: fill && !sized ? 480 : undefined,
+          }}
+        />
       )}
     </div>
   );

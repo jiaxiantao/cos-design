@@ -25,6 +25,7 @@ export const componentDemos: ComponentDemoItem[] = [
 
 // 接入 Open-Meteo 实况：把 live 改为 true
 <WeatherBackground
+  fill
   weather="partlyCloudy"
   time="14:00"
   live={false}
@@ -37,8 +38,6 @@ export const componentDemos: ComponentDemoItem[] = [
   fogLevel={2}
   smogLevel={2}
   loading={false}
-  width={800}
-  height={450}
 />`,
   },
   {

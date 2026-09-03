@@ -20,6 +20,10 @@
   font-size: 13px;
   pointer-events: none;
 }
+/* Author `display:flex` must not override the HTML `hidden` attribute */
+.cos-weather-background__loading-overlay[hidden] {
+  display: none !important;
+}
 .cos-weather-background__loading-spinner {
   width: 28px;
   height: 28px;

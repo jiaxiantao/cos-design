@@ -86,6 +86,8 @@ const enUS: typeof zhCN = {
     copySnippet: 'Copy snippet',
     snippetHint:
       'Switch tabs for React / Vue / Web Components / Core examples. Vue and Element mounts are live.',
+    weatherDebuggerHint:
+      'Use the React tab for the full weather debugger (scene type, wind, rain/snow levels). This tab shows the multi-framework mount and fill layout.',
   },
   quickstart: {
     eyebrow: 'Quick Start',

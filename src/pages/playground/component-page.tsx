@@ -53,11 +53,13 @@ const ComponentPage = () => {
   const installCmd = scopedPackage ? `pnpm add ${scopedPackage}` : '';
   const isBackground = current?.category === 'background';
   /**
-   * 静态预览：Weather 在自家 canvas 舞台内挂载 Demo Content，避免遮挡控制面板。
-   * 编辑代码：示例只渲染 WeatherBackground 本体，需由页面叠加 Demo Content。
-   * 所有背景组件（含 Weather）静态预览都去 padding，让画布铺满预览框。
+   * 静态预览：
+   * - Weather 在自家 Demo 内挂载 FillStage + 文案 + 调试器（仅 React）
+   * - 其它背景组件由页面叠加 Demo Content
+   * - 非 React Tab：所有背景（含 Weather）统一 FillStage + 示例文案
    */
   const showStaticDemoContent = isBackground && current?.name !== 'WeatherBackground';
+  const showFrameworkDemoContent = isBackground;
   const showLiveDemoContent = isBackground;
   const fillStaticPreview = isBackground;
   const demoCopy = useBackgroundDemoCopy(current?.name ?? '');
@@ -211,11 +213,15 @@ const ComponentPage = () => {
       />
     );
 
-    if (showStaticDemoContent) {
+    if (showFrameworkDemoContent) {
       return (
         <>
-          <FillStage>{preview}</FillStage>
-          <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
+          <FillStage overlay={<BackgroundDemoContent headline={demoCopy.headline} />}>
+            {preview}
+          </FillStage>
+          {current.name === 'WeatherBackground' ? (
+            <p className={styles.frameworkDemoHint}>{t('component.weatherDebuggerHint')}</p>
+          ) : null}
         </>
       );
     }

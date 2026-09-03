@@ -25,14 +25,16 @@ function parseOptions(el: HTMLElement): WeatherBackgroundOptions {
   if (el.hasAttribute('smog-level')) options.smogLevel = Number(el.getAttribute('smog-level'));
   options.fill = el.hasAttribute('fill');
   options.live = el.hasAttribute('live');
-  options.loading = el.hasAttribute('loading');
+  if (el.hasAttribute('loading')) {
+    const raw = el.getAttribute('loading');
+    options.loading = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('weather')) {
+    const raw = el.getAttribute('weather') ?? '';
     try {
-      options.weather = JSON.parse(
-        el.getAttribute('weather') ?? 'null',
-      ) as WeatherBackgroundOptions['weather'];
+      options.weather = JSON.parse(raw) as WeatherBackgroundOptions['weather'];
     } catch {
-      /* ignore invalid JSON */
+      options.weather = raw as WeatherBackgroundOptions['weather'];
     }
   }
   const propweather = (el as CosWeatherBackgroundElement)._weather;

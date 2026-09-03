@@ -66,6 +66,7 @@ export function createWeatherBackground(
   overlay.append(spinner, loadingLabel);
   root.append(canvas, overlay);
   container.appendChild(root);
+  overlay.hidden = true;
 
   const applyLayout = () => {
     applyCanvasHostBox(container, root, {

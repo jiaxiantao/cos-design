@@ -83,6 +83,8 @@ const zhCN = {
     copySnippet: '复制示例',
     snippetHint:
       '切换 Tab 可查看 React / Vue / Web Components / Core 示例；Vue 与 Element 为实时挂载预览。',
+    weatherDebuggerHint:
+      '天气场景调试器（天气类型 / 风力 / 雨雪强度等）请切换到 React Tab 使用；本 Tab 展示多框架挂载与铺满效果。',
   },
   quickstart: {
     eyebrow: 'Quick Start',
