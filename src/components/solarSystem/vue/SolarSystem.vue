@@ -8,22 +8,26 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: SolarSystemController | null = null;
 
-const toOptions = (): SolarSystemOptions => ({ ...props });
+const toOptions = (): SolarSystemOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createSolarSystem(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

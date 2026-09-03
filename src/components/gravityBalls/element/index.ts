@@ -3,10 +3,11 @@ import '../style/index.css';
 
 const TAG = 'cos-gravity-balls';
 
-function parseOptions(_el: HTMLElement): GravityBallsOptions {
-  void _el;
-  const options: GravityBallsOptions = {};
-
+function parseOptions(el: HTMLElement): GravityBallsOptions {
+  const options = {} as GravityBallsOptions;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('ball-count')) options.ballCount = Number(el.getAttribute('ball-count'));
   return options;
 }
 
@@ -14,7 +15,7 @@ class CosGravityBallsElement extends HTMLElement {
   private ctrl: GravityBallsController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['width', 'height', 'ball-count'];
   }
 
   connectedCallback() {

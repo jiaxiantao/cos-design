@@ -4,26 +4,33 @@ import { createDiceRoll, type DiceRollController, type DiceRollOptions } from '.
 import '../style/index.css';
 
 const props = defineProps<DiceRollOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  roll: [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: DiceRollController | null = null;
 
-const toOptions = (): DiceRollOptions => ({ ...props });
+const toOptions = (): DiceRollOptions => ({
+  ...props,
+  onRoll: (...args: unknown[]) => emit('roll', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createDiceRoll(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

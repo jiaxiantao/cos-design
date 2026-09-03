@@ -8,22 +8,26 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: RadarScanController | null = null;
 
-const toOptions = (): RadarScanOptions => ({ ...props });
+const toOptions = (): RadarScanOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createRadarScan(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

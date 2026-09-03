@@ -5,12 +5,12 @@ const TAG = 'cos-ripple-water';
 
 function parseOptions(el: HTMLElement): RippleWaterOptions {
   const options = {} as RippleWaterOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('fill')) options.fill = true;
   if (el.hasAttribute('from-color')) options.fromColor = el.getAttribute('from-color') ?? undefined;
   if (el.hasAttribute('to-color')) options.toColor = el.getAttribute('to-color') ?? undefined;
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('wave-amplitude'))
     options.waveAmplitude = Number(el.getAttribute('wave-amplitude'));
   if (el.hasAttribute('wave-speed')) options.waveSpeed = Number(el.getAttribute('wave-speed'));
@@ -22,10 +22,9 @@ function parseOptions(el: HTMLElement): RippleWaterOptions {
     options.rippleRadius = Number(el.getAttribute('ripple-radius'));
   if (el.hasAttribute('damping')) options.damping = Number(el.getAttribute('damping'));
   if (el.hasAttribute('spread')) options.spread = Number(el.getAttribute('spread'));
-  if (el.hasAttribute('interactive'))
-    options.interactive = el.getAttribute('interactive') !== 'false';
-  if (el.hasAttribute('show-hint')) options.showHint = el.getAttribute('show-hint') !== 'false';
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
+  options.fill = el.hasAttribute('fill');
+  options.interactive = el.hasAttribute('interactive');
+  options.showHint = el.hasAttribute('show-hint');
   return options;
 }
 

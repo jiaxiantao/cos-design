@@ -8,17 +8,37 @@ import '../style/index.css';
 const TAG = 'cos-timeline-pulse';
 
 function parseOptions(el: HTMLElement): TimelinePulseOptions {
-  const options: TimelinePulseOptions = {};
-  if (el.hasAttribute('current')) options.current = Number(el.getAttribute('current'));
+  const options = {} as TimelinePulseOptions;
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('current')) options.current = Number(el.getAttribute('current'));
+  if (el.hasAttribute('steps')) {
+    try {
+      options.steps = JSON.parse(
+        el.getAttribute('steps') ?? 'null',
+      ) as TimelinePulseOptions['steps'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propsteps = (el as CosTimelinePulseElement)._steps;
+  if (propsteps !== undefined) options.steps = propsteps as TimelinePulseOptions['steps'];
   return options;
 }
 
 class CosTimelinePulseElement extends HTMLElement {
   private ctrl: TimelinePulseController | null = null;
 
+  _steps?: TimelinePulseOptions['steps'];
+  get steps(): TimelinePulseOptions['steps'] | undefined {
+    return this._steps;
+  }
+  set steps(value: TimelinePulseOptions['steps']) {
+    this._steps = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
-    return ['current', 'color'];
+    return ['steps', 'current', 'color'];
   }
 
   connectedCallback() {

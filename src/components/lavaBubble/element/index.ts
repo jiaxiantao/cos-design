@@ -5,16 +5,15 @@ const TAG = 'cos-lava-bubble';
 
 function parseOptions(el: HTMLElement): LavaBubbleOptions {
   const options = {} as LavaBubbleOptions;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('fill')) options.fill = true;
   if (el.hasAttribute('heat')) options.heat = Number(el.getAttribute('heat'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('auto-spawn')) options.autoSpawn = el.getAttribute('auto-spawn') !== 'false';
   if (el.hasAttribute('activity')) options.activity = Number(el.getAttribute('activity'));
-  if (el.hasAttribute('interactive'))
-    options.interactive = el.getAttribute('interactive') !== 'false';
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  options.fill = el.hasAttribute('fill');
+  options.autoSpawn = el.hasAttribute('auto-spawn');
+  options.interactive = el.hasAttribute('interactive');
   return options;
 }
 

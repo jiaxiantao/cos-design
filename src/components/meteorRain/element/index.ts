@@ -3,10 +3,13 @@ import '../style/index.css';
 
 const TAG = 'cos-meteor-rain';
 
-function parseOptions(_el: HTMLElement): MeteorRainOptions {
-  void _el;
-  const options: MeteorRainOptions = {};
-
+function parseOptions(el: HTMLElement): MeteorRainOptions {
+  const options = {} as MeteorRainOptions;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('meteor-count'))
+    options.meteorCount = Number(el.getAttribute('meteor-count'));
+  options.fill = el.hasAttribute('fill');
   return options;
 }
 
@@ -14,7 +17,7 @@ class CosMeteorRainElement extends HTMLElement {
   private ctrl: MeteorRainController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['width', 'height', 'fill', 'meteor-count'];
   }
 
   connectedCallback() {

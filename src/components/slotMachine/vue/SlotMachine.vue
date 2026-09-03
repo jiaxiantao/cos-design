@@ -4,17 +4,26 @@ import { createSlotMachine, type SlotMachineController, type SlotMachineOptions 
 import '../style/index.css';
 
 const props = defineProps<SlotMachineOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'spin-end': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: SlotMachineController | null = null;
 
-const toOptions = (): SlotMachineOptions => ({ ...props });
+const toOptions = (): SlotMachineOptions => ({
+  ...props,
+  onSpinEnd: (...args: unknown[]) => emit('spin-end', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createSlotMachine(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -23,7 +32,7 @@ onUnmounted(() => {
 
 defineExpose({
   spin: (results?: string[]) => ctrl?.spin(results),
-  reset: () => ctrl?.reset()
+  reset: () => ctrl?.reset(),
 });
 </script>
 

@@ -7,10 +7,16 @@ import '../style/index.css';
 
 const TAG = 'cos-dandelion-field';
 
-function parseOptions(_el: HTMLElement): DandelionFieldOptions {
-  void _el;
-  const options: DandelionFieldOptions = {};
-
+function parseOptions(el: HTMLElement): DandelionFieldOptions {
+  const options = {} as DandelionFieldOptions;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('plant-count')) options.plantCount = Number(el.getAttribute('plant-count'));
+  if (el.hasAttribute('seed-count')) options.seedCount = Number(el.getAttribute('seed-count'));
+  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
+  options.fill = el.hasAttribute('fill');
+  options.interactive = el.hasAttribute('interactive');
   return options;
 }
 
@@ -18,7 +24,16 @@ class CosDandelionFieldElement extends HTMLElement {
   private ctrl: DandelionFieldController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return [
+      'width',
+      'height',
+      'fill',
+      'plant-count',
+      'seed-count',
+      'speed',
+      'interactive',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {

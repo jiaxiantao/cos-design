@@ -3,14 +3,13 @@ import '../style/index.css';
 
 const TAG = 'cos-starfield';
 
-function parseOptions(_el: HTMLElement): StarfieldOptions {
-  void _el;
-  const options: StarfieldOptions = {};
-  if (_el.hasAttribute('width')) options.width = Number(_el.getAttribute('width'));
-  if (_el.hasAttribute('height')) options.height = Number(_el.getAttribute('height'));
-  if (_el.hasAttribute('fill')) options.fill = true;
-  if (_el.hasAttribute('star-count')) options.starCount = Number(_el.getAttribute('star-count'));
-  if (_el.hasAttribute('speed')) options.speed = Number(_el.getAttribute('speed'));
+function parseOptions(el: HTMLElement): StarfieldOptions {
+  const options = {} as StarfieldOptions;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('star-count')) options.starCount = Number(el.getAttribute('star-count'));
+  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
+  options.fill = el.hasAttribute('fill');
   return options;
 }
 

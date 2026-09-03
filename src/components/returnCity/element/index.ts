@@ -3,10 +3,12 @@ import '../style/index.css';
 
 const TAG = 'cos-return-city';
 
-function parseOptions(_el: HTMLElement): ReturnCityOptions {
-  void _el;
-  const options: ReturnCityOptions = {};
-
+function parseOptions(el: HTMLElement): ReturnCityOptions {
+  const options = {} as ReturnCityOptions;
+  if (el.hasAttribute('star-count')) options.starCount = Number(el.getAttribute('star-count'));
+  if (el.hasAttribute('glass-count')) options.glassCount = Number(el.getAttribute('glass-count'));
+  if (el.hasAttribute('glass-radius'))
+    options.glassRadius = Number(el.getAttribute('glass-radius'));
   return options;
 }
 
@@ -14,7 +16,7 @@ class CosReturnCityElement extends HTMLElement {
   private ctrl: ReturnCityController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['star-count', 'glass-count', 'glass-radius'];
   }
 
   connectedCallback() {

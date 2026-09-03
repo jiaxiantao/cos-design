@@ -3,10 +3,13 @@ import '../style/index.css';
 
 const TAG = 'cos-cursor-trail';
 
-function parseOptions(_el: HTMLElement): CursorTrailOptions {
-  void _el;
-  const options: CursorTrailOptions = {};
-
+function parseOptions(el: HTMLElement): CursorTrailOptions {
+  const options = {} as CursorTrailOptions;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
+  if (el.hasAttribute('length')) options.length = Number(el.getAttribute('length'));
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   return options;
 }
 
@@ -14,7 +17,7 @@ class CosCursorTrailElement extends HTMLElement {
   private ctrl: CursorTrailController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['color', 'length', 'width', 'height', 'hint'];
   }
 
   connectedCallback() {

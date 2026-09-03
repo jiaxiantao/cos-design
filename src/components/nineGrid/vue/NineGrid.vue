@@ -4,17 +4,26 @@ import { createNineGrid, type NineGridController, type NineGridOptions } from '.
 import '../style/index.css';
 
 const props = defineProps<NineGridOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'draw-end': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: NineGridController | null = null;
 
-const toOptions = (): NineGridOptions => ({ ...props });
+const toOptions = (): NineGridOptions => ({
+  ...props,
+  onDrawEnd: (...args: unknown[]) => emit('draw-end', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createNineGrid(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -23,7 +32,7 @@ onUnmounted(() => {
 
 defineExpose({
   draw: (targetIndex?: number) => ctrl?.draw(targetIndex),
-  reset: () => ctrl?.reset()
+  reset: () => ctrl?.reset(),
 });
 </script>
 

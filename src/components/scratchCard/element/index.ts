@@ -13,8 +13,10 @@ function parseOptions(el: HTMLElement): ScratchCardOptions {
     options.revealThreshold = Number(el.getAttribute('reveal-threshold'));
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  options.onReveal = () => {
-    el.dispatchEvent(new CustomEvent('reveal', { bubbles: true }));
+  options.onReveal = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('reveal', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
   };
   return options;
 }
@@ -40,11 +42,10 @@ class CosScratchCardElement extends HTMLElement {
   }
 
   reset() {
-    this.ctrl?.reset();
+    return this.ctrl?.reset();
   }
-
   reveal() {
-    this.ctrl?.reveal();
+    return this.ctrl?.reveal();
   }
 }
 

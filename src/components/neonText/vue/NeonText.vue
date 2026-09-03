@@ -8,22 +8,26 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: NeonTextController | null = null;
 
-const toOptions = (): NeonTextOptions => ({ ...props });
+const toOptions = (): NeonTextOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createNeonText(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

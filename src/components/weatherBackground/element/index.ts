@@ -9,14 +9,12 @@ const TAG = 'cos-weather-background';
 
 function parseOptions(el: HTMLElement): WeatherBackgroundOptions {
   const options = {} as WeatherBackgroundOptions;
+  if (el.hasAttribute('time')) options.time = el.getAttribute('time') ?? undefined;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  if (el.hasAttribute('loading-text'))
+    options.loadingText = el.getAttribute('loading-text') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('fill')) options.fill = true;
-  if (el.hasAttribute('weather'))
-    options.weather = (el.getAttribute('weather') ??
-      undefined) as WeatherBackgroundOptions['weather'];
-  if (el.hasAttribute('time')) options.time = el.getAttribute('time') ?? undefined;
-  if (el.hasAttribute('live')) options.live = el.getAttribute('live') !== 'false';
   if (el.hasAttribute('latitude')) options.latitude = Number(el.getAttribute('latitude'));
   if (el.hasAttribute('longitude')) options.longitude = Number(el.getAttribute('longitude'));
   if (el.hasAttribute('wind-level')) options.windLevel = Number(el.getAttribute('wind-level'));
@@ -25,15 +23,40 @@ function parseOptions(el: HTMLElement): WeatherBackgroundOptions {
   if (el.hasAttribute('hail-level')) options.hailLevel = Number(el.getAttribute('hail-level'));
   if (el.hasAttribute('fog-level')) options.fogLevel = Number(el.getAttribute('fog-level'));
   if (el.hasAttribute('smog-level')) options.smogLevel = Number(el.getAttribute('smog-level'));
-  if (el.hasAttribute('loading')) options.loading = el.getAttribute('loading') !== 'false';
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('loading-text'))
-    options.loadingText = el.getAttribute('loading-text') ?? undefined;
+  options.fill = el.hasAttribute('fill');
+  options.live = el.hasAttribute('live');
+  options.loading = el.hasAttribute('loading');
+  if (el.hasAttribute('weather')) {
+    try {
+      options.weather = JSON.parse(
+        el.getAttribute('weather') ?? 'null',
+      ) as WeatherBackgroundOptions['weather'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propweather = (el as CosWeatherBackgroundElement)._weather;
+  if (propweather !== undefined)
+    options.weather = propweather as WeatherBackgroundOptions['weather'];
+  options.onLiveWeather = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('live-weather', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosWeatherBackgroundElement extends HTMLElement {
   private ctrl: WeatherBackgroundController | null = null;
+
+  _weather?: WeatherBackgroundOptions['weather'];
+  get weather(): WeatherBackgroundOptions['weather'] | undefined {
+    return this._weather;
+  }
+  set weather(value: WeatherBackgroundOptions['weather']) {
+    this._weather = value;
+    this.ctrl?.update(parseOptions(this));
+  }
 
   static get observedAttributes() {
     return [

@@ -8,22 +8,26 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: TrueFocusController | null = null;
 
-const toOptions = (): TrueFocusOptions => ({ ...props });
+const toOptions = (): TrueFocusOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createTrueFocus(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

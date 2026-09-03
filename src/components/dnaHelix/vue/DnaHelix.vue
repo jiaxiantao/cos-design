@@ -8,22 +8,26 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: DnaHelixController | null = null;
 
-const toOptions = (): DnaHelixOptions => ({ ...props });
+const toOptions = (): DnaHelixOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createDnaHelix(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

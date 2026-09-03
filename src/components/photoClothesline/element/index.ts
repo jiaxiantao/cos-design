@@ -9,8 +9,17 @@ const TAG = 'cos-photo-clothesline';
 
 function parseOptions(el: HTMLElement): PhotoClotheslineOptions {
   const options = {} as PhotoClotheslineOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
+  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('rope-color')) options.ropeColor = el.getAttribute('rope-color') ?? undefined;
+  if (el.hasAttribute('band-color')) options.bandColor = el.getAttribute('band-color') ?? undefined;
+  if (el.hasAttribute('pin-color')) options.pinColor = el.getAttribute('pin-color') ?? undefined;
+  if (el.hasAttribute('frame-color'))
+    options.frameColor = el.getAttribute('frame-color') ?? undefined;
+  if (el.hasAttribute('background'))
+    options.background = el.getAttribute('background') ?? undefined;
+  if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('photo-width')) options.photoWidth = Number(el.getAttribute('photo-width'));
   if (el.hasAttribute('photo-height'))
     options.photoHeight = Number(el.getAttribute('photo-height'));
@@ -24,27 +33,48 @@ function parseOptions(el: HTMLElement): PhotoClotheslineOptions {
   if (el.hasAttribute('damping')) options.damping = Number(el.getAttribute('damping'));
   if (el.hasAttribute('tension')) options.tension = Number(el.getAttribute('tension'));
   if (el.hasAttribute('tilt')) options.tilt = Number(el.getAttribute('tilt'));
-  if (el.hasAttribute('rope-color')) options.ropeColor = el.getAttribute('rope-color') ?? undefined;
-  if (el.hasAttribute('band-color')) options.bandColor = el.getAttribute('band-color') ?? undefined;
-  if (el.hasAttribute('pin-color')) options.pinColor = el.getAttribute('pin-color') ?? undefined;
-  if (el.hasAttribute('frame-color'))
-    options.frameColor = el.getAttribute('frame-color') ?? undefined;
-  if (el.hasAttribute('background'))
-    options.background = el.getAttribute('background') ?? undefined;
-  if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
-  if (el.hasAttribute('show-caption'))
-    options.showCaption = el.getAttribute('show-caption') !== 'false';
   if (el.hasAttribute('initial-index'))
     options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('photos')) {
+    try {
+      options.photos = JSON.parse(
+        el.getAttribute('photos') ?? 'null',
+      ) as PhotoClotheslineOptions['photos'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propphotos = (el as CosPhotoClotheslineElement)._photos;
+  if (propphotos !== undefined) options.photos = propphotos as PhotoClotheslineOptions['photos'];
+  options.onIndexChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onPhotoClick = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosPhotoClotheslineElement extends HTMLElement {
   private ctrl: PhotoClotheslineController | null = null;
 
+  _photos?: PhotoClotheslineOptions['photos'];
+  get photos(): PhotoClotheslineOptions['photos'] | undefined {
+    return this._photos;
+  }
+  set photos(value: PhotoClotheslineOptions['photos']) {
+    this._photos = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
     return [
+      'photos',
       'width',
       'height',
       'photo-width',

@@ -4,10 +4,10 @@ import '../style/index.css';
 const TAG = 'cos-split-reveal';
 
 function parseOptions(el: HTMLElement): SplitRevealOptions {
-  const options: SplitRevealOptions = {};
+  const options = {} as SplitRevealOptions;
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('delay')) options.delay = Number(el.getAttribute('delay'));
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('delay')) options.delay = Number(el.getAttribute('delay'));
   return options;
 }
 

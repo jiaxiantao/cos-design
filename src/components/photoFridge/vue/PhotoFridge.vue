@@ -4,26 +4,33 @@ import { createPhotoFridge, type PhotoFridgeController, type PhotoFridgeOptions 
 import '../style/index.css';
 
 const props = defineProps<PhotoFridgeOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'photo-click': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: PhotoFridgeController | null = null;
 
-const toOptions = (): PhotoFridgeOptions => ({ ...props });
+const toOptions = (): PhotoFridgeOptions => ({
+  ...props,
+  onPhotoClick: (...args: unknown[]) => emit('photo-click', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createPhotoFridge(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

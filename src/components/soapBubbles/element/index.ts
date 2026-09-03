@@ -5,14 +5,13 @@ const TAG = 'cos-soap-bubbles';
 
 function parseOptions(el: HTMLElement): SoapBubblesOptions {
   const options = {} as SoapBubblesOptions;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('fill')) options.fill = true;
   if (el.hasAttribute('count')) options.count = Number(el.getAttribute('count'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('interactive'))
-    options.interactive = el.getAttribute('interactive') !== 'false';
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  options.fill = el.hasAttribute('fill');
+  options.interactive = el.hasAttribute('interactive');
   return options;
 }
 

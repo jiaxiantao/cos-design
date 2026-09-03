@@ -3,10 +3,10 @@ import '../style/index.css';
 
 const TAG = 'cos-canvas-clock';
 
-function parseOptions(_el: HTMLElement): CanvasClockOptions {
-  void _el;
-  const options: CanvasClockOptions = {};
-
+function parseOptions(el: HTMLElement): CanvasClockOptions {
+  const options = {} as CanvasClockOptions;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   return options;
 }
 
@@ -14,7 +14,7 @@ class CosCanvasClockElement extends HTMLElement {
   private ctrl: CanvasClockController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['width', 'height'];
   }
 
   connectedCallback() {

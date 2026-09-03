@@ -1,3 +1,9 @@
+.cos-nineGrid-host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-nine-grid {
   display: grid;
   gap: 16px;

@@ -4,26 +4,35 @@ import { createPhotoTunnel, type PhotoTunnelController, type PhotoTunnelOptions 
 import '../style/index.css';
 
 const props = defineProps<PhotoTunnelOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'photo-click': [...args: unknown[]];
+  'index-change': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: PhotoTunnelController | null = null;
 
-const toOptions = (): PhotoTunnelOptions => ({ ...props });
+const toOptions = (): PhotoTunnelOptions => ({
+  ...props,
+  onPhotoClick: (...args: unknown[]) => emit('photo-click', ...args),
+  onIndexChange: (...args: unknown[]) => emit('index-change', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createPhotoTunnel(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

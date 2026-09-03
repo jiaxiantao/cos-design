@@ -4,11 +4,11 @@ import '../style/index.css';
 const TAG = 'cos-neon-text';
 
 function parseOptions(el: HTMLElement): NeonTextOptions {
-  const options: NeonTextOptions = {};
+  const options = {} as NeonTextOptions;
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('flicker')) options.flicker = true;
+  options.flicker = el.hasAttribute('flicker');
   return options;
 }
 

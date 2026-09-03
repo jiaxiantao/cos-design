@@ -3,10 +3,12 @@ import '../style/index.css';
 
 const TAG = 'cos-speedometer';
 
-function parseOptions(_el: HTMLElement): SpeedometerOptions {
-  void _el;
-  const options: SpeedometerOptions = {};
-
+function parseOptions(el: HTMLElement): SpeedometerOptions {
+  const options = {} as SpeedometerOptions;
+  if (el.hasAttribute('label')) options.label = el.getAttribute('label') ?? undefined;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
+  if (el.hasAttribute('max')) options.max = Number(el.getAttribute('max'));
   return options;
 }
 
@@ -14,7 +16,7 @@ class CosSpeedometerElement extends HTMLElement {
   private ctrl: SpeedometerController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['value', 'max', 'label', 'color'];
   }
 
   connectedCallback() {

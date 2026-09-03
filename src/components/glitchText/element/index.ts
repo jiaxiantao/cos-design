@@ -4,7 +4,7 @@ import '../style/index.css';
 const TAG = 'cos-glitch-text';
 
 function parseOptions(el: HTMLElement): GlitchTextOptions {
-  const options: GlitchTextOptions = {};
+  const options = {} as GlitchTextOptions;
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('glitch-color1'))

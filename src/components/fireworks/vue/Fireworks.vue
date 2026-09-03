@@ -3,32 +3,26 @@ import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createFireworks, type FireworksController, type FireworksOptions } from '../core';
 import '../style/index.css';
 
-const props = withDefaults(defineProps<FireworksOptions>(), {
-  auto: true,
-  hint: '点击画布燃放烟花'
-});
-
+const props = defineProps<FireworksOptions>();
 const emit = defineEmits<{
-  complete: [];
+  complete: [...args: unknown[]];
 }>();
-
 const hostRef = ref<HTMLElement>();
 let ctrl: FireworksController | null = null;
 
 const toOptions = (): FireworksOptions => ({
   ...props,
-  onComplete: () => emit('complete')
+  onComplete: (...args: unknown[]) => emit('complete', ...args),
 });
 
 onMounted(() => {
-  if (!hostRef.value) return;
-  ctrl = createFireworks(hostRef.value, toOptions());
+  if (hostRef.value) ctrl = createFireworks(hostRef.value, toOptions());
 });
 
 watch(
   () => ({ ...props }),
   () => ctrl?.update(toOptions()),
-  { deep: true }
+  { deep: true },
 );
 
 onUnmounted(() => {
@@ -37,7 +31,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-  launch: (x?: number) => ctrl?.launch(x)
+  launch: (x?: number) => ctrl?.launch(x),
 });
 </script>
 

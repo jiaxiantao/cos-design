@@ -4,17 +4,26 @@ import { createBurnAway, type BurnAwayController, type BurnAwayOptions } from '.
 import '../style/index.css';
 
 const props = defineProps<BurnAwayOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  complete: [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: BurnAwayController | null = null;
 
-const toOptions = (): BurnAwayOptions => ({ ...props });
+const toOptions = (): BurnAwayOptions => ({
+  ...props,
+  onComplete: (...args: unknown[]) => emit('complete', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createBurnAway(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,7 +31,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-  ignite: (...args: unknown[]) => ctrl?.ignite(...args)
+  ignite: () => ctrl?.ignite(),
 });
 </script>
 

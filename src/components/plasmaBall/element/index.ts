@@ -5,9 +5,9 @@ const TAG = 'cos-plasma-ball';
 
 function parseOptions(el: HTMLElement): PlasmaBallOptions {
   const options = {} as PlasmaBallOptions;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('arc-count')) options.arcCount = Number(el.getAttribute('arc-count'));
   return options;
 }

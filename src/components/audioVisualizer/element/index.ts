@@ -7,10 +7,12 @@ import '../style/index.css';
 
 const TAG = 'cos-audio-visualizer';
 
-function parseOptions(_el: HTMLElement): AudioVisualizerOptions {
-  void _el;
-  const options: AudioVisualizerOptions = {};
-
+function parseOptions(el: HTMLElement): AudioVisualizerOptions {
+  const options = {} as AudioVisualizerOptions;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('bar-count')) options.barCount = Number(el.getAttribute('bar-count'));
+  options.useMic = el.hasAttribute('use-mic');
   return options;
 }
 
@@ -18,7 +20,7 @@ class CosAudioVisualizerElement extends HTMLElement {
   private ctrl: AudioVisualizerController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['width', 'height', 'bar-count', 'use-mic'];
   }
 
   connectedCallback() {

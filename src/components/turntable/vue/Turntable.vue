@@ -4,17 +4,26 @@ import { createTurntable, type TurntableController, type TurntableOptions } from
 import '../style/index.css';
 
 const props = defineProps<TurntableOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'spin-end': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: TurntableController | null = null;
 
-const toOptions = (): TurntableOptions => ({ ...props });
+const toOptions = (): TurntableOptions => ({
+  ...props,
+  onSpinEnd: (...args: unknown[]) => emit('spin-end', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createTurntable(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -23,7 +32,7 @@ onUnmounted(() => {
 
 defineExpose({
   spin: (targetIndex?: number) => ctrl?.spin(targetIndex),
-  reset: () => ctrl?.reset()
+  reset: () => ctrl?.reset(),
 });
 </script>
 

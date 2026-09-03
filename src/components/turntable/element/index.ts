@@ -5,30 +5,48 @@ const TAG = 'cos-turntable';
 
 function parseOptions(el: HTMLElement): TurntableOptions {
   const options = {} as TurntableOptions;
-  if (el.hasAttribute('prizes')) {
-    try {
-      options.prizes = JSON.parse(el.getAttribute('prizes') ?? 'null');
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
-  if (el.hasAttribute('spin-duration'))
-    options.spinDuration = Number(el.getAttribute('spin-duration'));
-  if (el.hasAttribute('spin-rounds')) options.spinRounds = Number(el.getAttribute('spin-rounds'));
-  if (el.hasAttribute('target-index'))
-    options.targetIndex = Number(el.getAttribute('target-index'));
   if (el.hasAttribute('button-text'))
     options.buttonText = el.getAttribute('button-text') ?? undefined;
   if (el.hasAttribute('spinning-text'))
     options.spinningText = el.getAttribute('spinning-text') ?? undefined;
   if (el.hasAttribute('result-prefix'))
     options.resultPrefix = el.getAttribute('result-prefix') ?? undefined;
+  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
+  if (el.hasAttribute('spin-duration'))
+    options.spinDuration = Number(el.getAttribute('spin-duration'));
+  if (el.hasAttribute('spin-rounds')) options.spinRounds = Number(el.getAttribute('spin-rounds'));
+  if (el.hasAttribute('target-index'))
+    options.targetIndex = Number(el.getAttribute('target-index'));
+  if (el.hasAttribute('prizes')) {
+    try {
+      options.prizes = JSON.parse(
+        el.getAttribute('prizes') ?? 'null',
+      ) as TurntableOptions['prizes'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propprizes = (el as CosTurntableElement)._prizes;
+  if (propprizes !== undefined) options.prizes = propprizes as TurntableOptions['prizes'];
+  options.onSpinEnd = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('spin-end', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosTurntableElement extends HTMLElement {
   private ctrl: TurntableController | null = null;
+
+  _prizes?: TurntableOptions['prizes'];
+  get prizes(): TurntableOptions['prizes'] | undefined {
+    return this._prizes;
+  }
+  set prizes(value: TurntableOptions['prizes']) {
+    this._prizes = value;
+    this.ctrl?.update(parseOptions(this));
+  }
 
   static get observedAttributes() {
     return [
@@ -57,11 +75,10 @@ class CosTurntableElement extends HTMLElement {
   }
 
   spin(targetIndex?: number) {
-    this.ctrl?.spin(targetIndex);
+    return this.ctrl?.spin(targetIndex);
   }
-
   reset() {
-    this.ctrl?.reset();
+    return this.ctrl?.reset();
   }
 }
 

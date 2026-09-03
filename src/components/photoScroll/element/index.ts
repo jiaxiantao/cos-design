@@ -5,8 +5,9 @@ const TAG = 'cos-photo-scroll';
 
 function parseOptions(el: HTMLElement): PhotoScrollOptions {
   const options = {} as PhotoScrollOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
+  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('frame-width')) options.frameWidth = Number(el.getAttribute('frame-width'));
   if (el.hasAttribute('frame-height'))
     options.frameHeight = Number(el.getAttribute('frame-height'));
@@ -14,19 +15,48 @@ function parseOptions(el: HTMLElement): PhotoScrollOptions {
   if (el.hasAttribute('drag-sensitivity'))
     options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('show-caption'))
-    options.showCaption = el.getAttribute('show-caption') !== 'false';
   if (el.hasAttribute('initial-index'))
     options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('photos')) {
+    try {
+      options.photos = JSON.parse(
+        el.getAttribute('photos') ?? 'null',
+      ) as PhotoScrollOptions['photos'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propphotos = (el as CosPhotoScrollElement)._photos;
+  if (propphotos !== undefined) options.photos = propphotos as PhotoScrollOptions['photos'];
+  options.onPhotoClick = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onIndexChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosPhotoScrollElement extends HTMLElement {
   private ctrl: PhotoScrollController | null = null;
 
+  _photos?: PhotoScrollOptions['photos'];
+  get photos(): PhotoScrollOptions['photos'] | undefined {
+    return this._photos;
+  }
+  set photos(value: PhotoScrollOptions['photos']) {
+    this._photos = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
     return [
+      'photos',
       'width',
       'height',
       'frame-width',

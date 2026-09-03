@@ -8,7 +8,7 @@ import '../style/index.css';
 const TAG = 'cos-holographic-card';
 
 function parseOptions(el: HTMLElement): HolographicCardOptions {
-  const options: HolographicCardOptions = {};
+  const options = {} as HolographicCardOptions;
   if (el.hasAttribute('title')) options.title = el.getAttribute('title') ?? undefined;
   if (el.hasAttribute('subtitle')) options.subtitle = el.getAttribute('subtitle') ?? undefined;
   if (el.hasAttribute('image')) options.image = el.getAttribute('image') ?? undefined;

@@ -23,11 +23,11 @@ Scratch → Fireworks
 
 ## Notes
 
-| Topic     | Rule                                                        |
-| --------- | ----------------------------------------------------------- |
-| Import    | `from '@cos-design/<pkg>/vue'`                              |
-| Size      | `fill` needs parent with explicit height                    |
-| Callbacks | Pass Core callbacks as props (`:on-reveal`, `:on-draw-end`) |
+| Topic     | Rule                                                                 |
+| --------- | -------------------------------------------------------------------- |
+| Import    | `from '@cos-design/<pkg>/vue'`                                       |
+| Size      | `fill` needs parent with explicit height                             |
+| Callbacks | Prefer Vue events (`@reveal`, `@draw-end`, `@spin-end`, `@complete`) |
 
 ## Related
 

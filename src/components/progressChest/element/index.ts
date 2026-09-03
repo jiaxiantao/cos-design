@@ -7,10 +7,17 @@ import '../style/index.css';
 
 const TAG = 'cos-progress-chest';
 
-function parseOptions(_el: HTMLElement): ProgressChestOptions {
-  void _el;
-  const options: ProgressChestOptions = {};
-
+function parseOptions(el: HTMLElement): ProgressChestOptions {
+  const options = {} as ProgressChestOptions;
+  if (el.hasAttribute('label')) options.label = el.getAttribute('label') ?? undefined;
+  if (el.hasAttribute('opened-label'))
+    options.openedLabel = el.getAttribute('opened-label') ?? undefined;
+  if (el.hasAttribute('progress')) options.progress = Number(el.getAttribute('progress'));
+  options.onOpen = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('open', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
@@ -18,7 +25,7 @@ class CosProgressChestElement extends HTMLElement {
   private ctrl: ProgressChestController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['progress', 'label', 'opened-label'];
   }
 
   connectedCallback() {

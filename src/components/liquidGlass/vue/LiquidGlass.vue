@@ -8,13 +8,19 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: LiquidGlassController | null = null;
 
-const toOptions = (): LiquidGlassOptions => ({ ...props });
+const toOptions = (): LiquidGlassOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createLiquidGlass(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,7 +28,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-
+  getSlot: () => ctrl?.getSlot(),
 });
 </script>
 

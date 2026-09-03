@@ -4,26 +4,35 @@ import { createPhotoScroll, type PhotoScrollController, type PhotoScrollOptions 
 import '../style/index.css';
 
 const props = defineProps<PhotoScrollOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'photo-click': [...args: unknown[]];
+  'index-change': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: PhotoScrollController | null = null;
 
-const toOptions = (): PhotoScrollOptions => ({ ...props });
+const toOptions = (): PhotoScrollOptions => ({
+  ...props,
+  onPhotoClick: (...args: unknown[]) => emit('photo-click', ...args),
+  onIndexChange: (...args: unknown[]) => emit('index-change', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createPhotoScroll(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

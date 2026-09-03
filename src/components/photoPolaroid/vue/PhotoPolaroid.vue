@@ -1,29 +1,40 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { createPhotoPolaroid, type PhotoPolaroidController, type PhotoPolaroidOptions } from '../core';
+import {
+  createPhotoPolaroid,
+  type PhotoPolaroidController,
+  type PhotoPolaroidOptions,
+} from '../core';
 import '../style/index.css';
 
 const props = defineProps<PhotoPolaroidOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'photo-click': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: PhotoPolaroidController | null = null;
 
-const toOptions = (): PhotoPolaroidOptions => ({ ...props });
+const toOptions = (): PhotoPolaroidOptions => ({
+  ...props,
+  onPhotoClick: (...args: unknown[]) => emit('photo-click', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createPhotoPolaroid(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

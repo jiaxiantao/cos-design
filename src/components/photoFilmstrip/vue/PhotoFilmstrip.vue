@@ -1,29 +1,42 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { createPhotoFilmstrip, type PhotoFilmstripController, type PhotoFilmstripOptions } from '../core';
+import {
+  createPhotoFilmstrip,
+  type PhotoFilmstripController,
+  type PhotoFilmstripOptions,
+} from '../core';
 import '../style/index.css';
 
 const props = defineProps<PhotoFilmstripOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'photo-click': [...args: unknown[]];
+  'index-change': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: PhotoFilmstripController | null = null;
 
-const toOptions = (): PhotoFilmstripOptions => ({ ...props });
+const toOptions = (): PhotoFilmstripOptions => ({
+  ...props,
+  onPhotoClick: (...args: unknown[]) => emit('photo-click', ...args),
+  onIndexChange: (...args: unknown[]) => emit('index-change', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createPhotoFilmstrip(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

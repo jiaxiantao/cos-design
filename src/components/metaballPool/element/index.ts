@@ -5,10 +5,10 @@ const TAG = 'cos-metaball-pool';
 
 function parseOptions(el: HTMLElement): MetaballPoolOptions {
   const options = {} as MetaballPoolOptions;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('ball-count')) options.ballCount = Number(el.getAttribute('ball-count'));
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   return options;
 }
 

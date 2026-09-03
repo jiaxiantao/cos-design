@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Playground: React / Vue / Web Components / Core framework tabs with live Vue & Element mounts
 - Examples: `examples/vue-app` and `examples/vanilla`
 - Element adapters: FlipCard / NineGrid / ScratchCard emit `reveal` / `draw-end` CustomEvents
+- Regenerate all Vue/Element adapters from `core/types.ts` (attr parsing, boolean clear, on\* → events, photos/prizes JS props)
+- Playground Element mounts use kebab-case attributes
 
 ### Breaking
 

@@ -9,30 +9,59 @@ const TAG = 'cos-photo-view-master';
 
 function parseOptions(el: HTMLElement): PhotoViewMasterOptions {
   const options = {} as PhotoViewMasterOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
+  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('disc-size')) options.discSize = Number(el.getAttribute('disc-size'));
   if (el.hasAttribute('peep-size')) options.peepSize = Number(el.getAttribute('peep-size'));
   if (el.hasAttribute('drag-sensitivity'))
     options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('auto-rotate'))
-    options.autoRotate = el.getAttribute('auto-rotate') !== 'false';
   if (el.hasAttribute('auto-rotate-speed'))
     options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
-  if (el.hasAttribute('show-caption'))
-    options.showCaption = el.getAttribute('show-caption') !== 'false';
   if (el.hasAttribute('initial-index'))
     options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  options.autoRotate = el.hasAttribute('auto-rotate');
+  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('photos')) {
+    try {
+      options.photos = JSON.parse(
+        el.getAttribute('photos') ?? 'null',
+      ) as PhotoViewMasterOptions['photos'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propphotos = (el as CosPhotoViewMasterElement)._photos;
+  if (propphotos !== undefined) options.photos = propphotos as PhotoViewMasterOptions['photos'];
+  options.onPhotoClick = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onIndexChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosPhotoViewMasterElement extends HTMLElement {
   private ctrl: PhotoViewMasterController | null = null;
 
+  _photos?: PhotoViewMasterOptions['photos'];
+  get photos(): PhotoViewMasterOptions['photos'] | undefined {
+    return this._photos;
+  }
+  set photos(value: PhotoViewMasterOptions['photos']) {
+    this._photos = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
     return [
+      'photos',
       'width',
       'height',
       'disc-size',

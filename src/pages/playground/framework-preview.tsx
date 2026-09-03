@@ -7,6 +7,8 @@ import {
   type FrameworkId,
 } from './framework-snippets';
 
+const toAttrName = (key: string) => key.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
 const vueModules = import.meta.glob<{ default: Component }>('../../components/*/vue/*.vue');
 const elementModules = import.meta.glob('../../components/*/element/index.ts');
 const coreModules = import.meta.glob('../../components/*/core/index.ts');
@@ -66,11 +68,13 @@ const FrameworkPreview = ({ framework, exportName, codeExample, fill }: Framewor
             el.setAttribute('fill', '');
           }
           for (const [k, v] of Object.entries(props)) {
+            const attr = toAttrName(k);
             if (typeof v === 'boolean') {
-              if (v) el.setAttribute(k, '');
+              if (v) el.setAttribute(attr, '');
+              else el.removeAttribute(attr);
               continue;
             }
-            el.setAttribute(k, String(v));
+            el.setAttribute(attr, String(v));
           }
           host.appendChild(el);
           return;

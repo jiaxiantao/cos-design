@@ -3,25 +3,19 @@ import '../style/index.css';
 
 const TAG = 'cos-fireworks';
 
-const BOOL_ATTRS = new Set(['auto', 'interactive', 'fill']);
-
 function parseOptions(el: HTMLElement): FireworksOptions {
-  const options: FireworksOptions = {};
-
+  const options = {} as FireworksOptions;
+  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-
-  for (const key of BOOL_ATTRS) {
-    if (el.hasAttribute(key)) {
-      (options as Record<string, boolean>)[key] = true;
-    }
-  }
-
-  options.onComplete = () => {
-    el.dispatchEvent(new CustomEvent('complete', { bubbles: true }));
+  options.fill = el.hasAttribute('fill');
+  options.auto = el.hasAttribute('auto');
+  options.interactive = el.hasAttribute('interactive');
+  options.onComplete = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
   };
-
   return options;
 }
 
@@ -29,7 +23,7 @@ class CosFireworksElement extends HTMLElement {
   private ctrl: FireworksController | null = null;
 
   static get observedAttributes() {
-    return ['width', 'height', 'auto', 'interactive', 'fill', 'hint'];
+    return ['width', 'height', 'fill', 'auto', 'interactive', 'hint'];
   }
 
   connectedCallback() {
@@ -46,7 +40,7 @@ class CosFireworksElement extends HTMLElement {
   }
 
   launch(x?: number) {
-    this.ctrl?.launch(x);
+    return this.ctrl?.launch(x);
   }
 }
 

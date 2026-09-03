@@ -47,9 +47,9 @@ const onScratchReveal = () => {
           front-subtitle="Tap to check in"
           back-title="Checked in"
           back-subtitle="+20 pts"
-          :on-reveal="onReveal"
+          @reveal="onReveal"
         />
-        <NineGrid :disabled="!checkedIn" button-text="Draw" :on-draw-end="onDrawEnd" />
+        <NineGrid :disabled="!checkedIn" button-text="Draw" @draw-end="onDrawEnd" />
       </div>
       <div class="confettiSlot">
         <Confetti ref="confettiRef" fill :auto="false" />
@@ -64,7 +64,7 @@ const onScratchReveal = () => {
         :height="180"
         prize="50% OFF"
         cover-text="Scratch me"
-        :on-reveal="onScratchReveal"
+        @reveal="onScratchReveal"
       />
       <div class="fireworksSlot">
         <Fireworks ref="fireworksRef" fill :auto="false" />

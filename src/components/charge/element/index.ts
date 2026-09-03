@@ -4,13 +4,23 @@ import '../style/index.css';
 const TAG = 'cos-charge';
 
 function parseOptions(el: HTMLElement): ChargeOptions {
-  const options: ChargeOptions = {};
+  const options = {} as ChargeOptions;
   if (el.hasAttribute('init-quantity'))
     options.initQuantity = Number(el.getAttribute('init-quantity'));
   if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
-  if (el.hasAttribute('auto-charge')) options.autoCharge = true;
   if (el.hasAttribute('interval')) options.interval = Number(el.getAttribute('interval'));
-  options.onComplete = () => el.dispatchEvent(new CustomEvent('complete', { bubbles: true }));
+  if (el.hasAttribute('step')) options.step = Number(el.getAttribute('step'));
+  options.autoCharge = el.hasAttribute('auto-charge');
+  options.onChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onComplete = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
@@ -18,7 +28,7 @@ class CosChargeElement extends HTMLElement {
   private ctrl: ChargeController | null = null;
 
   static get observedAttributes() {
-    return ['init-quantity', 'value', 'auto-charge', 'interval'];
+    return ['init-quantity', 'value', 'auto-charge', 'interval', 'step'];
   }
 
   connectedCallback() {

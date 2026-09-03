@@ -1,3 +1,9 @@
+.cos-photoViewMaster-host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-photo-view-master {
   --pvm-disc-size: 300px;
   --pvm-peep-size: 160px;

@@ -8,13 +8,19 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: BarcodeScanController | null = null;
 
-const toOptions = (): BarcodeScanOptions => ({ ...props });
+const toOptions = (): BarcodeScanOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createBarcodeScan(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,7 +28,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-
+  getSlot: () => ctrl?.getSlot(),
 });
 </script>
 

@@ -3,10 +3,11 @@ import '../style/index.css';
 
 const TAG = 'cos-electric-arc';
 
-function parseOptions(_el: HTMLElement): ElectricArcOptions {
-  void _el;
-  const options: ElectricArcOptions = {};
-
+function parseOptions(el: HTMLElement): ElectricArcOptions {
+  const options = {} as ElectricArcOptions;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   return options;
 }
 
@@ -14,7 +15,7 @@ class CosElectricArcElement extends HTMLElement {
   private ctrl: ElectricArcController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['width', 'height', 'color'];
   }
 
   connectedCallback() {

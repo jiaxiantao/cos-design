@@ -4,10 +4,10 @@ import '../style/index.css';
 const TAG = 'cos-wave-text';
 
 function parseOptions(el: HTMLElement): WaveTextOptions {
-  const options: WaveTextOptions = {};
+  const options = {} as WaveTextOptions;
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('amplitude')) options.amplitude = Number(el.getAttribute('amplitude'));
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('amplitude')) options.amplitude = Number(el.getAttribute('amplitude'));
   if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
   return options;
 }

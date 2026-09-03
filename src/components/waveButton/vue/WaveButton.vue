@@ -8,13 +8,19 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: WaveButtonController | null = null;
 
-const toOptions = (): WaveButtonOptions => ({ ...props });
+const toOptions = (): WaveButtonOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createWaveButton(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,7 +28,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-
+  getButton: () => ctrl?.getButton(),
 });
 </script>
 

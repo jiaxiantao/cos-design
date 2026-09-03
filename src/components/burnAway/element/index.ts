@@ -4,12 +4,16 @@ import '../style/index.css';
 const TAG = 'cos-burn-away';
 
 function parseOptions(el: HTMLElement): BurnAwayOptions {
-  const options: BurnAwayOptions = {};
+  const options = {} as BurnAwayOptions;
   if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
   if (el.hasAttribute('completed-text'))
     options.completedText = el.getAttribute('completed-text') ?? undefined;
-  options.onComplete = () => el.dispatchEvent(new CustomEvent('complete', { bubbles: true }));
+  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
+  options.onComplete = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
@@ -34,7 +38,7 @@ class CosBurnAwayElement extends HTMLElement {
   }
 
   ignite() {
-    this.ctrl?.ignite();
+    return this.ctrl?.ignite();
   }
 }
 

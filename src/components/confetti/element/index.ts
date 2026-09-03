@@ -3,12 +3,21 @@ import '../style/index.css';
 
 const TAG = 'cos-confetti';
 
-function parseOptions(_el: HTMLElement): ConfettiOptions {
-  const options: ConfettiOptions = {};
-  if (_el.hasAttribute('width')) options.width = Number(_el.getAttribute('width'));
-  if (_el.hasAttribute('height')) options.height = Number(_el.getAttribute('height'));
-  if (_el.hasAttribute('fill')) options.fill = true;
-  if (_el.hasAttribute('auto')) options.auto = _el.getAttribute('auto') !== 'false';
+function parseOptions(el: HTMLElement): ConfettiOptions {
+  const options = {} as ConfettiOptions;
+  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('particle-count'))
+    options.particleCount = Number(el.getAttribute('particle-count'));
+  options.fill = el.hasAttribute('fill');
+  options.auto = el.hasAttribute('auto');
+  options.interactive = el.hasAttribute('interactive');
+  options.onComplete = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
@@ -16,7 +25,7 @@ class CosConfettiElement extends HTMLElement {
   private ctrl: ConfettiController | null = null;
 
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'auto'];
+    return ['width', 'height', 'fill', 'auto', 'interactive', 'particle-count', 'hint'];
   }
 
   connectedCallback() {
@@ -33,7 +42,7 @@ class CosConfettiElement extends HTMLElement {
   }
 
   burst() {
-    this.ctrl?.burst();
+    return this.ctrl?.burst();
   }
 }
 

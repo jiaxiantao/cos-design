@@ -5,10 +5,10 @@ const TAG = 'cos-dna-helix';
 
 function parseOptions(el: HTMLElement): DnaHelixOptions {
   const options = {} as DnaHelixOptions;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   return options;
 }
 

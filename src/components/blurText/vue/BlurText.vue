@@ -4,26 +4,33 @@ import { createBlurText, type BlurTextController, type BlurTextOptions } from '.
 import '../style/index.css';
 
 const props = defineProps<BlurTextOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  'animation-complete': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: BlurTextController | null = null;
 
-const toOptions = (): BlurTextOptions => ({ ...props });
+const toOptions = (): BlurTextOptions => ({
+  ...props,
+  onAnimationComplete: (...args: unknown[]) => emit('animation-complete', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createBlurText(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

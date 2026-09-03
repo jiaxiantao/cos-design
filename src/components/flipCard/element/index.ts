@@ -4,7 +4,7 @@ import '../style/index.css';
 const TAG = 'cos-flip-card';
 
 function parseOptions(el: HTMLElement): FlipCardOptions {
-  const options: FlipCardOptions = {};
+  const options = {} as FlipCardOptions;
   if (el.hasAttribute('front-title'))
     options.frontTitle = el.getAttribute('front-title') ?? undefined;
   if (el.hasAttribute('front-subtitle'))
@@ -12,14 +12,18 @@ function parseOptions(el: HTMLElement): FlipCardOptions {
   if (el.hasAttribute('back-title')) options.backTitle = el.getAttribute('back-title') ?? undefined;
   if (el.hasAttribute('back-subtitle'))
     options.backSubtitle = el.getAttribute('back-subtitle') ?? undefined;
-  if (el.hasAttribute('disabled')) options.disabled = el.getAttribute('disabled') !== 'false';
-  if (el.hasAttribute('default-flipped'))
-    options.defaultFlipped = el.getAttribute('default-flipped') !== 'false';
-  options.onReveal = () => {
-    el.dispatchEvent(new CustomEvent('reveal', { bubbles: true }));
+  options.flipped = el.hasAttribute('flipped');
+  options.defaultFlipped = el.hasAttribute('default-flipped');
+  options.disabled = el.hasAttribute('disabled');
+  options.onReveal = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('reveal', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
   };
-  options.onFlipChange = (flipped) => {
-    el.dispatchEvent(new CustomEvent('flip-change', { detail: { flipped }, bubbles: true }));
+  options.onFlipChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('flip-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
   };
   return options;
 }
@@ -33,8 +37,9 @@ class CosFlipCardElement extends HTMLElement {
       'front-subtitle',
       'back-title',
       'back-subtitle',
-      'disabled',
+      'flipped',
       'default-flipped',
+      'disabled',
     ];
   }
 
@@ -52,11 +57,10 @@ class CosFlipCardElement extends HTMLElement {
   }
 
   flip() {
-    this.ctrl?.flip();
+    return this.ctrl?.flip();
   }
-
   reset() {
-    this.ctrl?.reset();
+    return this.ctrl?.reset();
   }
 }
 

@@ -3,10 +3,12 @@ import '../style/index.css';
 
 const TAG = 'cos-flip-counter';
 
-function parseOptions(_el: HTMLElement): FlipCounterOptions {
-  void _el;
-  const options: FlipCounterOptions = {};
-
+function parseOptions(el: HTMLElement): FlipCounterOptions {
+  const options = {} as FlipCounterOptions;
+  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
+  if (el.hasAttribute('digits')) options.digits = Number(el.getAttribute('digits'));
+  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
   return options;
 }
 
@@ -14,7 +16,7 @@ class CosFlipCounterElement extends HTMLElement {
   private ctrl: FlipCounterController | null = null;
 
   static get observedAttributes() {
-    return [];
+    return ['value', 'digits', 'color', 'duration'];
   }
 
   connectedCallback() {

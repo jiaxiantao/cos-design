@@ -5,15 +5,8 @@ const TAG = 'cos-photo-lantern';
 
 function parseOptions(el: HTMLElement): PhotoLanternOptions {
   const options = {} as PhotoLanternOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('auto-rotate'))
-    options.autoRotate = el.getAttribute('auto-rotate') !== 'false';
-  if (el.hasAttribute('auto-rotate-speed'))
-    options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
-  if (el.hasAttribute('drag-sensitivity'))
-    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
-  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
+  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
+  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
   if (el.hasAttribute('frame-color'))
     options.frameColor = el.getAttribute('frame-color') ?? undefined;
   if (el.hasAttribute('paper-color'))
@@ -22,26 +15,66 @@ function parseOptions(el: HTMLElement): PhotoLanternOptions {
     options.lightColor = el.getAttribute('light-color') ?? undefined;
   if (el.hasAttribute('background'))
     options.background = el.getAttribute('background') ?? undefined;
-  if (el.hasAttribute('light-sway')) options.lightSway = Number(el.getAttribute('light-sway'));
-  if (el.hasAttribute('show-accessories'))
-    options.showAccessories = el.getAttribute('show-accessories') !== 'false';
   if (el.hasAttribute('tassel-color'))
     options.tasselColor = el.getAttribute('tassel-color') ?? undefined;
   if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
-  if (el.hasAttribute('silhouette')) options.silhouette = el.getAttribute('silhouette') !== 'false';
-  if (el.hasAttribute('show-caption'))
-    options.showCaption = el.getAttribute('show-caption') !== 'false';
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  if (el.hasAttribute('auto-rotate-speed'))
+    options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
+  if (el.hasAttribute('drag-sensitivity'))
+    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
+  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
+  if (el.hasAttribute('light-sway')) options.lightSway = Number(el.getAttribute('light-sway'));
   if (el.hasAttribute('initial-angle'))
     options.initialAngle = Number(el.getAttribute('initial-angle'));
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  options.autoRotate = el.hasAttribute('auto-rotate');
+  options.showAccessories = el.hasAttribute('show-accessories');
+  options.silhouette = el.hasAttribute('silhouette');
+  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('photos')) {
+    try {
+      options.photos = JSON.parse(
+        el.getAttribute('photos') ?? 'null',
+      ) as PhotoLanternOptions['photos'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propphotos = (el as CosPhotoLanternElement)._photos;
+  if (propphotos !== undefined) options.photos = propphotos as PhotoLanternOptions['photos'];
+  options.onFaceChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('face-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onIndexChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onPhotoClick = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosPhotoLanternElement extends HTMLElement {
   private ctrl: PhotoLanternController | null = null;
 
+  _photos?: PhotoLanternOptions['photos'];
+  get photos(): PhotoLanternOptions['photos'] | undefined {
+    return this._photos;
+  }
+  set photos(value: PhotoLanternOptions['photos']) {
+    this._photos = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
     return [
+      'photos',
       'width',
       'height',
       'auto-rotate',

@@ -4,17 +4,28 @@ import { createFlipCard, type FlipCardController, type FlipCardOptions } from '.
 import '../style/index.css';
 
 const props = defineProps<FlipCardOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  reveal: [...args: unknown[]];
+  'flip-change': [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: FlipCardController | null = null;
 
-const toOptions = (): FlipCardOptions => ({ ...props });
+const toOptions = (): FlipCardOptions => ({
+  ...props,
+  onReveal: (...args: unknown[]) => emit('reveal', ...args),
+  onFlipChange: (...args: unknown[]) => emit('flip-change', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createFlipCard(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,8 +33,8 @@ onUnmounted(() => {
 });
 
 defineExpose({
-  flip: (...args: unknown[]) => ctrl?.flip(...args),
-  reset: (...args: unknown[]) => ctrl?.reset(...args)
+  flip: () => ctrl?.flip(),
+  reset: () => ctrl?.reset(),
 });
 </script>
 

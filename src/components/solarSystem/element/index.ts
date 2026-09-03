@@ -8,8 +8,7 @@ function parseOptions(el: HTMLElement): SolarSystemOptions {
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('show-orbits'))
-    options.showOrbits = el.getAttribute('show-orbits') !== 'false';
+  options.showOrbits = el.hasAttribute('show-orbits');
   return options;
 }
 

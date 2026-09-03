@@ -4,17 +4,26 @@ import { createConfetti, type ConfettiController, type ConfettiOptions } from '.
 import '../style/index.css';
 
 const props = defineProps<ConfettiOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  complete: [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: ConfettiController | null = null;
 
-const toOptions = (): ConfettiOptions => ({ ...props });
+const toOptions = (): ConfettiOptions => ({
+  ...props,
+  onComplete: (...args: unknown[]) => emit('complete', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createConfetti(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,7 +31,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-  burst: (...args: unknown[]) => ctrl?.burst(...args)
+  burst: () => ctrl?.burst(),
 });
 </script>
 

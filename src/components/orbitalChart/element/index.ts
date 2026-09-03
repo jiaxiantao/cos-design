@@ -6,14 +6,32 @@ const TAG = 'cos-orbital-chart';
 function parseOptions(el: HTMLElement): OrbitalChartOptions {
   const options = {} as OrbitalChartOptions;
   if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
+  if (el.hasAttribute('data')) {
+    try {
+      options.data = JSON.parse(el.getAttribute('data') ?? 'null') as OrbitalChartOptions['data'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propdata = (el as CosOrbitalChartElement)._data;
+  if (propdata !== undefined) options.data = propdata as OrbitalChartOptions['data'];
   return options;
 }
 
 class CosOrbitalChartElement extends HTMLElement {
   private ctrl: OrbitalChartController | null = null;
 
+  _data?: OrbitalChartOptions['data'];
+  get data(): OrbitalChartOptions['data'] | undefined {
+    return this._data;
+  }
+  set data(value: OrbitalChartOptions['data']) {
+    this._data = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
-    return ['size'];
+    return ['data', 'size'];
   }
 
   connectedCallback() {

@@ -4,26 +4,35 @@ import { createCharge, type ChargeController, type ChargeOptions } from '../core
 import '../style/index.css';
 
 const props = defineProps<ChargeOptions>();
-const emit = defineEmits<{}>();
+const emit = defineEmits<{
+  change: [...args: unknown[]];
+  complete: [...args: unknown[]];
+}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: ChargeController | null = null;
 
-const toOptions = (): ChargeOptions => ({ ...props });
+const toOptions = (): ChargeOptions => ({
+  ...props,
+  onChange: (...args: unknown[]) => emit('change', ...args),
+  onComplete: (...args: unknown[]) => emit('complete', ...args),
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createCharge(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
   ctrl = null;
 });
 
-defineExpose({
-
-});
+defineExpose({});
 </script>
 
 <template>

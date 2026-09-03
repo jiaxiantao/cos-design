@@ -5,27 +5,76 @@ const TAG = 'cos-photo-album';
 
 function parseOptions(el: HTMLElement): PhotoAlbumOptions {
   const options = {} as PhotoAlbumOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('page-turn-duration'))
-    options.pageTurnDuration = Number(el.getAttribute('page-turn-duration'));
+  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
+  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
   if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
-  if (el.hasAttribute('show-page-number'))
-    options.showPageNumber = el.getAttribute('show-page-number') !== 'false';
   if (el.hasAttribute('page-color')) options.pageColor = el.getAttribute('page-color') ?? undefined;
   if (el.hasAttribute('cover-color'))
     options.coverColor = el.getAttribute('cover-color') ?? undefined;
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  if (el.hasAttribute('initial-index'))
+    options.initialIndex = Number(el.getAttribute('initial-index'));
+  if (el.hasAttribute('page-turn-duration'))
+    options.pageTurnDuration = Number(el.getAttribute('page-turn-duration'));
+  options.showPageNumber = el.hasAttribute('show-page-number');
+  if (el.hasAttribute('photos')) {
+    try {
+      options.photos = JSON.parse(
+        el.getAttribute('photos') ?? 'null',
+      ) as PhotoAlbumOptions['photos'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const propphotos = (el as CosPhotoAlbumElement)._photos;
+  if (propphotos !== undefined) options.photos = propphotos as PhotoAlbumOptions['photos'];
+  if (el.hasAttribute('labels')) {
+    try {
+      options.labels = JSON.parse(
+        el.getAttribute('labels') ?? 'null',
+      ) as PhotoAlbumOptions['labels'];
+    } catch {
+      /* ignore invalid JSON */
+    }
+  }
+  const proplabels = (el as CosPhotoAlbumElement)._labels;
+  if (proplabels !== undefined) options.labels = proplabels as PhotoAlbumOptions['labels'];
+  options.onPageChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('page-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
+  options.onIndexChange = (...args: unknown[]) => {
+    el.dispatchEvent(
+      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
+    );
+  };
   return options;
 }
 
 class CosPhotoAlbumElement extends HTMLElement {
   private ctrl: PhotoAlbumController | null = null;
 
+  _photos?: PhotoAlbumOptions['photos'];
+  get photos(): PhotoAlbumOptions['photos'] | undefined {
+    return this._photos;
+  }
+  set photos(value: PhotoAlbumOptions['photos']) {
+    this._photos = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+  _labels?: PhotoAlbumOptions['labels'];
+  get labels(): PhotoAlbumOptions['labels'] | undefined {
+    return this._labels;
+  }
+  set labels(value: PhotoAlbumOptions['labels']) {
+    this._labels = value;
+    this.ctrl?.update(parseOptions(this));
+  }
+
   static get observedAttributes() {
     return [
+      'photos',
       'width',
       'height',
       'initial-index',
@@ -35,6 +84,7 @@ class CosPhotoAlbumElement extends HTMLElement {
       'page-color',
       'cover-color',
       'aria-label',
+      'labels',
     ];
   }
 

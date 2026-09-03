@@ -5,8 +5,8 @@ const TAG = 'cos-newton-cradle';
 
 function parseOptions(el: HTMLElement): NewtonCradleOptions {
   const options = {} as NewtonCradleOptions;
-  if (el.hasAttribute('ball-count')) options.ballCount = Number(el.getAttribute('ball-count'));
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
+  if (el.hasAttribute('ball-count')) options.ballCount = Number(el.getAttribute('ball-count'));
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
   return options;

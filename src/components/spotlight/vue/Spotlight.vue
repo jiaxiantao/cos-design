@@ -8,13 +8,19 @@ const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: SpotlightController | null = null;
 
-const toOptions = (): SpotlightOptions => ({ ...props });
+const toOptions = (): SpotlightOptions => ({
+  ...props,
+});
 
 onMounted(() => {
   if (hostRef.value) ctrl = createSpotlight(hostRef.value, toOptions());
 });
 
-watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
+watch(
+  () => ({ ...props }),
+  () => ctrl?.update(toOptions()),
+  { deep: true },
+);
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -22,7 +28,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-
+  getSlot: () => ctrl?.getSlot(),
 });
 </script>
 

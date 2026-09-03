@@ -54,9 +54,12 @@ const vueProp = (key: string, value: string | number | boolean) => {
   return `${key}="${value}"`;
 };
 
+const toAttrName = (key: string) => key.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
 const htmlAttr = (key: string, value: string | number | boolean) => {
-  if (typeof value === 'boolean') return value ? key : null;
-  return `${key}="${value}"`;
+  const kebab = toAttrName(key);
+  if (typeof value === 'boolean') return value ? kebab : null;
+  return `${kebab}="${value}"`;
 };
 
 const jsLiteral = (value: string | number | boolean) => {
