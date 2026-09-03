@@ -110,6 +110,18 @@ All packages publish as **4.0.0** (aligned). Semver major — upgrade when ready
 - Auto-injected styles (no manual CSS import required)
 - Next.js canvas rule: `dynamic(..., { ssr: false })`
 
+## Vue / Element event mapping
+
+Callback props (`onReveal`, `onSpinEnd`, `onComplete`, …) map to:
+
+| Layer          | Pattern                                                    |
+| -------------- | ---------------------------------------------------------- |
+| Vue            | `@reveal`, `@spin-end`, `@complete`, `@draw-end`, …        |
+| Web Components | `addEventListener('reveal' \| 'spin-end' \| …)` + `detail` |
+| Core           | pass `onReveal` / `onSpinEnd` in options                   |
+
+Boolean HTML attributes follow presence semantics (`disabled` present = true; remove attribute to clear). Complex data (`photos`, `prizes`, `items`, `colors`) can use JSON attributes or JS properties (`el.photos = [...]`).
+
 ## Architecture (brief)
 
 Each component has:
