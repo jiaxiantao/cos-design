@@ -1,0 +1,11 @@
+.cos-ink-bloom {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #7eb0d4;
+}
+.cos-ink-bloom__canvas {
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+}

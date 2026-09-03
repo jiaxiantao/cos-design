@@ -1,0 +1,21 @@
+.cos-cursor-trail {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-cursor-trail__canvas {
+  display: block;
+  cursor: none;
+}
+.cos-cursor-trail__hint {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  color: rgba(148, 163, 184, 0.6);
+  font-size: 13px;
+  pointer-events: none;
+}

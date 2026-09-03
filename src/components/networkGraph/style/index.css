@@ -1,0 +1,39 @@
+.cos-network-graph {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 70% at 50% 40%, #1e293b 0%, #0f172a 55%, #020617 100%);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 22px 48px rgba(2, 6, 23, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.cos-network-graph__canvas {
+  display: block;
+  touch-action: none;
+}
+.cos-network-graph__cursor-default {
+  cursor: default;
+}
+.cos-network-graph__cursor-grab {
+  cursor: grab;
+}
+.cos-network-graph__cursor-grabbing {
+  cursor: grabbing;
+}
+.cos-network-graph__hint {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  max-width: calc(100% - 24px);
+  padding: 5px 11px;
+  overflow: hidden;
+  color: rgba(226, 232, 240, 0.78);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+}

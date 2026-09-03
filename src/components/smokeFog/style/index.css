@@ -1,0 +1,11 @@
+.cos-smoke-fog {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0e0f14;
+}
+.cos-smoke-fog__canvas {
+  display: block;
+  cursor: pointer;
+  touch-action: manipulation;
+}

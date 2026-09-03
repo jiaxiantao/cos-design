@@ -1,0 +1,8 @@
+.cos-meteor-rain {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-meteor-rain__canvas {
+  display: block;
+}

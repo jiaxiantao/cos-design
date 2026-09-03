@@ -1,0 +1,42 @@
+.cos-speedometer {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.cos-speedometer__svg {
+  width: 220px;
+  height: auto;
+  display: block;
+}
+.cos-speedometer__track {
+  stroke: rgba(148, 163, 184, 0.2);
+}
+.cos-speedometer__value-arc {
+  stroke: var(--gauge-color, #f97316);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gauge-color, #f97316) 50%, transparent));
+}
+.cos-speedometer__tick {
+  stroke: #64748b;
+  stroke-width: 2;
+}
+.cos-speedometer__needle {
+  stroke: #f8fafc;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.cos-speedometer__hub {
+  fill: var(--gauge-color, #f97316);
+}
+.cos-speedometer__value-text {
+  fill: #f8fafc;
+  font-size: 18px;
+  font-weight: 700;
+  text-anchor: middle;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+.cos-speedometer__label {
+  color: #94a3b8;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+}

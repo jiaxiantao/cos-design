@@ -1,0 +1,63 @@
+.cos-return-city {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+  /* 星星 */
+  /* 玻璃壁 */
+  /* 旋转动画 */
+}
+.cos-return-city .cos-return-city__star {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fd400a;
+  animation: star infinite 2s;
+}
+.cos-return-city .cos-return-city__glass-wrap {
+  width: 100px;
+  height: 175px;
+  /* background: #666; */
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+  transform-style: preserve-3d;
+  animation: rotate 10s linear infinite;
+}
+.cos-return-city .cos-return-city__glass-wrap .cos-return-city__glass-item {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  top: -250px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease-in;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.7);
+  background: rgba(173, 71, 2, 0.34);
+}
+@keyframes rotate {
+  from {
+    transform: translate(-50%, 50%) rotateY(360deg);
+  }
+  to {
+    transform: translate(-50%, 50%) rotateY(0deg);
+  }
+}
+@keyframes star {
+  0% {
+    filter: blur(1px) contrast(15) hue-rotate(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    filter: blur(1px) contrast(15) hue-rotate(360deg);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(1px) contrast(15) hue-rotate(0);
+  }
+}

@@ -1,0 +1,97 @@
+.cos-flip-counter {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.cos-flip-counter__digit {
+  perspective: 300px;
+}
+.cos-flip-counter__digit-card {
+  position: relative;
+  width: 48px;
+  height: 64px;
+  font-size: 36px;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+.cos-flip-counter__static-top,
+.cos-flip-counter__static-bottom,
+.cos-flip-counter__flap {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+.cos-flip-counter__static-top span,
+.cos-flip-counter__static-bottom span,
+.cos-flip-counter__flap span {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200%;
+  color: var(--flip-color, #38bdf8);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+.cos-flip-counter__static-top,
+.cos-flip-counter__flap-top {
+  top: 0;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
+.cos-flip-counter__static-top span,
+.cos-flip-counter__flap-top span {
+  top: 0;
+}
+.cos-flip-counter__static-bottom,
+.cos-flip-counter__flap-bottom {
+  bottom: 0;
+  border-radius: 0 0 8px 8px;
+}
+.cos-flip-counter__static-bottom span,
+.cos-flip-counter__flap-bottom span {
+  bottom: 0;
+}
+.cos-flip-counter__flap {
+  z-index: 2;
+  backface-visibility: hidden;
+}
+.cos-flip-counter__flap-top {
+  transform-origin: center bottom;
+}
+.cos-flip-counter__flap-bottom {
+  transform-origin: center top;
+  transform: rotateX(90deg);
+}
+.cos-flip-counter__is-flipping .cos-flip-counter__flap-top {
+  animation: fold-top var(--flip-duration, 600ms) ease-in forwards;
+}
+.cos-flip-counter__is-flipping .cos-flip-counter__flap-bottom {
+  animation: unfold-bottom var(--flip-duration, 600ms) ease-out forwards;
+}
+@keyframes fold-top {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+@keyframes unfold-bottom {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}

@@ -1,0 +1,19 @@
+.cos-particle-network {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cos-particle-network__canvas {
+  display: block;
+  cursor: crosshair;
+}
+.cos-particle-network__hint {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  margin: 0;
+  color: rgba(148, 163, 184, 0.7);
+  font-size: 13px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}

@@ -1,0 +1,25 @@
+.cos-confetti {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-confetti__canvas {
+  display: block;
+  cursor: pointer;
+}
+.cos-confetti__canvas-passthrough {
+  cursor: default;
+  pointer-events: none;
+}
+.cos-confetti__hint {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  color: rgba(148, 163, 184, 0.7);
+  font-size: 13px;
+  pointer-events: none;
+}

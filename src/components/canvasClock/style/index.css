@@ -1,0 +1,12 @@
+.cos-canvas-clock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+.cos-canvas-clock__canvas-target {
+  display: block;
+  border-radius: 50%;
+}

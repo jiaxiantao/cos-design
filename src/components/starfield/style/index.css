@@ -1,0 +1,8 @@
+.cos-starfield {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+.cos-starfield__canvas {
+  display: block;
+}

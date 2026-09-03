@@ -1,0 +1,8 @@
+.cos-snowfall {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-snowfall__canvas {
+  display: block;
+}
