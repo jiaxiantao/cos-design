@@ -1,0 +1,31 @@
+.cos-scratch-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.cos-scratch-card__prize {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: #b45309;
+  font-size: 20px;
+  font-weight: 700;
+}
+.cos-scratch-card__canvas {
+  position: relative;
+  z-index: 1;
+  cursor: grab;
+  touch-action: none;
+}
+.cos-scratch-card__canvas:active {
+  cursor: grabbing;
+}
+.cos-scratch-card__canvas.cos-scratch-card__hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}

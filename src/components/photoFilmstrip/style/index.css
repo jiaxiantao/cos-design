@@ -1,0 +1,120 @@
+.cos-photo-filmstrip {
+  --film-bg: #1a1a1a;
+  --film-edge: #0d0d0d;
+  --film-highlight: #2a2a2a;
+  --sprocket-hole: #050505;
+  --frame-border: #f8f8f8;
+  --frame-shadow: rgba(0, 0, 0, 0.55);
+  --frame-number: #e8a54b;
+  --caption-title: #f0e6d8;
+  --caption-desc: #b8a898;
+  --focus-ring: rgba(232, 165, 75, 0.45);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--film-highlight) 0%, var(--film-bg) 14%, var(--film-bg) 86%, var(--film-edge) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.35), 0 10px 28px rgba(0, 0, 0, 0.28);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.cos-photo-filmstrip:focus-visible {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -1px 0 rgba(0, 0, 0, 0.35), 0 0 0 3px var(--focus-ring), 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+.cos-photo-filmstrip__sprocket-band {
+  flex: 0 0 auto;
+  height: 18px;
+  background-color: var(--film-bg);
+  background-image: radial-gradient(circle at 10px 50%, var(--sprocket-hole) 0 4px, transparent 4px), linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 45%, rgba(0, 0, 0, 0.18) 100%);
+  background-size: 20px 100%,
+    100% 100%;
+  background-repeat: repeat-x, no-repeat;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.cos-photo-filmstrip__sprocket-band-bottom {
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+}
+.cos-photo-filmstrip__viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+}
+.cos-photo-filmstrip__viewport:active {
+  cursor: grabbing;
+}
+.cos-photo-filmstrip__strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  will-change: transform;
+}
+.cos-photo-filmstrip__frame-cell {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: 8px;
+}
+.cos-photo-filmstrip__frame-number {
+  margin-bottom: 4px;
+  color: var(--frame-number);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+}
+.cos-photo-filmstrip__frame-window {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--frame-border);
+  border-radius: 2px;
+  background: #000;
+  box-shadow: 0 4px 14px var(--frame-shadow), inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+.cos-photo-filmstrip__frame-window img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.cos-photo-filmstrip__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 0 2px;
+  text-align: center;
+}
+.cos-photo-filmstrip__caption strong {
+  color: var(--caption-title);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.cos-photo-filmstrip__caption span {
+  color: var(--caption-desc);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.cos-photo-filmstrip__empty {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  color: #8a8078;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}

@@ -1,0 +1,117 @@
+.cos-photo-lightbox {
+  --lightbox-glow-cyan: rgba(120, 220, 255, 0.42);
+  --lightbox-glow-warm: rgba(255, 244, 220, 0.38);
+  --lightbox-panel: rgba(18, 28, 36, 0.72);
+  --lightbox-border: rgba(255, 255, 255, 0.18);
+  --slide-mount: rgba(255, 255, 255, 0.08);
+  --slide-border: rgba(255, 255, 255, 0.28);
+  --caption-bg: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.62) 100%);
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: radial-gradient(120% 80% at 50% 110%, rgba(8, 12, 18, 0.96) 0%, #04060a 55%, #020304 100%), #050608;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.cos-photo-lightbox__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 发光灯箱面板：半透明 + 内外柔光 */
+.cos-photo-lightbox__table {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.06) 0%, transparent 42%), var(--lightbox-panel);
+  border: 1px solid var(--lightbox-border);
+  box-shadow: inset 0 0 48px 8px var(--lightbox-glow-cyan), inset 0 0 72px 16px var(--lightbox-glow-warm), 0 0 32px 4px rgba(90, 200, 255, 0.18), 0 0 64px 12px rgba(255, 230, 180, 0.1);
+}
+.cos-photo-lightbox__table::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 24px rgba(180, 240, 255, 0.12);
+  pointer-events: none;
+}
+.cos-photo-lightbox__slot {
+  position: relative;
+  touch-action: none;
+}
+.cos-photo-lightbox__slide {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background: var(--slide-mount);
+  border: 1.5px solid var(--slide-border);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+.cos-photo-lightbox__slide-behind {
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.72;
+  filter: brightness(0.88) saturate(0.92);
+}
+.cos-photo-lightbox__slide-active {
+  z-index: 2;
+  cursor: grab;
+}
+.cos-photo-lightbox__slide-active:active {
+  cursor: grabbing;
+}
+.cos-photo-lightbox__slide-exiting {
+  pointer-events: none;
+}
+.cos-photo-lightbox__slide-image-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.35);
+}
+.cos-photo-lightbox__slide-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.cos-photo-lightbox__caption {
+  flex-shrink: 0;
+  padding: 8px 10px 10px;
+  background: var(--caption-bg);
+  color: rgba(248, 252, 255, 0.92);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.cos-photo-lightbox__caption-title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.cos-photo-lightbox__caption-desc {
+  margin-top: 2px;
+  color: rgba(220, 230, 240, 0.78);
+  font-size: 11px;
+}
+.cos-photo-lightbox__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: rgba(180, 200, 220, 0.55);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}

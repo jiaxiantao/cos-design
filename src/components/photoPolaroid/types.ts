@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 /** 单张拍立得照片数据 */
 export interface PhotoPolaroidItem {
@@ -37,5 +37,5 @@ export interface PhotoPolaroidProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

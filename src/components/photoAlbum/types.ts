@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 export interface PhotoAlbumItem {
   /** 图片地址 */
@@ -40,7 +40,7 @@ export interface PhotoAlbumProps {
   /** 单次翻页动画时长（毫秒） */
   pageTurnDuration?: number;
   /** 照片填充方式 */
-  objectFit?: CSSProperties['objectFit'];
+  objectFit?: string;
   /** 是否显示页码 */
   showPageNumber?: boolean;
   /** 相纸颜色 */
@@ -58,5 +58,5 @@ export interface PhotoAlbumProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

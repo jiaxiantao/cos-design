@@ -1,12 +1,12 @@
 # RFC: cos-design v4.0 — 多框架支持与 Web Components
 
-| 字段         | 值                                                  |
-| ------------ | --------------------------------------------------- |
-| **状态**     | Approved — Phase 0 + Batch A/B/C 已完成（75/91 v4） |
-| **版本**     | 4.0.0                                               |
-| **作者**     | cos-design maintainers                              |
-| **创建日期** | 2026-09-02                                          |
-| **目标发布** | v4.0.0（一次性全量迁移）                            |
+| 字段         | 值                                                   |
+| ------------ | ---------------------------------------------------- |
+| **状态**     | Approved — 全量 91 组件 v4 迁移完成（Batch A/B/C/D） |
+| **版本**     | 4.0.0                                                |
+| **作者**     | cos-design maintainers                               |
+| **创建日期** | 2026-09-02                                           |
+| **目标发布** | v4.0.0（一次性全量迁移）                             |
 
 ---
 
@@ -206,7 +206,7 @@ const container = document.getElementById('fw')!;
 const controller = createFireworks(container, {
   auto: true,
   fill: true,
-  onComplete: () => console.log('done')
+  onComplete: () => console.log('done'),
 });
 
 // 命令式调用
@@ -296,7 +296,10 @@ export interface FireworksController {
 }
 
 // core/index.ts
-export function createFireworks(container: HTMLElement, options: FireworksOptions): FireworksController;
+export function createFireworks(
+  container: HTMLElement,
+  options: FireworksOptions,
+): FireworksController;
 ```
 
 ### 统一约定
@@ -347,7 +350,7 @@ const Fireworks = forwardRef<FireworksHandle, FireworksProps>((props, ref) => {
   const ctrlRef = useRef<FireworksController | null>(null);
 
   useImperativeHandle(ref, () => ({
-    launch: (x) => ctrlRef.current?.launch(x)
+    launch: (x) => ctrlRef.current?.launch(x),
   }));
 
   useEffect(() => {
@@ -399,7 +402,7 @@ onMounted(() => {
 watch(
   () => ({ ...props }),
   (next) => ctrl?.update(next),
-  { deep: true }
+  { deep: true },
 );
 
 onUnmounted(() => {
@@ -408,7 +411,7 @@ onUnmounted(() => {
 });
 
 defineExpose({
-  launch: (x?: number) => ctrl?.launch(x)
+  launch: (x?: number) => ctrl?.launch(x),
 });
 </script>
 
@@ -489,7 +492,7 @@ class CosFireworks extends HTMLElement {
       width: this.hasAttribute('width') ? Number(this.getAttribute('width')) : undefined,
       height: this.hasAttribute('height') ? Number(this.getAttribute('height')) : undefined,
       hint: this.getAttribute('hint') ?? undefined,
-      onComplete: () => this.dispatchEvent(new CustomEvent('complete', { bubbles: true }))
+      onComplete: () => this.dispatchEvent(new CustomEvent('complete', { bubbles: true })),
     };
   }
 }

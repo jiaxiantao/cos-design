@@ -1,0 +1,61 @@
+import { createPhotoScroll, type PhotoScrollController, type PhotoScrollOptions } from '../core';
+import '../style/index.css';
+
+const TAG = 'cos-photo-scroll';
+
+function parseOptions(el: HTMLElement): PhotoScrollOptions {
+  const options = {} as PhotoScrollOptions;
+  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
+  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  if (el.hasAttribute('frame-width')) options.frameWidth = Number(el.getAttribute('frame-width'));
+  if (el.hasAttribute('frame-height'))
+    options.frameHeight = Number(el.getAttribute('frame-height'));
+  if (el.hasAttribute('frame-gap')) options.frameGap = Number(el.getAttribute('frame-gap'));
+  if (el.hasAttribute('drag-sensitivity'))
+    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
+  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
+  if (el.hasAttribute('show-caption'))
+    options.showCaption = el.getAttribute('show-caption') !== 'false';
+  if (el.hasAttribute('initial-index'))
+    options.initialIndex = Number(el.getAttribute('initial-index'));
+  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
+  return options;
+}
+
+class CosPhotoScrollElement extends HTMLElement {
+  private ctrl: PhotoScrollController | null = null;
+
+  static get observedAttributes() {
+    return [
+      'width',
+      'height',
+      'frame-width',
+      'frame-height',
+      'frame-gap',
+      'drag-sensitivity',
+      'friction',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
+  }
+
+  connectedCallback() {
+    this.ctrl = createPhotoScroll(this, parseOptions(this));
+  }
+
+  disconnectedCallback() {
+    this.ctrl?.destroy();
+    this.ctrl = null;
+  }
+
+  attributeChangedCallback() {
+    this.ctrl?.update(parseOptions(this));
+  }
+}
+
+if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {
+  customElements.define(TAG, CosPhotoScrollElement);
+}
+
+export { CosPhotoScrollElement, TAG };

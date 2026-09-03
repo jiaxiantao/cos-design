@@ -44,6 +44,7 @@
     "migrate:batch-a": "node scripts/migrate-batch-a.mjs",
     "migrate:batch-b": "node scripts/migrate-batch-b.mjs",
     "migrate:batch-c": "node scripts/migrate-batch-c.mjs",
+    "migrate:batch-d": "node scripts/migrate-batch-d.mjs",
     "verify:v4-matrix": "node scripts/verify-v4-matrix.mjs",
     "sync:logo": "node scripts/sync-public-logo.mjs",
     "sync:skills": "node scripts/sync-skills.mjs",

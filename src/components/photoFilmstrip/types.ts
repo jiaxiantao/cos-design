@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 export interface PhotoFilmstripItem {
   /** 图片地址 */
@@ -41,5 +41,5 @@ export interface PhotoFilmstripProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

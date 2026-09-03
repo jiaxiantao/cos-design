@@ -30,7 +30,12 @@
   position: absolute;
   inset: 18% 4% -2%;
   border-radius: 48%;
-  background: radial-gradient(ellipse at 50% 40%, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 22%) 48%, transparent 72%);
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgb(0 0 0 / 55%) 0%,
+    rgb(0 0 0 / 22%) 48%,
+    transparent 72%
+  );
   filter: blur(18px);
   transform: translate3d(0, 10%, 0) scaleX(1.02);
 }
@@ -52,14 +57,22 @@
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 12px;
   background:
-    linear-gradient(118deg, rgb(255 255 255 / 12%) 0%, transparent 18%, transparent 78%, rgb(0 0 0 / 28%)),
-    linear-gradient(90deg, rgb(0 0 0 / 18%), transparent 8%, transparent 88%, rgb(0 0 0 / 28%)), var(--cover-color);
+    linear-gradient(
+      118deg,
+      rgb(255 255 255 / 12%) 0%,
+      transparent 18%,
+      transparent 78%,
+      rgb(0 0 0 / 28%)
+    ),
+    linear-gradient(90deg, rgb(0 0 0 / 18%), transparent 8%, transparent 88%, rgb(0 0 0 / 28%)),
+    var(--cover-color);
   box-shadow:
     0 22px 40px rgb(0 0 0 / 42%),
     0 6px 12px rgb(0 0 0 / 28%),
     inset 0 0 0 3px rgb(0 0 0 / 16%),
     inset 0 1px 0 rgb(255 255 255 / 14%),
-    /* 右侧厚度收窄，与左边露出的封面条接近 */ 3px 1px 0 color-mix(in srgb, var(--cover-color) 72%, #000),
+    /* 右侧厚度收窄，与左边露出的封面条接近 */ 3px 1px 0
+      color-mix(in srgb, var(--cover-color) 72%, #000),
     4px 2px 0 color-mix(in srgb, var(--cover-color) 55%, #000);
   transform: translateZ(-18px);
 }
@@ -72,7 +85,11 @@
   left: 16px;
   height: 5px;
   border-radius: 4px 4px 0 0;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--cover-color) 78%, #fff), var(--cover-color));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--cover-color) 78%, #fff),
+    var(--cover-color)
+  );
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%);
   transform: rotateX(70deg);
   transform-origin: bottom center;
@@ -119,7 +136,8 @@
 .book {
   position: absolute;
   z-index: 2;
-  inset: var(--book-inset-top) var(--book-inset-right) var(--book-inset-bottom) var(--book-inset-left);
+  inset: var(--book-inset-top) var(--book-inset-right) var(--book-inset-bottom)
+    var(--book-inset-left);
   border-radius: 1.2%;
   transform: var(--book-tilt) translateZ(8px);
   transform-style: preserve-3d;
@@ -134,7 +152,9 @@
   z-index: 3;
   top: var(--book-inset-top);
   bottom: var(--book-inset-bottom);
-  left: calc(var(--book-inset-left) + (100% - var(--book-inset-left) - var(--book-inset-right)) / 2);
+  left: calc(
+    var(--book-inset-left) + (100% - var(--book-inset-left) - var(--book-inset-right)) / 2
+  );
   width: calc((100% - var(--book-inset-left) - var(--book-inset-right)) * 0.26);
   pointer-events: none;
   background: linear-gradient(
@@ -252,7 +272,12 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(112deg, rgb(255 255 255 / 22%), rgb(255 255 255 / 0%) 28%, rgb(92 70 42 / 7%));
+    background: linear-gradient(
+      112deg,
+      rgb(255 255 255 / 22%),
+      rgb(255 255 255 / 0%) 28%,
+      rgb(92 70 42 / 7%)
+    );
     content: '';
   }
 }
@@ -418,7 +443,13 @@
   display: block;
   width: 58%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(103 72 38 / 35%) 18%, rgb(103 72 38 / 35%) 82%, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(103 72 38 / 35%) 18%,
+    rgb(103 72 38 / 35%) 82%,
+    transparent
+  );
 }
 
 .turningPage {
@@ -498,7 +529,9 @@
   position: absolute;
   top: var(--book-inset-top);
   bottom: var(--book-inset-bottom);
-  left: calc(var(--book-inset-left) + (100% - var(--book-inset-left) - var(--book-inset-right)) / 2);
+  left: calc(
+    var(--book-inset-left) + (100% - var(--book-inset-left) - var(--book-inset-right)) / 2
+  );
   width: 28px;
   pointer-events: none;
   transform: translateX(-50%) var(--book-tilt) translateZ(8px);
@@ -549,7 +582,12 @@
     width: 30%;
     height: 2px;
     border-radius: 1px;
-    background: linear-gradient(90deg, rgb(255 255 255 / 0%), rgb(255 255 255 / 55%), rgb(255 255 255 / 0%));
+    background: linear-gradient(
+      90deg,
+      rgb(255 255 255 / 0%),
+      rgb(255 255 255 / 55%),
+      rgb(255 255 255 / 0%)
+    );
     content: '';
     transform: rotate(-14deg);
   }
