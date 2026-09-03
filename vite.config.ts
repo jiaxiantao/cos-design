@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -14,6 +15,7 @@ export default defineConfig(({ mode }) => {
     plugins: isLib
       ? [
           react(),
+          vue(),
           libInjectCss(),
           dts({
             include: ['src'],
@@ -29,6 +31,7 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': resolve(__dirname, 'src'),
         '@cos-design/shared': resolve(__dirname, 'packages/shared/src/index.ts'),
+        '@cos-design/shared/react': resolve(__dirname, 'packages/shared/src/react/index.ts'),
       },
     },
     css: {
@@ -48,19 +51,34 @@ export default defineConfig(({ mode }) => {
     build: isLib
       ? {
           lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
+            entry: {
+              index: resolve(__dirname, 'src/index.ts'),
+              vue: resolve(__dirname, 'src/vue.ts'),
+              core: resolve(__dirname, 'src/core.ts'),
+              elements: resolve(__dirname, 'src/elements.ts'),
+            },
             name: 'CosDesign',
             formats: ['es', 'cjs'],
-            fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
+            fileName: (format, entryName) =>
+              format === 'es' ? `${entryName}.js` : `${entryName}.cjs`,
           },
           rollupOptions: {
-            external: ['react', 'react-dom', 'react/jsx-runtime', 'three'],
+            external: [
+              'react',
+              'react-dom',
+              'react/jsx-runtime',
+              'vue',
+              'three',
+              '@cos-design/shared',
+            ],
             output: {
               exports: 'named',
               globals: {
                 react: 'React',
                 'react-dom': 'ReactDOM',
+                vue: 'Vue',
                 three: 'THREE',
+                '@cos-design/shared': 'CosDesignShared',
               },
             },
           },

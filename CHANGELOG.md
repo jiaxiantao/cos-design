@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-09-03
+
+### Added
+
+- **Multi-framework support** for all **91** components (package names unchanged):
+  - React — default entry `.` (backward compatible)
+  - Vue 3 — `@cos-design/<pkg>/vue` and `cos-design/vue`
+  - Core API — `@cos-design/<pkg>/core` and `cos-design/core` (`create*` factories)
+  - Web Components — `@cos-design/<pkg>/element` and `cos-design/elements`
+- Core + Adapter architecture: shared engines under `src/components/*/core`
+- `@cos-design/shared/react` subpath for React hooks (`useElementSize`, `useCanvasBox`)
+- Migration guide: [docs/migration-v4.md](./docs/migration-v4.md)
+- Architecture RFC: [docs/rfc-v4-multi-framework.md](./docs/rfc-v4-multi-framework.md)
+- Tooling: `migrate:component`, `migrate:batch-a|b|c|d`, `verify:v4-matrix`
+
+### Changed
+
+- All packages aligned to **4.0.0**
+- Component styles ship as stable `cos-*` CSS classes (shared `style/index.css`) instead of hashed LESS modules in adapters
+- Umbrella `cos-design` description / peers updated for optional Vue
+- Aggregate build emits `vue` / `core` / `elements` entry points alongside React `index`
+- Remove unused per-component `style/index.module.less` leftovers (adapters use `style/index.css`)
+- Fix `generate-ai-docs` catastrophic regex hang when regenerating `llms.txt` / `docs/ai.md`
+- Fix FlipCard zero-width host in Playground (`cos-flipCard-host` + flipped BEM `--flipped`) and static preview layout for v4 host wrappers
+- Mark umbrella `three` peer as optional
+
+### Breaking
+
+- `@cos-design/shared` default export no longer includes React hooks — import from `@cos-design/shared/react`
+- CSS Module hashed class names from v3 adapters are replaced by public `cos-*` prefixes (override selectors may need updates)
+- Major version bump (3.x → 4.0.0)
+
 ## [3.8.1] - 2026-09-01
 
 ### Added

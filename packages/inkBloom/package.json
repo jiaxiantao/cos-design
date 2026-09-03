@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/ink-bloom",
-  "version": "3.8.0",
+  "version": "4.0.0",
   "description": "InkBloom component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

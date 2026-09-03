@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/starfield",
-  "version": "3.5.4",
+  "version": "4.0.0",
   "description": "Starfield component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

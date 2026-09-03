@@ -21,7 +21,7 @@
 2. 自己从零写 Canvas 动画
 3. 在多个页面中复制难以维护的样式代码
 
-**cos-design** 就是在这种需求下逐渐形成的。它不是传统意义上的“后台组件库”，而是一个更偏**视觉表达**和**交互氛围**的 React 组件集合。你可以把它理解为：
+**cos-design** 就是在这种需求下逐渐形成的。它不是传统意义上的“后台组件库”，而是一个更偏**视觉表达**和**交互氛围**的多框架特效组件库（React 默认，同时支持 Vue 3 / 原生命令式 API / Web Components）。你可以把它理解为：
 
 > 一个适合放进活动页、展示页、作品集、技术 Demo、品牌页面里的“视觉特效组件库”。
 
@@ -783,11 +783,11 @@ git push origin master
 
 ## 十三、总结
 
-**cos-design** 从一个早期的视觉 Demo 集合，已经演化成了一个具备如下特征的现代 React 组件库：
+**cos-design** 从一个早期的视觉 Demo 集合，已经演化成了一个具备如下特征的现代多框架特效组件库：
 
-- 基于 **React 19 + Vite 8 + TypeScript 5**
-- 覆盖 **10 个**视觉型组件
-- 支持 **ESM / CJS / TypeScript 类型**
+- 基于 **React 19 + Vue 3 + Vite 8 + TypeScript 5**
+- 覆盖 **91 个**视觉型组件
+- 支持 **ESM / CJS / TypeScript 类型**，以及 React / Vue / Core / Web Components 入口
 - 内置 **Playground**、**CI**、**自动发布**
 - 适合活动页、展示页、品牌页和创意项目
 

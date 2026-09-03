@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/orbital-chart",
-  "version": "3.5.3",
+  "version": "4.0.0",
   "description": "OrbitalChart component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

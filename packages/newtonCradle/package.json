@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/newton-cradle",
-  "version": "3.5.3",
+  "version": "4.0.0",
   "description": "NewtonCradle component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

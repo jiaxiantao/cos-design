@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/canvas-clock",
-  "version": "3.5.3",
+  "version": "4.0.0",
   "description": "CanvasClock component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

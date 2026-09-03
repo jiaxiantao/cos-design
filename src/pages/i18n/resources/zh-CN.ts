@@ -17,10 +17,10 @@ const zhCN = {
     navQuickstart: '快速开始',
   },
   home: {
-    eyebrow: 'React 视觉特效组件库',
+    eyebrow: '多框架视觉特效组件库',
     title: '为页面加上记忆点',
     subtitle:
-      '<strong>cos-design</strong> 是面向视觉表达的 React 组件库——专注特效与氛围，给活动页、品牌页与创意展示加趣味与记忆点。',
+      '<strong>cos-design</strong> 是面向视觉表达的多框架特效组件库（React / Vue / 原生）——专注特效与氛围，给活动页、品牌页与创意展示加趣味与记忆点。',
     browseCatalog: '浏览组件目录',
     npmDocs: 'npm 文档',
     metricComponents: '视觉组件',
@@ -113,7 +113,8 @@ const zhCN = {
     aiComponentHint: '每个组件页右上角有「复制给 AI」，可生成带安装命令与示例的提示词。',
     aiSkillInstallTitle: '安装 Skill（Cursor / Claude / OpenCode）',
     installTitle: '1. 安装',
-    installReq: '要求 React >= 18，Node.js >= 20。任选一种方式：',
+    installReq:
+      'Node.js >= 20。React >= 18（默认入口）或 Vue >= 3.4（/vue 入口）。任选一种安装方式：',
     installMethodA: '方式 A：安装全部组件',
     installMethodADesc: '适合快速试用、多组件同页，API 与以往一致。',
     installMethodB: '方式 B：按需安装单个组件',

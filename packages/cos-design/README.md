@@ -2,16 +2,17 @@
 
 # cos-design
 
-**91 React visual-effect components** for marketing pages, brand landings, and creative showcases  
-**91 个 React 视觉特效组件 · 活动页 / 品牌页 / 创意展示开箱即用**
+**91 multi-framework visual-effect components** for marketing pages, brand landings, and creative showcases  
+**91 个视觉特效组件 · React / Vue / 原生 · 活动页 / 品牌页 / 创意展示开箱即用**
 
 [![CI](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml/badge.svg)](https://github.com/jiaxiantao/cos-design/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/cos-design.svg)](https://www.npmjs.com/package/cos-design)
 [![license](https://img.shields.io/npm/l/cos-design.svg)](https://github.com/jiaxiantao/cos-design/blob/main/LICENSE)
-[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
+[![React](https://img.shields.io/badge/React-18%2B-61dafb)](https://react.dev/)
+[![Vue](https://img.shields.io/badge/Vue-3.4%2B-42b883)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [**10-minute campaign**](./docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./examples/next-app) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
+[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [**Migrate to 4.0**](./docs/migration-v4.md) · [**10-minute campaign**](./docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./examples/next-app) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
 
 </div>
 
@@ -19,7 +20,7 @@
 
 ## English (for developers & AI agents)
 
-**cos-design** is a React library of **visual effects** — fireworks, scratch cards, weather/matrix backgrounds, neon headlines, flip counters — not a general admin UI kit.
+**cos-design** is a **multi-framework** library of **visual effects** — fireworks, scratch cards, weather/matrix backgrounds, neon headlines, flip counters — not a general admin UI kit. **React is the default entry**; Vue 3, Core APIs, and Web Components use the same package names via subpaths.
 
 ```bash
 pnpm add cos-design
@@ -41,8 +42,25 @@ export function Campaign() {
 }
 ```
 
+```vue
+<script setup>
+import { Fireworks } from '@cos-design/fireworks/vue';
+</script>
+<template>
+  <Fireworks :width="800" :height="500" />
+</template>
+```
+
+```html
+<script type="module">
+  import '@cos-design/fireworks/element';
+</script>
+<cos-fireworks auto fill></cos-fireworks>
+```
+
 - **Use for:** campaign / lottery / celebration UI, canvas backgrounds, animated headlines, dashboard decorations
 - **Do not use for:** tables, forms, nav shells → use Ant Design / shadcn / MUI
+- **v4 migration:** [docs/migration-v4.md](./docs/migration-v4.md)
 - **Start here (campaign):** [Build a campaign page in 10 minutes](./docs/campaign-10-minutes.md) · runnable [examples/next-app](./examples/next-app)
 - **AI index:** https://jiaxiantao.github.io/cos-design/llms.txt · **Context7:** `/jiaxiantao/cos-design`
 - **Cursor Skill install:** see [docs/ai-discovery.md](./docs/ai-discovery.md)
@@ -52,7 +70,7 @@ export function Campaign() {
 
 ## 这是什么？
 
-**cos-design** 是一个面向**视觉表达**的 React 组件库——专注特效与氛围，给页面加趣味、加记忆点的「特效层」。
+**cos-design** 是一个面向**视觉表达**的多框架特效组件库（React 默认入口，同时支持 Vue 3 / 原生命令式 API / Web Components）——专注特效与氛围，给页面加趣味、加记忆点的「特效层」。
 
 适合用在：
 

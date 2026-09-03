@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/snowfall",
-  "version": "3.5.4",
+  "version": "4.0.0",
   "description": "Snowfall component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

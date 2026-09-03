@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/nine-grid",
-  "version": "3.7.11",
+  "version": "4.0.0",
   "description": "NineGrid component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

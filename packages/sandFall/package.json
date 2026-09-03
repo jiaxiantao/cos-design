@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/sand-fall",
-  "version": "3.6.0",
+  "version": "4.0.0",
   "description": "SandFall component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

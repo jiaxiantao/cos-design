@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/photo-carousel",
-  "version": "3.7.4",
+  "version": "4.0.0",
   "description": "PhotoCarousel component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

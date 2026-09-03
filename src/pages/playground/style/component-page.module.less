@@ -131,6 +131,16 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+
+  /* v4 adapters mount into a host wrapper; give it a definite width so
+     children using width:min(100%, …) do not collapse to 0. */
+  > * {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .previewBackground {

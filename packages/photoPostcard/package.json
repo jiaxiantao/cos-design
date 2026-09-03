@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/photo-postcard",
-  "version": "3.7.3",
+  "version": "4.0.0",
   "description": "PhotoPostcard component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

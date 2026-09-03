@@ -1,16 +1,19 @@
 # 快速开始
 
-cos-design 是一套面向**视觉表达**的 React 组件库（90 个特效组件），适合活动页、品牌 Landing、数据大屏等场景。本文档帮助你在几分钟内完成安装、使用，并避开常见坑。
+cos-design 是一套面向**视觉表达**的多框架特效组件库（**91** 个组件）。**React 为默认入口**；Vue 3、Core API、Web Components 使用**相同包名**的 subpath。适合活动页、品牌 Landing、数据大屏等场景。
+
+升级到 4.0：见 **[docs/migration-v4.md](./docs/migration-v4.md)**。
 
 ---
 
 ## 环境要求
 
-| 项目     | 版本            |
-| -------- | --------------- |
-| Node.js  | >= 20           |
-| React    | >= 18           |
-| 包管理器 | pnpm 9+（推荐） |
+| 项目     | 版本                       |
+| -------- | -------------------------- |
+| Node.js  | >= 20                      |
+| React    | >= 18（使用 React 入口时） |
+| Vue      | >= 3.4（使用 Vue 入口时）  |
+| 包管理器 | pnpm 9+（推荐）            |
 
 ---
 
@@ -83,7 +86,38 @@ export default function Page() {
 }
 ```
 
+### Vue 3
+
+```vue
+<script setup lang="ts">
+import { Fireworks, ScratchCard } from 'cos-design/vue';
+// 或：import { Fireworks } from '@cos-design/fireworks/vue';
+</script>
+
+<template>
+  <ScratchCard prize="🎉 恭喜中奖！" />
+  <Fireworks :width="800" :height="500" />
+</template>
+```
+
+### 原生 / Web Components
+
+```ts
+import { createFireworks } from 'cos-design/core';
+const fw = createFireworks(document.getElementById('fw')!, { auto: true, fill: true });
+```
+
+```html
+<script type="module">
+  import 'cos-design/elements';
+  // 或：import '@cos-design/fireworks/element';
+</script>
+<cos-fireworks auto fill></cos-fireworks>
+```
+
 **无需手动引入 CSS** — 组件样式会随 JS 自动注入（`sideEffects` 已配置）。
+
+完整多框架说明见 **[docs/migration-v4.md](./docs/migration-v4.md)**。
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/barcode-scan",
-  "version": "3.5.3",
+  "version": "4.0.0",
   "description": "BarcodeScan component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

@@ -13,7 +13,7 @@
 
 Marketing and event pages need **presence**: fireworks after a win, scratch cards, weather/atmosphere behind a hero, neon headlines. Most React UI kits (Ant Design, MUI, shadcn) solve forms and tables — not celebration and atmosphere. Teams either paste one-off canvas snippets or pull three unrelated packages (`canvas-confetti`, a scratch-card gist, a matrix-rain demo) with inconsistent APIs.
 
-**cos-design** is a focused React library of visual-effect components for that gap: campaign games, background motion, text animation, photo metaphors, and dashboard decorations.
+**cos-design** is a focused multi-framework library of visual-effect components for that gap (React default · Vue · Core · Web Components): campaign games, background motion, text animation, photo metaphors, and dashboard decorations.
 
 ## Install
 

@@ -18,6 +18,7 @@ import {
 } from './component-packages.mjs';
 import { isV4Component } from './v4-utils.mjs';
 import { v4ExportMap, v4PeerDependencies, writeV4PackageEntries } from './v4-package-exports.mjs';
+import { writeUmbrellaEntries } from './generate-umbrella-entries.mjs';
 
 const AI_KEYWORDS = [
   'cos',
@@ -83,7 +84,8 @@ function createComponentPackage(name) {
   const exportName = toExportName(name);
   const extra = EXTRA_EXPORTS[name];
   const componentPath = `../../../src/components/${name}`;
-  const version = readExistingVersion(pkgPath, VERSION);
+  // v4.0：全量对齐根版本号
+  const version = VERSION;
   const v4 = isV4Component(name);
 
   if (v4) {
@@ -192,19 +194,49 @@ function createComponentPackage(name) {
 function createUmbrellaPackage() {
   const dir = join(PACKAGES_DIR, 'cos-design');
   mkdirSync(dir, { recursive: true });
+  writeUmbrellaEntries();
 
   const pkg = {
     name: 'cos-design',
     version: VERSION,
     description:
-      'React visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases',
+      'Multi-framework visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases (React / Vue / Web Components)',
     type: 'module',
     main: './dist/index.cjs',
     module: './dist/index.js',
     types: './dist/index.d.ts',
-    exports: legacyExports(),
+    exports: {
+      '.': {
+        import: {
+          types: './dist/index.d.ts',
+          default: './dist/index.js'
+        },
+        require: {
+          types: './dist/index.d.ts',
+          default: './dist/index.cjs'
+        }
+      },
+      './vue': {
+        import: {
+          types: './dist/vue.d.ts',
+          default: './dist/vue.js'
+        }
+      },
+      './core': {
+        import: {
+          types: './dist/core.d.ts',
+          default: './dist/core.js'
+        }
+      },
+      './elements': {
+        import: {
+          types: './dist/elements.d.ts',
+          default: './dist/elements.js'
+        }
+      }
+    },
     files: ['dist', 'LICENSE', 'README.md', 'CHANGELOG.md'],
-    sideEffects: ['**/*.css', '**/*.less'],
+    sideEffects: ['**/*.css', '**/*.less', './dist/elements.js'],
     keywords: AI_KEYWORDS,
     homepage: 'https://jiaxiantao.github.io/cos-design/',
     bugs: {
@@ -220,7 +252,14 @@ function createUmbrellaPackage() {
     peerDependencies: {
       react: '>=18.0.0',
       'react-dom': '>=18.0.0',
+      vue: '>=3.4.0',
       three: '>=0.160.0'
+    },
+    peerDependenciesMeta: {
+      react: { optional: true },
+      'react-dom': { optional: true },
+      vue: { optional: true },
+      three: { optional: true }
     },
     publishConfig: {
       access: 'public',
@@ -238,7 +277,7 @@ function createUmbrellaPackage() {
 
 const sharedPkgPath = join(PACKAGES_DIR, 'shared', 'package.json');
 const sharedPkg = JSON.parse(readFileSync(sharedPkgPath, 'utf8'));
-sharedPkg.version = readExistingVersion(sharedPkgPath, VERSION);
+sharedPkg.version = VERSION;
 sharedPkg.exports = {
   '.': {
     import: {

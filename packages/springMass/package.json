@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/spring-mass",
-  "version": "3.6.0",
+  "version": "4.0.0",
   "description": "SpringMass component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

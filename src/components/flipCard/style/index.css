@@ -1,4 +1,11 @@
+.cos-flipCard-host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-flip-card {
+  display: block;
   width: min(100%, 240px);
   height: 320px;
   padding: 0;
@@ -19,7 +26,7 @@
   transform-style: preserve-3d;
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.cos-flip-card__flipped .cos-flip-card__inner {
+.cos-flip-card--flipped .cos-flip-card__inner {
   transform: rotateY(180deg);
 }
 .cos-flip-card__face {

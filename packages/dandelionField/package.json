@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/dandelion-field",
-  "version": "3.8.0",
+  "version": "4.0.0",
   "description": "DandelionField component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

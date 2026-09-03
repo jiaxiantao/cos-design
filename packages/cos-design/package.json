@@ -1,7 +1,7 @@
 {
   "name": "cos-design",
-  "version": "3.8.1",
-  "description": "React visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases",
+  "version": "4.0.0",
+  "description": "Multi-framework visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases (React / Vue / Web Components)",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -16,6 +16,24 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.cjs"
       }
+    },
+    "./vue": {
+      "import": {
+        "types": "./dist/vue.d.ts",
+        "default": "./dist/vue.js"
+      }
+    },
+    "./core": {
+      "import": {
+        "types": "./dist/core.d.ts",
+        "default": "./dist/core.js"
+      }
+    },
+    "./elements": {
+      "import": {
+        "types": "./dist/elements.d.ts",
+        "default": "./dist/elements.js"
+      }
     }
   },
   "files": [
@@ -26,7 +44,8 @@
   ],
   "sideEffects": [
     "**/*.css",
-    "**/*.less"
+    "**/*.less",
+    "./dist/elements.js"
   ],
   "keywords": [
     "cos",
@@ -66,7 +85,22 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
+    "vue": ">=3.4.0",
     "three": ">=0.160.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    },
+    "three": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public",

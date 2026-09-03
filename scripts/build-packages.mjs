@@ -155,6 +155,10 @@ function writeUmbrellaTypesEntry() {
   if (existsSync(nested)) {
     writeFileSync(join(distDir, 'index.d.ts'), "export * from './src';\n");
   }
+  // vue / core / elements 入口类型
+  writeFileSync(join(distDir, 'vue.d.ts'), "export * from './src/vue';\n");
+  writeFileSync(join(distDir, 'core.d.ts'), "export * from './src/core';\n");
+  writeFileSync(join(distDir, 'elements.d.ts'), "export * from './src/elements';\n");
 }
 
 async function buildPackageEntry(name, entry, { usesShared = false, usesThree = false, emptyOutDir = false } = {}) {

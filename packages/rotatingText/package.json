@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/rotating-text",
-  "version": "3.7.0",
+  "version": "4.0.0",
   "description": "RotatingText component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/charge",
-  "version": "3.5.4",
+  "version": "4.0.0",
   "description": "Charge component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

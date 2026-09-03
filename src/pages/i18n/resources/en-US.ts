@@ -19,10 +19,10 @@ const enUS: typeof zhCN = {
     navQuickstart: 'Quick Start',
   },
   home: {
-    eyebrow: 'React Visual Effect Library',
+    eyebrow: 'Multi-framework Visual Effects',
     title: 'Make your pages memorable',
     subtitle:
-      '<strong>cos-design</strong> is a React library built for visual storytelling—focused on effects and atmosphere for campaign pages, brand landings, and creative showcases.',
+      '<strong>cos-design</strong> is a multi-framework library built for visual storytelling (React / Vue / native)—focused on effects and atmosphere for campaign pages, brand landings, and creative showcases.',
     browseCatalog: 'Browse catalog',
     npmDocs: 'npm docs',
     metricComponents: 'visual components',
@@ -117,7 +117,8 @@ const enUS: typeof zhCN = {
       'Every component page has “Copy for AI” — install command + example in one prompt.',
     aiSkillInstallTitle: 'Install skill (Cursor / Claude / OpenCode)',
     installTitle: '1. Install',
-    installReq: 'Requires React >= 18 and Node.js >= 20. Pick either option:',
+    installReq:
+      'Requires Node.js >= 20. Use React >= 18 (default) or Vue >= 3.4 (/vue). Pick either install option:',
     installMethodA: 'Option A: install every component',
     installMethodADesc:
       'Best for quick trials and pages that mix several components. The API stays the same.',

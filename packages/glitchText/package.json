@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/glitch-text",
-  "version": "3.5.3",
+  "version": "4.0.0",
   "description": "GlitchText component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

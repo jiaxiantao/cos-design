@@ -1,13 +1,15 @@
 {
   "name": "cos-design-monorepo",
-  "version": "3.8.1",
+  "version": "4.0.0",
   "private": true,
-  "description": "cos-design monorepo — React visual effect components",
+  "description": "cos-design monorepo — multi-framework visual effect components (React / Vue / Web Components)",
   "type": "module",
   "keywords": [
     "cos",
     "cos-design",
     "react",
+    "vue",
+    "web-components",
     "component-library",
     "visual-effects",
     "canvas",
