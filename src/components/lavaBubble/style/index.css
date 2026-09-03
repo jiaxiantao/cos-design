@@ -1,0 +1,11 @@
+.cos-lava-bubble {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #140301;
+}
+.cos-lava-bubble__canvas {
+  display: block;
+  cursor: pointer;
+  touch-action: none;
+}

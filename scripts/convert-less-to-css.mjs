@@ -22,12 +22,15 @@ export function extractLessClasses(source) {
 
 export function prefixLessClasses(source, componentName) {
   const prefix = `cos-${toPackageId(componentName)}`;
-  const classes = extractLessClasses(source).sort((a, b) => b.length - a.length);
+  const extracted = extractLessClasses(source);
+  const classes = [...extracted].sort((a, b) => b.length - a.length);
   const rootHint = componentName.charAt(0).toLowerCase() + componentName.slice(1);
+  // Prefer first class in source (visual root) over longest name — photos use
+  // `.root` / `.tunnel` which are shorter than BEM elements like `peepVignette`.
   const rootClass =
-    classes.find((c) => c === rootHint) ||
-    classes.find((c) => c.toLowerCase() === rootHint.toLowerCase()) ||
-    classes[0];
+    extracted.find((c) => c === rootHint) ||
+    extracted.find((c) => c.toLowerCase() === rootHint.toLowerCase()) ||
+    extracted[0];
 
   let out = source;
   for (const cls of classes) {

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 export interface PhotoTunnelItem {
   /** 图片地址 */
@@ -41,5 +41,5 @@ export interface PhotoTunnelProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

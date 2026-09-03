@@ -1,0 +1,9 @@
+.cos-metaball-pool {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+  cursor: pointer;
+}
+.cos-metaball-pool__canvas {
+  display: block;
+}

@@ -1,0 +1,8 @@
+.cos-dna-helix {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-dna-helix__canvas {
+  display: block;
+}

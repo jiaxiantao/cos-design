@@ -71,7 +71,7 @@ export function writeV4PackageEntries(name, srcDir, exportName, extra) {
   };
 
   if (extra) {
-    appendExtraExports(lines.react, componentPath, extra);
+    lines.react.push(...extraExportLines(componentPath, extra));
   }
 
   for (const [entry, content] of Object.entries(lines)) {
@@ -79,9 +79,11 @@ export function writeV4PackageEntries(name, srcDir, exportName, extra) {
   }
 }
 
-function appendExtraExports(reactLines, componentPath, extra) {
+/** EXTRA_EXPORTS 按 from 分组，生成具名 export 行 */
+export function extraExportLines(componentPath, extra) {
   const fromLive = extra.from || {};
   const byFrom = new Map();
+  const lines = [];
 
   for (const value of extra.values || []) {
     const rel = fromLive[value] || '.';
@@ -100,10 +102,11 @@ function appendExtraExports(reactLines, componentPath, extra) {
   for (const [rel, group] of byFrom) {
     const base = `${componentPath}/${rel.replace(/^\.\//, '')}`;
     if (group.values.length) {
-      reactLines.push(`export { ${group.values.join(', ')} } from '${base}';`);
+      lines.push(`export { ${group.values.join(', ')} } from '${base}';`);
     }
     if (group.types.length) {
-      reactLines.push(`export type { ${group.types.join(', ')} } from '${base}';`);
+      lines.push(`export type { ${group.types.join(', ')} } from '${base}';`);
     }
   }
+  return lines;
 }

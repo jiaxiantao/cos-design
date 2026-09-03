@@ -1,0 +1,33 @@
+.cos-liquid-progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.cos-liquid-progress__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.cos-liquid-progress__track {
+  stroke: rgba(148, 163, 184, 0.15);
+}
+.cos-liquid-progress__ring {
+  stroke: var(--liquid-color, #38bdf8);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--liquid-color, #38bdf8) 50%, transparent));
+}
+.cos-liquid-progress__fill-bg {
+  fill: color-mix(in srgb, var(--liquid-color, #38bdf8) 25%, #0f172a);
+}
+.cos-liquid-progress__wave {
+  fill: var(--liquid-color, #38bdf8);
+  opacity: 0.85;
+}
+.cos-liquid-progress__label {
+  position: absolute;
+  font-size: 22px;
+  font-weight: 700;
+  color: #f8fafc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--liquid-color, #38bdf8) 60%, transparent);
+}

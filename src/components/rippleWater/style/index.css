@@ -1,0 +1,19 @@
+.cos-ripple-water {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cos-ripple-water__canvas {
+  display: block;
+  cursor: pointer;
+}
+.cos-ripple-water__hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  pointer-events: none;
+  user-select: none;
+}

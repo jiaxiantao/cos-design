@@ -8,6 +8,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  EXTRA_EXPORTS,
   PACKAGES_DIR,
   ROOT,
   componentUsesShared,
@@ -16,6 +17,7 @@ import {
   packageNameOf,
   toExportName
 } from './component-packages.mjs';
+import { extraExportLines } from './v4-package-exports.mjs';
 import { isV4Component, V4_ENTRIES } from './v4-utils.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -75,12 +77,14 @@ function writeV4TypesEntry(name, entry) {
   const componentRoot = `./src/components/${name}`;
 
   if (entry === 'react') {
+    const extra = EXTRA_EXPORTS[name];
     writeFileSync(
       join(distDir, 'index.d.ts'),
       [
         `export { default } from '${componentRoot}/react';`,
         `export { default as ${exportName} } from '${componentRoot}/react';`,
         `export type * from '${componentRoot}/core/types';`,
+        ...(extra ? extraExportLines(componentRoot, extra) : []),
         ''
       ].join('\n')
     );
@@ -202,15 +206,18 @@ async function buildPackage(name, opts = {}) {
 }
 
 async function main() {
+  const only = process.argv.slice(2);
   await run('node', [join(__dirname, 'sync-packages.mjs')]);
 
   console.log('\n▶ Typecheck');
   await run('pnpm', ['exec', 'tsc', '-p', 'tsconfig.build.json', '--noEmit']);
 
-  console.log('\n▶ Building @cos-design/shared');
-  await buildPackage('shared');
+  if (!only.length) {
+    console.log('\n▶ Building @cos-design/shared');
+    await buildPackage('shared');
+  }
 
-  const names = listComponentNames();
+  const names = listComponentNames().filter((name) => !only.length || only.includes(name));
   console.log(`\n▶ Building ${names.length} component packages (concurrency=${CONCURRENCY})`);
   await mapPool(names, CONCURRENCY, async (name) => {
     await buildPackage(name, {
@@ -219,10 +226,12 @@ async function main() {
     });
   });
 
-  console.log('\n▶ Building cos-design (umbrella)');
-  mkdirSync(join(PACKAGES_DIR, 'cos-design'), { recursive: true });
-  await run('pnpm', ['exec', 'vite', 'build', '--mode', 'lib']);
-  writeUmbrellaTypesEntry();
+  if (!only.length) {
+    console.log('\n▶ Building cos-design (umbrella)');
+    mkdirSync(join(PACKAGES_DIR, 'cos-design'), { recursive: true });
+    await run('pnpm', ['exec', 'vite', 'build', '--mode', 'lib']);
+    writeUmbrellaTypesEntry();
+  }
 
   console.log('\n✅ All packages built');
 }

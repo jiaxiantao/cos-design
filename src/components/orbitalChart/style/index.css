@@ -1,0 +1,31 @@
+.cos-orbital-chart {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.cos-orbital-chart__canvas {
+  display: block;
+  border-radius: 50%;
+  background: #0f172a;
+}
+.cos-orbital-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.cos-orbital-chart__legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cos-orbital-chart__swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}

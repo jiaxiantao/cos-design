@@ -1,0 +1,11 @@
+.cos-soap-bubbles {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.22);
+}
+.cos-soap-bubbles__canvas {
+  display: block;
+  touch-action: none;
+  cursor: pointer;
+}
