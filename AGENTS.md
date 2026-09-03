@@ -91,6 +91,7 @@ v4 migration: [docs/migration-v4.md](./docs/migration-v4.md)
 | **Campaign recipes (AI)**          | [docs/campaign-recipes-ai.md](./docs/campaign-recipes-ai.md)                                                               |
 | **Multi-tool AI discovery**        | [docs/ai-discovery.md](./docs/ai-discovery.md) (Cursor / Claude / Copilot / Codex / TRAE / Qoder / OpenCode)               |
 | **Next.js example**                | [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) · runnable [examples/next-app](./examples/next-app) |
+| **Vue / Vanilla examples**         | [examples/vue-app](./examples/vue-app) · [examples/vanilla](./examples/vanilla) · docs under `docs/examples/`              |
 | **Context7**                       | `/jiaxiantao/cos-design`（校验：`pnpm verify:context7`）                                                                   |
 | Playground                         | https://jiaxiantao.github.io/cos-design/                                                                                   |
 | Quickstart                         | [QUICKSTART.md](./QUICKSTART.md)                                                                                           |

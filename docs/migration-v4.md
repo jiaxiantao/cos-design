@@ -124,6 +124,14 @@ style/    → shared CSS
 
 See [docs/rfc-v4-multi-framework.md](./rfc-v4-multi-framework.md) for the full design.
 
+## Runnable examples
+
+| Framework                 | Path                                      | Docs                                                         |
+| ------------------------- | ----------------------------------------- | ------------------------------------------------------------ |
+| React / Next.js           | [examples/next-app](../examples/next-app) | [examples/next-app-router.md](./examples/next-app-router.md) |
+| Vue 3                     | [examples/vue-app](../examples/vue-app)   | [examples/vue-app.md](./examples/vue-app.md)                 |
+| Vanilla (Core + Elements) | [examples/vanilla](../examples/vanilla)   | [examples/vanilla.md](./examples/vanilla.md)                 |
+
 ## Verification
 
 ```bash

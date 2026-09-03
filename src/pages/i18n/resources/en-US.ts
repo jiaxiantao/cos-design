@@ -82,6 +82,10 @@ const enUS: typeof zhCN = {
     copyForAi: 'Copy for AI',
     copied: 'Copied',
     demoNotConfigured: 'Demo is not configured yet',
+    frameworkTabsAria: 'Choose framework example',
+    copySnippet: 'Copy snippet',
+    snippetHint:
+      'Switch tabs for React / Vue / Web Components / Core examples. Vue and Element mounts are live.',
   },
   quickstart: {
     eyebrow: 'Quick Start',

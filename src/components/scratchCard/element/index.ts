@@ -13,6 +13,9 @@ function parseOptions(el: HTMLElement): ScratchCardOptions {
     options.revealThreshold = Number(el.getAttribute('reveal-threshold'));
   if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
   if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  options.onReveal = () => {
+    el.dispatchEvent(new CustomEvent('reveal', { bubbles: true }));
+  };
   return options;
 }
 

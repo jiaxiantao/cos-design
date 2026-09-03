@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `generate-ai-docs` catastrophic regex hang when regenerating `llms.txt` / `docs/ai.md`
 - Fix FlipCard zero-width host in Playground (`cos-flipCard-host` + flipped BEM `--flipped`) and static preview layout for v4 host wrappers
 - Mark umbrella `three` peer as optional
+- Playground: React / Vue / Web Components / Core framework tabs with live Vue & Element mounts
+- Examples: `examples/vue-app` and `examples/vanilla`
+- Element adapters: FlipCard / NineGrid / ScratchCard emit `reveal` / `draw-end` CustomEvents
 
 ### Breaking
 

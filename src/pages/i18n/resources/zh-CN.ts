@@ -79,6 +79,10 @@ const zhCN = {
     copyForAi: '复制给 AI',
     copied: '已复制',
     demoNotConfigured: '演示暂未配置',
+    frameworkTabsAria: '选择框架示例',
+    copySnippet: '复制示例',
+    snippetHint:
+      '切换 Tab 可查看 React / Vue / Web Components / Core 示例；Vue 与 Element 为实时挂载预览。',
   },
   quickstart: {
     eyebrow: 'Quick Start',

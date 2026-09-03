@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
             entryRoot: '.',
           }),
         ]
-      : [react()],
+      : [react(), vue()],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),

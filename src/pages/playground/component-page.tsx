@@ -5,6 +5,8 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { demoComponents } from '../config/demo-components';
 import BackgroundDemoContent from './background-demo-content';
 import FillStage from './fill-stage';
+import FrameworkPreview from './framework-preview';
+import { buildFrameworkSnippets, FRAMEWORK_TABS, type FrameworkId } from './framework-snippets';
 import {
   useBackgroundDemoCopy,
   useLocalizedCategories,
@@ -29,10 +31,19 @@ const ComponentPage = () => {
   const [copied, setCopied] = useState(false);
   const [installCopied, setInstallCopied] = useState(false);
   const [aiCopied, setAiCopied] = useState(false);
+  const [snippetCopied, setSnippetCopied] = useState(false);
+  const [framework, setFramework] = useState<FrameworkId>('react');
   const [editSession, setEditSession] = useState<{ path: string; code: string } | null>(null);
+  const [frameworkPath, setFrameworkPath] = useState(pathname);
+  if (pathname !== frameworkPath) {
+    setFrameworkPath(pathname);
+    setFramework('react');
+    setEditSession(null);
+  }
   const copyTimerRef = useRef(0);
   const installTimerRef = useRef(0);
   const aiTimerRef = useRef(0);
+  const snippetTimerRef = useRef(0);
   const editorRef = useRef<HTMLDivElement>(null);
   const shouldScrollToEditor = useRef(false);
 
@@ -51,8 +62,15 @@ const ComponentPage = () => {
   const fillStaticPreview = isBackground;
   const demoCopy = useBackgroundDemoCopy(current?.name ?? '');
 
-  const showCode = editSession?.path === pathname;
+  const showCode = framework === 'react' && editSession?.path === pathname;
   const editorCode = showCode ? editSession.code : (current?.codeExample ?? '');
+
+  const snippets = useMemo(() => {
+    if (!current) return null;
+    return buildFrameworkSnippets(current.name, current.codeExample);
+  }, [current]);
+
+  const activeSnippet = snippets?.[framework] ?? '';
 
   const next = useMemo(() => {
     if (!current) return null;
@@ -66,6 +84,7 @@ const ComponentPage = () => {
       clearTimeout(copyTimerRef.current);
       clearTimeout(installTimerRef.current);
       clearTimeout(aiTimerRef.current);
+      clearTimeout(snippetTimerRef.current);
     },
     [],
   );
@@ -98,6 +117,13 @@ const ComponentPage = () => {
     installTimerRef.current = window.setTimeout(() => setInstallCopied(false), 2000);
   };
 
+  const handleCopySnippet = async () => {
+    await navigator.clipboard.writeText(activeSnippet);
+    setSnippetCopied(true);
+    clearTimeout(snippetTimerRef.current);
+    snippetTimerRef.current = window.setTimeout(() => setSnippetCopied(false), 2000);
+  };
+
   const buildAiPrompt = () => {
     const demoUrl = `https://jiaxiantao.github.io/cos-design/#${current.path}`;
     return [
@@ -112,7 +138,7 @@ const ComponentPage = () => {
       '# or: pnpm add cos-design',
       '```',
       '',
-      '## Example',
+      '## Example (React default · also /vue · /core · /element)',
       '',
       '```tsx',
       current.codeExample.trim(),
@@ -146,12 +172,55 @@ const ComponentPage = () => {
       setEditSession(null);
       return;
     }
+    setFramework('react');
     shouldScrollToEditor.current = true;
     setEditSession({ path: pathname, code: current.codeExample });
   };
 
   const handleReset = () => {
     setEditSession({ path: pathname, code: current.codeExample });
+  };
+
+  const handleFrameworkChange = (nextFramework: FrameworkId) => {
+    setFramework(nextFramework);
+    if (nextFramework !== 'react') setEditSession(null);
+  };
+
+  const renderPreview = () => {
+    if (framework === 'react') {
+      return (
+        <>
+          {showStaticDemoContent ? (
+            <FillStage>{demoComponents[current.name]}</FillStage>
+          ) : (
+            (demoComponents[current.name] ?? <p>{t('component.demoNotConfigured')}</p>)
+          )}
+          {showStaticDemoContent ? (
+            <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
+          ) : null}
+        </>
+      );
+    }
+
+    const preview = (
+      <FrameworkPreview
+        framework={framework}
+        exportName={current.name}
+        codeExample={current.codeExample}
+        fill={fillStaticPreview}
+      />
+    );
+
+    if (showStaticDemoContent) {
+      return (
+        <>
+          <FillStage>{preview}</FillStage>
+          <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
+        </>
+      );
+    }
+
+    return preview;
   };
 
   return (
@@ -168,9 +237,11 @@ const ComponentPage = () => {
             >
               {categoryMeta.label}
             </span>
-            <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>
-              {showCode ? t('component.closeEditor') : t('component.editCode')}
-            </button>
+            {framework === 'react' ? (
+              <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>
+                {showCode ? t('component.closeEditor') : t('component.editCode')}
+              </button>
+            ) : null}
           </div>
           <h1 className={styles.name}>{current.name}</h1>
           <p className={styles.desc}>{current.description}</p>
@@ -184,6 +255,26 @@ const ComponentPage = () => {
             </button>
           </div>
         </header>
+
+        <div
+          className={styles.frameworkBar}
+          role="tablist"
+          aria-label={t('component.frameworkTabsAria')}
+        >
+          {FRAMEWORK_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={framework === tab.id}
+              className={`${styles.frameworkTab} ${framework === tab.id ? styles.frameworkTabActive : ''}`}
+              onClick={() => handleFrameworkChange(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <p className={styles.frameworkHint}>{t('component.snippetHint')}</p>
 
         {showCode ? (
           <LiveDemoPlayground
@@ -200,16 +291,32 @@ const ComponentPage = () => {
             }
           />
         ) : (
-          <div className={`${styles.preview} ${fillStaticPreview ? styles.previewBackground : ''}`}>
-            {showStaticDemoContent ? (
-              <FillStage>{demoComponents[current.name]}</FillStage>
-            ) : (
-              (demoComponents[current.name] ?? <p>{t('component.demoNotConfigured')}</p>)
-            )}
-            {showStaticDemoContent ? (
-              <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
-            ) : null}
-          </div>
+          <>
+            <div
+              className={`${styles.preview} ${fillStaticPreview ? styles.previewBackground : ''}`}
+            >
+              {renderPreview()}
+            </div>
+            <div className={styles.snippetPanel}>
+              <div className={styles.snippetHeader}>
+                <span>
+                  {framework === 'react'
+                    ? 'TSX'
+                    : framework === 'vue'
+                      ? 'Vue'
+                      : framework === 'element'
+                        ? 'HTML'
+                        : 'TS'}
+                </span>
+                <button type="button" className={styles.snippetCopyBtn} onClick={handleCopySnippet}>
+                  {snippetCopied ? t('component.copied') : t('component.copySnippet')}
+                </button>
+              </div>
+              <pre className={styles.snippetCode}>
+                <code>{activeSnippet}</code>
+              </pre>
+            </div>
+          </>
         )}
 
         <PropsTable componentName={current.name} />

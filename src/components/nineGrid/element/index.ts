@@ -19,6 +19,9 @@ function parseOptions(el: HTMLElement): NineGridOptions {
   if (el.hasAttribute('spinning-text'))
     options.spinningText = el.getAttribute('spinning-text') ?? undefined;
   if (el.hasAttribute('disabled')) options.disabled = el.getAttribute('disabled') !== 'false';
+  options.onDrawEnd = (item, index) => {
+    el.dispatchEvent(new CustomEvent('draw-end', { detail: { item, index }, bubbles: true }));
+  };
   return options;
 }
 

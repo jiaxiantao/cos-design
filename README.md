@@ -12,7 +12,7 @@
 [![Vue](https://img.shields.io/badge/Vue-3.4%2B-42b883)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [**Migrate to 4.0**](./docs/migration-v4.md) · [**10-minute campaign**](./docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js example](./examples/next-app) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
+[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [**Migrate to 4.0**](./docs/migration-v4.md) · [**10-minute campaign**](./docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js](./examples/next-app) · [Vue](./examples/vue-app) · [Vanilla](./examples/vanilla) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
 
 </div>
 
@@ -61,7 +61,7 @@ import { Fireworks } from '@cos-design/fireworks/vue';
 - **Use for:** campaign / lottery / celebration UI, canvas backgrounds, animated headlines, dashboard decorations
 - **Do not use for:** tables, forms, nav shells → use Ant Design / shadcn / MUI
 - **v4 migration:** [docs/migration-v4.md](./docs/migration-v4.md)
-- **Start here (campaign):** [Build a campaign page in 10 minutes](./docs/campaign-10-minutes.md) · runnable [examples/next-app](./examples/next-app)
+- **Start here (campaign):** [Build a campaign page in 10 minutes](./docs/campaign-10-minutes.md) · runnable [examples/next-app](./examples/next-app) · [examples/vue-app](./examples/vue-app) · [examples/vanilla](./examples/vanilla)
 - **AI index:** https://jiaxiantao.github.io/cos-design/llms.txt · **Context7:** `/jiaxiantao/cos-design`
 - **Cursor Skill install:** see [docs/ai-discovery.md](./docs/ai-discovery.md)
 - **Article:** [React marketing page effects with cos-design](./website-content/cos-design-marketing-effects-en.md)
