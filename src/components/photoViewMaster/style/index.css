@@ -1,7 +1,13 @@
-.cos-photoViewMaster-host {
-  display: flex;
-  justify-content: center;
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoViewMaster-host,
+cos-photo-view-master {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-view-master__empty[hidden] {
+  display: none !important;
 }
 
 .cos-photo-view-master {

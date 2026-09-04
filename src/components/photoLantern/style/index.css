@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoLantern-host,
+cos-photo-lantern {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-lantern__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-lantern {
   position: relative;
   width: 360px;

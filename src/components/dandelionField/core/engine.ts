@@ -784,20 +784,20 @@ export function createDandelionField(
       }
     };
 
-    const cleanup = () => {
+    const stopAnimation = () => {
       cancelAnimationFrame(localFrameId);
+      localFrameId = 0;
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointerenter', onEnter);
       canvas.removeEventListener('pointerleave', onLeave);
-      unbindVisibility?.();
-      unbindMotion?.();
     };
 
     if (reduced) {
       flushIntroSpawns(true);
       paint(true);
-      return cleanup;
+      cleanupLoop = stopAnimation;
+      return;
     }
 
     const draw = (ts: number) => {
@@ -884,14 +884,17 @@ export function createDandelionField(
     paint(false, 0);
     kickFirstIntroSpawn();
     draw(0);
-    return cleanup;
+    cleanupLoop = stopAnimation;
   };
 
   unbindVisibility = bindVisibilityPause((h) => {
     paused = h;
   });
+  // bindPrefersReducedMotion fires immediately — only react to real changes.
   unbindMotion = bindPrefersReducedMotion((v) => {
+    const wasReduced = reduced;
     reduced = v;
+    if (reduced === wasReduced) return;
     startLoop();
   });
   applyLayout();
@@ -899,13 +902,23 @@ export function createDandelionField(
 
   return {
     update(next) {
+      const prevFill = options.fill;
+      const prevW = options.width;
+      const prevH = options.height;
+      const prevPlantCount = options.plantCount;
+      const prevSeedCount = options.seedCount;
       options = { ...options, ...next };
-      bindSize();
+      const sizeChanged =
+        options.fill !== prevFill || options.width !== prevW || options.height !== prevH;
+      const sceneChanged =
+        options.plantCount !== prevPlantCount || options.seedCount !== prevSeedCount;
+      if (sizeChanged || sceneChanged) bindSize();
     },
     destroy() {
       if (destroyed) return;
       destroyed = true;
       cleanupLoop?.();
+      cleanupLoop = null;
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       unbindMotion?.();

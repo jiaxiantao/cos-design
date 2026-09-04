@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoCarousel-host,
+cos-photo-carousel {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-carousel__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-carousel {
   position: relative;
   display: flex;
@@ -12,18 +24,6 @@
 }
 .cos-photo-carousel:focus-visible {
   box-shadow: inset 0 0 0 3px rgba(168, 139, 96, 0.42);
-}
-.cos-photo-carousel__ground-shadow {
-  position: absolute;
-  left: 50%;
-  bottom: 8%;
-  width: 72%;
-  height: 14%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(72, 52, 28, 0.34) 0%, rgba(72, 52, 28, 0.12) 52%, transparent 78%);
-  filter: blur(10px);
-  transform: translateX(-50%) scaleY(0.55);
-  pointer-events: none;
 }
 .cos-photo-carousel__perspective {
   position: relative;
@@ -40,26 +40,6 @@
   justify-content: center;
   transform: rotateX(14deg);
   transform-style: preserve-3d;
-  pointer-events: none;
-}
-.cos-photo-carousel__tray {
-  position: absolute;
-  left: 50%;
-  bottom: 10%;
-  width: 78%;
-  height: 18%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 28%, rgba(255, 255, 255, 0.18) 0%, transparent 55%), linear-gradient(180deg, #b89262 0%, #8f6b42 52%, #6f5132 100%);
-  box-shadow: 0 10px 22px rgba(56, 38, 20, 0.28), inset 0 2px 0 rgba(255, 255, 255, 0.22), inset 0 -4px 10px rgba(0, 0, 0, 0.18);
-  transform: translateX(-50%) rotateX(78deg) translateZ(-8px);
-  transform-style: preserve-3d;
-}
-.cos-photo-carousel__tray-rim {
-  position: absolute;
-  inset: -3px;
-  border-radius: inherit;
-  border: 2px solid rgba(255, 248, 235, 0.28);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
   pointer-events: none;
 }
 .cos-photo-carousel__ring {

@@ -1,3 +1,4 @@
+import { applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoPolaroidController, PhotoPolaroidOptions } from './types';
 
 const P = 'cos-photo-polaroid';
@@ -9,7 +10,6 @@ const ROT_FRICTION = 0.88;
 const DRAG_LIFT = 1.04;
 const CAPTION_RATIO = 0.22;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const pseudoRandom = (seed: number) => {
   const value = Math.sin(seed * 127.1 + 31.7) * 43758.5453;
@@ -97,7 +97,7 @@ export function createPhotoPolaroid(
     initialIndex: 0,
     ariaLabel: '拍立得照片堆叠',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let viewport = { width: 0, height: 0 };
@@ -120,7 +120,7 @@ export function createPhotoPolaroid(
   root.appendChild(stage);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const countOf = () => photosOf().length;
   const scatterOf = () => clamp(options.scatter ?? 1, 0, 2.5);
 
@@ -296,7 +296,7 @@ export function createPhotoPolaroid(
     const cardH = options.cardHeight ?? 180;
     const imageHeight = Math.round(cardH * (1 - CAPTION_RATIO));
     const hasCaption = Boolean(options.showCaption && photos.some((p) => p.title || p.description));
-    empty.hidden = count > 0;
+    setHidden(empty, count > 0);
     cardEls.splice(0);
     stage.querySelectorAll(`.${P}__card`).forEach((n) => n.remove());
     photos.forEach((photo, index) => {
@@ -341,8 +341,10 @@ export function createPhotoPolaroid(
 
   const applyRoot = () => {
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? '100%');
-    root.style.height = cssSize(options.height ?? 420);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? '100%',
+      height: options.height ?? 420,
+    });
     assignStyle(root, options.style);
     root.setAttribute('role', 'region');
     root.setAttribute('aria-label', options.ariaLabel ?? '拍立得照片堆叠');
@@ -364,7 +366,11 @@ export function createPhotoPolaroid(
   return {
     update(next) {
       const prevPhotos = options.photos;
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      options = {
+        ...options,
+        ...next,
+        photos: Array.isArray(next.photos) ? next.photos : options.photos,
+      };
       applyRoot();
       if (
         (next.photos && next.photos !== prevPhotos) ||

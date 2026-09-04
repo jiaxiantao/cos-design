@@ -1,3 +1,4 @@
+import { applyBlockHostBox } from '@cos-design/shared';
 import type { PhotoAlbumController, PhotoAlbumItem, PhotoAlbumOptions } from './types';
 
 const P = 'cos-photo-album';
@@ -89,7 +90,7 @@ export function createPhotoAlbum(
     coverColor: '#4a3025',
     ariaLabel: 'Photo album',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let currentIndex = clampRightIndex(options.initialIndex ?? 0, options.photos.length);
@@ -145,7 +146,7 @@ export function createPhotoAlbum(
   root.append(bookShadow, stage, wireBack, book, bookGutter, wireFront, prevBtn, nextBtn);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const copyOf = () => ({
     previous: options.labels?.previous ?? DEFAULT_LABELS.previous,
     next: options.labels?.next ?? DEFAULT_LABELS.next,
@@ -443,6 +444,10 @@ export function createPhotoAlbum(
     const copy = copyOf();
     const width = options.width ?? 920;
     const height = options.height ?? 560;
+    applyBlockHostBox(container, root, {
+      width: typeof width === 'number' || typeof width === 'string' ? width : '100%',
+      rootFillsHost: false,
+    });
     root.style.setProperty('--album-width', cssSize(width));
     root.style.setProperty('--album-height', cssSize(height));
     root.style.setProperty(
@@ -523,7 +528,8 @@ export function createPhotoAlbum(
 
   return {
     update(next) {
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      const nextPhotos = Array.isArray(next.photos) ? next.photos : options.photos;
+      options = { ...options, ...next, photos: nextPhotos };
       currentIndex = clampRightIndex(currentIndex, photosOf().length);
       paint();
     },

@@ -24,7 +24,7 @@ const App = () => {
                 <Route
                   key={item.path}
                   path={item.path.replace(/^\//, '')}
-                  element={<ComponentPage />}
+                  element={<ComponentPage key={item.path} />}
                 />
               ))}
             </Route>

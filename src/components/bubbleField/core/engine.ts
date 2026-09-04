@@ -190,7 +190,12 @@ export function createBubbleField(
         backgroundCache = { key: bgKey, canvas: bgCanvas };
       }
     }
-    if (backgroundCache) ctx.drawImage(backgroundCache.canvas, 0, 0, width, height);
+    if (backgroundCache) {
+      // 1:1 device pixels — avoid depending on the current user-space transform
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(backgroundCache.canvas, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
   };
 
   const paintStaticFrame = () => {
@@ -204,6 +209,12 @@ export function createBubbleField(
     for (const bubble of drawOrder) drawBubble(ctx, bubble, time, tint, width, height);
   };
 
+  const stopLoop = () => {
+    cancelAnimationFrame(frameId);
+    frameId = 0;
+    lastFrameTs = 0;
+  };
+
   const draw = (frameTs = 0) => {
     if (destroyed) return;
     frameId = requestAnimationFrame(draw);
@@ -211,6 +222,7 @@ export function createBubbleField(
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (!snowSprite) snowSprite = createSnowSprite();
 
     if (!lastFrameTs) lastFrameTs = frameTs;
@@ -224,6 +236,7 @@ export function createBubbleField(
     const currentSpeed = options.speed ?? 1;
     const maxCount = options.bubbleCount ?? 36;
     const isInteractive = options.interactive ?? true;
+    canvas.style.cursor = isInteractive ? 'pointer' : 'default';
 
     ensureBackground(ctx, dpr, tint);
     drawDynamicBackground(ctx, width, height, time, snowSprite, false);
@@ -343,7 +356,7 @@ export function createBubbleField(
   };
 
   const cleanup = () => {
-    cancelAnimationFrame(frameId);
+    stopLoop();
     canvas.removeEventListener('pointermove', onPointerMove);
     canvas.removeEventListener('pointerenter', onPointerEnter);
     canvas.removeEventListener('pointerdown', onPointerDown);
@@ -353,24 +366,54 @@ export function createBubbleField(
     sizeCleanup?.();
   };
 
+  const startLoop = () => {
+    stopLoop();
+    if (reduced) {
+      paintStaticFrame();
+      return;
+    }
+    draw();
+  };
+
+  // Match 3.x: only flip the flag — never start a second rAF chain here.
+  // bindPrefersReducedMotion invokes immediately on subscribe.
   unbindVisibility = bindVisibilityPause((h) => {
     paused = h;
   });
   unbindMotion = bindPrefersReducedMotion((v) => {
+    const wasReduced = reduced;
     reduced = v;
-    if (reduced) paintStaticFrame();
-    else draw();
+    if (reduced && !wasReduced) {
+      stopLoop();
+      paintStaticFrame();
+    } else if (!reduced && wasReduced) {
+      startLoop();
+    }
   });
 
   bindSize();
-  if (reduced) paintStaticFrame();
-  else draw();
+  startLoop();
 
   return {
     update(next) {
+      const prevFill = options.fill;
+      const prevW = options.width;
+      const prevH = options.height;
+      const prevCount = options.bubbleCount;
       options = { ...options, ...next };
-      bindSize();
-      if (reduced) paintStaticFrame();
+      canvas.style.cursor = (options.interactive ?? true) ? 'pointer' : 'default';
+      const sizeChanged =
+        options.fill !== prevFill || options.width !== prevW || options.height !== prevH;
+      const countChanged = options.bubbleCount !== prevCount;
+      if (sizeChanged) {
+        bindSize();
+        startLoop();
+      } else if (countChanged) {
+        initBubbles();
+        if (reduced) paintStaticFrame();
+      } else if (reduced) {
+        paintStaticFrame();
+      }
     },
     destroy() {
       if (destroyed) return;

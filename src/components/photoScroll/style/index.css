@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoScroll-host,
+cos-photo-scroll {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-scroll__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-scroll {
   --wood-dark: #4a2f18;
   --wood-mid: #6b4423;

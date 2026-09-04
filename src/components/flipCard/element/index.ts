@@ -12,9 +12,23 @@ function parseOptions(el: HTMLElement): FlipCardOptions {
   if (el.hasAttribute('back-title')) options.backTitle = el.getAttribute('back-title') ?? undefined;
   if (el.hasAttribute('back-subtitle'))
     options.backSubtitle = el.getAttribute('back-subtitle') ?? undefined;
-  options.flipped = el.hasAttribute('flipped');
-  options.defaultFlipped = el.hasAttribute('default-flipped');
-  options.disabled = el.hasAttribute('disabled');
+  // Controlled `flipped` only when attribute is present. Omitting must stay
+  // undefined — `hasAttribute` → false would lock the card in controlled mode
+  // and make clicks no-ops (engine only flips uncontrolled state).
+  if (el.hasAttribute('flipped')) {
+    const raw = el.getAttribute('flipped');
+    options.flipped = raw !== 'false' && raw !== '0';
+  } else {
+    options.flipped = undefined;
+  }
+  if (el.hasAttribute('default-flipped')) {
+    const raw = el.getAttribute('default-flipped');
+    options.defaultFlipped = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('disabled')) {
+    const raw = el.getAttribute('disabled');
+    options.disabled = raw !== 'false' && raw !== '0';
+  }
   options.onReveal = (...args: unknown[]) => {
     el.dispatchEvent(
       new CustomEvent('reveal', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),

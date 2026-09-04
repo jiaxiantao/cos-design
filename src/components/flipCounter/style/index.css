@@ -1,8 +1,16 @@
+.cos-flipCounter-host,
+cos-flip-counter {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-flip-counter {
   display: flex;
   gap: 6px;
   align-items: center;
   justify-content: center;
+  margin-inline: auto;
   padding: 24px;
 }
 .cos-flip-counter__digit {
@@ -73,10 +81,10 @@
   transform-origin: center top;
   transform: rotateX(90deg);
 }
-.cos-flip-counter__is-flipping .cos-flip-counter__flap-top {
+.cos-flip-counter__digit-card--flipping .cos-flip-counter__flap-top {
   animation: fold-top var(--flip-duration, 600ms) ease-in forwards;
 }
-.cos-flip-counter__is-flipping .cos-flip-counter__flap-bottom {
+.cos-flip-counter__digit-card--flipping .cos-flip-counter__flap-bottom {
   animation: unfold-bottom var(--flip-duration, 600ms) ease-out forwards;
 }
 @keyframes fold-top {

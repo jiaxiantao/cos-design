@@ -4,6 +4,12 @@
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
+.cos-scratchCard-host,
+cos-scratch-card {
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 .cos-scratch-card__prize {
   position: absolute;
   inset: 0;

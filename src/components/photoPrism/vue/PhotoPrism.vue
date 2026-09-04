@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createPhotoPrism, type PhotoPrismController, type PhotoPrismOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoPrismOptions>();
+const props = withDefaults(defineProps<PhotoPrismOptions>(), {
+  autoRotate: true,
+  showCaption: true,
+});
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
 }>();

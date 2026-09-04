@@ -22,6 +22,7 @@
   justify-content: center;
   min-height: inherit;
   padding: 40px;
+  color: rgba(148, 163, 184, 0.85);
   pointer-events: none;
 }
 .cos-click-spark__hint {
@@ -34,4 +35,13 @@
   color: rgba(148, 163, 184, 0.7);
   font-size: 15px;
   pointer-events: none;
+}
+.cos-click-spark__hint[hidden] {
+  display: none !important;
+}
+.cos-clickSpark-host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }

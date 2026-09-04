@@ -1,4 +1,4 @@
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoTunnelController, PhotoTunnelOptions } from './types';
 
 const P = 'cos-photo-tunnel';
@@ -9,7 +9,6 @@ const SNAP_SPEED = 10;
 const IDLE_BEFORE_RELEASE_MS = 90;
 const VELOCITY_SMOOTH_TAU = 0.045;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const nearestIndex = (progress: number, count: number) => {
   if (count <= 0) return 0;
@@ -39,7 +38,7 @@ export function createPhotoTunnel(
     initialIndex: 0,
     ariaLabel: '纵深照片隧道',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let progress = options.initialIndex ?? 0;
@@ -78,7 +77,7 @@ export function createPhotoTunnel(
   root.append(fog, vignette, stage, empty);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
 
   const applyProgress = (next: number) => {
     progress = next;
@@ -144,14 +143,16 @@ export function createPhotoTunnel(
   const rebuild = () => {
     const photos = photosOf();
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? 380);
-    root.style.height = cssSize(options.height ?? 480);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? 380,
+      height: options.height ?? 480,
+    });
     assignStyle(root, options.style);
     const emptyMode = photos.length === 0;
-    empty.hidden = !emptyMode;
-    fog.hidden = emptyMode;
-    vignette.hidden = emptyMode;
-    stage.hidden = emptyMode;
+    setHidden(empty, !emptyMode);
+    setHidden(fog, emptyMode);
+    setHidden(vignette, emptyMode);
+    setHidden(stage, emptyMode);
     root.setAttribute('role', emptyMode ? 'img' : 'region');
     if (!emptyMode) {
       root.setAttribute('aria-roledescription', 'carousel');
@@ -336,8 +337,10 @@ export function createPhotoTunnel(
       if (options.photos !== prevPhotos) rebuild();
       else {
         root.className = [P, options.className].filter(Boolean).join(' ');
-        root.style.width = cssSize(options.width ?? 380);
-        root.style.height = cssSize(options.height ?? 480);
+        applyBlockHostBox(container, root, {
+          width: options.width ?? 380,
+          height: options.height ?? 480,
+        });
         assignStyle(root, options.style);
         if (options.initialIndex !== prevIndex) {
           const safe = nearestIndex(options.initialIndex ?? 0, photosOf().length);

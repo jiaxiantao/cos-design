@@ -5,8 +5,16 @@ const TAG = 'cos-photo-tunnel';
 
 function parseOptions(el: HTMLElement): PhotoTunnelOptions {
   const options = {} as PhotoTunnelOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('depth-step')) options.depthStep = Number(el.getAttribute('depth-step'));
   if (el.hasAttribute('drag-sensitivity'))
@@ -16,8 +24,14 @@ function parseOptions(el: HTMLElement): PhotoTunnelOptions {
     options.autoAdvanceSpeed = Number(el.getAttribute('auto-advance-speed'));
   if (el.hasAttribute('initial-index'))
     options.initialIndex = Number(el.getAttribute('initial-index'));
-  options.autoAdvance = el.hasAttribute('auto-advance');
-  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('auto-advance')) {
+    const raw = el.getAttribute('auto-advance');
+    options.autoAdvance = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('show-caption')) {
+    const raw = el.getAttribute('show-caption');
+    options.showCaption = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

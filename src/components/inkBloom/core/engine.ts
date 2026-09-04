@@ -482,14 +482,13 @@ export function createInkBloom(
 
     if (reduced) {
       paintWater(0);
-      return () => {
+      cleanupLoop = () => {
         canvas.removeEventListener('pointerdown', onDown);
         canvas.removeEventListener('pointermove', onMove);
         canvas.removeEventListener('pointerup', onUp);
         canvas.removeEventListener('pointercancel', onUp);
-        unbindVisibility?.();
-        unbindMotion?.();
       };
+      return;
     }
 
     const draw = (ts: number) => {
@@ -544,14 +543,12 @@ export function createInkBloom(
     };
 
     draw(0);
-    return () => {
+    cleanupLoop = () => {
       cancelAnimationFrame(localFrameId);
       canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerup', onUp);
       canvas.removeEventListener('pointercancel', onUp);
-      unbindVisibility?.();
-      unbindMotion?.();
     };
   };
 
@@ -559,7 +556,9 @@ export function createInkBloom(
     paused = h;
   });
   unbindMotion = bindPrefersReducedMotion((v) => {
+    const wasReduced = reduced;
     reduced = v;
+    if (reduced === wasReduced) return;
     startLoop();
   });
   applyLayout();
@@ -567,13 +566,19 @@ export function createInkBloom(
 
   return {
     update(next) {
+      const prevFill = options.fill;
+      const prevW = options.width;
+      const prevH = options.height;
       options = { ...options, ...next };
-      bindSize();
+      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH) {
+        bindSize();
+      }
     },
     destroy() {
       if (destroyed) return;
       destroyed = true;
       cleanupLoop?.();
+      cleanupLoop = null;
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       unbindMotion?.();

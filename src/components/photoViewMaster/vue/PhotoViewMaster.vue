@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import {
   createPhotoViewMaster,
   type PhotoViewMasterController,
@@ -8,7 +8,10 @@ import {
 } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoViewMasterOptions>();
+const props = withDefaults(defineProps<PhotoViewMasterOptions>(), {
+  autoRotate: true,
+  showCaption: true,
+});
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
   'index-change': [...args: unknown[]];

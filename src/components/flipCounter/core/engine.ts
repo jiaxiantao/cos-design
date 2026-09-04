@@ -1,16 +1,27 @@
 import type { FlipCounterController, FlipCounterOptions } from './types';
 
 const P = 'cos-flip-counter';
+const DEFAULT_AUTO_MS = 2000;
 
 const padDigits = (value: number, digits: number) =>
   Math.max(0, Math.floor(value)).toString().padStart(digits, '0').slice(-digits);
 
 export function createFlipCounter(
   container: HTMLElement,
-  initial: FlipCounterOptions,
+  initial: FlipCounterOptions = {},
 ): FlipCounterController {
-  let options: FlipCounterOptions = { digits: 4, color: '#38bdf8', duration: 600, ...initial };
+  let options: FlipCounterOptions = {
+    value: 0,
+    digits: 4,
+    color: '#38bdf8',
+    duration: 600,
+    auto: false,
+    autoInterval: DEFAULT_AUTO_MS,
+    ...initial,
+  };
   let destroyed = false;
+  let liveValue = Math.max(0, Math.floor(options.value ?? 0));
+  let autoTimer: number | null = null;
   const digitStates: { prev: string; current: string; flipping: boolean; timer: number }[] = [];
 
   const root = document.createElement('div');
@@ -72,6 +83,7 @@ export function createFlipCounter(
     };
 
     renderStatic();
+    digit.appendChild(card);
     return { digit, renderStatic, startFlip };
   };
 
@@ -81,7 +93,7 @@ export function createFlipCounter(
     root.innerHTML = '';
     digitEls = [];
     const digits = options.digits ?? 4;
-    const chars = padDigits(options.value ?? 0, digits).split('');
+    const chars = padDigits(liveValue, digits).split('');
     while (digitStates.length < chars.length)
       digitStates.push({ prev: '0', current: '0', flipping: false, timer: 0 });
     digitStates.length = chars.length;
@@ -99,23 +111,67 @@ export function createFlipCounter(
     });
   };
 
+  const stopAuto = () => {
+    if (autoTimer != null) {
+      window.clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  };
+
+  const syncAuto = () => {
+    if (!(options.auto ?? false) || destroyed) {
+      stopAuto();
+      return;
+    }
+    if (autoTimer != null) return;
+    const ms = options.autoInterval ?? DEFAULT_AUTO_MS;
+    autoTimer = window.setInterval(() => {
+      if (destroyed) return;
+      liveValue += Math.floor(Math.random() * 9) + 1;
+      options.value = liveValue;
+      rebuild(true);
+    }, ms);
+  };
+
   rebuild(false);
+  syncAuto();
 
   return {
     update(next) {
       const prevValue = options.value;
+      const prevDigits = options.digits;
+      const prevAuto = Boolean(options.auto);
+      const prevInterval = options.autoInterval;
       options = { ...options, ...next };
-      if (next.value !== undefined && next.value !== prevValue) rebuild(true);
-      else {
+
+      if (next.value !== undefined && !options.auto) {
+        liveValue = Math.max(0, Math.floor(next.value));
+      } else if (next.value !== undefined && options.auto && !prevAuto) {
+        liveValue = Math.max(0, Math.floor(next.value));
+      } else if (options.auto && !prevAuto) {
+        liveValue = Math.max(0, Math.floor(options.value ?? liveValue));
+      }
+
+      const valueChanged = next.value !== undefined && next.value !== prevValue && !options.auto;
+      const digitsChanged = next.digits !== undefined && next.digits !== prevDigits;
+      if (valueChanged || digitsChanged) {
+        rebuild(valueChanged);
+      } else if (next.color !== undefined || next.duration !== undefined) {
         digitEls.forEach((d) => {
           d.digit.style.setProperty('--flip-color', options.color ?? '#38bdf8');
           d.digit.style.setProperty('--flip-duration', `${options.duration ?? 600}ms`);
         });
       }
+
+      if (Boolean(options.auto) !== prevAuto || options.autoInterval !== prevInterval) {
+        stopAuto();
+        syncAuto();
+      }
     },
     destroy() {
       if (destroyed) return;
       destroyed = true;
+      stopAuto();
       digitStates.forEach((s) => window.clearTimeout(s.timer));
       root.remove();
     },

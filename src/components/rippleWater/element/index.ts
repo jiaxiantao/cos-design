@@ -27,7 +27,10 @@ function parseOptions(el: HTMLElement): RippleWaterOptions {
     const raw = el.getAttribute('interactive');
     options.interactive = raw !== 'false' && raw !== '0';
   }
-  options.showHint = el.hasAttribute('show-hint');
+  if (el.hasAttribute('show-hint')) {
+    const raw = el.getAttribute('show-hint');
+    options.showHint = raw !== 'false' && raw !== '0';
+  }
   return options;
 }
 

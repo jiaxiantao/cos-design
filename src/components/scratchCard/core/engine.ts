@@ -1,4 +1,4 @@
-import { getRelativePointerPosition } from '@cos-design/shared';
+import { applyBlockHostBox, getRelativePointerPosition } from '@cos-design/shared';
 import type { ScratchCardController, ScratchCardOptions } from './types';
 
 const P = 'cos-scratch-card';
@@ -60,9 +60,8 @@ export function createScratchCard(
   const applyChrome = () => {
     const width = widthOf();
     const height = heightOf();
+    applyBlockHostBox(container, root, { width, height });
     root.className = P;
-    root.style.width = `${width}px`;
-    root.style.height = `${height}px`;
     prizeEl.textContent = options.prize ?? '🎉 恭喜中奖！';
     canvas.className = `${P}__canvas${revealed ? ` ${P}__hidden` : ''}`;
     canvas.setAttribute('aria-label', options.coverText ?? '刮开涂层');

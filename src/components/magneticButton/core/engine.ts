@@ -28,8 +28,10 @@ export function createMagneticButton(
     }
     // React/Vue portals own the children — do not clear existing nodes
     if (btn.childNodes.length > 0) return;
+    // nullish defaultContent = framework adapter will fill via portal/Teleport
+    if (opts.defaultContent == null) return;
     const ph = document.createElement('span');
-    ph.textContent = opts.defaultContent ?? '磁吸按钮';
+    ph.textContent = opts.defaultContent;
     btn.replaceChildren(ph);
   };
 

@@ -9,8 +9,16 @@ const TAG = 'cos-photo-carousel';
 
 function parseOptions(el: HTMLElement): PhotoCarouselOptions {
   const options = {} as PhotoCarouselOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('radius')) options.radius = Number(el.getAttribute('radius'));
   if (el.hasAttribute('card-width')) options.cardWidth = Number(el.getAttribute('card-width'));
@@ -22,8 +30,14 @@ function parseOptions(el: HTMLElement): PhotoCarouselOptions {
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
   if (el.hasAttribute('initial-angle'))
     options.initialAngle = Number(el.getAttribute('initial-angle'));
-  options.autoRotate = el.hasAttribute('auto-rotate');
-  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('auto-rotate')) {
+    const raw = el.getAttribute('auto-rotate');
+    options.autoRotate = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('show-caption')) {
+    const raw = el.getAttribute('show-caption');
+    options.showCaption = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

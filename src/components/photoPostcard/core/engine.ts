@@ -1,3 +1,4 @@
+import { applyBlockHostBox } from '@cos-design/shared';
 import type { PhotoPostcardController, PhotoPostcardItem, PhotoPostcardOptions } from './types';
 
 const P = 'cos-photo-postcard';
@@ -5,7 +6,6 @@ const CLICK_SLOP_PX = 6;
 const EXIT_MS = 280;
 const SNAP_MS = 320;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const modIndex = (value: number, count: number) => {
   if (count <= 0) return 0;
   return ((value % count) + count) % count;
@@ -106,6 +106,10 @@ const fillFaces = (host: HTMLElement, photo: PhotoPostcardItem, showCaption: boo
   host.append(front, back);
 };
 
+/**
+ * Imperative port of the v3.8.x PhotoPostcard React behavior.
+ * Motion updates only touch transform/opacity/class — never detach the active card.
+ */
 export function createPhotoPostcard(
   container: HTMLElement,
   initial: PhotoPostcardOptions = { photos: [] },
@@ -121,7 +125,7 @@ export function createPhotoPostcard(
     initialFlipped: false,
     ariaLabel: '明信片',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let index = clampIndex(options.initialIndex ?? 0, options.photos.length);
@@ -131,6 +135,7 @@ export function createPhotoPostcard(
   let drag: { pointerId: number; startX: number; moved: boolean } | null = null;
   let exitTimer: number | null = null;
   let snapTimer: number | null = null;
+  let paintedPhotoKey = '';
 
   const root = document.createElement('div');
   const stage = document.createElement('div');
@@ -154,8 +159,118 @@ export function createPhotoPostcard(
   root.appendChild(stage);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const countOf = () => photosOf().length;
+  const photoKey = (photo: PhotoPostcardItem | undefined, showCaption: boolean) =>
+    photo
+      ? `${photo.src}\0${photo.title ?? ''}\0${photo.description ?? ''}\0${photo.alt ?? ''}\0${showCaption}`
+      : '';
+
+  const applyMotion = () => {
+    card.className = [
+      `${P}__card-active`,
+      flipped ? `${P}__flipped` : '',
+      phase === 'exiting' ? `${P}__card-exiting` : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    card.style.transform = `translateX(${offsetX}px)`;
+    card.style.transition =
+      phase === 'snapping' || phase === 'exiting'
+        ? `transform ${phase === 'exiting' ? EXIT_MS : SNAP_MS}ms cubic-bezier(0.22, 1, 0.36, 1), opacity ${EXIT_MS}ms ease`
+        : 'none';
+    card.style.opacity = phase === 'exiting' ? '0.55' : '1';
+    card.setAttribute('aria-pressed', String(flipped));
+    const current = photosOf()[index];
+    card.setAttribute(
+      'aria-label',
+      current
+        ? `${flipped ? '背面' : '正面'}：${current.alt ?? current.title ?? `明信片 ${index + 1}`}`
+        : '',
+    );
+  };
+
+  const rebuildStackDecor = (count: number, cardWidth: number, cardHeight: number) => {
+    const keep = new Set<Element>([cardSlot]);
+    for (const child of [...stack.children]) {
+      if (!keep.has(child)) child.remove();
+    }
+    const layouts =
+      count <= 1
+        ? []
+        : [1, 2].slice(0, Math.min(2, count - 1)).map((depth) => {
+            const seed = index * 13.7 + depth * 5.3;
+            return {
+              depth,
+              rot: (pseudoRandom(seed) * 2 - 1) * 5.5,
+              dx: depth * 5 + pseudoRandom(seed + 1.1) * 4,
+              dy: depth * 3 + pseudoRandom(seed + 2.4) * 3,
+            };
+          });
+    for (const { depth, rot, dx, dy } of layouts) {
+      const sc = document.createElement('div');
+      sc.className = `${P}__stack-card`;
+      sc.style.width = `${cardWidth}px`;
+      sc.style.height = `${cardHeight}px`;
+      sc.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot}deg)`;
+      sc.style.opacity = depth === 1 ? '0.92' : '0.78';
+      sc.setAttribute('aria-hidden', 'true');
+      stack.insertBefore(sc, cardSlot);
+    }
+  };
+
+  const paintStructure = () => {
+    const photos = photosOf();
+    const count = photos.length;
+    const cardWidth = options.cardWidth ?? 260;
+    const cardHeight = options.cardHeight ?? 170;
+    const showCaption = options.showCaption !== false;
+
+    root.className = [P, options.className].filter(Boolean).join(' ');
+    applyBlockHostBox(container, root, {
+      width: options.width ?? 360,
+      height: options.height ?? 420,
+    });
+    assignStyle(root, options.style);
+    root.setAttribute('role', 'region');
+    root.setAttribute('aria-label', options.ariaLabel ?? '明信片');
+    root.tabIndex = 0;
+
+    empty.hidden = count > 0;
+    stack.hidden = count === 0;
+    hint.hidden = count <= 1;
+
+    if (count === 0) {
+      flipInner.replaceChildren();
+      paintedPhotoKey = '';
+      return;
+    }
+
+    stack.style.width = `${cardWidth}px`;
+    stack.style.height = `${cardHeight}px`;
+    if (!cardSlot.isConnected || cardSlot.parentElement !== stack) {
+      stack.appendChild(cardSlot);
+    }
+    rebuildStackDecor(count, cardWidth, cardHeight);
+
+    cardSlot.style.width = `${cardWidth}px`;
+    cardSlot.style.height = `${cardHeight}px`;
+    card.style.width = `${cardWidth}px`;
+    card.style.height = `${cardHeight}px`;
+    card.setAttribute('role', 'button');
+
+    const current = photos[index];
+    const nextKey = photoKey(current, showCaption);
+    if (current && nextKey !== paintedPhotoKey) {
+      fillFaces(flipInner, current, showCaption);
+      paintedPhotoKey = nextKey;
+    } else if (!current) {
+      flipInner.replaceChildren();
+      paintedPhotoKey = '';
+    }
+
+    applyMotion();
+  };
 
   const commitIndex = (nextIndex: number) => {
     const list = photosOf();
@@ -171,14 +286,14 @@ export function createPhotoPostcard(
     commitIndex(targetIndex);
     offsetX = 0;
     phase = 'idle';
-    paint();
+    paintStructure();
   };
 
   const animateExit = (direction: 1 | -1) => {
     const delta = direction * ((options.cardWidth ?? 260) * 0.55 + 48);
     phase = 'exiting';
     offsetX = delta;
-    paint();
+    applyMotion();
     if (exitTimer != null) window.clearTimeout(exitTimer);
     exitTimer = window.setTimeout(() => {
       const target = modIndex(index + direction, photosOf().length);
@@ -189,11 +304,11 @@ export function createPhotoPostcard(
   const snapBack = () => {
     phase = 'snapping';
     offsetX = 0;
-    paint();
+    applyMotion();
     if (snapTimer != null) window.clearTimeout(snapTimer);
     snapTimer = window.setTimeout(() => {
       phase = 'idle';
-      paint();
+      applyMotion();
     }, SNAP_MS);
   };
 
@@ -205,7 +320,7 @@ export function createPhotoPostcard(
   const toggleFlip = () => {
     flipped = !flipped;
     options.onFlipChange?.(flipped);
-    paint();
+    applyMotion();
   };
 
   const onPointerDown = (event: PointerEvent) => {
@@ -220,7 +335,7 @@ export function createPhotoPostcard(
     const dx = event.clientX - drag.startX;
     if (Math.abs(dx) > CLICK_SLOP_PX) drag.moved = true;
     offsetX = countOf() <= 1 ? dx * 0.22 : dx;
-    paint();
+    applyMotion();
   };
 
   const onPointerUp = (event: PointerEvent) => {
@@ -266,86 +381,23 @@ export function createPhotoPostcard(
     }
   };
 
-  const paint = () => {
-    const photos = photosOf();
-    const count = photos.length;
-    const cardWidth = options.cardWidth ?? 260;
-    const cardHeight = options.cardHeight ?? 170;
-    root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? 360);
-    root.style.height = cssSize(options.height ?? 420);
-    assignStyle(root, options.style);
-    root.setAttribute('role', 'region');
-    root.setAttribute('aria-label', options.ariaLabel ?? '明信片');
-    root.tabIndex = 0;
-    empty.hidden = count > 0;
-    stack.hidden = count === 0;
-    hint.hidden = count <= 1;
-    if (count === 0) return;
-
-    stack.style.width = `${cardWidth}px`;
-    stack.style.height = `${cardHeight}px`;
-    stack.replaceChildren();
-    const stackLayouts =
-      count <= 1
-        ? []
-        : [1, 2].slice(0, Math.min(2, count - 1)).map((depth) => {
-            const seed = index * 13.7 + depth * 5.3;
-            return {
-              depth,
-              rot: (pseudoRandom(seed) * 2 - 1) * 5.5,
-              dx: depth * 5 + pseudoRandom(seed + 1.1) * 4,
-              dy: depth * 3 + pseudoRandom(seed + 2.4) * 3,
-            };
-          });
-    for (const { depth, rot, dx, dy } of stackLayouts) {
-      const sc = document.createElement('div');
-      sc.className = `${P}__stack-card`;
-      sc.style.width = `${cardWidth}px`;
-      sc.style.height = `${cardHeight}px`;
-      sc.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${rot}deg)`;
-      sc.style.opacity = depth === 1 ? '0.92' : '0.78';
-      sc.setAttribute('aria-hidden', 'true');
-      stack.appendChild(sc);
-    }
-    cardSlot.style.width = `${cardWidth}px`;
-    cardSlot.style.height = `${cardHeight}px`;
-    stack.appendChild(cardSlot);
-
-    const current = photos[index];
-    card.className = `${P}__card-active${flipped ? ` ${P}__flipped` : ''}${phase === 'exiting' ? ` ${P}__card-exiting` : ''}`;
-    card.style.width = `${cardWidth}px`;
-    card.style.height = `${cardHeight}px`;
-    card.style.transform = `translateX(${offsetX}px)`;
-    card.style.transition =
-      phase === 'snapping' || phase === 'exiting'
-        ? `transform ${phase === 'exiting' ? EXIT_MS : SNAP_MS}ms cubic-bezier(0.22, 1, 0.36, 1), opacity ${EXIT_MS}ms ease`
-        : 'none';
-    card.style.opacity = phase === 'exiting' ? '0.55' : '1';
-    card.setAttribute('role', 'button');
-    card.setAttribute(
-      'aria-label',
-      current
-        ? `${flipped ? '背面' : '正面'}：${current.alt ?? current.title ?? `明信片 ${index + 1}`}`
-        : '',
-    );
-    card.setAttribute('aria-pressed', String(flipped));
-    if (current) fillFaces(flipInner, current, options.showCaption !== false);
-    else flipInner.replaceChildren();
-  };
-
   card.addEventListener('pointerdown', onPointerDown);
   card.addEventListener('pointermove', onPointerMove);
   card.addEventListener('pointerup', onPointerUp);
   card.addEventListener('pointercancel', onPointerCancel);
   root.addEventListener('keydown', onKeyDown);
-  paint();
+  paintStructure();
 
   return {
     update(next) {
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      const photos = Array.isArray(next.photos)
+        ? next.photos
+        : next.photos === undefined
+          ? options.photos
+          : [];
+      options = { ...options, ...next, photos };
       index = clampIndex(index, photosOf().length);
-      paint();
+      paintStructure();
     },
     destroy() {
       if (destroyed) return;

@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoAlbum-host,
+cos-photo-album {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-album__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-album {
   position: relative;
   /* 用 width + max-width，避免在居中 flex 子树里 min(..., 100%) 百分比循环塌成 0 */

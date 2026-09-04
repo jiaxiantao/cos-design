@@ -1,5 +1,5 @@
 import * as C from '@/components';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ChargeDemo from '../demos/charge-demo';
 import FireworksDemo from '../demos/fireworks-demo';
@@ -45,16 +45,9 @@ const CountdownDemo = () => {
 
 const ProgressChestDemo = () => {
   const { t } = useTranslation();
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setProgress((p) => (p >= 100 ? 0 : p + 2));
-    }, 120);
-    return () => clearInterval(timer);
-  }, []);
   return (
     <C.ProgressChest
-      progress={progress}
+      auto
       label={t('demos.progressChestLabel')}
       openedLabel={t('demos.progressChestOpened')}
     />
@@ -112,7 +105,7 @@ const LocalizedComponentDemo = ({
         <C.BurnAway text="COS DESIGN" fontSize={56} completedText={t(`${key}.burnAwayCompleted`)} />
       );
     case 'Confetti':
-      return <C.Confetti auto={false} hint={t(`${key}.confettiHint`)} />;
+      return <C.Confetti auto={false} interactive hint={t(`${key}.confettiHint`)} />;
     case 'CursorTrail':
       return <C.CursorTrail hint={t(`${key}.cursorTrailHint`)} />;
     case 'DiceRoll':

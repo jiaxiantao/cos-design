@@ -16,7 +16,12 @@ export function createClickSpark(
   container: HTMLElement,
   initial: ClickSparkOptions = {},
 ): ClickSparkController {
-  let options: ClickSparkOptions = { color: '#fbbf24', count: 16, ...initial };
+  let options: ClickSparkOptions = {
+    color: '#fbbf24',
+    count: 16,
+    defaultContent: '点击任意位置产生火花',
+    ...initial,
+  };
   let destroyed = false;
   let frameId = 0;
   let paused = typeof document !== 'undefined' ? document.hidden : false;
@@ -32,16 +37,35 @@ export function createClickSpark(
   content.className = `${P}__content`;
   const hintEl = document.createElement('p');
   hintEl.className = `${P}__hint`;
-  hintEl.textContent = '点击任意位置产生火花';
   root.append(canvas, content, hintEl);
   container.appendChild(root);
 
+  /** True when React/Vue portal or slotElement left real content (ignore empty Teleport text nodes). */
+  const hasSlottedContent = () => {
+    if (options.slotElement) return true;
+    if (content.children.length > 0) return true;
+    for (const node of content.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE && (node.textContent ?? '').trim()) return true;
+    }
+    return false;
+  };
+
+  /** v3: show hint only when there is no slotted content (React/Vue portal may arrive later). */
+  const syncHint = () => {
+    if (hasSlottedContent()) {
+      hintEl.hidden = true;
+      return;
+    }
+    hintEl.hidden = false;
+    hintEl.textContent = options.defaultContent ?? '点击任意位置产生火花';
+  };
+
   if (options.slotElement && options.slotElement.parentElement !== content) {
     content.appendChild(options.slotElement);
-    hintEl.hidden = true;
-  } else if (content.childNodes.length > 0) {
-    hintEl.hidden = true;
   }
+  syncHint();
+  const slotObserver = new MutationObserver(syncHint);
+  slotObserver.observe(content, { childList: true, characterData: true, subtree: true });
 
   const resize = () => {
     const dpr = window.devicePixelRatio || 1;
@@ -115,15 +139,12 @@ export function createClickSpark(
     getSlot: () => content,
     update(next) {
       if (next.slotElement !== undefined && next.slotElement !== options.slotElement) {
-        content.innerHTML = '';
-        if (next.slotElement) {
-          content.appendChild(next.slotElement);
-          hintEl.hidden = true;
-        } else {
-          hintEl.hidden = false;
-        }
+        // Avoid wipe when React/Vue owns portal children unless swapping slotElement.
+        content.replaceChildren();
+        if (next.slotElement) content.appendChild(next.slotElement);
       }
       options = { ...options, ...next };
+      syncHint();
     },
     destroy() {
       if (destroyed) return;
@@ -131,6 +152,7 @@ export function createClickSpark(
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       resizeObs?.disconnect();
+      slotObserver.disconnect();
       root.removeEventListener('click', onClick);
       root.remove();
     },

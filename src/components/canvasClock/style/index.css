@@ -1,7 +1,15 @@
+.cos-canvasClock-host,
+cos-canvas-clock {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-canvas-clock {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-inline: auto;
   border-radius: 50%;
   background-color: #fff;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);

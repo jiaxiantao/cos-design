@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import {
   createPhotoPostcard,
   type PhotoPostcardController,
@@ -8,7 +8,9 @@ import {
 } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoPostcardOptions>();
+const props = withDefaults(defineProps<PhotoPostcardOptions>(), {
+  showCaption: true,
+});
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
   'index-change': [...args: unknown[]];

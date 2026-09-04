@@ -7,6 +7,8 @@ function parseOptions(el: HTMLElement): SpotlightOptions {
   const options = {} as SpotlightOptions;
   if (el.hasAttribute('dim-color')) options.dimColor = el.getAttribute('dim-color') ?? undefined;
   if (el.hasAttribute('radius')) options.radius = Number(el.getAttribute('radius'));
+  if (el.hasAttribute('default-content'))
+    options.defaultContent = el.getAttribute('default-content') ?? undefined;
   if (el.hasAttribute('slot-element')) {
     try {
       options.slotElement = JSON.parse(
@@ -35,7 +37,7 @@ class CosSpotlightElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['radius', 'dim-color', 'slot-element'];
+    return ['radius', 'dim-color', 'slot-element', 'default-content'];
   }
 
   connectedCallback() {

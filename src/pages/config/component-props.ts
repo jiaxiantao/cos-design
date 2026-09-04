@@ -1022,9 +1022,9 @@ export const componentProps: ComponentPropsMap = {
     {
       name: 'value',
       type: 'number',
-      required: true,
-      default: '',
-      description: '显示数值',
+      required: false,
+      default: '0',
+      description: '显示数值（auto=true 时作为起始值）',
     },
     {
       name: 'digits',
@@ -1046,6 +1046,20 @@ export const componentProps: ComponentPropsMap = {
       required: false,
       default: '600',
       description: '翻牌动画时长（毫秒），默认 600',
+    },
+    {
+      name: 'auto',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '自动递增演示（默认每 2 秒）',
+    },
+    {
+      name: 'autoInterval',
+      type: 'number',
+      required: false,
+      default: '2000',
+      description: 'auto 递增间隔（毫秒）',
     },
   ],
   FuzzyText: [
@@ -3443,7 +3457,14 @@ export const componentProps: ComponentPropsMap = {
       type: 'number',
       required: false,
       default: '0',
-      description: '进度 0–100',
+      description: '进度 0–100（auto=true 时由组件自行推进）',
+    },
+    {
+      name: 'auto',
+      type: 'boolean',
+      required: false,
+      default: 'false',
+      description: '自动灌进度 0→100 循环，适合演示',
     },
     {
       name: 'onOpen',

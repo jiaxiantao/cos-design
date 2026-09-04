@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoFridge-host,
+cos-photo-fridge {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-fridge__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-fridge {
   --metal-light: #d8e2ea;
   --metal-mid: #a8b8c8;

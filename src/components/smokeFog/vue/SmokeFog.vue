@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createSmokeFog, type SmokeFogController, type SmokeFogOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<SmokeFogOptions>();
+const props = withDefaults(defineProps<SmokeFogOptions>(), {
+  interactive: true,
+});
 const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: SmokeFogController | null = null;

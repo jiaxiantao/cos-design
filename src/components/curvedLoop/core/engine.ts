@@ -61,13 +61,15 @@ export function createCurvedLoop(
     dir = opts.direction ?? 'left';
     const curve = opts.curveAmount ?? 80;
     path.setAttribute('d', `M-100,40 Q500,${40 + curve} 1540,40`);
-    root.style.visibility = ready ? 'visible' : 'hidden';
     root.style.cursor = (opts.interactive ?? true) ? 'grab' : 'default';
     root.style.setProperty('--curve-color', opts.color ?? '#f8fafc');
     root.style.setProperty('--curve-font-size', `${opts.fontSize ?? 56}px`);
     measureText.textContent = marqueeText();
     spacing = measureText.getComputedTextLength();
     ready = spacing > 0;
+    // Must set visibility *after* measuring — otherwise the first render leaves the
+    // root hidden forever (React only works because a follow-up update() re-renders).
+    root.style.visibility = ready ? 'visible' : 'hidden';
     if (ready) {
       offset = -spacing;
       textPath.setAttribute('startOffset', `${offset}px`);

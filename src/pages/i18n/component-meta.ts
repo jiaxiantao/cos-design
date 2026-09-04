@@ -511,6 +511,11 @@ const CODE_EXAMPLE_EN: Record<string, string> = {
   '<ClickSpark>点击任意位置</ClickSpark>': '<ClickSpark>Click anywhere</ClickSpark>',
   '<LiquidGlass>毛玻璃内容</LiquidGlass>': '<LiquidGlass>Frosted glass content</LiquidGlass>',
   "label: '一等奖'": "label: 'First prize'",
+  "label: '二等奖'": "label: 'Second prize'",
+  "label: '三等奖'": "label: 'Third prize'",
+  "label: '谢谢参与'": "label: 'Try again'",
+  "label: '优惠券'": "label: 'Coupon'",
+  "label: '再来一次'": "label: 'One more spin'",
   'prize="🎉 恭喜中奖！"': 'prize="🎉 You won!"',
   "['设计','开发','测试','上线']": "['Design','Build','Test','Launch']",
   "title: '在路上', description: '把远方装进相册', alt: '在路上'":

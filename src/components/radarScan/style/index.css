@@ -1,5 +1,13 @@
+.cos-radarScan-host,
+cos-radar-scan {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-radar-scan {
   position: relative;
+  margin-inline: auto;
   border-radius: 50%;
   overflow: hidden;
   background: radial-gradient(circle, #0f172a 0%, #020617 100%);

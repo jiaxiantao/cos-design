@@ -1,3 +1,10 @@
+.cos-countUp-host,
+cos-count-up {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-count-up {
   --count-up-color: #34d399;
   position: relative;
@@ -6,6 +13,7 @@
   justify-content: center;
   min-width: 240px;
   min-height: 140px;
+  margin-inline: auto;
   padding: 32px 40px;
   overflow: hidden;
   color: var(--count-up-color);

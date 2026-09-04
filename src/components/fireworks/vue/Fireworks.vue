@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createFireworks, type FireworksController, type FireworksOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<FireworksOptions>();
+// interactive stays undefined when omitted so Core can use `interactive ?? auto`.
+const props = withDefaults(defineProps<FireworksOptions>(), {
+  auto: true,
+  interactive: undefined,
+});
 const emit = defineEmits<{
   complete: [...args: unknown[]];
 }>();

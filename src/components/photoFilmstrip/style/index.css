@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoFilmstrip-host,
+cos-photo-filmstrip {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-filmstrip__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-filmstrip {
   --film-bg: #1a1a1a;
   --film-edge: #0d0d0d;

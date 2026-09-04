@@ -7,6 +7,8 @@ function parseOptions(el: HTMLElement): ClickSparkOptions {
   const options = {} as ClickSparkOptions;
   if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
   if (el.hasAttribute('count')) options.count = Number(el.getAttribute('count'));
+  if (el.hasAttribute('default-content'))
+    options.defaultContent = el.getAttribute('default-content') ?? undefined;
   if (el.hasAttribute('slot-element')) {
     try {
       options.slotElement = JSON.parse(
@@ -35,7 +37,7 @@ class CosClickSparkElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['color', 'count', 'slot-element'];
+    return ['color', 'count', 'default-content', 'slot-element'];
   }
 
   connectedCallback() {

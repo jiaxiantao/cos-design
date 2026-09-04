@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createPhotoTunnel, type PhotoTunnelController, type PhotoTunnelOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoTunnelOptions>();
+const props = withDefaults(defineProps<PhotoTunnelOptions>(), {
+  showCaption: true,
+});
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
   'index-change': [...args: unknown[]];

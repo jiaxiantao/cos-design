@@ -1,3 +1,4 @@
+import { applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoLightboxController, PhotoLightboxItem, PhotoLightboxOptions } from './types';
 
 const P = 'cos-photo-lightbox';
@@ -5,7 +6,6 @@ const CLICK_SLOP_PX = 6;
 const EXIT_MS = 260;
 const SNAP_MS = 320;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clampIndex = (index: number, length: number) => {
   if (length <= 0) return 0;
   return Math.max(0, Math.min(length - 1, Math.floor(index)));
@@ -37,7 +37,7 @@ export function createPhotoLightbox(
     initialIndex: 0,
     ariaLabel: 'Photo lightbox',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let index = clampIndex(options.initialIndex ?? 0, options.photos.length);
@@ -62,7 +62,7 @@ export function createPhotoLightbox(
   root.appendChild(stage);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const countOf = () => photosOf().length;
 
   const renderCaption = (photo: PhotoLightboxItem) => {
@@ -249,14 +249,16 @@ export function createPhotoLightbox(
     const width = options.width ?? 360;
     const height = options.height ?? 480;
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(width);
-    root.style.height = cssSize(height);
+    applyBlockHostBox(container, root, {
+      width: width,
+      height: height,
+    });
     assignStyle(root, options.style);
     root.setAttribute('role', 'region');
     root.setAttribute('aria-label', options.ariaLabel ?? 'Photo lightbox');
     root.tabIndex = 0;
-    empty.hidden = count > 0;
-    table.hidden = count === 0;
+    setHidden(empty, count > 0);
+    setHidden(table, count === 0);
     if (count === 0) {
       slot.replaceChildren();
       return;
@@ -281,7 +283,11 @@ export function createPhotoLightbox(
 
   return {
     update(next) {
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      options = {
+        ...options,
+        ...next,
+        photos: Array.isArray(next.photos) ? next.photos : options.photos,
+      };
       index = clampIndex(index, photosOf().length);
       paint();
     },

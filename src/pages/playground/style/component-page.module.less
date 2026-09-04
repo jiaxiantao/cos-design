@@ -232,6 +232,15 @@
     width: 100%;
     min-width: 0;
   }
+
+  /* Fixed-size engines (clock, gauges, cards…) sit in full-width hosts —
+     center them for React / Vue demos without per-component CSS. */
+  :global([class$='-host']) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 }
 
 .previewBackground {

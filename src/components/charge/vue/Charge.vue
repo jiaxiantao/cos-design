@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createCharge, type ChargeController, type ChargeOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<ChargeOptions>();
+const props = withDefaults(defineProps<ChargeOptions>(), {
+  autoCharge: true,
+});
 const emit = defineEmits<{
   change: [...args: unknown[]];
   complete: [...args: unknown[]];

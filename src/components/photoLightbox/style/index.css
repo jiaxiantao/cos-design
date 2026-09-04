@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoLightbox-host,
+cos-photo-lightbox {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-lightbox__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-lightbox {
   --lightbox-glow-cyan: rgba(120, 220, 255, 0.42);
   --lightbox-glow-warm: rgba(255, 244, 220, 0.38);

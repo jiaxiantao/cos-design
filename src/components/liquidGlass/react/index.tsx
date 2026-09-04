@@ -12,17 +12,25 @@ const LiquidGlass = forwardRef<unknown, SlotProps>(({ children, ...props }, ref)
   const hostRef = useRef<HTMLDivElement>(null);
   const ctrlRef = useRef<LiquidGlassController | null>(null);
   const propsRef = useRef(props);
+  const childrenRef = useRef(children);
   const [slotEl, setSlotEl] = useState<HTMLElement | null>(null);
   propsRef.current = props;
+  childrenRef.current = children;
 
   const optionsKey = useMemo(() => optionsFingerprint(props), [props]);
 
   useImperativeHandle(ref, () => ({}));
 
+  const toOptions = (): LiquidGlassOptions => {
+    // Skip engine placeholder when React portals children (avoids duplicate copy)
+    if (childrenRef.current != null) return { ...propsRef.current, defaultContent: undefined };
+    return propsRef.current;
+  };
+
   useEffect(() => {
     const host = hostRef.current;
     if (!host) return;
-    const ctrl = createLiquidGlass(host, propsRef.current);
+    const ctrl = createLiquidGlass(host, toOptions());
     ctrlRef.current = ctrl;
     setSlotEl(typeof ctrl.getSlot === 'function' ? ctrl.getSlot() : null);
     return () => {
@@ -33,8 +41,8 @@ const LiquidGlass = forwardRef<unknown, SlotProps>(({ children, ...props }, ref)
   }, []);
 
   useEffect(() => {
-    ctrlRef.current?.update(propsRef.current);
-  }, [optionsKey]);
+    ctrlRef.current?.update(toOptions());
+  }, [optionsKey, children]);
 
   return (
     <div ref={hostRef} className="cos-liquidGlass-host">

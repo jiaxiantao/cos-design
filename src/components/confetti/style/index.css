@@ -6,9 +6,12 @@
 }
 .cos-confetti__canvas {
   display: block;
+  cursor: default;
+}
+.cos-confetti__canvas--interactive {
   cursor: pointer;
 }
-.cos-confetti__canvas-passthrough {
+.cos-confetti__canvas--passthrough {
   cursor: default;
   pointer-events: none;
 }
@@ -22,4 +25,13 @@
   color: rgba(148, 163, 184, 0.7);
   font-size: 13px;
   pointer-events: none;
+}
+.cos-confetti__hint[hidden] {
+  display: none !important;
+}
+.cos-confetti-host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }

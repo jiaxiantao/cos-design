@@ -613,14 +613,13 @@ export function createAuroraVeil(
 
     if (reduced) {
       paint(true);
-      return () => {
+      cleanupLoop = () => {
         canvas.removeEventListener('pointermove', onMove);
         canvas.removeEventListener('pointerenter', onEnter);
         canvas.removeEventListener('pointerdown', onDown);
         canvas.removeEventListener('pointerleave', onLeave);
-        unbindVisibility?.();
-        unbindMotion?.();
       };
+      return;
     }
 
     const draw = (ts: number) => {
@@ -640,14 +639,12 @@ export function createAuroraVeil(
     };
 
     draw(0);
-    return () => {
+    cleanupLoop = () => {
       cancelAnimationFrame(localFrameId);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerenter', onEnter);
       canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointerleave', onLeave);
-      unbindVisibility?.();
-      unbindMotion?.();
     };
   };
 
@@ -655,7 +652,9 @@ export function createAuroraVeil(
     paused = h;
   });
   unbindMotion = bindPrefersReducedMotion((v) => {
+    const wasReduced = reduced;
     reduced = v;
+    if (reduced === wasReduced) return;
     startLoop();
   });
 
@@ -665,13 +664,19 @@ export function createAuroraVeil(
 
   return {
     update(next) {
+      const prevFill = options.fill;
+      const prevW = options.width;
+      const prevH = options.height;
       options = { ...options, ...next };
-      bindSize();
+      if (options.fill !== prevFill || options.width !== prevW || options.height !== prevH) {
+        bindSize();
+      }
     },
     destroy() {
       if (destroyed) return;
       destroyed = true;
       cleanupLoop?.();
+      cleanupLoop = null;
       cancelAnimationFrame(frameId);
       unbindVisibility?.();
       unbindMotion?.();

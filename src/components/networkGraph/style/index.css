@@ -1,5 +1,13 @@
+.cos-networkGraph-host,
+cos-network-graph {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-network-graph {
   position: relative;
+  margin-inline: auto;
   overflow: hidden;
   background: radial-gradient(ellipse 80% 70% at 50% 40%, #1e293b 0%, #0f172a 55%, #020617 100%);
   border: 1px solid rgba(148, 163, 184, 0.1);

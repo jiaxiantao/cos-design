@@ -923,7 +923,16 @@ return (
     category: 'game' as const,
     codeExample: `import { Turntable } from 'cos-design';
 
-<Turntable prizes={[{ label: '一等奖' }]} />`,
+<Turntable
+  prizes={[
+    { label: '一等奖' },
+    { label: '二等奖' },
+    { label: '三等奖' },
+    { label: '谢谢参与' },
+    { label: '优惠券' },
+    { label: '再来一次' },
+  ]}
+/>`,
   },
   {
     name: 'Confetti',
@@ -934,7 +943,8 @@ return (
     category: 'game' as const,
     codeExample: `import { Confetti } from 'cos-design';
 
-<Confetti auto={false} />`,
+{/* auto=false：不自动播放；interactive：点击画布喷射（叠在按钮上时可不设 interactive） */}
+<Confetti auto={false} interactive />`,
   },
   {
     name: 'Charge',
@@ -945,7 +955,7 @@ return (
     category: 'game' as const,
     codeExample: `import { Charge } from 'cos-design';
 
-<Charge value={50} autoCharge={false} />`,
+<Charge />`,
   },
   {
     name: 'ScratchCard',
@@ -1031,7 +1041,8 @@ return (
     category: 'game' as const,
     codeExample: `import { ProgressChest } from 'cos-design';
 
-<ProgressChest progress={75} />`,
+{/* auto：演示用自动灌进度；业务里可改为受控 progress={n} */}
+<ProgressChest auto />`,
   },
   {
     name: 'RadarScan',
@@ -1064,7 +1075,8 @@ return (
     category: 'data' as const,
     codeExample: `import { FlipCounter } from 'cos-design';
 
-<FlipCounter value={12345} digits={5} />`,
+{/* auto：每 2 秒自动递增演示；业务受控请传 value 且不要 auto */}
+<FlipCounter value={1024} digits={5} auto />`,
   },
   {
     name: 'Countdown',
@@ -1300,7 +1312,8 @@ return (
     category: 'effect' as const,
     codeExample: `import { Fireworks } from 'cos-design';
 
-<Fireworks auto={false} />`,
+{/* auto=false：不自动燃放；interactive：点击画布燃放 */}
+<Fireworks auto={false} interactive width={800} height={500} />`,
   },
   {
     name: 'ReturnCity',

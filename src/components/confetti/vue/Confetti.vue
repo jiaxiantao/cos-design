@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createConfetti, type ConfettiController, type ConfettiOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<ConfettiOptions>();
+// interactive stays undefined when omitted so Core can use `interactive ?? auto`.
+const props = withDefaults(defineProps<ConfettiOptions>(), {
+  auto: true,
+  interactive: undefined,
+});
 const emit = defineEmits<{
   complete: [...args: unknown[]];
 }>();

@@ -1,4 +1,4 @@
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, applyBlockHostBox } from '@cos-design/shared';
 import type { PhotoPrismItem } from '../types';
 import type { PhotoPrismController, PhotoPrismOptions } from './types';
 
@@ -17,7 +17,6 @@ const DEFAULT_H = 380;
 const DEFAULT_SIZE = 200;
 const FACE_KEYS = ['front', 'back', 'right', 'left', 'top', 'bottom'] as const;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 const wrap180 = (deg: number) => {
   let a = ((deg % 360) + 360) % 360;
@@ -55,7 +54,7 @@ export function createPhotoPrism(
     showCaption: true,
     ariaLabel: '照片棱镜',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let rx = -12;
@@ -93,10 +92,10 @@ export function createPhotoPrism(
   container.appendChild(root);
 
   const facesOf = () =>
-    Array.from({ length: FACE_COUNT }, (_, i) => (options.photos ?? [])[i]) as (
-      | PhotoPrismItem
-      | undefined
-    )[];
+    Array.from(
+      { length: FACE_COUNT },
+      (_, i) => (Array.isArray(options.photos) ? options.photos : [])[i],
+    ) as (PhotoPrismItem | undefined)[];
 
   const renderFaces = () => {
     cube.replaceChildren();
@@ -143,8 +142,10 @@ export function createPhotoPrism(
 
   const applyRoot = () => {
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? DEFAULT_W);
-    root.style.height = cssSize(options.height ?? DEFAULT_H);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? DEFAULT_W,
+      height: options.height ?? DEFAULT_H,
+    });
     root.style.setProperty('--prism-size', `${options.size ?? DEFAULT_SIZE}px`);
     assignStyle(root, options.style);
     const faces = facesOf();

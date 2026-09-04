@@ -1,8 +1,16 @@
+.cos-orbitalChart-host,
+cos-orbital-chart {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-orbital-chart {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  margin-inline: auto;
 }
 .cos-orbital-chart__canvas {
   display: block;

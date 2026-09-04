@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createPhotoFridge, type PhotoFridgeController, type PhotoFridgeOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoFridgeOptions>();
+const props = withDefaults(defineProps<PhotoFridgeOptions>(), {
+  showCaption: true,
+});
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
 }>();

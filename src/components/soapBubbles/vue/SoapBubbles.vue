@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createSoapBubbles, type SoapBubblesController, type SoapBubblesOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<SoapBubblesOptions>();
+const props = withDefaults(defineProps<SoapBubblesOptions>(), {
+  interactive: true,
+});
 const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: SoapBubblesController | null = null;

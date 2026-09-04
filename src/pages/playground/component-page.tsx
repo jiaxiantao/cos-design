@@ -189,9 +189,13 @@ const ComponentPage = () => {
   };
 
   const renderPreview = () => {
+    // Key by route + framework so React fully remounts/tears down canvas engines
+    // when switching sidebar items or framework tabs (ComponentPage instance is reused).
+    const previewKey = `${pathname}:${framework}:${current.name}`;
+
     if (framework === 'react') {
       return (
-        <>
+        <div key={previewKey}>
           {showStaticDemoContent ? (
             <FillStage>{demoComponents[current.name]}</FillStage>
           ) : (
@@ -200,7 +204,7 @@ const ComponentPage = () => {
           {showStaticDemoContent ? (
             <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
           ) : null}
-        </>
+        </div>
       );
     }
 
@@ -215,18 +219,18 @@ const ComponentPage = () => {
 
     if (showFrameworkDemoContent) {
       return (
-        <>
+        <div key={previewKey}>
           <FillStage overlay={<BackgroundDemoContent headline={demoCopy.headline} />}>
             {preview}
           </FillStage>
           {current.name === 'WeatherBackground' ? (
             <p className={styles.frameworkDemoHint}>{t('component.weatherDebuggerHint')}</p>
           ) : null}
-        </>
+        </div>
       );
     }
 
-    return preview;
+    return <div key={previewKey}>{preview}</div>;
   };
 
   return (

@@ -17,6 +17,19 @@ const ROOT = join(__dirname, '..');
 
 const SKIP_PROPS = new Set(['className', 'style', 'children']);
 
+/** Booleans engines treat as true when omitted — Vue must withDefaults these. */
+const TRUE_DEFAULT_BOOLS = new Set([
+  'auto',
+  'interactive',
+  'showHint',
+  'showAccessories',
+  'showCaption',
+  'showPageNumber',
+  'autoRotate',
+]);
+/** interactive follows auto in these engines (`interactive ?? auto`). */
+const INTERACTIVE_FOLLOWS_AUTO = new Set(['fireworks', 'confetti']);
+
 function camelToKebab(name) {
   return name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 }
@@ -188,8 +201,16 @@ function generateElement(componentName, exportName, fields, methods) {
   }
   for (const f of boolFields) {
     const attr = camelToKebab(f.name);
-    // Always emit boolean so Core update can clear flags when attribute is removed.
-    parseLines.push(`  options.${f.name} = el.hasAttribute('${attr}');`);
+    if (TRUE_DEFAULT_BOOLS.has(f.name)) {
+      // Omit when absent so Core defaults (true) apply; support attr="false".
+      parseLines.push(`  if (el.hasAttribute('${attr}')) {`);
+      parseLines.push(`    const raw = el.getAttribute('${attr}');`);
+      parseLines.push(`    options.${f.name} = raw !== 'false' && raw !== '0';`);
+      parseLines.push(`  }`);
+    } else {
+      // Always emit boolean so Core update can clear flags when attribute is removed.
+      parseLines.push(`  options.${f.name} = el.hasAttribute('${attr}');`);
+    }
   }
   for (const f of jsonFields) {
     const attr = camelToKebab(f.name);
@@ -321,12 +342,27 @@ function generateVue(componentName, exportName, fields, methods) {
           })
           .join('\n')}\n});`;
 
+  const trueDefaults = fields
+    .filter((f) => f.kind === 'boolean' && TRUE_DEFAULT_BOOLS.has(f.name))
+    .map((f) => {
+      if (f.name === 'interactive' && INTERACTIVE_FOLLOWS_AUTO.has(componentName)) {
+        return { name: f.name, value: 'undefined' };
+      }
+      return { name: f.name, value: 'true' };
+    });
+  const propsDecl =
+    trueDefaults.length === 0
+      ? `const props = defineProps<${optionsName}>();`
+      : `const props = withDefaults(defineProps<${optionsName}>(), {\n${trueDefaults
+          .map((d) => `  ${d.name}: ${d.value},`)
+          .join('\n')}\n});`;
+
   return `<script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch${trueDefaults.length ? ', withDefaults' : ''} } from 'vue';
 import { ${createName}, type ${controllerName}, type ${optionsName} } from '../core';
 import '../style/index.css';
 
-const props = defineProps<${optionsName}>();
+${propsDecl}
 ${emitBlock}
 const hostRef = ref<HTMLElement>();
 let ctrl: ${controllerName} | null = null;

@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoClothesline-host,
+cos-photo-clothesline {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-clothesline__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-clothesline {
   --clothesline-bg: radial-gradient(120% 96% at 50% -10%, #fbfff5 0%, #eaf6dd 32%, #cbe7ae 64%, #a8d68a 100%);
   --rope-color: #8d7a5c;

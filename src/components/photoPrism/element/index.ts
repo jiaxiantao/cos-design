@@ -5,15 +5,29 @@ const TAG = 'cos-photo-prism';
 
 function parseOptions(el: HTMLElement): PhotoPrismOptions {
   const options = {} as PhotoPrismOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
   if (el.hasAttribute('drag-sensitivity'))
     options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  options.autoRotate = el.hasAttribute('auto-rotate');
-  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('auto-rotate')) {
+    const raw = el.getAttribute('auto-rotate');
+    options.autoRotate = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('show-caption')) {
+    const raw = el.getAttribute('show-caption');
+    options.showCaption = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

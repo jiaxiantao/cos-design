@@ -1,4 +1,4 @@
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, applyBlockHostBox } from '@cos-design/shared';
 import { FACE_COUNT, createLanternScene, frontFaceIndex, type LanternSceneApi } from '../scene';
 import type { PhotoLanternItem } from '../types';
 import type { PhotoLanternController, PhotoLanternOptions } from './types';
@@ -11,8 +11,6 @@ const IDLE_BEFORE_RELEASE_MS = 90;
 const VELOCITY_SMOOTH_TAU = 0.045;
 const DEFAULT_W = 360;
 const DEFAULT_H = 480;
-
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 
@@ -63,7 +61,7 @@ export function createPhotoLantern(
     initialAngle: 0,
     ariaLabel: '走马灯图片预览',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let angle = options.initialAngle ?? 0;
@@ -92,14 +90,16 @@ export function createPhotoLantern(
   container.appendChild(root);
 
   const facesOf = () =>
-    Array.from({ length: FACE_COUNT }, (_, i) => (options.photos ?? [])[i]) as (
-      | PhotoLanternItem
-      | undefined
-    )[];
+    Array.from(
+      { length: FACE_COUNT },
+      (_, i) => (Array.isArray(options.photos) ? options.photos : [])[i],
+    ) as (PhotoLanternItem | undefined)[];
 
   const applyRootStyle = () => {
-    root.style.width = cssSize(options.width ?? DEFAULT_W);
-    root.style.height = cssSize(options.height ?? DEFAULT_H);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? DEFAULT_W,
+      height: options.height ?? DEFAULT_H,
+    });
     if (options.background !== undefined) root.style.background = options.background;
     assignStyle(root, options.style);
     root.className = [P, options.className].filter(Boolean).join(' ');

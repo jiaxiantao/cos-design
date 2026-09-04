@@ -9,7 +9,8 @@ const hostRef = ref<HTMLElement>();
 const slotTarget = ref<HTMLElement | null>(null);
 let ctrl: LiquidGlassController | null = null;
 
-const toOptions = (): LiquidGlassOptions => ({ ...props });
+/** Teleport owns the slot — never let the engine inject a placeholder. */
+const toOptions = (): LiquidGlassOptions => ({ ...props, defaultContent: undefined });
 
 onMounted(() => {
   if (!hostRef.value) return;
@@ -36,7 +37,9 @@ defineExpose({
 <template>
   <div ref="hostRef" class="cos-liquidGlass-host">
     <Teleport v-if="slotTarget" :to="slotTarget">
-      <slot />
+      <slot>
+        <span>{{ defaultContent ?? '液态玻璃面板' }}</span>
+      </slot>
     </Teleport>
   </div>
 </template>

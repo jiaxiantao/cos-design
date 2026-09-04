@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createPhotoLantern, type PhotoLanternController, type PhotoLanternOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoLanternOptions>();
+const props = withDefaults(defineProps<PhotoLanternOptions>(), {
+  // Match engine defaults — Vue casts absent Boolean props to false otherwise.
+  autoRotate: true,
+  showAccessories: true,
+});
 const emit = defineEmits<{
   'face-change': [...args: unknown[]];
   'index-change': [...args: unknown[]];

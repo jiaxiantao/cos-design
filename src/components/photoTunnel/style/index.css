@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoTunnel-host,
+cos-photo-tunnel {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-tunnel__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-tunnel {
   --tunnel-bg: #0e1218;
   --tunnel-vignette: rgba(0, 0, 0, 0.72);

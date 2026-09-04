@@ -5,8 +5,16 @@ const TAG = 'cos-photo-scroll';
 
 function parseOptions(el: HTMLElement): PhotoScrollOptions {
   const options = {} as PhotoScrollOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('frame-width')) options.frameWidth = Number(el.getAttribute('frame-width'));
   if (el.hasAttribute('frame-height'))
@@ -17,7 +25,10 @@ function parseOptions(el: HTMLElement): PhotoScrollOptions {
   if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
   if (el.hasAttribute('initial-index'))
     options.initialIndex = Number(el.getAttribute('initial-index'));
-  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('show-caption')) {
+    const raw = el.getAttribute('show-caption');
+    options.showCaption = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

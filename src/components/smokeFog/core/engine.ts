@@ -527,6 +527,34 @@ export function createSmokeFog(
     };
   };
 
+  const disperseAt = (clientX: number, clientY: number) => {
+    if (!(options.interactive ?? true)) return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const x = ((clientX - rect.left) / rect.width) * width;
+    const y = ((clientY - rect.top) / rect.height) * height;
+    const radiusScale = clamp(options.disperseRadius ?? 1, 0, 3);
+    const strengthScale = clamp(options.disperseStrength ?? 1, 0, 3);
+    // 叠太多会乱，保留最近几次拨风
+    if (gusts.length > 3) gusts.shift();
+    gusts.push({
+      x,
+      y,
+      life: 1,
+      swirl: Math.random() < 0.5 ? -1 : 1,
+      // 从小范围向外扩张，像手拨开空气
+      radius: Math.min(width, height) * 0.08 * radiusScale,
+      maxRadius: Math.min(width, height) * (0.42 + Math.random() * 0.12) * radiusScale,
+      strength: (0.7 + Math.random() * 0.25) * strengthScale,
+    });
+  };
+
+  const onPointer = (e: PointerEvent) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    disperseAt(e.clientX, e.clientY);
+  };
+
+  canvas.addEventListener('pointerdown', onPointer);
   unbindVisibility = bindVisibilityPause((h) => {
     paused = h;
   });
@@ -539,14 +567,27 @@ export function createSmokeFog(
 
   return {
     update(next) {
+      const prevFill = options.fill;
+      const prevW = options.width;
+      const prevH = options.height;
+      const prevDensity = options.density;
       options = { ...options, ...next };
-      bindSize();
+      applyLayout();
+      if (
+        options.fill !== prevFill ||
+        options.width !== prevW ||
+        options.height !== prevH ||
+        options.density !== prevDensity
+      ) {
+        bindSize();
+      }
     },
     destroy() {
       if (destroyed) return;
       destroyed = true;
       cleanupLoop?.();
       cancelAnimationFrame(frameId);
+      canvas.removeEventListener('pointerdown', onPointer);
       unbindVisibility?.();
       unbindMotion?.();
       sizeCleanup?.();

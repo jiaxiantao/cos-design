@@ -9,6 +9,12 @@ function parseOptions(el: HTMLElement): FlipCounterOptions {
   if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
   if (el.hasAttribute('digits')) options.digits = Number(el.getAttribute('digits'));
   if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
+  if (el.hasAttribute('auto-interval'))
+    options.autoInterval = Number(el.getAttribute('auto-interval'));
+  if (el.hasAttribute('auto')) {
+    const raw = el.getAttribute('auto');
+    options.auto = raw !== 'false' && raw !== '0';
+  }
   return options;
 }
 
@@ -16,7 +22,7 @@ class CosFlipCounterElement extends HTMLElement {
   private ctrl: FlipCounterController | null = null;
 
   static get observedAttributes() {
-    return ['value', 'digits', 'color', 'duration'];
+    return ['value', 'digits', 'color', 'duration', 'auto', 'auto-interval'];
   }
 
   connectedCallback() {

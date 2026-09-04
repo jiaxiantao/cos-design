@@ -5,8 +5,16 @@ const TAG = 'cos-photo-album';
 
 function parseOptions(el: HTMLElement): PhotoAlbumOptions {
   const options = {} as PhotoAlbumOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
   if (el.hasAttribute('page-color')) options.pageColor = el.getAttribute('page-color') ?? undefined;
   if (el.hasAttribute('cover-color'))
@@ -16,7 +24,10 @@ function parseOptions(el: HTMLElement): PhotoAlbumOptions {
     options.initialIndex = Number(el.getAttribute('initial-index'));
   if (el.hasAttribute('page-turn-duration'))
     options.pageTurnDuration = Number(el.getAttribute('page-turn-duration'));
-  options.showPageNumber = el.hasAttribute('show-page-number');
+  if (el.hasAttribute('show-page-number')) {
+    const raw = el.getAttribute('show-page-number');
+    options.showPageNumber = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

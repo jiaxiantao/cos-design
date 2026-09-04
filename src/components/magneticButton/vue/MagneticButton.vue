@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { createMagneticButton, type MagneticButtonController, type MagneticButtonOptions } from '../core';
+import {
+  createMagneticButton,
+  type MagneticButtonController,
+  type MagneticButtonOptions,
+} from '../core';
 import '../style/index.css';
 
 const props = defineProps<MagneticButtonOptions>();
@@ -9,7 +13,8 @@ const hostRef = ref<HTMLElement>();
 const slotTarget = ref<HTMLElement | null>(null);
 let ctrl: MagneticButtonController | null = null;
 
-const toOptions = (): MagneticButtonOptions => ({ ...props });
+/** Teleport owns the slot — never let the engine inject a placeholder. */
+const toOptions = (): MagneticButtonOptions => ({ ...props, defaultContent: undefined });
 
 onMounted(() => {
   if (!hostRef.value) return;
@@ -36,7 +41,9 @@ defineExpose({
 <template>
   <div ref="hostRef" class="cos-magneticButton-host">
     <Teleport v-if="slotTarget" :to="slotTarget">
-      <slot />
+      <slot>
+        <span>{{ defaultContent ?? '磁吸按钮' }}</span>
+      </slot>
     </Teleport>
   </div>
 </template>

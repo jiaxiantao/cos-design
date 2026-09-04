@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createCurvedLoop, type CurvedLoopController, type CurvedLoopOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<CurvedLoopOptions>();
+const props = withDefaults(defineProps<CurvedLoopOptions>(), {
+  interactive: true,
+});
 const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: CurvedLoopController | null = null;

@@ -1,6 +1,16 @@
+.cos-timelinePulse-host,
+cos-timeline-pulse {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-timeline-pulse {
   --dot-size: 14px;
   --line-inset: calc(100% / var(--step-count, 4) / 2);
+  box-sizing: border-box;
+  width: min(100%, 560px);
+  margin-inline: auto;
   padding: 24px 16px;
   min-width: 280px;
 }

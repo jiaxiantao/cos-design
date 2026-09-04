@@ -1,4 +1,5 @@
-.cos-flipCard-host {
+.cos-flipCard-host,
+cos-flip-card {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -8,6 +9,7 @@
   display: block;
   width: min(100%, 240px);
   height: 320px;
+  margin-inline: auto;
   padding: 0;
   border: 0;
   background: transparent;

@@ -1,8 +1,16 @@
+.cos-liquidProgress-host,
+cos-liquid-progress {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-liquid-progress {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-inline: auto;
 }
 .cos-liquid-progress__svg {
   width: 100%;

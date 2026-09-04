@@ -9,7 +9,8 @@ const hostRef = ref<HTMLElement>();
 const slotTarget = ref<HTMLElement | null>(null);
 let ctrl: BarcodeScanController | null = null;
 
-const toOptions = (): BarcodeScanOptions => ({ ...props });
+/** Teleport owns the slot — never let the engine inject a placeholder. */
+const toOptions = (): BarcodeScanOptions => ({ ...props, defaultContent: undefined });
 
 onMounted(() => {
   if (!hostRef.value) return;
@@ -36,7 +37,9 @@ defineExpose({
 <template>
   <div ref="hostRef" class="cos-barcodeScan-host">
     <Teleport v-if="slotTarget" :to="slotTarget">
-      <slot />
+      <slot>
+        <span>{{ defaultContent ?? 'SCAN ME' }}</span>
+      </slot>
     </Teleport>
   </div>
 </template>

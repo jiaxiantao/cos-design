@@ -9,8 +9,16 @@ const TAG = 'cos-photo-view-master';
 
 function parseOptions(el: HTMLElement): PhotoViewMasterOptions {
   const options = {} as PhotoViewMasterOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
   if (el.hasAttribute('disc-size')) options.discSize = Number(el.getAttribute('disc-size'));
   if (el.hasAttribute('peep-size')) options.peepSize = Number(el.getAttribute('peep-size'));
@@ -21,8 +29,14 @@ function parseOptions(el: HTMLElement): PhotoViewMasterOptions {
     options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
   if (el.hasAttribute('initial-index'))
     options.initialIndex = Number(el.getAttribute('initial-index'));
-  options.autoRotate = el.hasAttribute('auto-rotate');
-  options.showCaption = el.hasAttribute('show-caption');
+  if (el.hasAttribute('auto-rotate')) {
+    const raw = el.getAttribute('auto-rotate');
+    options.autoRotate = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('show-caption')) {
+    const raw = el.getAttribute('show-caption');
+    options.showCaption = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

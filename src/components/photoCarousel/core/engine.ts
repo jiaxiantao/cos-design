@@ -1,8 +1,7 @@
+import { applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoCarouselController, PhotoCarouselOptions } from './types';
 
 const P = 'cos-photo-carousel';
-
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 
 const assignStyle = (el: HTMLElement, style?: Record<string, string | number | undefined>) => {
   if (!style) return;
@@ -43,7 +42,7 @@ export function createPhotoCarousel(
     initialAngle: 0,
     ariaLabel: 'Photo carousel',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let angle = options.initialAngle ?? 0;
@@ -58,19 +57,10 @@ export function createPhotoCarousel(
   let frameId = 0;
 
   const root = document.createElement('div');
-  const groundShadow = document.createElement('div');
-  groundShadow.className = `${P}__ground-shadow`;
-  groundShadow.setAttribute('aria-hidden', 'true');
   const perspective = document.createElement('div');
   perspective.className = `${P}__perspective`;
   const scene = document.createElement('div');
   scene.className = `${P}__scene`;
-  const tray = document.createElement('div');
-  tray.className = `${P}__tray`;
-  tray.setAttribute('aria-hidden', 'true');
-  const trayRim = document.createElement('div');
-  trayRim.className = `${P}__tray-rim`;
-  tray.appendChild(trayRim);
   const ring = document.createElement('div');
   ring.className = `${P}__ring`;
   const caption = document.createElement('div');
@@ -78,12 +68,12 @@ export function createPhotoCarousel(
   const empty = document.createElement('div');
   empty.className = `${P}__empty`;
   empty.textContent = '暂无照片';
-  scene.append(tray, ring);
+  scene.appendChild(ring);
   perspective.appendChild(scene);
-  root.append(groundShadow, perspective, caption, empty);
+  root.append(perspective, caption, empty);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const countOf = () => photosOf().length;
   const stepOf = () => (countOf() > 0 ? 360 / countOf() : 360);
 
@@ -172,23 +162,25 @@ export function createPhotoCarousel(
   const applyRoot = () => {
     const count = countOf();
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? 420);
-    root.style.height = cssSize(options.height ?? 360);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? 420,
+      height: options.height ?? 360,
+    });
     assignStyle(root, options.style);
     root.setAttribute('aria-label', options.ariaLabel ?? 'Photo carousel');
     if (count === 0) {
       root.setAttribute('role', 'img');
       root.removeAttribute('aria-roledescription');
       root.tabIndex = -1;
-      empty.hidden = false;
-      perspective.hidden = true;
-      caption.hidden = true;
+      setHidden(empty, false);
+      setHidden(perspective, true);
+      setHidden(caption, true);
     } else {
       root.setAttribute('role', 'region');
       root.setAttribute('aria-roledescription', 'carousel');
       root.tabIndex = 0;
-      empty.hidden = true;
-      perspective.hidden = false;
+      setHidden(empty, true);
+      setHidden(perspective, false);
     }
   };
 
@@ -288,7 +280,11 @@ export function createPhotoCarousel(
     update(next) {
       const prevCount = countOf();
       const prevInitial = options.initialAngle;
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      options = {
+        ...options,
+        ...next,
+        photos: Array.isArray(next.photos) ? next.photos : options.photos,
+      };
       applyRoot();
       if (
         countOf() !== prevCount ||

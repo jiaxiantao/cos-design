@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import {
   createPhotoPolaroid,
   type PhotoPolaroidController,
@@ -8,7 +8,9 @@ import {
 } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoPolaroidOptions>();
+const props = withDefaults(defineProps<PhotoPolaroidOptions>(), {
+  showCaption: true,
+});
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
 }>();

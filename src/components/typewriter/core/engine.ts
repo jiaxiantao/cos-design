@@ -40,7 +40,8 @@ export function createTypewriter(
   root.appendChild(terminal);
   container.appendChild(root);
 
-  const safeTexts = () => (opts.texts?.length ? opts.texts! : DEFAULT_TEXTS);
+  const safeTexts = () =>
+    Array.isArray(opts.texts) && opts.texts.length > 0 ? opts.texts : DEFAULT_TEXTS;
 
   const tick = () => {
     if (cancelled) return;

@@ -1,4 +1,4 @@
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoViewMasterController, PhotoViewMasterOptions } from './types';
 
 const P = 'cos-photo-view-master';
@@ -14,7 +14,6 @@ const VELOCITY_SMOOTH_TAU = 0.045;
 const SNAP_THRESHOLD = 0.35;
 const SNAP_LERP = 14;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 const modIndex = (value: number, count: number) => {
   if (count <= 0) return 0;
@@ -52,7 +51,7 @@ export function createPhotoViewMaster(
     initialIndex: 0,
     ariaLabel: '观景器',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let angle = 0;
@@ -117,7 +116,7 @@ export function createPhotoViewMaster(
   root.append(empty, body, caption);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const stepOf = () => {
     const count = photosOf().length;
     return count > 0 ? 360 / count : 360;
@@ -180,9 +179,10 @@ export function createPhotoViewMaster(
     const photos = photosOf();
     const count = photos.length;
     const emptyMode = count === 0;
-    empty.hidden = !emptyMode;
-    body.hidden = emptyMode;
-    caption.hidden = emptyMode;
+    setHidden(empty, !emptyMode);
+    setHidden(body, emptyMode);
+    // caption visibility is managed in syncPeep when photos exist
+    if (emptyMode) setHidden(caption, true);
     disc.replaceChildren();
     const step = stepOf();
     const orbit = orbitRadiusOf();
@@ -211,8 +211,10 @@ export function createPhotoViewMaster(
 
   const applyRoot = () => {
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? DEFAULT_W);
-    root.style.height = cssSize(options.height ?? DEFAULT_H);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? DEFAULT_W,
+      height: options.height ?? DEFAULT_H,
+    });
     root.style.setProperty('--pvm-disc-size', `${options.discSize ?? DEFAULT_DISC}px`);
     root.style.setProperty('--pvm-peep-size', `${options.peepSize ?? DEFAULT_PEEP}px`);
     assignStyle(root, options.style);

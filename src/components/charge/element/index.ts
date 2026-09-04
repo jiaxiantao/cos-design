@@ -10,7 +10,12 @@ function parseOptions(el: HTMLElement): ChargeOptions {
   if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
   if (el.hasAttribute('interval')) options.interval = Number(el.getAttribute('interval'));
   if (el.hasAttribute('step')) options.step = Number(el.getAttribute('step'));
-  options.autoCharge = el.hasAttribute('auto-charge');
+  // Only override when attribute is present — omit keeps engine default (true).
+  // Supports auto-charge="false" from playground / explicit opt-out.
+  if (el.hasAttribute('auto-charge')) {
+    const raw = el.getAttribute('auto-charge');
+    options.autoCharge = raw !== 'false' && raw !== '0';
+  }
   options.onChange = (...args: unknown[]) => {
     el.dispatchEvent(
       new CustomEvent('change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),

@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoPrism-host,
+cos-photo-prism {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-prism__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-prism {
   --prism-size: 200px;
   --prism-half: calc(var(--prism-size) / 2);

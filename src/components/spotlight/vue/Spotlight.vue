@@ -9,7 +9,8 @@ const hostRef = ref<HTMLElement>();
 const slotTarget = ref<HTMLElement | null>(null);
 let ctrl: SpotlightController | null = null;
 
-const toOptions = (): SpotlightOptions => ({ ...props });
+/** Teleport owns the slot — never let the engine inject a placeholder. */
+const toOptions = (): SpotlightOptions => ({ ...props, defaultContent: undefined });
 
 onMounted(() => {
   if (!hostRef.value) return;
@@ -36,7 +37,9 @@ defineExpose({
 <template>
   <div ref="hostRef" class="cos-spotlight-host">
     <Teleport v-if="slotTarget" :to="slotTarget">
-      <slot />
+      <slot>
+        <span>{{ defaultContent ?? '隐藏内容' }}</span>
+      </slot>
     </Teleport>
   </div>
 </template>

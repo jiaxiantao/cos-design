@@ -33,7 +33,8 @@ export function createTextMorph(
   root.appendChild(stage);
   container.appendChild(root);
 
-  const safeTexts = () => (opts.texts?.length ? opts.texts! : DEFAULT_TEXTS);
+  const safeTexts = () =>
+    Array.isArray(opts.texts) && opts.texts.length > 0 ? opts.texts : DEFAULT_TEXTS;
 
   const applyStyles = () => {
     root.style.setProperty('--morph-color', opts.color ?? '#f8fafc');

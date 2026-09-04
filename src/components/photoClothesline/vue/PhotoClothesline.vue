@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import {
   createPhotoClothesline,
   type PhotoClotheslineController,
@@ -8,7 +8,9 @@ import {
 } from '../core';
 import '../style/index.css';
 
-const props = defineProps<PhotoClotheslineOptions>();
+const props = withDefaults(defineProps<PhotoClotheslineOptions>(), {
+  showCaption: true,
+});
 const emit = defineEmits<{
   'index-change': [...args: unknown[]];
   'photo-click': [...args: unknown[]];

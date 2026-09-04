@@ -2,6 +2,8 @@ import { clamp } from '@cos-design/shared';
 import type { ProgressChestController, ProgressChestOptions } from './types';
 
 const P = 'cos-progress-chest';
+const AUTO_STEP = 2;
+const AUTO_MS = 120;
 
 export function createProgressChest(
   container: HTMLElement,
@@ -9,12 +11,15 @@ export function createProgressChest(
 ): ProgressChestController {
   let options: ProgressChestOptions = {
     progress: 0,
+    auto: false,
     label: '开启宝箱',
     openedLabel: '宝箱已开启！',
     ...initial,
   };
   let destroyed = false;
   let opened = false;
+  let autoProgress = clamp(options.progress ?? 0, 0, 100);
+  let autoTimer: number | null = null;
   const onOpenRef = { current: options.onOpen };
 
   const root = document.createElement('div');
@@ -57,8 +62,10 @@ export function createProgressChest(
   root.append(barWrap, chest, labelEl);
   container.appendChild(root);
 
+  const progressOf = () => (options.auto ? autoProgress : clamp(options.progress ?? 0, 0, 100));
+
   const render = () => {
-    const pct = clamp(options.progress ?? 0, 0, 100);
+    const pct = progressOf();
     const isOpen = pct >= 100;
     barFill.style.width = `${pct}%`;
     pctEl.textContent = `${pct.toFixed(0)}%`;
@@ -74,17 +81,47 @@ export function createProgressChest(
     if (!isOpen) opened = false;
   };
 
+  const stopAuto = () => {
+    if (autoTimer != null) {
+      window.clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  };
+
+  const syncAuto = () => {
+    if (!(options.auto ?? false) || destroyed) {
+      stopAuto();
+      return;
+    }
+    if (autoTimer != null) return;
+    autoTimer = window.setInterval(() => {
+      if (destroyed) return;
+      autoProgress = autoProgress >= 100 ? 0 : autoProgress + AUTO_STEP;
+      render();
+    }, AUTO_MS);
+  };
+
   render();
+  syncAuto();
 
   return {
     update(next) {
+      const prevAuto = Boolean(options.auto);
       options = { ...options, ...next };
       onOpenRef.current = options.onOpen;
+      if (!options.auto && next.progress !== undefined) {
+        autoProgress = clamp(next.progress, 0, 100);
+      }
+      if (Boolean(options.auto) !== prevAuto && options.auto) {
+        autoProgress = clamp(options.progress ?? autoProgress, 0, 100);
+      }
+      syncAuto();
       render();
     },
     destroy() {
       if (destroyed) return;
       destroyed = true;
+      stopAuto();
       root.remove();
     },
   };

@@ -37,9 +37,11 @@ export function createBarcodeScan(
     }
     // React/Vue portals own the children — do not clear existing nodes
     if (content.childNodes.length > 0) return;
+    // nullish defaultContent = framework adapter will fill via portal/Teleport
+    if (opts.defaultContent == null) return;
     const ph = document.createElement('span');
     ph.className = `${root.className}__placeholder`;
-    ph.textContent = opts.defaultContent ?? 'SCAN ME';
+    ph.textContent = opts.defaultContent;
     content.replaceChildren(ph);
   };
 

@@ -5,8 +5,16 @@ const TAG = 'cos-photo-lantern';
 
 function parseOptions(el: HTMLElement): PhotoLanternOptions {
   const options = {} as PhotoLanternOptions;
-  if (el.hasAttribute('width')) options.width = el.getAttribute('width') ?? undefined;
-  if (el.hasAttribute('height')) options.height = el.getAttribute('height') ?? undefined;
+  if (el.hasAttribute('width')) {
+    const raw = el.getAttribute('width');
+    const n = Number(raw);
+    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
+  if (el.hasAttribute('height')) {
+    const raw = el.getAttribute('height');
+    const n = Number(raw);
+    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
+  }
   if (el.hasAttribute('frame-color'))
     options.frameColor = el.getAttribute('frame-color') ?? undefined;
   if (el.hasAttribute('paper-color'))
@@ -27,10 +35,24 @@ function parseOptions(el: HTMLElement): PhotoLanternOptions {
   if (el.hasAttribute('light-sway')) options.lightSway = Number(el.getAttribute('light-sway'));
   if (el.hasAttribute('initial-angle'))
     options.initialAngle = Number(el.getAttribute('initial-angle'));
-  options.autoRotate = el.hasAttribute('auto-rotate');
-  options.showAccessories = el.hasAttribute('show-accessories');
-  options.silhouette = el.hasAttribute('silhouette');
-  options.showCaption = el.hasAttribute('show-caption');
+  // Only set booleans when the attribute is present — otherwise keep engine defaults
+  // (e.g. showAccessories/autoRotate default true; absence must not become false).
+  if (el.hasAttribute('auto-rotate')) {
+    const raw = el.getAttribute('auto-rotate');
+    options.autoRotate = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('show-accessories')) {
+    const raw = el.getAttribute('show-accessories');
+    options.showAccessories = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('silhouette')) {
+    const raw = el.getAttribute('silhouette');
+    options.silhouette = raw !== 'false' && raw !== '0';
+  }
+  if (el.hasAttribute('show-caption')) {
+    const raw = el.getAttribute('show-caption');
+    options.showCaption = raw !== 'false' && raw !== '0';
+  }
   if (el.hasAttribute('photos')) {
     try {
       options.photos = JSON.parse(

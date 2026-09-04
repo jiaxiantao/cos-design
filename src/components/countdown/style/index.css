@@ -1,9 +1,17 @@
+.cos-countdown-host,
+cos-countdown {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-countdown {
   display: flex;
   gap: 16px;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  margin-inline: auto;
   padding: 32px;
   position: relative;
 }

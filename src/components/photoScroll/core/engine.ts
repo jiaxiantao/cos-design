@@ -1,4 +1,4 @@
-import { bindVisibilityPause } from '@cos-design/shared';
+import { bindVisibilityPause, applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoScrollController, PhotoScrollOptions } from './types';
 
 const P = 'cos-photo-scroll';
@@ -9,7 +9,6 @@ const REST_VELOCITY = 8;
 const MAX_VELOCITY = 2600;
 const SNAP_SPEED = 14;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const assignStyle = (el: HTMLElement, style?: Record<string, string | number | undefined>) => {
   if (!style) return;
@@ -49,7 +48,7 @@ export function createPhotoScroll(
     initialIndex: 0,
     ariaLabel: '卷轴照片',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let viewportWidth = 0;
@@ -90,7 +89,7 @@ export function createPhotoScroll(
   root.append(rollerLeft, center, rollerRight);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const countOf = () => photosOf().length;
   const frameStep = () => (options.frameWidth ?? 160) + (options.frameGap ?? 20);
   const startPadding = () =>
@@ -269,11 +268,13 @@ export function createPhotoScroll(
   const applyRoot = () => {
     const count = countOf();
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? 520);
-    root.style.height = cssSize(options.height ?? 280);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? 520,
+      height: options.height ?? 280,
+    });
     assignStyle(root, options.style);
-    empty.hidden = count > 0;
-    viewport.hidden = count === 0;
+    setHidden(empty, count > 0);
+    setHidden(viewport, count === 0);
     if (count === 0) {
       root.setAttribute('role', 'img');
       root.tabIndex = -1;
@@ -420,7 +421,11 @@ export function createPhotoScroll(
     update(next) {
       const prevPhotos = options.photos;
       const prevIndex = options.initialIndex;
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      options = {
+        ...options,
+        ...next,
+        photos: Array.isArray(next.photos) ? next.photos : options.photos,
+      };
       applyRoot();
       if (
         (next.photos && next.photos !== prevPhotos) ||

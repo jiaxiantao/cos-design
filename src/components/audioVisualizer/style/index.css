@@ -1,4 +1,12 @@
+.cos-audioVisualizer-host,
+cos-audio-visualizer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .cos-audio-visualizer {
+  margin-inline: auto;
   border-radius: 12px;
   overflow: hidden;
   background: #0f172a;

@@ -1,3 +1,4 @@
+import { applyBlockHostBox } from '@cos-design/shared';
 import {
   CLICK_SLOP_PX,
   MAX_FLING_SPEED,
@@ -9,7 +10,7 @@ import {
   PIN_GRIP,
 } from '../constants';
 import { buildLayout, buildPhysics } from '../layout';
-import { clamp, cssSize } from '../math';
+import { clamp } from '../math';
 import { createHangerNode, type DragState, type Point2 } from '../model';
 import {
   getOffsetBounds,
@@ -62,7 +63,7 @@ export function createPhotoClothesline(
     initialIndex: 0,
     ariaLabel: 'Photo clothesline',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let viewportSize = { width: 0, height: 0 };
@@ -116,7 +117,7 @@ export function createPhotoClothesline(
   root.appendChild(viewport);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
 
   const currentLayout = () =>
     buildLayout({
@@ -326,8 +327,10 @@ export function createPhotoClothesline(
 
   const applyRoot = () => {
     root.className = `${P} ${options.className ?? ''}`.trim();
-    root.style.width = cssSize(options.width ?? '100%');
-    root.style.height = cssSize(options.height ?? 480);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? '100%',
+      height: options.height ?? 480,
+    });
     root.style.setProperty('--rope-color', options.ropeColor ?? '#8d7a5c');
     root.style.setProperty('--band-color', options.bandColor ?? options.ropeColor ?? '#8d7a5c');
     root.style.setProperty('--band-width', `${Math.max(1, options.bandWidth ?? 5)}px`);
@@ -507,6 +510,9 @@ export function createPhotoClothesline(
   applyRoot();
   rebuildHangars();
   measure(viewport.clientWidth, viewport.clientHeight);
+  requestAnimationFrame(() => {
+    if (!destroyed) measure(viewport.clientWidth, viewport.clientHeight);
+  });
   const ro =
     typeof ResizeObserver === 'undefined'
       ? null

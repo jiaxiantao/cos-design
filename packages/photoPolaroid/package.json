@@ -82,5 +82,8 @@
     "vue": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "@cos-design/shared": "workspace:*"
   }
 }

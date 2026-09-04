@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createAuroraVeil, type AuroraVeilController, type AuroraVeilOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<AuroraVeilOptions>();
+const props = withDefaults(defineProps<AuroraVeilOptions>(), {
+  interactive: true,
+});
 const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: AuroraVeilController | null = null;

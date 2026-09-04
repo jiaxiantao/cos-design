@@ -1,3 +1,4 @@
+import { applyBlockHostBox, setHidden } from '@cos-design/shared';
 import type { PhotoFilmstripController, PhotoFilmstripOptions } from './types';
 
 const P = 'cos-photo-filmstrip';
@@ -6,7 +7,6 @@ const REST_VELOCITY = 8;
 const MAX_VELOCITY = 2600;
 const SNAP_SPEED = 14;
 
-const cssSize = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const formatFrameNumber = (index: number) => String(index + 1).padStart(2, '0');
 
@@ -47,7 +47,7 @@ export function createPhotoFilmstrip(
     initialIndex: 0,
     ariaLabel: 'Photo filmstrip',
     ...initial,
-    photos: initial.photos ?? [],
+    photos: Array.isArray(initial.photos) ? initial.photos : [],
   };
   let destroyed = false;
   let viewportWidth = 0;
@@ -82,7 +82,7 @@ export function createPhotoFilmstrip(
   root.append(topBand, viewport, bottomBand);
   container.appendChild(root);
 
-  const photosOf = () => options.photos ?? [];
+  const photosOf = () => (Array.isArray(options.photos) ? options.photos : []);
   const countOf = () => photosOf().length;
   const frameStep = () => (options.frameWidth ?? 160) + (options.frameGap ?? 14);
   const startPadding = () =>
@@ -251,14 +251,16 @@ export function createPhotoFilmstrip(
     strip.style.paddingLeft = `${pad}px`;
     strip.style.paddingRight = `${pad}px`;
     strip.style.boxSizing = 'border-box';
-    empty.hidden = count > 0;
+    setHidden(empty, count > 0);
     strip.hidden = count === 0;
   };
 
   const applyRoot = () => {
     root.className = [P, options.className].filter(Boolean).join(' ');
-    root.style.width = cssSize(options.width ?? '100%');
-    root.style.height = cssSize(options.height ?? 280);
+    applyBlockHostBox(container, root, {
+      width: options.width ?? '100%',
+      height: options.height ?? 280,
+    });
     assignStyle(root, options.style);
     root.setAttribute('role', 'region');
     root.tabIndex = countOf() > 0 ? 0 : -1;
@@ -375,6 +377,9 @@ export function createPhotoFilmstrip(
   applyRoot();
   rebuildStrip();
   measure(viewport.clientWidth);
+  requestAnimationFrame(() => {
+    if (!destroyed) measure(viewport.clientWidth);
+  });
   const ro =
     typeof ResizeObserver === 'undefined'
       ? null
@@ -388,7 +393,11 @@ export function createPhotoFilmstrip(
     update(next) {
       const prevPhotos = options.photos;
       const prevIndex = options.initialIndex;
-      options = { ...options, ...next, photos: next.photos ?? options.photos };
+      options = {
+        ...options,
+        ...next,
+        photos: Array.isArray(next.photos) ? next.photos : options.photos,
+      };
       applyRoot();
       if (next.photos && next.photos !== prevPhotos) {
         ready = false;

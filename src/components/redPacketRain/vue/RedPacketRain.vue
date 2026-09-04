@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import {
   createRedPacketRain,
   type RedPacketRainController,
@@ -8,7 +8,9 @@ import {
 } from '../core';
 import '../style/index.css';
 
-const props = defineProps<RedPacketRainOptions>();
+const props = withDefaults(defineProps<RedPacketRainOptions>(), {
+  auto: true,
+});
 const emit = defineEmits<{
   grab: [...args: unknown[]];
   end: [...args: unknown[]];

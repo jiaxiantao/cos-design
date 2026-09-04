@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createRippleWater, type RippleWaterController, type RippleWaterOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<RippleWaterOptions>();
+const props = withDefaults(defineProps<RippleWaterOptions>(), {
+  interactive: true,
+  showHint: true,
+});
 const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: RippleWaterController | null = null;

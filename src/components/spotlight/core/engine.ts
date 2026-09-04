@@ -4,7 +4,12 @@ export function createSpotlight(
   container: HTMLElement,
   initial: SpotlightOptions = {},
 ): SpotlightController {
-  let opts: SpotlightOptions = { radius: 120, dimColor: 'rgba(0, 0, 0, 0.85)', ...initial };
+  let opts: SpotlightOptions = {
+    radius: 120,
+    dimColor: 'rgba(0, 0, 0, 0.85)',
+    defaultContent: '隐藏内容',
+    ...initial,
+  };
   const root = document.createElement('div');
   root.className = P;
   const content = document.createElement('div');
@@ -31,9 +36,11 @@ export function createSpotlight(
     }
     // React/Vue portals own the children — do not clear existing nodes
     if (content.childNodes.length > 0) return;
+    // nullish defaultContent = framework adapter will fill via portal/Teleport
+    if (opts.defaultContent == null) return;
     const ph = document.createElement('span');
     ph.className = `${root.className}__placeholder`;
-    ph.textContent = (opts as { defaultContent?: string }).defaultContent ?? '';
+    ph.textContent = opts.defaultContent;
     content.replaceChildren(ph);
   };
 

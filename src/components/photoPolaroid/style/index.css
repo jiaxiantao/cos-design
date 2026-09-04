@@ -1,3 +1,15 @@
+/* Adapter host / custom element — prevent width:100% collapse */
+.cos-photoPolaroid-host,
+cos-photo-polaroid {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-photo-polaroid__empty[hidden] {
+  display: none !important;
+}
+
 .cos-photo-polaroid {
   --desk-light: #d4bc94;
   --desk-mid: #b8956a;
