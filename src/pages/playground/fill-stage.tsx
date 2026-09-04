@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
 import styles from './style/fill-stage.module.less';
 
+/** Fixed playground stage height — never derive height from children (avoids grow loops). */
+export const FILL_STAGE_HEIGHT = 480;
+
 interface Size {
   width: number;
   height: number;
@@ -12,11 +15,12 @@ interface FillStageProps {
 }
 
 /**
- * 按父容器实际尺寸，向子组件注入 width / height（覆盖示例里的固定画布尺寸）。
+ * 固定高度舞台：宽度跟父级，高度恒为 FILL_STAGE_HEIGHT。
+ * 向子组件注入 width / height（像素），子组件应使用显式尺寸而非 fill 百分比。
  */
 const FillStage = ({ children, overlay }: FillStageProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState<Size>({ width: 0, height: 0 });
+  const [size, setSize] = useState<Size>({ width: 0, height: FILL_STAGE_HEIGHT });
 
   useEffect(() => {
     const el = ref.current;
@@ -24,18 +28,19 @@ const FillStage = ({ children, overlay }: FillStageProps) => {
     const parent = el.parentElement;
 
     const update = () => {
-      // 优先用父级宽度，避免 flex 居中时自身被内容宽度（如默认 800）回缩
       const width = Math.max(1, Math.floor(parent?.clientWidth || el.clientWidth));
-      const height = Math.max(1, Math.floor(el.clientHeight));
       setSize((prev) =>
-        prev.width === width && prev.height === height ? prev : { width, height },
+        prev.width === width && prev.height === FILL_STAGE_HEIGHT
+          ? prev
+          : { width, height: FILL_STAGE_HEIGHT },
       );
     };
 
     update();
     const ro = new ResizeObserver(update);
-    ro.observe(el);
+    // Only observe the parent for width — never self, or child-driven height feeds back.
     if (parent) ro.observe(parent);
+    else ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
@@ -44,11 +49,12 @@ const FillStage = ({ children, overlay }: FillStageProps) => {
   );
 
   return (
-    <div ref={ref} className={styles.fillStage}>
+    <div ref={ref} className={styles.fillStage} style={{ height: FILL_STAGE_HEIGHT }}>
       {child && size.width > 0
         ? React.cloneElement(child as ReactElement<Record<string, unknown>>, {
             width: size.width,
             height: size.height,
+            fill: false,
           })
         : null}
       {overlay}

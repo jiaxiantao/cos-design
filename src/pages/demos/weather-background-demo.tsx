@@ -244,7 +244,6 @@ const WeatherBackgroundDemo = () => {
           }
         >
           <WeatherBackground
-            fill
             weather={activeWeather}
             time={sceneTime}
             windLevel={windLevel}

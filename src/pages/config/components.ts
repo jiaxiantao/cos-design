@@ -24,8 +24,8 @@ export const componentDemos: ComponentDemoItem[] = [
     codeExample: `import { WeatherBackground } from 'cos-design';
 
 // 接入 Open-Meteo 实况：把 live 改为 true
+// Playground 预览由 FillStage 注入宽高；业务页可用 fill 铺满父容器
 <WeatherBackground
-  fill
   weather="partlyCloudy"
   time="14:00"
   live={false}
@@ -38,6 +38,8 @@ export const componentDemos: ComponentDemoItem[] = [
   fogLevel={2}
   smogLevel={2}
   loading={false}
+  width={800}
+  height={480}
 />`,
   },
   {
