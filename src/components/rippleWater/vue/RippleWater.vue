@@ -31,5 +31,5 @@ defineExpose({});
 </script>
 
 <template>
-  <div ref="hostRef" class="cos-rippleWater-host" />
+  <div ref="hostRef" class="cos-rippleWater-host" style="display: block; width: 100%; height: 100%" />
 </template>

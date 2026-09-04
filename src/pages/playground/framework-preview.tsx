@@ -70,8 +70,9 @@ const FrameworkPreview = ({
           const mod = await loader();
           if (cancelled) return;
           const mountEl = document.createElement('div');
-          mountEl.style.width = '100%';
-          mountEl.style.height = '100%';
+          mountEl.style.cssText = 'display:block;width:100%;height:100%;position:relative;';
+          host.style.width = '100%';
+          host.style.height = '100%';
           host.appendChild(mountEl);
           vueApp = createApp(mod.default, props);
           vueApp.mount(mountEl);
