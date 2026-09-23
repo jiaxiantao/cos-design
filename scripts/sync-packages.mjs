@@ -3,6 +3,7 @@
  * v4 组件（含 core/index.ts）生成 react / vue / core / element 四入口。
  * 用法：node scripts/sync-packages.mjs
  */
+import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import {
@@ -287,7 +288,17 @@ function createUmbrellaPackage() {
         return `](https://github.com/jiaxiantao/cos-design/blob/master/${cleaned})`;
       },
     );
-    writeFileSync(join(dir, file), rewritten);
+    const outPath = join(dir, file);
+    writeFileSync(outPath, rewritten);
+    // Stabilize markdown table widths after longer GitHub URLs are injected.
+    try {
+      const prettierBin = join(ROOT, 'node_modules/prettier/bin/prettier.cjs');
+      if (existsSync(prettierBin)) {
+        execFileSync(process.execPath, [prettierBin, '--write', outPath], { stdio: 'ignore' });
+      }
+    } catch {
+      // prettier optional during bootstrap
+    }
   }
 }
 
