@@ -12,7 +12,7 @@
 [![Vue](https://img.shields.io/badge/Vue-3.4%2B-42b883)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org/)
 
-[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](./QUICKSTART.md) · [**Migrate to 4.0**](./docs/migration-v4.md) · [**10-minute campaign**](./docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](./docs/ai-discovery.md) · [Next.js](./examples/next-app) · [Vue](./examples/vue-app) · [Vanilla](./examples/vanilla) · [EN guide](./website-content/cos-design-marketing-effects-en.md) · [中文指南](./website-content/cos-design-intro.md) · [Changelog](./CHANGELOG.md)
+[Playground](https://jiaxiantao.github.io/cos-design/) · [Quickstart](https://github.com/jiaxiantao/cos-design/blob/master/QUICKSTART.md) · [**Migrate to 4.0**](https://github.com/jiaxiantao/cos-design/blob/master/docs/migration-v4.md) · [**10-minute campaign**](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-10-minutes.md) · [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) · [AI discovery](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md) · [Next.js](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app) · [Vue](https://github.com/jiaxiantao/cos-design/blob/master/examples/vue-app) · [Vanilla](https://github.com/jiaxiantao/cos-design/blob/master/examples/vanilla) · [EN guide](https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-marketing-effects-en.md) · [中文指南](https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-intro.md) · [Changelog](https://github.com/jiaxiantao/cos-design/blob/master/CHANGELOG.md)
 
 </div>
 
@@ -60,11 +60,11 @@ import { Fireworks } from '@cos-design/fireworks/vue';
 
 - **Use for:** campaign / lottery / celebration UI, canvas backgrounds, animated headlines, dashboard decorations
 - **Do not use for:** tables, forms, nav shells → use Ant Design / shadcn / MUI
-- **v4 migration:** [docs/migration-v4.md](./docs/migration-v4.md)
-- **Start here (campaign):** [Build a campaign page in 10 minutes](./docs/campaign-10-minutes.md) · runnable [examples/next-app](./examples/next-app) · [examples/vue-app](./examples/vue-app) · [examples/vanilla](./examples/vanilla)
+- **v4 migration:** [docs/migration-v4.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/migration-v4.md)
+- **Start here (campaign):** [Build a campaign page in 10 minutes](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-10-minutes.md) · runnable [examples/next-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app) · [examples/vue-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/vue-app) · [examples/vanilla](https://github.com/jiaxiantao/cos-design/blob/master/examples/vanilla)
 - **AI index:** https://jiaxiantao.github.io/cos-design/llms.txt · **Context7:** `/jiaxiantao/cos-design`
-- **Cursor Skill install:** see [docs/ai-discovery.md](./docs/ai-discovery.md)
-- **Article:** [React marketing page effects with cos-design](./website-content/cos-design-marketing-effects-en.md)
+- **Cursor Skill install:** see [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md)
+- **Article:** [React marketing page effects with cos-design](https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-marketing-effects-en.md)
 
 ---
 
@@ -87,7 +87,7 @@ import { Fireworks } from '@cos-design/fireworks/vue';
 
 ## 快速开始
 
-> 完整说明见 **[QUICKSTART.md](./QUICKSTART.md)** · Playground 内访问 **#/quickstart**
+> 完整说明见 **[QUICKSTART.md](https://github.com/jiaxiantao/cos-design/blob/master/QUICKSTART.md)** · Playground 内访问 **#/quickstart**
 
 ### 安装
 
@@ -128,17 +128,17 @@ export default function Page() {
 
 让 AI 在写活动页、特效背景时自动选用本库：
 
-| 资源                                                                   | 说明                                                    |
-| ---------------------------------------------------------------------- | ------------------------------------------------------- |
-| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)           | 供 Agent 抓取的索引（场景 → 组件 → 安装命令）           |
-| [llms-full.txt](https://jiaxiantao.github.io/cos-design/llms-full.txt) | 站点上的完整 AI 参考（与 docs/ai.md 同步）              |
-| [docs/ai.md](./docs/ai.md)                                             | 91 个组件的完整 AI 参考（安装 / import / 示例 / Props） |
-| [docs/examples/next-app-router.md](./docs/examples/next-app-router.md) | Next.js App Router 接入说明（SSR + fill）               |
-| [examples/next-app](./examples/next-app)                               | 可运行 Next.js 示例（`pnpm install && pnpm dev`）       |
-| [docs/ai-discovery.md](./docs/ai-discovery.md)                         | Context7 提交、校验、Cursor Skill 安装、项目 Rule 片段  |
-| [AGENTS.md](./AGENTS.md)                                               | 仓库级 Agent 规则，可复制到用户项目                     |
-| [.cursor/skills/cos-design](./.cursor/skills/cos-design/SKILL.md)      | Cursor Skill                                            |
-| Context7                                                               | `/jiaxiantao/cos-design`（`pnpm verify:context7`）      |
+| 资源                                                                                                                      | 说明                                                    |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)                                                              | 供 Agent 抓取的索引（场景 → 组件 → 安装命令）           |
+| [llms-full.txt](https://jiaxiantao.github.io/cos-design/llms-full.txt)                                                    | 站点上的完整 AI 参考（与 docs/ai.md 同步）              |
+| [docs/ai.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai.md)                                             | 91 个组件的完整 AI 参考（安装 / import / 示例 / Props） |
+| [docs/examples/next-app-router.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/examples/next-app-router.md) | Next.js App Router 接入说明（SSR + fill）               |
+| [examples/next-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app)                               | 可运行 Next.js 示例（`pnpm install && pnpm dev`）       |
+| [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md)                         | Context7 提交、校验、Cursor Skill 安装、项目 Rule 片段  |
+| [AGENTS.md](https://github.com/jiaxiantao/cos-design/blob/master/AGENTS.md)                                               | 仓库级 Agent 规则，可复制到用户项目                     |
+| [.cursor/skills/cos-design](https://github.com/jiaxiantao/cos-design/blob/master/.cursor/skills/cos-design/SKILL.md)      | Cursor Skill                                            |
+| Context7                                                                                                                  | `/jiaxiantao/cos-design`（`pnpm verify:context7`）      |
 
 **安装 Cursor Skill（用户本机）：**
 
@@ -396,7 +396,7 @@ npx --yes pnpm@9 dev   # 启动 Playground
 
 ## 使用注意
 
-详见 [QUICKSTART.md](./QUICKSTART.md)。以下为高频场景摘要：
+详见 [QUICKSTART.md](https://github.com/jiaxiantao/cos-design/blob/master/QUICKSTART.md)。以下为高频场景摘要：
 
 **Canvas 组件请客户端渲染**（依赖 `window` / `canvas` / `requestAnimationFrame`）：
 
@@ -412,16 +412,16 @@ const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
 
 ## 文档
 
-| 文档                                                         | 内容                             |
-| ------------------------------------------------------------ | -------------------------------- |
-| [快速开始](./QUICKSTART.md)                                  | 安装、用法、注意事项与常见问题   |
-| [AI Agent 参考](./docs/ai.md)                                | 供 AI 使用的组件选型与 API 文档  |
-| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) | 机器可读索引（llmstxt 规范）     |
-| [AGENTS.md](./AGENTS.md)                                     | 编码 Agent 仓库规则              |
-| [v3.0 发布博客](./website-content/cos-design-v3-release.md)  | 重大升级解读、分类体系、技术实现 |
-| [完整介绍与实践指南](./website-content/cos-design-intro.md)  | 架构、使用规则、组件详解         |
-| [CHANGELOG](./CHANGELOG.md)                                  | 版本更新记录                     |
-| [CONTRIBUTING](./CONTRIBUTING.md)                            | 参与贡献指南                     |
+| 文档                                                                                                           | 内容                             |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| [快速开始](https://github.com/jiaxiantao/cos-design/blob/master/QUICKSTART.md)                                 | 安装、用法、注意事项与常见问题   |
+| [AI Agent 参考](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai.md)                               | 供 AI 使用的组件选型与 API 文档  |
+| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt)                                                   | 机器可读索引（llmstxt 规范）     |
+| [AGENTS.md](https://github.com/jiaxiantao/cos-design/blob/master/AGENTS.md)                                    | 编码 Agent 仓库规则              |
+| [v3.0 发布博客](https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-v3-release.md) | 重大升级解读、分类体系、技术实现 |
+| [完整介绍与实践指南](https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-intro.md) | 架构、使用规则、组件详解         |
+| [CHANGELOG](https://github.com/jiaxiantao/cos-design/blob/master/CHANGELOG.md)                                 | 版本更新记录                     |
+| [CONTRIBUTING](https://github.com/jiaxiantao/cos-design/blob/master/CONTRIBUTING.md)                           | 参与贡献指南                     |
 
 ---
 
@@ -443,6 +443,6 @@ const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
 
 **如果觉得有用，欢迎 Star ⭐**
 
-[MIT](./LICENSE) © [jiaxiantao](https://github.com/jiaxiantao)
+[MIT](https://github.com/jiaxiantao/cos-design/blob/master/LICENSE) © [jiaxiantao](https://github.com/jiaxiantao)
 
 </div>

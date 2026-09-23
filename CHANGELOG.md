@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [4.0.0] - 2026-09-03
+## [4.0.0] - 2026-09-23
 
 ### Added
 
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `@cos-design/shared/react` subpath for React hooks (`useElementSize`, `useCanvasBox`)
 - Migration guide: [docs/migration-v4.md](./docs/migration-v4.md)
 - Architecture RFC: [docs/rfc-v4-multi-framework.md](./docs/rfc-v4-multi-framework.md)
-- Tooling: `migrate:component`, `migrate:batch-a|b|c|d`, `verify:v4-matrix`
+- Tooling: `migrate:component`, `migrate:batch-a|b|c|d`, `verify:v4-matrix`, `verify:v4-runtime`
 
 ### Changed
 
@@ -33,11 +33,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix FlipCard zero-width host in Playground (`cos-flipCard-host` + flipped BEM `--flipped`) and static preview layout for v4 host wrappers
 - Mark umbrella `three` peer as optional
 - Playground: React / Vue / Web Components / Core framework tabs with live Vue & Element mounts
-- Examples: `examples/vue-app` and `examples/vanilla`
+- Examples: `examples/next-app`, `examples/vue-app`, and `examples/vanilla` (workspace-linked to 4.0.0)
 - Element adapters: FlipCard / NineGrid / ScratchCard emit `reveal` / `draw-end` CustomEvents
 - Regenerate all Vue/Element adapters from `core/types.ts` (attr parsing, boolean clear, on\* → events, photos/prizes JS props)
 - Playground Element mounts use kebab-case attributes
 - **Runtime parity with 3.x**: fill sizes the adapter host (`applyCanvasHostBox`); React/Vue adapters update only when options change (fingerprint); slotted components use portals/`Teleport`; reduce-motion no longer starts a second rAF loop; `@cos-design/shared` default entry is framework-free again
+
+### Fixed
+
+- FlipCounter: digit cards mount correctly; `auto` / `autoInterval` for Vue / WC / Core demos
+- ProgressChest: `auto` demo prop so non-React tabs animate
+- ClickSpark: slotted content + `[hidden]` hint stacking across frameworks
+- PhotoPostcard: restore 3.x declarative React behavior; Core avoids rebuild during drag
+- Confetti / Turntable / ScratchCard / RedPacketRain: interactive demos, prize lists, and host centering for Playground multi-framework tabs
+- Canvas hosts: `margin-inline: auto` when not `fill` so fixed-size canvases center in full-width preview hosts
+- `examples/next-app` dependencies aligned to `workspace:*` (4.0.0) like vue/vanilla examples
+- Umbrella npm `README` / `CHANGELOG`: `sync-packages` rewrites repo-relative doc links to GitHub URLs so they work on npmjs.com
 
 ### Breaking
 

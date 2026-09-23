@@ -124,29 +124,29 @@ importers:
   examples/next-app:
     dependencies:
       '@cos-design/confetti':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/confetti
       '@cos-design/fireworks':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/fireworks
       '@cos-design/flip-card':
-        specifier: ^3.7.8
-        version: 3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/flipCard
       '@cos-design/neon-text':
-        specifier: ^3.5.3
-        version: 3.5.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/neonText
       '@cos-design/nine-grid':
-        specifier: ^3.7.8
-        version: 3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/nineGrid
       '@cos-design/scratch-card':
-        specifier: ^3.5.4
-        version: 3.5.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/scratchCard
       '@cos-design/turntable':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/turntable
       '@cos-design/weather-background':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/weatherBackground
       next:
         specifier: ^15.5.2
         version: 15.5.24(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@22.19.21)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -294,6 +294,9 @@ importers:
 
   packages/barcodeScan:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -306,6 +309,9 @@ importers:
 
   packages/blurText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -333,6 +339,9 @@ importers:
 
   packages/burnAway:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -375,6 +384,9 @@ importers:
 
   packages/circularText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -432,6 +444,9 @@ importers:
 
   packages/countUp:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -444,6 +459,9 @@ importers:
 
   packages/countdown:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -471,6 +489,9 @@ importers:
 
   packages/curvedLoop:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -513,6 +534,9 @@ importers:
 
   packages/diceRoll:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -585,6 +609,9 @@ importers:
 
   packages/flipCard:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -597,6 +624,9 @@ importers:
 
   packages/flipCounter:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -609,6 +639,9 @@ importers:
 
   packages/fuzzyText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -636,6 +669,9 @@ importers:
 
   packages/glitchText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -648,6 +684,9 @@ importers:
 
   packages/gradientFlow:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -675,6 +714,9 @@ importers:
 
   packages/holographicCard:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -717,6 +759,9 @@ importers:
 
   packages/liquidGlass:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -759,6 +804,9 @@ importers:
 
   packages/magneticButton:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -831,6 +879,9 @@ importers:
 
   packages/neonText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -918,6 +969,9 @@ importers:
 
   packages/photoAlbum:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -930,6 +984,9 @@ importers:
 
   packages/photoCarousel:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -942,6 +999,9 @@ importers:
 
   packages/photoClothesline:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -954,6 +1014,9 @@ importers:
 
   packages/photoFilmstrip:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -966,6 +1029,9 @@ importers:
 
   packages/photoFridge:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -996,6 +1062,9 @@ importers:
 
   packages/photoLightbox:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1008,6 +1077,9 @@ importers:
 
   packages/photoPolaroid:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1020,6 +1092,9 @@ importers:
 
   packages/photoPostcard:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1152,6 +1227,9 @@ importers:
 
   packages/returnCity:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1194,6 +1272,9 @@ importers:
 
   packages/rotatingText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1221,6 +1302,9 @@ importers:
 
   packages/scrambleText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1254,6 +1338,9 @@ importers:
 
   packages/shinyText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1356,6 +1443,9 @@ importers:
 
   packages/splitReveal:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1368,6 +1458,9 @@ importers:
 
   packages/splitText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1380,6 +1473,9 @@ importers:
 
   packages/spotlight:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1452,6 +1548,9 @@ importers:
 
   packages/trueFocus:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1479,6 +1578,9 @@ importers:
 
   packages/typewriter:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1491,6 +1593,9 @@ importers:
 
   packages/waveButton:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1503,6 +1608,9 @@ importers:
 
   packages/waveText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -1677,67 +1785,6 @@ packages:
 
   '@cacheable/utils@2.4.1':
     resolution: {integrity: sha512-eiFgzCbIneyMlLOmNG4g9xzF7Hv3Mga4LjxjcSC/ues6VYq2+gUbQI8JqNuw/ZM8tJIeIaBGpswAsqV2V7ApgA==}
-
-  '@cos-design/confetti@3.5.5':
-    resolution: {integrity: sha512-K8ofynIYtNmFwVIEY7nRijWEWsa4XykqtbkZuYhaTioQ3CWB5cxLUeZ5dizcLMd3Y5b1GEQEWc4mGOQTpJ9KIw==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/fireworks@3.5.5':
-    resolution: {integrity: sha512-TilaOuzMXy/I3cE4O16nKdCLAGEl/AeZPo5swfKcL9wiL27VtMu0K/qc5NBORZB2Ka8KC6DX+P8ksMNSYLDO7w==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/flip-card@3.7.8':
-    resolution: {integrity: sha512-g9gm8VHyHRfqfflHsajnNricrXhMhLf0sQYUCaPsiHB2k7DGbok4qdt48IwWnS/YisWhhGffpUOP4yJbcFa7Sg==, tarball: https://registry.npmjs.org/@cos-design/flip-card/-/flip-card-3.7.8.tgz}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/neon-text@3.5.3':
-    resolution: {integrity: sha512-ENZekyp5VX+pEZpp6fNo5yEDjS3y3yQbHMBstUEQvzLQ4ULiAEQbZBS8RDdjNNQBkGJ8DjiD5KyTrqZ7R9K0Zw==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/nine-grid@3.7.8':
-    resolution: {integrity: sha512-avrLl+jdxnB3gswULWB6UjtDoOnFzsriJd2UaJFsC64baNZ3Co+M2DGKisJ8Lr94/1mxlabe59/a9uSYVWxPNA==, tarball: https://registry.npmjs.org/@cos-design/nine-grid/-/nine-grid-3.7.8.tgz}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/scratch-card@3.5.4':
-    resolution: {integrity: sha512-yPqf6kj3wg20T2jxlAO37yT0ERcV6edzooX+dEP5N3jvyB9AbJJxBRKLah7zqI5WrG14rAql6vjoh0Ss4lUFVw==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/shared@3.5.4':
-    resolution: {integrity: sha512-//j9VLK1wLdkhBEjiiALCbJ87WqcvuCYw7Ud96yP6qrU8Y+s9PQ+WvNvIc1mX/gQCvTfwfO75vm04CY4ggw18g==}
-
-  '@cos-design/shared@3.5.5':
-    resolution: {integrity: sha512-1A8aoAH2aw8aoEoawcxRVdt/fjQU8KkF2XpLPXeqXU5ZZds+vGu6ED0dPEEJUFCEdbvPeUi1MwQCCej7FwcCFA==}
-    peerDependencies:
-      react: '>=18.0.0'
-
-  '@cos-design/shared@3.5.6':
-    resolution: {integrity: sha512-LRxwCHmFlUmbSs8j6XE16GMYV1EH1bSYmB1EbDXes5cuOq1RHGHbyi8x3VPloworjOUNGk377TeE7x4HWJdMYQ==}
-    peerDependencies:
-      react: '>=18.0.0'
-
-  '@cos-design/turntable@3.5.5':
-    resolution: {integrity: sha512-9WNCfNciff/ctT4UtJGgZeXZIL7VR6DZXljQWPbJw7l61kYsTkppbs9R81e3s8KCWXzC2kTSbjXu8dUrjMd1aQ==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/weather-background@3.5.5':
-    resolution: {integrity: sha512-0wfZoDCYDQhNGqEJUofjlcHtDtby0yUFFfEfv8R/OSMZ49qo2na9US6bQaTLt2q/hC58v1R4oEcggRPCEhD3FQ==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
 
   '@csstools/css-calc@3.2.1':
     resolution: {integrity: sha512-DtdHlgXh5ZkA43cwBcAm+huzgJiwx3ZTWVjBs94kwz2xKqSimDA3lBgCjphYgwgVUMWatSM0pDd8TILB1yrVVg==}
@@ -4703,60 +4750,6 @@ snapshots:
     dependencies:
       hashery: 1.5.1
       keyv: 5.6.0
-
-  '@cos-design/confetti@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.5(react@19.2.7)
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/fireworks@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.5(react@19.2.7)
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/flip-card@3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/neon-text@3.5.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/nine-grid@3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/scratch-card@3.5.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.4
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/shared@3.5.4': {}
-
-  '@cos-design/shared@3.5.5(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-
-  '@cos-design/shared@3.5.6(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-
-  '@cos-design/turntable@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/weather-background@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.6(react@19.2.7)
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
 
   '@csstools/css-calc@3.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)':
     dependencies:

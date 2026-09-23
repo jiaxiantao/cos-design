@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [4.0.0] - 2026-09-03
+## [4.0.0] - 2026-09-23
 
 ### Added
 
@@ -18,9 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Web Components — `@cos-design/<pkg>/element` and `cos-design/elements`
 - Core + Adapter architecture: shared engines under `src/components/*/core`
 - `@cos-design/shared/react` subpath for React hooks (`useElementSize`, `useCanvasBox`)
-- Migration guide: [docs/migration-v4.md](./docs/migration-v4.md)
-- Architecture RFC: [docs/rfc-v4-multi-framework.md](./docs/rfc-v4-multi-framework.md)
-- Tooling: `migrate:component`, `migrate:batch-a|b|c|d`, `verify:v4-matrix`
+- Migration guide: [docs/migration-v4.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/migration-v4.md)
+- Architecture RFC: [docs/rfc-v4-multi-framework.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/rfc-v4-multi-framework.md)
+- Tooling: `migrate:component`, `migrate:batch-a|b|c|d`, `verify:v4-matrix`, `verify:v4-runtime`
 
 ### Changed
 
@@ -33,11 +33,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix FlipCard zero-width host in Playground (`cos-flipCard-host` + flipped BEM `--flipped`) and static preview layout for v4 host wrappers
 - Mark umbrella `three` peer as optional
 - Playground: React / Vue / Web Components / Core framework tabs with live Vue & Element mounts
-- Examples: `examples/vue-app` and `examples/vanilla`
+- Examples: `examples/next-app`, `examples/vue-app`, and `examples/vanilla` (workspace-linked to 4.0.0)
 - Element adapters: FlipCard / NineGrid / ScratchCard emit `reveal` / `draw-end` CustomEvents
 - Regenerate all Vue/Element adapters from `core/types.ts` (attr parsing, boolean clear, on\* → events, photos/prizes JS props)
 - Playground Element mounts use kebab-case attributes
 - **Runtime parity with 3.x**: fill sizes the adapter host (`applyCanvasHostBox`); React/Vue adapters update only when options change (fingerprint); slotted components use portals/`Teleport`; reduce-motion no longer starts a second rAF loop; `@cos-design/shared` default entry is framework-free again
+
+### Fixed
+
+- FlipCounter: digit cards mount correctly; `auto` / `autoInterval` for Vue / WC / Core demos
+- ProgressChest: `auto` demo prop so non-React tabs animate
+- ClickSpark: slotted content + `[hidden]` hint stacking across frameworks
+- PhotoPostcard: restore 3.x declarative React behavior; Core avoids rebuild during drag
+- Confetti / Turntable / ScratchCard / RedPacketRain: interactive demos, prize lists, and host centering for Playground multi-framework tabs
+- Canvas hosts: `margin-inline: auto` when not `fill` so fixed-size canvases center in full-width preview hosts
+- `examples/next-app` dependencies aligned to `workspace:*` (4.0.0) like vue/vanilla examples
+- Umbrella npm `README` / `CHANGELOG`: `sync-packages` rewrites repo-relative doc links to GitHub URLs so they work on npmjs.com
 
 ### Breaking
 
@@ -81,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Playground「活动配方」整页路由与导航（`#/recipes`）；活动组合改走 [examples/next-app](./examples/next-app) 与 [docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)
+- Playground「活动配方」整页路由与导航（`#/recipes`）；活动组合改走 [examples/next-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app) 与 [docs/campaign-10-minutes.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-10-minutes.md)
 
 ### Added
 
@@ -102,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Playground 配方页「可复制片段」（`recipe-snippets` + 一键复制）
 - Next 示例主链路：`CampaignFlow`（fill hero → FlipCard → NineGrid → Confetti）
-- 文档：[docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)、[docs/campaign-patterns.md](./docs/campaign-patterns.md)
+- 文档：[docs/campaign-10-minutes.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-10-minutes.md)、[docs/campaign-patterns.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-patterns.md)
 - Playwright 交互 smoke：翻牌 / 九宫格 busy / 转盘出结果 / checkin-draw 解锁
 - `NineGrid.spinningText`；Turntable / SlotMachine / NineGrid 按钮 `aria-busy` + `data-testid`
 
@@ -128,7 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NineGrid / FlipCard Playground 属性说明改为中文源 + EN 映射；`extract-props` 支持 forwardRef 换行解构默认值
 - `pnpm verify:context7`：区分 required（`fill` / `next-app`）与 optional markers
-- [docs/ai-discovery.md](./docs/ai-discovery.md) 同步健康状态与 refresh 冷却说明（勿把 API key 写入仓库）
+- [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md) 同步健康状态与 refresh 冷却说明（勿把 API key 写入仓库）
 - @cos-design/flip-card: 3.7.8 → 3.7.9
 - @cos-design/nine-grid: 3.7.8 → 3.7.9
 - cos-design: 聚合包更新至 3.7.9
@@ -161,12 +172,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- 可运行 Next.js 示例工程 [examples/next-app](./examples/next-app)（fill hero + 刮开庆祝）
+- 可运行 Next.js 示例工程 [examples/next-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app)（fill hero + 刮开庆祝）
 - `pnpm verify:context7`：检查 Context7 是否收录以及索引是否包含 `fill` / Next 示例
 
 ### Changed
 
-- Context7 校验结论写入 [docs/ai-discovery.md](./docs/ai-discovery.md)；刷新 workflow 在缺少 `CONTEXT7_API_KEY` 时发出 warning
+- Context7 校验结论写入 [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md)；刷新 workflow 在缺少 `CONTEXT7_API_KEY` 时发出 warning
 - `context7.json` 规则补充 `fill` 与 Next 示例路径
 - cos-design: 聚合包更新至 3.7.7
 
@@ -177,7 +188,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `@cos-design/shared`：新增 `useCanvasBox`（fill 尺寸一站式 hook）
 - 背景组件全面支持 `fill`：`WeatherBackground`、`Aurora`、`Starfield`、`Snowfall`、`MeteorRain`、`CyberGrid`、`SmokeFog`、`BubbleField`、`RippleWater`
 - `Starfield` / `Snowfall` / `MeteorRain` / `CyberGrid` / `Aurora` 接入 `prefers-reduced-motion` 静态降级
-- Playground 配方「全屏氛围 Hero」；Next.js 接入示例 [docs/examples/next-app-router.md](./docs/examples/next-app-router.md)
+- Playground 配方「全屏氛围 Hero」；Next.js 接入示例 [docs/examples/next-app-router.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/examples/next-app-router.md)
 
 ### Changed
 
