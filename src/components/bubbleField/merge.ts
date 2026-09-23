@@ -77,7 +77,11 @@ export const applyMergeAttraction = (bubbles: Bubble[]) => {
   });
 };
 
-export const startNearbyMerges = (bubbles: Bubble[], merges: ActiveMerge[], busyIds: Set<number>) => {
+export const startNearbyMerges = (
+  bubbles: Bubble[],
+  merges: ActiveMerge[],
+  busyIds: Set<number>,
+) => {
   forEachNearbyPair(bubbles, (a, b) => {
     if (busyIds.has(a.id) || busyIds.has(b.id)) return;
 
@@ -87,7 +91,10 @@ export const startNearbyMerges = (bubbles: Bubble[], merges: ActiveMerge[], busy
 
     const primary = a.radius >= b.radius ? a : b;
     const secondary = a.radius >= b.radius ? b : a;
-    const targetRadius = Math.min(MAX_RADIUS, Math.cbrt(primary.radius ** 3 + secondary.radius ** 3));
+    const targetRadius = Math.min(
+      MAX_RADIUS,
+      Math.cbrt(primary.radius ** 3 + secondary.radius ** 3),
+    );
     merges.push({
       primaryId: primary.id,
       secondaryId: secondary.id,
@@ -98,14 +105,19 @@ export const startNearbyMerges = (bubbles: Bubble[], merges: ActiveMerge[], busy
       startPrimaryX: primary.x,
       startPrimaryY: primary.y,
       startSecondaryX: secondary.x,
-      startSecondaryY: secondary.y
+      startSecondaryY: secondary.y,
     });
     busyIds.add(primary.id);
     busyIds.add(secondary.id);
   });
 };
 
-export const updateMerges = (bubbles: Bubble[], merges: ActiveMerge[], speedScale: number, frameScale: number) => {
+export const updateMerges = (
+  bubbles: Bubble[],
+  merges: ActiveMerge[],
+  speedScale: number,
+  frameScale: number,
+) => {
   const completed: number[] = [];
 
   for (let i = 0; i < merges.length; i++) {
@@ -144,7 +156,10 @@ export const updateMerges = (bubbles: Bubble[], merges: ActiveMerge[], speedScal
       primary.x = (pose.ax * pose.ar + pose.bx * pose.br) / Math.max(1, pose.ar + pose.br);
       primary.y = (pose.ay * pose.ar + pose.by * pose.br) / Math.max(1, pose.ar + pose.br);
       primary.radius = merge.targetRadius;
-      primary.terminalRise = Math.min(2.2, terminalRiseForRadius(primary.radius, speedScale, false) * 1.04);
+      primary.terminalRise = Math.min(
+        2.2,
+        terminalRiseForRadius(primary.radius, speedScale, false) * 1.04,
+      );
       primary.settle = 0.7;
       primary.aspect = 0.94;
       const removeIdx = bubbles.findIndex((b) => b.id === secondary.id);

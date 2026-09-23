@@ -10,7 +10,7 @@ export function makeCloudSprite(
   scale: number,
   puffs: Puff[],
   rgb: [number, number, number],
-  alpha: number
+  alpha: number,
 ): { sprite: HTMLCanvasElement; ox: number; oy: number } {
   const [r, g, b] = rgb;
 
@@ -61,14 +61,14 @@ export function makeCloud(
   height: number,
   cloudSpread: number,
   rgb: [number, number, number],
-  alpha: number
+  alpha: number,
 ): Cloud {
   const scale = 0.7 + Math.random() * 0.9;
   const puffCount = 4 + Math.floor(Math.random() * 3);
   const puffs: Puff[] = Array.from({ length: puffCount }, (_, i) => ({
     dx: (i - puffCount / 2) * 26 + (Math.random() - 0.5) * 14,
     dy: (Math.random() - 0.5) * 14,
-    r: 22 + Math.random() * 20
+    r: 22 + Math.random() * 20,
   }));
   const { sprite, ox, oy } = makeCloudSprite(scale, puffs, rgb, alpha);
   return {
@@ -79,7 +79,7 @@ export function makeCloud(
     puffs,
     sprite,
     ox,
-    oy
+    oy,
   };
 }
 

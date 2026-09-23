@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 /** 观景器单张照片数据 */
 export interface PhotoViewMasterItem {
@@ -45,5 +45,5 @@ export interface PhotoViewMasterProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

@@ -1,0 +1,7 @@
+.cos-gravity-balls {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cos-gravity-balls__canvas {
+  display: block;
+}

@@ -100,7 +100,11 @@ export function makeSunSprite(cfg: WeatherConfig, sunR: number): CelestialSprite
  * 预渲染月亮贴图（含月光散射、月轮、月海、环形山、受光高光与软边 bloom）。
  * sun==='none' 时不渲染月亮（与原逻辑一致）。
  */
-export function makeMoonSprite(cfg: WeatherConfig, sunR: number, moonCraters: MoonCrater[]): CelestialSprite | null {
+export function makeMoonSprite(
+  cfg: WeatherConfig,
+  sunR: number,
+  moonCraters: MoonCrater[],
+): CelestialSprite | null {
   if (cfg.sun === 'none') return null;
 
   const moonR = sunR * 0.82;
@@ -159,7 +163,7 @@ export function makeMoonSprite(cfg: WeatherConfig, sunR: number, moonCraters: Mo
   const maria = [
     { dx: -0.18, dy: 0.12, rx: 0.38, ry: 0.28, a: 0.14 },
     { dx: 0.22, dy: -0.08, rx: 0.26, ry: 0.2, a: 0.11 },
-    { dx: 0.05, dy: 0.32, rx: 0.2, ry: 0.14, a: 0.09 }
+    { dx: 0.05, dy: 0.32, rx: 0.2, ry: 0.14, a: 0.09 },
   ];
   for (const m of maria) {
     const cx = mx + m.dx * moonR;
@@ -196,7 +200,7 @@ export function makeMoonSprite(cfg: WeatherConfig, sunR: number, moonCraters: Mo
     0,
     mx - moonR * 0.1,
     my - moonR * 0.1,
-    moonR * 0.7
+    moonR * 0.7,
   );
   sheen.addColorStop(0, `rgba(255, 255, 255, ${0.28 * intensity})`);
   sheen.addColorStop(0.45, `rgba(245, 248, 252, ${0.08 * intensity})`);

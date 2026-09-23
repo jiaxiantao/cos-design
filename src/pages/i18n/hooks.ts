@@ -14,9 +14,9 @@ export const useLocalizedCategories = () => {
       COMPONENT_CATEGORIES.map((category) => ({
         ...category,
         label: t(`categories.${category.id}.label`),
-        description: t(`categories.${category.id}.description`)
+        description: t(`categories.${category.id}.description`),
       })),
-    [t]
+    [t],
   );
 };
 
@@ -33,11 +33,11 @@ export const useLocalizedComponentDemos = () => {
         description: t(`components.${item.name}.description`, { defaultValue: item.description }),
         tags: t(`components.${item.name}.tags`, {
           returnObjects: true,
-          defaultValue: item.tags
+          defaultValue: item.tags,
         }) as string[],
-        codeExample: localizeCodeExample(item.codeExample, locale, item.name)
+        codeExample: localizeCodeExample(item.codeExample, locale, item.name),
       })),
-    [locale, t]
+    [locale, t],
   );
 };
 
@@ -46,7 +46,11 @@ export const useBackgroundDemoCopy = (componentName: string) => {
   const { t } = useTranslation();
 
   return {
-    headline: t(`backgroundDemo.headlines.${componentName}`, { defaultValue: t('backgroundDemo.defaultHeadline') }),
-    subtitle: t(`backgroundDemo.subtitles.${componentName}`, { defaultValue: t('backgroundDemo.defaultSubtitle') })
+    headline: t(`backgroundDemo.headlines.${componentName}`, {
+      defaultValue: t('backgroundDemo.defaultHeadline'),
+    }),
+    subtitle: t(`backgroundDemo.subtitles.${componentName}`, {
+      defaultValue: t('backgroundDemo.defaultSubtitle'),
+    }),
   };
 };

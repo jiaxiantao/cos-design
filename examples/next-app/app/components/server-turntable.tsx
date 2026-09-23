@@ -5,8 +5,12 @@ import dynamic from 'next/dynamic';
 import type { ConfettiHandle } from '@cos-design/confetti';
 import type { TurntableHandle } from '@cos-design/turntable';
 
-const Turntable = dynamic(() => import('@cos-design/turntable').then((m) => m.Turntable), { ssr: false });
-const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
+const Turntable = dynamic(() => import('@cos-design/turntable').then((m) => m.Turntable), {
+  ssr: false,
+});
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), {
+  ssr: false,
+});
 
 export function ServerTurntable() {
   const turntableRef = useRef<TurntableHandle>(null);

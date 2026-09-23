@@ -12,7 +12,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   partlyCloudy: {
     sky: ['#5b9bd0', '#cfe6f3'],
@@ -25,7 +25,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   overcast: {
     sky: ['#8a97a8', '#c3cbd6'],
@@ -38,7 +38,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.06,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   /** 雨天默认中雨；实际由 rainLevel 1~10 连续插值；天空按毛毛/小、中、暴三档 CONFIGS */
   rain: {
@@ -52,7 +52,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.06,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   /** @deprecated 请使用 rain + rainLevel={2} */
   lightRain: {
@@ -66,7 +66,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.04,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   moderateRain: {
     sky: ['#55637a', '#7e8ba0'],
@@ -79,7 +79,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.06,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   heavyRain: {
     sky: ['#3d4a5f', '#5d6a80'],
@@ -92,7 +92,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.1,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   thunderstorm: {
     sky: ['#252f42', '#43506a'],
@@ -105,7 +105,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.08,
     snowCount: 0,
-    lightning: true
+    lightning: true,
   },
   fog: {
     sky: ['#aab4bf', '#d5dbe1'],
@@ -118,7 +118,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 10,
     haze: 0.28,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   lightSnow: {
     sky: ['#aab8c8', '#e2e8ef'],
@@ -131,7 +131,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.05,
     snowCount: 70,
-    lightning: false
+    lightning: false,
   },
   moderateSnow: {
     sky: ['#9fb0c4', '#dde5ee'],
@@ -144,7 +144,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.08,
     snowCount: 160,
-    lightning: false
+    lightning: false,
   },
   heavySnow: {
     sky: ['#8495aa', '#c7d1dc'],
@@ -157,7 +157,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 3,
     haze: 0.14,
     snowCount: 300,
-    lightning: false
+    lightning: false,
   },
   sleet: {
     sky: ['#78899e', '#b8c5d2'],
@@ -170,7 +170,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.09,
     snowCount: 100,
-    lightning: false
+    lightning: false,
   },
   hail: {
     sky: ['#46566c', '#77889d'],
@@ -183,7 +183,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.1,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   smog: {
     sky: ['#8f8b7e', '#c5bca8'],
@@ -196,7 +196,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 12,
     haze: 0.34,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   gale: {
     sky: ['#587087', '#a6b5c2'],
@@ -209,7 +209,7 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.04,
     snowCount: 0,
-    lightning: false
+    lightning: false,
   },
   /** 雪天默认中雪；实际渲染由 resolveSceneWeather + snowLevel 选 light/moderate/heavy */
   snow: {
@@ -223,8 +223,8 @@ export const CONFIGS: Record<WeatherType, WeatherConfig> = {
     fogBanks: 0,
     haze: 0.08,
     snowCount: 160,
-    lightning: false
-  }
+    lightning: false,
+  },
 };
 
 /** 夜间天空渐变与可见星星数量（云越多星越少） */
@@ -245,12 +245,12 @@ export const NIGHT_CONFIGS: Record<WeatherType, { sky: [string, string]; stars: 
   sleet: { sky: ['#121924', '#2c3745'], stars: 0 },
   hail: { sky: ['#0e141d', '#26303e'], stars: 0 },
   smog: { sky: ['#1a1812', '#38321f'], stars: 0 },
-  gale: { sky: ['#101a26', '#2e3d4d'], stars: 30 }
+  gale: { sky: ['#101a26', '#2e3d4d'], stars: 30 },
 };
 
 /** 夜间云色：整体压暗并偏冷蓝 */
-export const toNightCloudColor = ([r, g, b]: [number, number, number]): [number, number, number] => [
-  Math.round(r * 0.3 + 18),
-  Math.round(g * 0.3 + 24),
-  Math.round(b * 0.3 + 42)
-];
+export const toNightCloudColor = ([r, g, b]: [number, number, number]): [
+  number,
+  number,
+  number,
+] => [Math.round(r * 0.3 + 18), Math.round(g * 0.3 + 24), Math.round(b * 0.3 + 42)];

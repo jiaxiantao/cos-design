@@ -17,7 +17,12 @@ export const puffSeedMotion = (plant: Plant, seed: Seed) => {
 };
 
 /** 绒球飘降时忽快忽慢的垂直目标速度 */
-export const seedFallTargetVy = (seed: Seed, time: number, wind: { x: number; y: number }, sway: number) => {
+export const seedFallTargetVy = (
+  seed: Seed,
+  time: number,
+  wind: { x: number; y: number },
+  sway: number,
+) => {
   const base = seed.terminalVy;
   const slow = Math.sin(time * seed.fallFreqA + seed.swayPhase);
   const fast = Math.sin(time * seed.fallFreqB + seed.hairPhase);
@@ -60,7 +65,7 @@ export const appendSeedsForPlant = (seeds: Seed[], plant: Plant, attached: boole
       fallFreqA: 0,
       fallFreqB: 0,
       fluffOx: 0,
-      fluffOy: 0
+      fluffOy: 0,
     });
   }
 };
@@ -93,7 +98,7 @@ export const makePappusSprite = () => {
       cx + Math.cos(angle + bend) * midR,
       cy + Math.sin(angle + bend) * midR,
       cx + Math.cos(angle + bend * 0.6) * len,
-      cy + Math.sin(angle + bend * 0.6) * len
+      cy + Math.sin(angle + bend * 0.6) * len,
     );
     c.stroke();
   }

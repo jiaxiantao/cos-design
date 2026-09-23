@@ -1,0 +1,8 @@
+.cos-lorenz-attractor {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-lorenz-attractor__canvas {
+  display: block;
+}

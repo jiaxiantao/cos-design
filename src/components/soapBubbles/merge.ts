@@ -48,7 +48,7 @@ export const SCENE_LIGHT_Y = 0.08;
 
 export const sceneLightPos = (width: number, height: number) => ({
   x: width * SCENE_LIGHT_X,
-  y: height * SCENE_LIGHT_Y
+  y: height * SCENE_LIGHT_Y,
 });
 
 export const mergeBusyIds = (merges: ActiveMerge[]) => {
@@ -100,7 +100,7 @@ const metaballField = (
   ar: number,
   bx: number,
   by: number,
-  br: number
+  br: number,
 ) => {
   const d1 = (x - ax) * (x - ax) + (y - ay) * (y - ay) + 0.35;
   const d2 = (x - bx) * (x - bx) + (y - by) * (y - by) + 0.35;
@@ -116,7 +116,7 @@ const sampleMetaballPoint = (
   by: number,
   br: number,
   cx: number,
-  cy: number
+  cy: number,
 ) => {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -136,7 +136,14 @@ const sampleMetaballPoint = (
   return { x: cx + cos * r, y: cy + sin * r };
 };
 
-export const buildMergePath = (ax: number, ay: number, ar: number, bx: number, by: number, br: number) => {
+export const buildMergePath = (
+  ax: number,
+  ay: number,
+  ar: number,
+  bx: number,
+  by: number,
+  br: number,
+) => {
   const mass = ar + br || 1;
   const cx = (ax * ar + bx * br) / mass;
   const cy = (ay * ar + by * br) / mass;

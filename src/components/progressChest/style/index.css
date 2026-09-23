@@ -1,0 +1,106 @@
+.cos-progress-chest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px;
+  min-width: 280px;
+}
+.cos-progress-chest__bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.cos-progress-chest__bar-track {
+  flex: 1;
+  height: 12px;
+  background: #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.cos-progress-chest__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  border-radius: 6px;
+  transition: width 0.4s ease-out;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+.cos-progress-chest__pct {
+  min-width: 40px;
+  color: #fbbf24;
+  font-size: 14px;
+  font-weight: 700;
+}
+.cos-progress-chest__chest {
+  position: relative;
+  width: 120px;
+  height: 100px;
+  perspective: 300px;
+  transform-style: preserve-3d;
+}
+.cos-progress-chest__lid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  transform-origin: bottom center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+.cos-progress-chest__open .cos-progress-chest__lid {
+  transform: rotateX(-120deg);
+}
+.cos-progress-chest__lid-top {
+  height: 100%;
+  background: linear-gradient(180deg, #d97706, #b45309);
+  border-radius: 8px 8px 0 0;
+  border: 2px solid #92400e;
+}
+.cos-progress-chest__lock {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  background: #fbbf24;
+  border-radius: 4px;
+  border: 2px solid #d97706;
+}
+.cos-progress-chest__body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+  border-radius: 0 0 8px 8px;
+  border: 2px solid #92400e;
+  border-top: none;
+  overflow: hidden;
+}
+.cos-progress-chest__treasure {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 16px;
+  font-size: 24px;
+  animation: pop 0.5s ease-out 0.3s both;
+}
+@keyframes pop {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.cos-progress-chest__label {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 15px;
+}

@@ -5,7 +5,13 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { demoComponents } from '../config/demo-components';
 import BackgroundDemoContent from './background-demo-content';
 import FillStage from './fill-stage';
-import { useBackgroundDemoCopy, useLocalizedCategories, useLocalizedComponentDemos } from '../i18n/hooks';
+import FrameworkPreview from './framework-preview';
+import { buildFrameworkSnippets, FRAMEWORK_TABS, type FrameworkId } from './framework-snippets';
+import {
+  useBackgroundDemoCopy,
+  useLocalizedCategories,
+  useLocalizedComponentDemos,
+} from '../i18n/hooks';
 import LiveDemoPlayground from './live-demo';
 import PropsTable from './props-table';
 import styles from './style/component-page.module.less';
@@ -25,10 +31,19 @@ const ComponentPage = () => {
   const [copied, setCopied] = useState(false);
   const [installCopied, setInstallCopied] = useState(false);
   const [aiCopied, setAiCopied] = useState(false);
+  const [snippetCopied, setSnippetCopied] = useState(false);
+  const [framework, setFramework] = useState<FrameworkId>('react');
   const [editSession, setEditSession] = useState<{ path: string; code: string } | null>(null);
+  const [frameworkPath, setFrameworkPath] = useState(pathname);
+  if (pathname !== frameworkPath) {
+    setFrameworkPath(pathname);
+    setFramework('react');
+    setEditSession(null);
+  }
   const copyTimerRef = useRef(0);
   const installTimerRef = useRef(0);
   const aiTimerRef = useRef(0);
+  const snippetTimerRef = useRef(0);
   const editorRef = useRef<HTMLDivElement>(null);
   const shouldScrollToEditor = useRef(false);
 
@@ -38,17 +53,26 @@ const ComponentPage = () => {
   const installCmd = scopedPackage ? `pnpm add ${scopedPackage}` : '';
   const isBackground = current?.category === 'background';
   /**
-   * 静态预览：Weather 在自家 canvas 舞台内挂载 Demo Content，避免遮挡控制面板。
-   * 编辑代码：示例只渲染 WeatherBackground 本体，需由页面叠加 Demo Content。
-   * 所有背景组件（含 Weather）静态预览都去 padding，让画布铺满预览框。
+   * 静态预览：
+   * - Weather 在自家 Demo 内挂载 FillStage + 文案 + 调试器（仅 React）
+   * - 其它背景组件由页面叠加 Demo Content
+   * - 非 React Tab：所有背景（含 Weather）统一 FillStage + 示例文案
    */
   const showStaticDemoContent = isBackground && current?.name !== 'WeatherBackground';
+  const showFrameworkDemoContent = isBackground;
   const showLiveDemoContent = isBackground;
   const fillStaticPreview = isBackground;
   const demoCopy = useBackgroundDemoCopy(current?.name ?? '');
 
-  const showCode = editSession?.path === pathname;
+  const showCode = framework === 'react' && editSession?.path === pathname;
   const editorCode = showCode ? editSession.code : (current?.codeExample ?? '');
+
+  const snippets = useMemo(() => {
+    if (!current) return null;
+    return buildFrameworkSnippets(current.name, current.codeExample);
+  }, [current]);
+
+  const activeSnippet = snippets?.[framework] ?? '';
 
   const next = useMemo(() => {
     if (!current) return null;
@@ -62,8 +86,9 @@ const ComponentPage = () => {
       clearTimeout(copyTimerRef.current);
       clearTimeout(installTimerRef.current);
       clearTimeout(aiTimerRef.current);
+      clearTimeout(snippetTimerRef.current);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -94,6 +119,13 @@ const ComponentPage = () => {
     installTimerRef.current = window.setTimeout(() => setInstallCopied(false), 2000);
   };
 
+  const handleCopySnippet = async () => {
+    await navigator.clipboard.writeText(activeSnippet);
+    setSnippetCopied(true);
+    clearTimeout(snippetTimerRef.current);
+    snippetTimerRef.current = window.setTimeout(() => setSnippetCopied(false), 2000);
+  };
+
   const buildAiPrompt = () => {
     const demoUrl = `https://jiaxiantao.github.io/cos-design/#${current.path}`;
     return [
@@ -108,7 +140,7 @@ const ComponentPage = () => {
       '# or: pnpm add cos-design',
       '```',
       '',
-      '## Example',
+      '## Example (React default · also /vue · /core · /element)',
       '',
       '```tsx',
       current.codeExample.trim(),
@@ -126,7 +158,7 @@ const ComponentPage = () => {
       `- Demo: ${demoUrl}`,
       '- AI index: https://jiaxiantao.github.io/cos-design/llms.txt',
       '- Context7: /jiaxiantao/cos-design',
-      ''
+      '',
     ].join('\n');
   };
 
@@ -142,12 +174,63 @@ const ComponentPage = () => {
       setEditSession(null);
       return;
     }
+    setFramework('react');
     shouldScrollToEditor.current = true;
     setEditSession({ path: pathname, code: current.codeExample });
   };
 
   const handleReset = () => {
     setEditSession({ path: pathname, code: current.codeExample });
+  };
+
+  const handleFrameworkChange = (nextFramework: FrameworkId) => {
+    setFramework(nextFramework);
+    if (nextFramework !== 'react') setEditSession(null);
+  };
+
+  const renderPreview = () => {
+    // Key by route + framework so React fully remounts/tears down canvas engines
+    // when switching sidebar items or framework tabs (ComponentPage instance is reused).
+    const previewKey = `${pathname}:${framework}:${current.name}`;
+
+    if (framework === 'react') {
+      return (
+        <div key={previewKey}>
+          {showStaticDemoContent ? (
+            <FillStage>{demoComponents[current.name]}</FillStage>
+          ) : (
+            (demoComponents[current.name] ?? <p>{t('component.demoNotConfigured')}</p>)
+          )}
+          {showStaticDemoContent ? (
+            <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
+          ) : null}
+        </div>
+      );
+    }
+
+    const preview = (
+      <FrameworkPreview
+        framework={framework}
+        exportName={current.name}
+        codeExample={current.codeExample}
+        fill={fillStaticPreview}
+      />
+    );
+
+    if (showFrameworkDemoContent) {
+      return (
+        <div key={previewKey}>
+          <FillStage overlay={<BackgroundDemoContent headline={demoCopy.headline} />}>
+            {preview}
+          </FillStage>
+          {current.name === 'WeatherBackground' ? (
+            <p className={styles.frameworkDemoHint}>{t('component.weatherDebuggerHint')}</p>
+          ) : null}
+        </div>
+      );
+    }
+
+    return <div key={previewKey}>{preview}</div>;
   };
 
   return (
@@ -158,12 +241,17 @@ const ComponentPage = () => {
             <Link to="/catalog" className={styles.back}>
               {t('component.backToCatalog')}
             </Link>
-            <span className={styles.categoryTag} style={{ '--tag-color': categoryMeta.accent } as CSSProperties}>
+            <span
+              className={styles.categoryTag}
+              style={{ '--tag-color': categoryMeta.accent } as CSSProperties}
+            >
               {categoryMeta.label}
             </span>
-            <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>
-              {showCode ? t('component.closeEditor') : t('component.editCode')}
-            </button>
+            {framework === 'react' ? (
+              <button type="button" className={styles.codeBtn} onClick={handleToggleCode}>
+                {showCode ? t('component.closeEditor') : t('component.editCode')}
+              </button>
+            ) : null}
           </div>
           <h1 className={styles.name}>{current.name}</h1>
           <p className={styles.desc}>{current.description}</p>
@@ -177,6 +265,26 @@ const ComponentPage = () => {
             </button>
           </div>
         </header>
+
+        <div
+          className={styles.frameworkBar}
+          role="tablist"
+          aria-label={t('component.frameworkTabsAria')}
+        >
+          {FRAMEWORK_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={framework === tab.id}
+              className={`${styles.frameworkTab} ${framework === tab.id ? styles.frameworkTabActive : ''}`}
+              onClick={() => handleFrameworkChange(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <p className={styles.frameworkHint}>{t('component.snippetHint')}</p>
 
         {showCode ? (
           <LiveDemoPlayground
@@ -193,16 +301,32 @@ const ComponentPage = () => {
             }
           />
         ) : (
-          <div className={`${styles.preview} ${fillStaticPreview ? styles.previewBackground : ''}`}>
-            {showStaticDemoContent ? (
-              <FillStage>{demoComponents[current.name]}</FillStage>
-            ) : (
-              (demoComponents[current.name] ?? <p>{t('component.demoNotConfigured')}</p>)
-            )}
-            {showStaticDemoContent ? (
-              <BackgroundDemoContent headline={demoCopy.headline} subtitle={demoCopy.subtitle} />
-            ) : null}
-          </div>
+          <>
+            <div
+              className={`${styles.preview} ${fillStaticPreview ? styles.previewBackground : ''}`}
+            >
+              {renderPreview()}
+            </div>
+            <div className={styles.snippetPanel}>
+              <div className={styles.snippetHeader}>
+                <span>
+                  {framework === 'react'
+                    ? 'TSX'
+                    : framework === 'vue'
+                      ? 'Vue'
+                      : framework === 'element'
+                        ? 'HTML'
+                        : 'TS'}
+                </span>
+                <button type="button" className={styles.snippetCopyBtn} onClick={handleCopySnippet}>
+                  {snippetCopied ? t('component.copied') : t('component.copySnippet')}
+                </button>
+              </div>
+              <pre className={styles.snippetCode}>
+                <code>{activeSnippet}</code>
+              </pre>
+            </div>
+          </>
         )}
 
         <PropsTable componentName={current.name} />

@@ -1,0 +1,59 @@
+.cos-slot-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+}
+.cos-slot-machine__machine {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  background: linear-gradient(180deg, #1e293b, #0f172a);
+  border-radius: 16px;
+  border: 3px solid #fbbf24;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+}
+.cos-slot-machine__reel {
+  position: relative;
+  width: 80px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 8px;
+}
+.cos-slot-machine__strip {
+  transition: none;
+}
+.cos-slot-machine__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+.cos-slot-machine__mask {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 30px 20px rgba(0, 0, 0, 0.15), inset 0 -30px 20px rgba(0, 0, 0, 0.15);
+}
+.cos-slot-machine__spin-btn {
+  padding: 12px 40px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(180deg, #fbbf24, #f59e0b);
+  color: #78350f;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);
+}
+.cos-slot-machine__spin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.cos-slot-machine__result {
+  margin: 0;
+  color: #fbbf24;
+  font-size: 16px;
+  font-weight: 600;
+}

@@ -1,18 +1,17 @@
 # cos-design · Next.js App Router example
 
-Forkable campaign starter using published npm packages.
+Campaign starter for **cos-design 4.0** (React default entry). Inside this monorepo it uses `workspace:*` packages; after the 4.0.0 publish you can also fork with `pnpm add @cos-design/...@^4.0.0`.
 
 ## 3-step fork
 
 ```bash
-# 1) clone / open this folder
-cd examples/next-app
-
-# 2) install
+# From repo root (recommended in monorepo):
 pnpm install
-
-# 3) run
+cd examples/next-app
 pnpm dev
+
+# Or after 4.0 is on npm, in a standalone copy of this folder:
+# pnpm add @cos-design/weather-background@^4.0.0 @cos-design/neon-text@^4.0.0 ...
 ```
 
 Open http://localhost:3000 → hero → **#campaign** (FlipCard → NineGrid).  

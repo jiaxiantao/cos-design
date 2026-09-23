@@ -7,7 +7,8 @@ import styles from './style/quickstart-page.module.less';
 const LLMS_TXT = 'https://jiaxiantao.github.io/cos-design/llms.txt';
 const LLMS_FULL = 'https://jiaxiantao.github.io/cos-design/llms-full.txt';
 const AI_DISCOVERY = 'https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md';
-const CAMPAIGN_RECIPES = 'https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-recipes-ai.md';
+const CAMPAIGN_RECIPES =
+  'https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-recipes-ai.md';
 const CONTEXT7 = 'https://context7.com/jiaxiantao/cos-design';
 
 interface AiTool {
@@ -38,7 +39,7 @@ const NAMING_ROWS = [
   { dir: 'weatherBackground', pkg: '@cos-design/weather-background' },
   { dir: 'scratchCard', pkg: '@cos-design/scratch-card' },
   { dir: 'matrixRain', pkg: '@cos-design/matrix-rain' },
-  { dir: 'fireworks', pkg: '@cos-design/fireworks' }
+  { dir: 'fireworks', pkg: '@cos-design/fireworks' },
 ];
 
 interface CategoryCard {
@@ -64,7 +65,11 @@ const QuickstartPage = () => {
   const ruleTimerRef = useRef(0);
   const promptTimerRef = useRef(0);
 
-  const copyText = async (text: string, setCopied: (v: boolean) => void, timerRef: { current: number }) => {
+  const copyText = async (
+    text: string,
+    setCopied: (v: boolean) => void,
+    timerRef: { current: number },
+  ) => {
     await navigator.clipboard.writeText(text);
     setCopied(true);
     clearTimeout(timerRef.current);
@@ -113,7 +118,9 @@ const QuickstartPage = () => {
           <button
             type="button"
             className={styles.copyBtnSecondary}
-            onClick={() => copyText(t('quickstart.snippets.aiPrompt'), setPromptCopied, promptTimerRef)}
+            onClick={() =>
+              copyText(t('quickstart.snippets.aiPrompt'), setPromptCopied, promptTimerRef)
+            }
           >
             {promptCopied ? t('quickstart.aiCopied') : t('quickstart.aiCopyPrompt')}
           </button>

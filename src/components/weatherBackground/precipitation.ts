@@ -45,26 +45,38 @@ export const SNOW_LEVEL_LABELS = ['', ...SNOW_BAND_LABELS] as const;
 
 /** 对外展示用天气（小/中/大雨雪 → 雨天/雪天） */
 export const normalizeWeatherType = (weather: WeatherType): WeatherType => {
-  if (weather === 'lightRain' || weather === 'moderateRain' || weather === 'heavyRain') return 'rain';
-  if (weather === 'lightSnow' || weather === 'moderateSnow' || weather === 'heavySnow') return 'snow';
+  if (weather === 'lightRain' || weather === 'moderateRain' || weather === 'heavyRain')
+    return 'rain';
+  if (weather === 'lightSnow' || weather === 'moderateSnow' || weather === 'heavySnow')
+    return 'snow';
   return weather;
 };
 
 export const isRainWeather = (weather: WeatherType) =>
-  weather === 'rain' || weather === 'lightRain' || weather === 'moderateRain' || weather === 'heavyRain';
+  weather === 'rain' ||
+  weather === 'lightRain' ||
+  weather === 'moderateRain' ||
+  weather === 'heavyRain';
 
 export const isSnowWeather = (weather: WeatherType) =>
-  weather === 'snow' || weather === 'lightSnow' || weather === 'moderateSnow' || weather === 'heavySnow';
+  weather === 'snow' ||
+  weather === 'lightSnow' ||
+  weather === 'moderateSnow' ||
+  weather === 'heavySnow';
 
 /** 可调节雨量：雨天 + 雷阵雨 + 雨夹雪 */
 export const supportsRainLevel = (weather: WeatherType) =>
   isRainWeather(weather) || weather === 'thunderstorm' || weather === 'sleet';
 
 /** 可调节雪量：雪天 + 雨夹雪 */
-export const supportsSnowLevel = (weather: WeatherType) => isSnowWeather(weather) || weather === 'sleet';
+export const supportsSnowLevel = (weather: WeatherType) =>
+  isSnowWeather(weather) || weather === 'sleet';
 
 /** 从旧版细分天气类型推断雨量档（映射到 1~10） */
-export const rainLevelFromWeather = (weather: WeatherType, fallback: number = DEFAULT_RAIN_LEVEL): number => {
+export const rainLevelFromWeather = (
+  weather: WeatherType,
+  fallback: number = DEFAULT_RAIN_LEVEL,
+): number => {
   if (weather === 'lightRain') return 3;
   if (weather === 'moderateRain') return 5;
   if (weather === 'heavyRain') return 8;
@@ -72,7 +84,10 @@ export const rainLevelFromWeather = (weather: WeatherType, fallback: number = DE
 };
 
 /** 从旧版细分天气类型推断雪量档（映射到 1~10） */
-export const snowLevelFromWeather = (weather: WeatherType, fallback: number = DEFAULT_SNOW_LEVEL): number => {
+export const snowLevelFromWeather = (
+  weather: WeatherType,
+  fallback: number = DEFAULT_SNOW_LEVEL,
+): number => {
   if (weather === 'lightSnow') return 3;
   if (weather === 'moderateSnow') return 5;
   if (weather === 'heavySnow') return 8;
@@ -98,7 +113,7 @@ const sceneKeyFromBand = (band: 1 | 2 | 3 | 4 | 5, kind: 'rain' | 'snow'): Weath
 export const resolveSceneWeather = (
   weather: WeatherType,
   rainLevel: number = DEFAULT_RAIN_LEVEL,
-  snowLevel: number = DEFAULT_SNOW_LEVEL
+  snowLevel: number = DEFAULT_SNOW_LEVEL,
 ): WeatherType => {
   if (weather === 'rain') return sceneKeyFromBand(precipBand(rainLevel), 'rain');
   if (weather === 'lightRain' || weather === 'moderateRain' || weather === 'heavyRain') {
@@ -114,7 +129,7 @@ export const resolveSceneWeather = (
 /** 按 1~10 档连续插值雨丝参数（毛毛雨极淡 → 特大暴雨极密） */
 export const intensifyRainConfig = (
   rain: NonNullable<WeatherConfig['rain']>,
-  level: number
+  level: number,
 ): NonNullable<WeatherConfig['rain']> => {
   const t = (clampPrecipLevel(level) - 1) / (MAX_PRECIP_LEVEL - 1);
   return {
@@ -122,7 +137,7 @@ export const intensifyRainConfig = (
     speed: lerp(5.5, 16, t),
     wind: lerp(-0.4, -3.2, t),
     alpha: lerp(0.28, 0.62, t),
-    splash: clampPrecipLevel(level) >= 5
+    splash: clampPrecipLevel(level) >= 5,
   };
 };
 

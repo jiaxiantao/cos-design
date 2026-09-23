@@ -1,0 +1,57 @@
+.cos-wave-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+}
+.cos-wave-button__btn {
+  position: relative;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 50px;
+  background: var(--wave-color, #38bdf8);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
+  transition: transform 0.2s;
+}
+.cos-wave-button__btn:hover {
+  transform: scale(1.05);
+}
+.cos-wave-button__btn:active {
+  transform: scale(0.97);
+}
+.cos-wave-button__label {
+  position: relative;
+  z-index: 1;
+}
+.cos-wave-button__wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  animation: ripple 3s ease-out infinite;
+}
+.cos-wave-button__wave:nth-child(2) {
+  animation-delay: 1s;
+}
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.6;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}

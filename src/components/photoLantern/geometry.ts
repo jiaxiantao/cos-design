@@ -38,7 +38,7 @@ export const createFramedRect = (
   outerR: number,
   holeW: number,
   holeH: number,
-  holeR: number
+  holeR: number,
 ) => {
   const shape = createRoundedRectShape(outerW, outerH, outerR);
   shape.holes.push(createRoundedRectShape(holeW, holeH, holeR));

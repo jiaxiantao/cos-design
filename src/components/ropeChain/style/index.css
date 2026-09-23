@@ -1,0 +1,12 @@
+.cos-rope-chain {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+  cursor: grab;
+}
+.cos-rope-chain:active {
+  cursor: grabbing;
+}
+.cos-rope-chain__canvas {
+  display: block;
+}

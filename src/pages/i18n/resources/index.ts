@@ -1,5 +1,9 @@
 import { componentDemos } from '../../config/components';
-import { assertComponentMetaCoverage, componentMetaEn, type ComponentMetaI18n } from '../component-meta';
+import {
+  assertComponentMetaCoverage,
+  componentMetaEn,
+  type ComponentMetaI18n,
+} from '../component-meta';
 import enUS from './en-US';
 import zhCN from './zh-CN';
 
@@ -7,8 +11,12 @@ import zhCN from './zh-CN';
 const componentMetaZh = Object.fromEntries(
   componentDemos.map((item) => [
     item.name,
-    { title: item.title, description: item.description, tags: item.tags } satisfies ComponentMetaI18n
-  ])
+    {
+      title: item.title,
+      description: item.description,
+      tags: item.tags,
+    } satisfies ComponentMetaI18n,
+  ]),
 );
 
 if (import.meta.env.DEV) {
@@ -17,5 +25,5 @@ if (import.meta.env.DEV) {
 
 export const resources = {
   'zh-CN': { translation: { ...zhCN, components: componentMetaZh } },
-  'en-US': { translation: { ...enUS, components: componentMetaEn } }
+  'en-US': { translation: { ...enUS, components: componentMetaEn } },
 };

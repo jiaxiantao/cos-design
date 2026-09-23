@@ -316,7 +316,7 @@ function ActivityPage() {
 import dynamic from 'next/dynamic';
 
 const Starfield = dynamic(() => import('cos-design').then((m) => m.Starfield), {
-  ssr: false
+  ssr: false,
 });
 ```
 

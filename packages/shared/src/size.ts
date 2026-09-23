@@ -7,7 +7,7 @@ export interface ElementSize {
 export const observeElementSize = (
   element: Element,
   onChange: (size: ElementSize) => void,
-  options?: { box?: ResizeObserverBoxOptions }
+  options?: { box?: ResizeObserverBoxOptions },
 ) => {
   const notify = () => {
     if (element instanceof HTMLElement) {
@@ -31,7 +31,7 @@ export const observeElementSize = (
     if (!entry) return;
     onChange({
       width: Math.round(entry.contentRect.width),
-      height: Math.round(entry.contentRect.height)
+      height: Math.round(entry.contentRect.height),
     });
   });
   observer.observe(element, options);

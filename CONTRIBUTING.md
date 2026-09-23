@@ -142,6 +142,8 @@ git push origin v3.5.3
 
 ## 代码风格
 
-- TypeScript + React 函数组件
-- 样式使用 Less + CSS Modules（`*.module.less`）
+- TypeScript；Core 引擎 + React / Vue / Web Component 适配层（见 [docs/rfc-v4-multi-framework.md](./docs/rfc-v4-multi-framework.md)）
+- 组件对外样式使用稳定 `cos-*` 类名（`style/index.css`）；Playground 侧可保留 Less
 - 提交前会由 Husky + lint-staged 自动执行格式化与 lint
+- 新增组件需通过 `pnpm verify:v4-matrix`（react / vue / core / element 四层齐全）
+- 版本统一为根目录 `package.json` 的 `version`，由 `pnpm sync:packages` 同步

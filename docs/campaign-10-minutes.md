@@ -20,9 +20,12 @@ Parent needs an explicit height. Canvas components must be client-only in the Ap
 import dynamic from 'next/dynamic';
 import { NeonText } from '@cos-design/neon-text';
 
-const WeatherBackground = dynamic(() => import('@cos-design/weather-background').then((m) => m.WeatherBackground), {
-  ssr: false
-});
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  {
+    ssr: false,
+  },
+);
 
 export function Hero() {
   return (
@@ -46,7 +49,9 @@ import { FlipCard } from '@cos-design/flip-card';
 import { NineGrid } from '@cos-design/nine-grid';
 import type { ConfettiHandle } from '@cos-design/confetti';
 
-const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), { ssr: false });
+const Confetti = dynamic(() => import('@cos-design/confetti').then((m) => m.Confetti), {
+  ssr: false,
+});
 
 export function Campaign() {
   const confettiRef = useRef<ConfettiHandle>(null);

@@ -1,0 +1,48 @@
+.cos-red-packet-rain {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #450a0a, #1c1917);
+}
+.cos-redPacketRain-host,
+cos-red-packet-rain {
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.cos-red-packet-rain__canvas {
+  display: block;
+  cursor: pointer;
+}
+.cos-red-packet-rain__hud {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  color: #fde68a;
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.cos-red-packet-rain__end {
+  color: #f87171;
+}
+.cos-red-packet-rain__end[hidden] {
+  display: none !important;
+}
+.cos-red-packet-rain__hint {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  color: rgba(253, 230, 138, 0.6);
+  font-size: 13px;
+  pointer-events: none;
+}

@@ -5,17 +5,58 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.8.1] - 2026-09-01
+## [Unreleased]
+
+## [4.0.0] - 2026-09-23
+
+### Added
+
+- **Multi-framework support** for all **91** components (package names unchanged):
+  - React — default entry `.` (backward compatible)
+  - Vue 3 — `@cos-design/<pkg>/vue` and `cos-design/vue`
+  - Core API — `@cos-design/<pkg>/core` and `cos-design/core` (`create*` factories)
+  - Web Components — `@cos-design/<pkg>/element` and `cos-design/elements`
+- Core + Adapter architecture: shared engines under `src/components/*/core`
+- `@cos-design/shared/react` subpath for React hooks (`useElementSize`, `useCanvasBox`)
+- Migration guide: [docs/migration-v4.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/migration-v4.md)
+- Architecture RFC: [docs/rfc-v4-multi-framework.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/rfc-v4-multi-framework.md)
+- Tooling: `migrate:component`, `migrate:batch-a|b|c|d`, `verify:v4-matrix`, `verify:v4-runtime`
 
 ### Changed
 
-- @cos-design/nine-grid: 3.7.10 → 3.7.11
-- @cos-design/scratch-card: 3.5.4 → 3.5.5
-- @cos-design/slot-machine: 3.5.6 → 3.5.7
-- @cos-design/turntable: 3.5.6 → 3.5.7
-- cos-design: 聚合包更新至 3.8.1
+- All packages aligned to **4.0.0**
+- Component styles ship as stable `cos-*` CSS classes (shared `style/index.css`) instead of hashed LESS modules in adapters
+- Umbrella `cos-design` description / peers updated for optional Vue
+- Aggregate build emits `vue` / `core` / `elements` entry points alongside React `index`
+- Remove unused per-component `style/index.module.less` leftovers (adapters use `style/index.css`)
+- Fix `generate-ai-docs` catastrophic regex hang when regenerating `llms.txt` / `docs/ai.md`
+- Fix FlipCard zero-width host in Playground (`cos-flipCard-host` + flipped BEM `--flipped`) and static preview layout for v4 host wrappers
+- Mark umbrella `three` peer as optional
+- Playground: React / Vue / Web Components / Core framework tabs with live Vue & Element mounts
+- Examples: `examples/next-app`, `examples/vue-app`, and `examples/vanilla` (workspace-linked to 4.0.0)
+- Element adapters: FlipCard / NineGrid / ScratchCard emit `reveal` / `draw-end` CustomEvents
+- Regenerate all Vue/Element adapters from `core/types.ts` (attr parsing, boolean clear, on\* → events, photos/prizes JS props)
+- Playground Element mounts use kebab-case attributes
+- **Runtime parity with 3.x**: fill sizes the adapter host (`applyCanvasHostBox`); React/Vue adapters update only when options change (fingerprint); slotted components use portals/`Teleport`; reduce-motion no longer starts a second rAF loop; `@cos-design/shared` default entry is framework-free again
 
-## [Unreleased]
+### Fixed
+
+- FlipCounter: digit cards mount correctly; `auto` / `autoInterval` for Vue / WC / Core demos
+- ProgressChest: `auto` demo prop so non-React tabs animate
+- ClickSpark: slotted content + `[hidden]` hint stacking across frameworks
+- PhotoPostcard: restore 3.x declarative React behavior; Core avoids rebuild during drag
+- Confetti / Turntable / ScratchCard / RedPacketRain: interactive demos, prize lists, and host centering for Playground multi-framework tabs
+- Canvas hosts: `margin-inline: auto` when not `fill` so fixed-size canvases center in full-width preview hosts
+- `examples/next-app` dependencies aligned to `workspace:*` (4.0.0) like vue/vanilla examples
+- Umbrella npm `README` / `CHANGELOG`: `sync-packages` rewrites repo-relative doc links to GitHub URLs so they work on npmjs.com
+
+### Breaking
+
+- `@cos-design/shared` default export no longer includes React hooks — import from `@cos-design/shared/react`
+- CSS Module hashed class names from v3 adapters are replaced by public `cos-*` prefixes (override selectors may need updates)
+- Major version bump (3.x → 4.0.0)
+
+## [3.8.1] - 2026-09-01
 
 ### Added
 
@@ -28,6 +69,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Turntable` / `SlotMachine` / `NineGrid`：`prefers-reduced-motion: reduce` 时跳过旋转动画，直接展示结果
 - Context7 rules 补充 campaign-recipes 与抽奖 reduced-motion 约定；`verify:context7` optional markers 扩展
 - CONTRIBUTING 增加工程质量清单；AGENTS / Cursor Skill 指向 campaign-recipes-ai
+- @cos-design/nine-grid: 3.7.10 → 3.7.11
+- @cos-design/scratch-card: 3.5.4 → 3.5.5
+- @cos-design/slot-machine: 3.5.6 → 3.5.7
+- @cos-design/turntable: 3.5.6 → 3.5.7
+- cos-design: 聚合包更新至 3.8.1
 
 ## [3.8.0] - 2026-08-31
 
@@ -46,7 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Playground「活动配方」整页路由与导航（`#/recipes`）；活动组合改走 [examples/next-app](./examples/next-app) 与 [docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)
+- Playground「活动配方」整页路由与导航（`#/recipes`）；活动组合改走 [examples/next-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app) 与 [docs/campaign-10-minutes.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-10-minutes.md)
 
 ### Added
 
@@ -67,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Playground 配方页「可复制片段」（`recipe-snippets` + 一键复制）
 - Next 示例主链路：`CampaignFlow`（fill hero → FlipCard → NineGrid → Confetti）
-- 文档：[docs/campaign-10-minutes.md](./docs/campaign-10-minutes.md)、[docs/campaign-patterns.md](./docs/campaign-patterns.md)
+- 文档：[docs/campaign-10-minutes.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-10-minutes.md)、[docs/campaign-patterns.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/campaign-patterns.md)
 - Playwright 交互 smoke：翻牌 / 九宫格 busy / 转盘出结果 / checkin-draw 解锁
 - `NineGrid.spinningText`；Turntable / SlotMachine / NineGrid 按钮 `aria-busy` + `data-testid`
 
@@ -93,7 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NineGrid / FlipCard Playground 属性说明改为中文源 + EN 映射；`extract-props` 支持 forwardRef 换行解构默认值
 - `pnpm verify:context7`：区分 required（`fill` / `next-app`）与 optional markers
-- [docs/ai-discovery.md](./docs/ai-discovery.md) 同步健康状态与 refresh 冷却说明（勿把 API key 写入仓库）
+- [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md) 同步健康状态与 refresh 冷却说明（勿把 API key 写入仓库）
 - @cos-design/flip-card: 3.7.8 → 3.7.9
 - @cos-design/nine-grid: 3.7.8 → 3.7.9
 - cos-design: 聚合包更新至 3.7.9
@@ -126,12 +172,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- 可运行 Next.js 示例工程 [examples/next-app](./examples/next-app)（fill hero + 刮开庆祝）
+- 可运行 Next.js 示例工程 [examples/next-app](https://github.com/jiaxiantao/cos-design/blob/master/examples/next-app)（fill hero + 刮开庆祝）
 - `pnpm verify:context7`：检查 Context7 是否收录以及索引是否包含 `fill` / Next 示例
 
 ### Changed
 
-- Context7 校验结论写入 [docs/ai-discovery.md](./docs/ai-discovery.md)；刷新 workflow 在缺少 `CONTEXT7_API_KEY` 时发出 warning
+- Context7 校验结论写入 [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md)；刷新 workflow 在缺少 `CONTEXT7_API_KEY` 时发出 warning
 - `context7.json` 规则补充 `fill` 与 Next 示例路径
 - cos-design: 聚合包更新至 3.7.7
 
@@ -142,7 +188,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `@cos-design/shared`：新增 `useCanvasBox`（fill 尺寸一站式 hook）
 - 背景组件全面支持 `fill`：`WeatherBackground`、`Aurora`、`Starfield`、`Snowfall`、`MeteorRain`、`CyberGrid`、`SmokeFog`、`BubbleField`、`RippleWater`
 - `Starfield` / `Snowfall` / `MeteorRain` / `CyberGrid` / `Aurora` 接入 `prefers-reduced-motion` 静态降级
-- Playground 配方「全屏氛围 Hero」；Next.js 接入示例 [docs/examples/next-app-router.md](./docs/examples/next-app-router.md)
+- Playground 配方「全屏氛围 Hero」；Next.js 接入示例 [docs/examples/next-app-router.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/examples/next-app-router.md)
 
 ### Changed
 

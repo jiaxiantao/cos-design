@@ -18,5 +18,5 @@ export const createPointerState = (): PointerState => ({
   vy: 0,
   speed: 0,
   active: false,
-  lastTs: 0
+  lastTs: 0,
 });

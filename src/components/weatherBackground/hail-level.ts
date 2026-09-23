@@ -5,7 +5,8 @@ export const DEFAULT_HAIL_LEVEL: HailLevel = 2;
 
 export const HAIL_LEVEL_LABELS = ['', '细雹', '密雹', '巨雹'] as const;
 
-export const clampHailLevel = (level: number): HailLevel => Math.min(3, Math.max(1, Math.round(level))) as HailLevel;
+export const clampHailLevel = (level: number): HailLevel =>
+  Math.min(3, Math.max(1, Math.round(level))) as HailLevel;
 
 export const formatHailLevel = (level: number): string => {
   const lv = clampHailLevel(level);

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 export interface PhotoLanternItem {
   /** 图片地址 */
@@ -41,7 +41,7 @@ export interface PhotoLanternProps {
   /** 流苏颜色 */
   tasselColor?: string;
   /** 照片填充方式 */
-  objectFit?: CSSProperties['objectFit'];
+  objectFit?: string;
   /** 是否以剪影风格呈现图片（更接近传统走马灯） */
   silhouette?: boolean;
   /** 是否在照片底部嵌入标题与说明 */
@@ -59,5 +59,5 @@ export interface PhotoLanternProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

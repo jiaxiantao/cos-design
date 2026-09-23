@@ -7,7 +7,8 @@ export const hash = (n: number) => {
 
 export const easeOutCubic = (t: number) => 1 - Math.pow(1 - clamp(t, 0, 1), 3);
 
-export const easeInOutCubic = (t: number) => (clamp(t, 0, 1) < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+export const easeInOutCubic = (t: number) =>
+  clamp(t, 0, 1) < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 /** 平滑阶跃，用于交叉渐变 */
 export const smoothstep = (edge0: number, edge1: number, x: number) => {
@@ -23,7 +24,8 @@ export const lerpColor = (a: number, b: number, t: number) => a + (b - a) * t;
 export const windGustFromSpeed = (pxPerFrame: number) => clamp(pxPerFrame / 14, 0, 1);
 
 /** 风力向量视觉强度（与 gust 解耦，避免风力衰减后绒毛立刻静止） */
-export const windVisualStrength = (wind: { x: number; y: number }) => clamp(Math.hypot(wind.x, wind.y) / 4.2, 0, 1);
+export const windVisualStrength = (wind: { x: number; y: number }) =>
+  clamp(Math.hypot(wind.x, wind.y) / 4.2, 0, 1);
 
 /** 由落地 Y 反推景深，用于新株 */
 export const depthFromGround = (ground: number, height: number) =>

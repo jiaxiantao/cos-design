@@ -29,3 +29,8 @@ yarn-error.log
 coverage
 test-results
 playwright-report
+
+# Local debug / scratch artifacts
+**/.tmp-*
+**/*.tmp.png
+**/.tmp-check.png

@@ -1,0 +1,11 @@
+.cos-aurora-veil {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #010208;
+}
+.cos-aurora-veil__canvas {
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+}

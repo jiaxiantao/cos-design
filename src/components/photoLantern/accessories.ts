@@ -3,7 +3,12 @@ import { FACE_ANGLE, FACE_COUNT, PANEL_H } from './constants';
 import type { LanternMaterials } from './materials';
 
 /** 吊环、角饰、流苏、底穗 —— 几何与材质参数保持与原实现一致 */
-export const addLanternAccessories = (rotor: THREE.Group, mats: LanternMaterials, vertexR: number, apothem: number) => {
+export const addLanternAccessories = (
+  rotor: THREE.Group,
+  mats: LanternMaterials,
+  vertexR: number,
+  apothem: number,
+) => {
   const { accentMat, trimMat, beadMat, silkMat } = mats;
   const panelH = PANEL_H;
 
@@ -64,7 +69,11 @@ export const addLanternAccessories = (rotor: THREE.Group, mats: LanternMaterials
   for (let i = 0; i < FACE_COUNT; i++) {
     const angle = i * FACE_ANGLE + FACE_ANGLE / 2;
     const g = new THREE.Group();
-    g.position.set(Math.sin(angle) * (vertexR + 0.04), panelH / 2 - 0.02, Math.cos(angle) * (vertexR + 0.04));
+    g.position.set(
+      Math.sin(angle) * (vertexR + 0.04),
+      panelH / 2 - 0.02,
+      Math.cos(angle) * (vertexR + 0.04),
+    );
 
     g.add(new THREE.Mesh(beadGeo, beadMat));
 
@@ -87,8 +96,15 @@ export const addLanternAccessories = (rotor: THREE.Group, mats: LanternMaterials
 
   for (let i = 0; i < FACE_COUNT * 3; i++) {
     const angle = (i / (FACE_COUNT * 3)) * Math.PI * 2;
-    const fringe = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.003, 0.14 + (i % 3) * 0.02, 6), silkMat);
-    fringe.position.set(Math.sin(angle) * (apothem * 0.88), -panelH / 2 - 0.2, Math.cos(angle) * (apothem * 0.88));
+    const fringe = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.008, 0.003, 0.14 + (i % 3) * 0.02, 6),
+      silkMat,
+    );
+    fringe.position.set(
+      Math.sin(angle) * (apothem * 0.88),
+      -panelH / 2 - 0.2,
+      Math.cos(angle) * (apothem * 0.88),
+    );
     rotor.add(fringe);
   }
 };

@@ -1,0 +1,45 @@
+.cos-neon-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  padding: 40px;
+  background: #0a0a0a;
+  border-radius: 12px;
+}
+.cos-neon-text__text {
+  margin: 0;
+  color: var(--neon-color, #ff00de);
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 5px var(--neon-color), 0 0 10px var(--neon-color), 0 0 20px var(--neon-color), 0 0 40px var(--neon-color), 0 0 80px var(--neon-color);
+}
+.cos-neon-text__flicker {
+  animation: neon-flicker 2.5s infinite alternate;
+}
+.cos-neon-text__reflection {
+  margin: 12px 0 0;
+  opacity: 0.3;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  transform: scaleY(-1);
+  filter: blur(2px);
+}
+@keyframes neon-flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  24%,
+  55% {
+    opacity: 0.6;
+  }
+}

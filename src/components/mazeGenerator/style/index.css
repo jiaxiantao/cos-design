@@ -1,0 +1,7 @@
+.cos-maze-generator {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cos-maze-generator__canvas {
+  display: block;
+}

@@ -102,7 +102,10 @@ export function drawHail(scene: WeatherSceneRuntime) {
     const previousX = h.x;
     const previousY = h.y;
     h.vy += h.gravity + lift * 0.02;
-    h.vx += h.gust * 0.004 * hailMul * intensity + lateral + (Math.random() - 0.5) * 0.08 * hailMul * intensity;
+    h.vx +=
+      h.gust * 0.004 * hailMul * intensity +
+      lateral +
+      (Math.random() - 0.5) * 0.08 * hailMul * intensity;
     h.x += h.vx + Math.sin(t * 0.028 + h.phase) * 0.35;
     h.y += h.vy;
 
@@ -127,7 +130,7 @@ export function drawHail(scene: WeatherSceneRuntime) {
           pool,
           true,
           scene.hailSpec ? { min: scene.hailSpec.sizeMin, max: scene.hailSpec.sizeMax } : undefined,
-          scene.hailSpec?.speedMul ?? 1
+          scene.hailSpec?.speedMul ?? 1,
         );
         continue;
       }

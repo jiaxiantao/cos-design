@@ -1,0 +1,8 @@
+.cos-solar-system {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-solar-system__canvas {
+  display: block;
+}

@@ -1,0 +1,8 @@
+.cos-cyber-grid {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #050510;
+}
+.cos-cyber-grid__canvas {
+  display: block;
+}

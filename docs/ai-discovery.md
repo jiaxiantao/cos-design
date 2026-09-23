@@ -12,6 +12,7 @@ How to get **Claude Code, GitHub Copilot, Codex, Cursor, TRAE, Qoder, OpenCode**
 | **Live docs API**      | Context7                       | `/jiaxiantao/cos-design`                                           |
 | **Reusable skill**     | Agent Skills standard          | [.agents/skills/cos-design](../.agents/skills/cos-design/SKILL.md) |
 | **Campaign recipes**   | Copy-paste flows               | [campaign-recipes-ai.md](./campaign-recipes-ai.md)                 |
+| **v4 migration**       | React / Vue / Core / Elements  | [migration-v4.md](./migration-v4.md)                               |
 
 ---
 

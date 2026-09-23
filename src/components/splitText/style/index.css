@@ -1,0 +1,136 @@
+.cos-split-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 40px;
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 25%, rgba(56, 189, 248, 0.1), transparent 32%), linear-gradient(180deg, #0a0a0a, #0f172a);
+  border-radius: 18px;
+}
+.cos-split-text__text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: var(--split-color, #f8fafc);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.cos-split-text__char {
+  display: inline-block;
+  animation-duration: var(--split-duration, 500ms);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* fadeUp */
+.cos-split-text__fade-up.cos-split-text__enter {
+  animation-name: fadeUpIn;
+}
+.cos-split-text__fade-up.cos-split-text__exit {
+  animation-name: fadeUpOut;
+}
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeUpOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+/* scale */
+.cos-split-text__scale.cos-split-text__enter {
+  animation-name: scaleIn;
+}
+.cos-split-text__scale.cos-split-text__exit {
+  animation-name: scaleOut;
+}
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+/* rotate */
+.cos-split-text__rotate.cos-split-text__enter {
+  animation-name: rotateIn;
+}
+.cos-split-text__rotate.cos-split-text__exit {
+  animation-name: rotateOut;
+}
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotateX(90deg) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0);
+  }
+}
+@keyframes rotateOut {
+  from {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: rotateX(-90deg) translateY(-20px);
+  }
+}
+/* blur */
+.cos-split-text__blur.cos-split-text__enter {
+  animation-name: blurIn;
+}
+.cos-split-text__blur.cos-split-text__exit {
+  animation-name: blurOut;
+}
+@keyframes blurIn {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes blurOut {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(-10px);
+  }
+}

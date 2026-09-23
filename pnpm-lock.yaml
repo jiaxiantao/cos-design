@@ -40,8 +40,14 @@ importers:
         specifier: ^0.185.3
         version: 0.185.3
       '@vitejs/plugin-react':
-        specifier: ^6.0.2
-        version: 6.0.2(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))
+        specifier: ^6.1.1
+        version: 6.1.1(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))
+      '@vitejs/plugin-vue':
+        specifier: ^6.0.4
+        version: 6.0.8(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))(vue@3.5.42(typescript@5.9.3))
+      '@vue/tsconfig':
+        specifier: ^0.8.1
+        version: 0.8.1(typescript@5.9.3)(vue@3.5.42(typescript@5.9.3))
       eslint:
         specifier: ^9.39.1
         version: 9.39.4
@@ -111,33 +117,36 @@ importers:
       vite-plugin-lib-inject-css:
         specifier: ^2.2.2
         version: 2.2.2(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))
+      vue:
+        specifier: ^3.5.28
+        version: 3.5.42(typescript@5.9.3)
 
   examples/next-app:
     dependencies:
       '@cos-design/confetti':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/confetti
       '@cos-design/fireworks':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/fireworks
       '@cos-design/flip-card':
-        specifier: ^3.7.8
-        version: 3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/flipCard
       '@cos-design/neon-text':
-        specifier: ^3.5.3
-        version: 3.5.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/neonText
       '@cos-design/nine-grid':
-        specifier: ^3.7.8
-        version: 3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/nineGrid
       '@cos-design/scratch-card':
-        specifier: ^3.5.4
-        version: 3.5.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/scratchCard
       '@cos-design/turntable':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/turntable
       '@cos-design/weather-background':
-        specifier: ^3.5.5
-        version: 3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: workspace:*
+        version: link:../../packages/weatherBackground
       next:
         specifier: ^15.5.2
         version: 15.5.24(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@22.19.21)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -167,6 +176,77 @@ importers:
         specifier: ^5.9.2
         version: 5.9.3
 
+  examples/vanilla:
+    dependencies:
+      '@cos-design/confetti':
+        specifier: workspace:*
+        version: link:../../packages/confetti
+      '@cos-design/fireworks':
+        specifier: workspace:*
+        version: link:../../packages/fireworks
+      '@cos-design/flip-card':
+        specifier: workspace:*
+        version: link:../../packages/flipCard
+      '@cos-design/neon-text':
+        specifier: workspace:*
+        version: link:../../packages/neonText
+      '@cos-design/nine-grid':
+        specifier: workspace:*
+        version: link:../../packages/nineGrid
+      '@cos-design/scratch-card':
+        specifier: workspace:*
+        version: link:../../packages/scratchCard
+      '@cos-design/weather-background':
+        specifier: workspace:*
+        version: link:../../packages/weatherBackground
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^8.0.16
+        version: 8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0)
+
+  examples/vue-app:
+    dependencies:
+      '@cos-design/confetti':
+        specifier: workspace:*
+        version: link:../../packages/confetti
+      '@cos-design/fireworks':
+        specifier: workspace:*
+        version: link:../../packages/fireworks
+      '@cos-design/flip-card':
+        specifier: workspace:*
+        version: link:../../packages/flipCard
+      '@cos-design/neon-text':
+        specifier: workspace:*
+        version: link:../../packages/neonText
+      '@cos-design/nine-grid':
+        specifier: workspace:*
+        version: link:../../packages/nineGrid
+      '@cos-design/scratch-card':
+        specifier: workspace:*
+        version: link:../../packages/scratchCard
+      '@cos-design/weather-background':
+        specifier: workspace:*
+        version: link:../../packages/weatherBackground
+      vue:
+        specifier: ^3.5.28
+        version: 3.5.42(typescript@5.9.3)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: ^6.0.4
+        version: 6.0.8(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))(vue@3.5.42(typescript@5.9.3))
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^8.0.16
+        version: 8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0)
+      vue-tsc:
+        specifier: ^3.2.1
+        version: 3.3.11(typescript@5.9.3)
+
   packages/audioVisualizer:
     dependencies:
       '@cos-design/shared':
@@ -178,6 +258,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/aurora:
     dependencies:
@@ -190,6 +273,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/auroraVeil:
     dependencies:
@@ -202,24 +288,39 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/barcodeScan:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/blurText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/bubbleField:
     dependencies:
@@ -232,15 +333,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/burnAway:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/canvasClock:
     dependencies:
@@ -253,6 +363,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/charge:
     dependencies:
@@ -265,15 +378,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/circularText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/clickSpark:
     dependencies:
@@ -286,6 +408,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/confetti:
     dependencies:
@@ -298,6 +423,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/cos-design:
     dependencies:
@@ -310,24 +438,39 @@ importers:
       three:
         specifier: '>=0.160.0'
         version: 0.185.1
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/countUp:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/countdown:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/cursorTrail:
     dependencies:
@@ -340,15 +483,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/curvedLoop:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/cyberGrid:
     dependencies:
@@ -361,6 +513,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/dandelionField:
     dependencies:
@@ -373,15 +528,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/diceRoll:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/dnaHelix:
     dependencies:
@@ -394,6 +558,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/doublePendulum:
     dependencies:
@@ -406,6 +573,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/electricArc:
     dependencies:
@@ -418,6 +588,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/fireworks:
     dependencies:
@@ -430,33 +603,54 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/flipCard:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/flipCounter:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/fuzzyText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/gameOfLife:
     dependencies:
@@ -469,24 +663,39 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/glitchText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/gradientFlow:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/gravityBalls:
     dependencies:
@@ -499,15 +708,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/holographicCard:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/inkBloom:
     dependencies:
@@ -520,6 +738,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/lavaBubble:
     dependencies:
@@ -532,15 +753,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/liquidGlass:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/liquidProgress:
     dependencies:
@@ -553,6 +783,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/lorenzAttractor:
     dependencies:
@@ -565,15 +798,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/magneticButton:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/matrixRain:
     dependencies:
@@ -586,6 +828,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/mazeGenerator:
     dependencies:
@@ -598,6 +843,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/metaballPool:
     dependencies:
@@ -610,6 +858,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/meteorRain:
     dependencies:
@@ -622,15 +873,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/neonText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/networkGraph:
     dependencies:
@@ -643,6 +903,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/newtonCradle:
     dependencies:
@@ -655,6 +918,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/nineGrid:
     dependencies:
@@ -667,6 +933,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/orbitalChart:
     dependencies:
@@ -679,6 +948,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/particleNetwork:
     dependencies:
@@ -691,51 +963,84 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoAlbum:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoCarousel:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoClothesline:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoFilmstrip:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoFridge:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoLantern:
     dependencies:
@@ -751,33 +1056,54 @@ importers:
       three:
         specifier: '>=0.160.0'
         version: 0.185.1
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoLightbox:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoPolaroid:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoPostcard:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoPrism:
     dependencies:
@@ -790,6 +1116,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoScroll:
     dependencies:
@@ -802,6 +1131,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoTunnel:
     dependencies:
@@ -814,6 +1146,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/photoViewMaster:
     dependencies:
@@ -826,6 +1161,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/plasmaBall:
     dependencies:
@@ -838,6 +1176,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/progressChest:
     dependencies:
@@ -850,6 +1191,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/radarScan:
     dependencies:
@@ -862,6 +1206,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/redPacketRain:
     dependencies:
@@ -874,15 +1221,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/returnCity:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/rippleWater:
     dependencies:
@@ -895,6 +1251,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/ropeChain:
     dependencies:
@@ -907,15 +1266,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/rotatingText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/sandFall:
     dependencies:
@@ -928,15 +1296,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/scrambleText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/scratchCard:
     dependencies:
@@ -949,6 +1326,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/shared:
     dependencies:
@@ -958,12 +1338,18 @@ importers:
 
   packages/shinyText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/slotMachine:
     dependencies:
@@ -976,6 +1362,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/smokeFog:
     dependencies:
@@ -988,6 +1377,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/snowfall:
     dependencies:
@@ -1000,6 +1392,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/soapBubbles:
     dependencies:
@@ -1012,6 +1407,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/solarSystem:
     dependencies:
@@ -1024,6 +1422,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/speedometer:
     dependencies:
@@ -1036,33 +1437,54 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/splitReveal:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/splitText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/spotlight:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/springMass:
     dependencies:
@@ -1075,6 +1497,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/starfield:
     dependencies:
@@ -1087,15 +1512,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/textMorph:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/timelinePulse:
     dependencies:
@@ -1108,15 +1542,24 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/trueFocus:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/turntable:
     dependencies:
@@ -1129,33 +1572,54 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/typewriter:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/waveButton:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/waveText:
     dependencies:
+      '@cos-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
   packages/weatherBackground:
     dependencies:
@@ -1168,6 +1632,9 @@ importers:
       react-dom:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
+      vue:
+        specifier: '>=3.4.0'
+        version: 3.5.42(typescript@5.9.3)
 
 packages:
 
@@ -1288,6 +1755,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  '@babel/parser@7.29.8':
+    resolution: {integrity: sha512-E8lTAYNB1KW+FH+VGJuZM1ioAx2E6oVlvQFRrf5P8ZZmsiJXYAD9vTFV7yyEURNzgh1dFqMZuO6tUwcARbqFCA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   '@babel/runtime@7.29.7':
     resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
     engines: {node: '>=6.9.0'}
@@ -1304,72 +1776,15 @@ packages:
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/types@7.29.8':
+    resolution: {integrity: sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg==}
+    engines: {node: '>=6.9.0'}
+
   '@cacheable/memory@2.0.9':
     resolution: {integrity: sha512-HdMx6DoGywB30vacDbBsITbIX4pgFqj1zsrV58jZBUw3klzkNoXhj7qOqAgledhxG7YZI5rBSJg7Zp8/VG0DuA==}
 
   '@cacheable/utils@2.4.1':
     resolution: {integrity: sha512-eiFgzCbIneyMlLOmNG4g9xzF7Hv3Mga4LjxjcSC/ues6VYq2+gUbQI8JqNuw/ZM8tJIeIaBGpswAsqV2V7ApgA==}
-
-  '@cos-design/confetti@3.5.5':
-    resolution: {integrity: sha512-K8ofynIYtNmFwVIEY7nRijWEWsa4XykqtbkZuYhaTioQ3CWB5cxLUeZ5dizcLMd3Y5b1GEQEWc4mGOQTpJ9KIw==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/fireworks@3.5.5':
-    resolution: {integrity: sha512-TilaOuzMXy/I3cE4O16nKdCLAGEl/AeZPo5swfKcL9wiL27VtMu0K/qc5NBORZB2Ka8KC6DX+P8ksMNSYLDO7w==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/flip-card@3.7.8':
-    resolution: {integrity: sha512-g9gm8VHyHRfqfflHsajnNricrXhMhLf0sQYUCaPsiHB2k7DGbok4qdt48IwWnS/YisWhhGffpUOP4yJbcFa7Sg==, tarball: https://registry.npmjs.org/@cos-design/flip-card/-/flip-card-3.7.8.tgz}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/neon-text@3.5.3':
-    resolution: {integrity: sha512-ENZekyp5VX+pEZpp6fNo5yEDjS3y3yQbHMBstUEQvzLQ4ULiAEQbZBS8RDdjNNQBkGJ8DjiD5KyTrqZ7R9K0Zw==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/nine-grid@3.7.8':
-    resolution: {integrity: sha512-avrLl+jdxnB3gswULWB6UjtDoOnFzsriJd2UaJFsC64baNZ3Co+M2DGKisJ8Lr94/1mxlabe59/a9uSYVWxPNA==, tarball: https://registry.npmjs.org/@cos-design/nine-grid/-/nine-grid-3.7.8.tgz}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/scratch-card@3.5.4':
-    resolution: {integrity: sha512-yPqf6kj3wg20T2jxlAO37yT0ERcV6edzooX+dEP5N3jvyB9AbJJxBRKLah7zqI5WrG14rAql6vjoh0Ss4lUFVw==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/shared@3.5.4':
-    resolution: {integrity: sha512-//j9VLK1wLdkhBEjiiALCbJ87WqcvuCYw7Ud96yP6qrU8Y+s9PQ+WvNvIc1mX/gQCvTfwfO75vm04CY4ggw18g==}
-
-  '@cos-design/shared@3.5.5':
-    resolution: {integrity: sha512-1A8aoAH2aw8aoEoawcxRVdt/fjQU8KkF2XpLPXeqXU5ZZds+vGu6ED0dPEEJUFCEdbvPeUi1MwQCCej7FwcCFA==}
-    peerDependencies:
-      react: '>=18.0.0'
-
-  '@cos-design/shared@3.5.6':
-    resolution: {integrity: sha512-LRxwCHmFlUmbSs8j6XE16GMYV1EH1bSYmB1EbDXes5cuOq1RHGHbyi8x3VPloworjOUNGk377TeE7x4HWJdMYQ==}
-    peerDependencies:
-      react: '>=18.0.0'
-
-  '@cos-design/turntable@3.5.5':
-    resolution: {integrity: sha512-9WNCfNciff/ctT4UtJGgZeXZIL7VR6DZXljQWPbJw7l61kYsTkppbs9R81e3s8KCWXzC2kTSbjXu8dUrjMd1aQ==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@cos-design/weather-background@3.5.5':
-    resolution: {integrity: sha512-0wfZoDCYDQhNGqEJUofjlcHtDtby0yUFFfEfv8R/OSMZ49qo2na9US6bQaTLt2q/hC58v1R4oEcggRPCEhD3FQ==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
 
   '@csstools/css-calc@3.2.1':
     resolution: {integrity: sha512-DtdHlgXh5ZkA43cwBcAm+huzgJiwx3ZTWVjBs94kwz2xKqSimDA3lBgCjphYgwgVUMWatSM0pDd8TILB1yrVVg==}
@@ -2152,18 +2567,28 @@ packages:
     resolution: {integrity: sha512-6fJ9MHWtK14C1DSkiMlHUSOmrVebL7150xZJBlJiL62jjhIA4JmOq6flwBgDxIdBKKdoiZRel+dfPD5MLfny3w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vitejs/plugin-react@6.0.2':
-    resolution: {integrity: sha512-DlSMqo4WhThw4vB8Mpn0Woe9J+Jfq1geJ61AKW0QEgLzGMNwtIMdxbDUzLxcun8W7NbJO0e2Jg/Nxm3cCSVzzg==}
+  '@vitejs/plugin-react@6.1.1':
+    resolution: {integrity: sha512-yxLaQV9gkhS8ezJqCM6+ndU7mDY6gqAg75NQ+0IjwEI8IYOmQCgkRwHKVSfWXW076DsqMo0Dk+0FK1U+M5RgFw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rolldown/plugin-babel': ^0.1.7 || ^0.2.0
       babel-plugin-react-compiler: ^1.0.0
+      oxc-transform-react: ^0.145.0
       vite: ^8.0.0
     peerDependenciesMeta:
       '@rolldown/plugin-babel':
         optional: true
       babel-plugin-react-compiler:
         optional: true
+      oxc-transform-react:
+        optional: true
+
+  '@vitejs/plugin-vue@6.0.8':
+    resolution: {integrity: sha512-0ZjgOg7oO6farnNGup7yvoM/YXZV84OZxHAwtflItNa/6zzQyVb5LNxyea3FEKEX2XlagIKzrlH7wwxkKgtiew==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+      vue: ^3.2.25
 
   '@volar/language-core@2.4.28':
     resolution: {integrity: sha512-w4qhIJ8ZSitgLAkVay6AbcnC7gP3glYM3fYwKV3srj8m494E3xtrCv6E+bWviiK/8hs6e6t1ij1s2Endql7vzQ==}
@@ -2173,6 +2598,47 @@ packages:
 
   '@volar/typescript@2.4.28':
     resolution: {integrity: sha512-Ja6yvWrbis2QtN4ClAKreeUZPVYMARDYZl9LMEv1iQ1QdepB6wn0jTRxA9MftYmYa4DQ4k/DaSZpFPUfxl8giw==}
+
+  '@vue/compiler-core@3.5.42':
+    resolution: {integrity: sha512-2Ye1ilMtKXxl8qZUrQ5j0CdgenFp/HFQmta6rfRyfEsTG69L6Wk+tWuNoHYHMx9E8tF2Slvdg1FuwDvAXdy1LQ==}
+
+  '@vue/compiler-dom@3.5.42':
+    resolution: {integrity: sha512-qbhQZEFmycr+ni/qyuccS4sucNN7VAbDfbkvNxWOX2VfgFm90MNs3/UhRNKoPMEIVn0F8gdlYjLPvqxHwHeQOA==}
+
+  '@vue/compiler-sfc@3.5.42':
+    resolution: {integrity: sha512-fkCAFB4okcAANGMThboWnScp/gzWjU0ZSkVnjTIiplmMDq2uq0tIB3j+xVu4rhv5rvOgBySCysudmbMd6xRRqw==}
+
+  '@vue/compiler-ssr@3.5.42':
+    resolution: {integrity: sha512-xmLk3wLkbizPAiLyomjgFFosf2ys9b5Ghb+oh/k2tnvipNz8OFrQOiTcWCzyK7MpBp9KkyGtfvgfLUivbmuGYA==}
+
+  '@vue/language-core@3.3.11':
+    resolution: {integrity: sha512-QJmpliwAVpC/OxubIByPAhNzsQPRc8/gxlN2qnVzVfIMjMDz/9RnXRFoetjz5yEgXVXyp4LqhXq3V53PjmNzFw==}
+
+  '@vue/reactivity@3.5.42':
+    resolution: {integrity: sha512-TzNNfKpb7hDxbQltwAut8VDQA5YP+BuRlxntHUuRjyKwlMvmAPbs3unhCvieijifY6vFfVBwsS7wG/C7uq+bEQ==}
+
+  '@vue/runtime-core@3.5.42':
+    resolution: {integrity: sha512-9uACtuHs7vJGkm5Bp3xu4xRDLFTIYy5DgxpToVjqGIAhAEKwQfsaLvKINhM6nFVp6bZPRFGdDqd1g52MqKsotA==}
+
+  '@vue/runtime-dom@3.5.42':
+    resolution: {integrity: sha512-rsCmhiWLaRxGltLwhlCWyYkFn7WAbKRh0q17eZ1A6Dq6eqc2ACQ61IIryxz0LrsvCzHSilLA9JHovVwM8CNE2g==}
+
+  '@vue/server-renderer@3.5.42':
+    resolution: {integrity: sha512-2++5dUyYS4gvo7xQXSECUDhB7TS0aOl5SeVfC5qSq1Jgfhjvegw1zqhwTIR3imZ+QYPJQw9gfcFvXGAjGZ7ajQ==}
+
+  '@vue/shared@3.5.42':
+    resolution: {integrity: sha512-2rPxex1jQf4jvl9MOHl6YaXCPcrNqz/FstMOEh3QWY+/OME9nQTvl9WYeCwhW7AFjaR0SnngZGlp/wkR6rkI6g==}
+
+  '@vue/tsconfig@0.8.1':
+    resolution: {integrity: sha512-aK7feIWPXFSUhsCP9PFqPyFOcz4ENkb8hZ2pneL6m2UjCkccvaOhC/5KCKluuBufvp2KzkbdA2W2pk20vLzu3g==}
+    peerDependencies:
+      typescript: 5.x
+      vue: ^3.4.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      vue:
+        optional: true
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2208,6 +2674,9 @@ packages:
 
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
+
+  alien-signals@3.2.1:
+    resolution: {integrity: sha512-I8FjmltrfnDFoZedi5CG8DghVYNhzb/Ijluz7tCSJH0xpd0484Kowhbb1XDYOxfJpU1p5wnM2X54dA+IfGyD1g==}
 
   ansi-escapes@7.3.0:
     resolution: {integrity: sha512-BvU8nYgGQBxcmMuEeUEmNTvrMVjJNSH7RgW24vXexN4Ven6qCvy4TntnvlnwnMLTVlcRQQdbRY8NKnaIoeWDNg==}
@@ -2476,6 +2945,10 @@ packages:
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+
+  entities@7.0.1:
+    resolution: {integrity: sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==}
+    engines: {node: '>=0.12'}
 
   env-paths@2.2.1:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
@@ -3255,11 +3728,19 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  muggle-string@0.4.1:
+    resolution: {integrity: sha512-VNTrAak/KhO2i8dqqnqnAHOa3cYBwXEZe9h+D5h/1ZqFSTEFHdM65lR7RoIqq3tBBYavsOXV84NoHXZ0AkPyqQ==}
+
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
   nanoid@3.3.12:
     resolution: {integrity: sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
+  nanoid@3.3.18:
+    resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -3439,6 +3920,10 @@ packages:
 
   postcss@8.5.15:
     resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.26:
+    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -4023,6 +4508,20 @@ packages:
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
 
+  vue-tsc@3.3.11:
+    resolution: {integrity: sha512-gOb0B9rtU2+f1dszwPqSH5kAieIF9ReeLhD3kSRNHv5WZZUQz/JdVXW0RTdqhNTMlQkqKzrTTviqKr/4FYZraQ==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=5.0.0'
+
+  vue@3.5.42:
+    resolution: {integrity: sha512-4RyHQTbQvOPs3MfvUO1Sg0YRrKNnA0mAVtvpd12Tg1fKDN7OHBUl1IqSn8zGJjK9nI3NkNp8cgTpVrSZC5TTcA==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
@@ -4206,6 +4705,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.7
 
+  '@babel/parser@7.29.8':
+    dependencies:
+      '@babel/types': 7.29.8
+
   '@babel/runtime@7.29.7': {}
 
   '@babel/template@7.29.7':
@@ -4231,6 +4734,11 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
+  '@babel/types@7.29.8':
+    dependencies:
+      '@babel/helper-string-parser': 7.29.7
+      '@babel/helper-validator-identifier': 7.29.7
+
   '@cacheable/memory@2.0.9':
     dependencies:
       '@cacheable/utils': 2.4.1
@@ -4242,60 +4750,6 @@ snapshots:
     dependencies:
       hashery: 1.5.1
       keyv: 5.6.0
-
-  '@cos-design/confetti@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.5(react@19.2.7)
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/fireworks@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.5(react@19.2.7)
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/flip-card@3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/neon-text@3.5.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/nine-grid@3.7.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/scratch-card@3.5.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.4
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/shared@3.5.4': {}
-
-  '@cos-design/shared@3.5.5(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-
-  '@cos-design/shared@3.5.6(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-
-  '@cos-design/turntable@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  '@cos-design/weather-background@3.5.5(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@cos-design/shared': 3.5.6(react@19.2.7)
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
 
   '@csstools/css-calc@3.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)':
     dependencies:
@@ -4952,10 +5406,16 @@ snapshots:
       '@typescript-eslint/types': 8.61.1
       eslint-visitor-keys: 5.0.1
 
-  '@vitejs/plugin-react@6.0.2(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))':
+  '@vitejs/plugin-react@6.1.1(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0)
+
+  '@vitejs/plugin-vue@6.0.8(vite@8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0))(vue@3.5.42(typescript@5.9.3))':
+    dependencies:
+      '@rolldown/pluginutils': 1.0.1
+      vite: 8.0.16(@types/node@22.19.21)(less@4.6.6)(yaml@2.9.0)
+      vue: 3.5.42(typescript@5.9.3)
 
   '@volar/language-core@2.4.28':
     dependencies:
@@ -4968,6 +5428,75 @@ snapshots:
       '@volar/language-core': 2.4.28
       path-browserify: 1.0.1
       vscode-uri: 3.1.0
+
+  '@vue/compiler-core@3.5.42':
+    dependencies:
+      '@babel/parser': 7.29.8
+      '@vue/shared': 3.5.42
+      entities: 7.0.1
+      estree-walker: 2.0.2
+      source-map-js: 1.2.1
+
+  '@vue/compiler-dom@3.5.42':
+    dependencies:
+      '@vue/compiler-core': 3.5.42
+      '@vue/shared': 3.5.42
+
+  '@vue/compiler-sfc@3.5.42':
+    dependencies:
+      '@babel/parser': 7.29.8
+      '@vue/compiler-core': 3.5.42
+      '@vue/compiler-dom': 3.5.42
+      '@vue/compiler-ssr': 3.5.42
+      '@vue/shared': 3.5.42
+      estree-walker: 2.0.2
+      magic-string: 0.30.21
+      postcss: 8.5.26
+      source-map-js: 1.2.1
+
+  '@vue/compiler-ssr@3.5.42':
+    dependencies:
+      '@vue/compiler-dom': 3.5.42
+      '@vue/shared': 3.5.42
+
+  '@vue/language-core@3.3.11':
+    dependencies:
+      '@volar/language-core': 2.4.28
+      '@vue/compiler-dom': 3.5.42
+      '@vue/shared': 3.5.42
+      alien-signals: 3.2.1
+      muggle-string: 0.4.1
+      path-browserify: 1.0.1
+      picomatch: 4.0.4
+
+  '@vue/reactivity@3.5.42':
+    dependencies:
+      '@vue/shared': 3.5.42
+
+  '@vue/runtime-core@3.5.42':
+    dependencies:
+      '@vue/reactivity': 3.5.42
+      '@vue/shared': 3.5.42
+
+  '@vue/runtime-dom@3.5.42':
+    dependencies:
+      '@vue/reactivity': 3.5.42
+      '@vue/runtime-core': 3.5.42
+      '@vue/shared': 3.5.42
+      csstype: 3.2.3
+
+  '@vue/server-renderer@3.5.42':
+    dependencies:
+      '@vue/compiler-ssr': 3.5.42
+      '@vue/runtime-dom': 3.5.42
+      '@vue/shared': 3.5.42
+
+  '@vue/shared@3.5.42': {}
+
+  '@vue/tsconfig@0.8.1(typescript@5.9.3)(vue@3.5.42(typescript@5.9.3))':
+    optionalDependencies:
+      typescript: 5.9.3
+      vue: 3.5.42(typescript@5.9.3)
 
   acorn-jsx@5.3.2(acorn@8.17.0):
     dependencies:
@@ -5006,6 +5535,8 @@ snapshots:
       fast-uri: 3.1.2
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
+
+  alien-signals@3.2.1: {}
 
   ansi-escapes@7.3.0:
     dependencies:
@@ -5281,6 +5812,8 @@ snapshots:
   emoji-regex@10.6.0: {}
 
   emoji-regex@8.0.0: {}
+
+  entities@7.0.1: {}
 
   env-paths@2.2.1: {}
 
@@ -6133,6 +6666,8 @@ snapshots:
 
   ms@2.1.3: {}
 
+  muggle-string@0.4.1: {}
+
   mz@2.7.0:
     dependencies:
       any-promise: 1.3.0
@@ -6140,6 +6675,8 @@ snapshots:
       thenify-all: 1.6.0
 
   nanoid@3.3.12: {}
+
+  nanoid@3.3.18: {}
 
   natural-compare@1.4.0: {}
 
@@ -6325,6 +6862,12 @@ snapshots:
   postcss@8.5.15:
     dependencies:
       nanoid: 3.3.12
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.26:
+    dependencies:
+      nanoid: 3.3.18
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -7023,6 +7566,22 @@ snapshots:
       yaml: 2.9.0
 
   vscode-uri@3.1.0: {}
+
+  vue-tsc@3.3.11(typescript@5.9.3):
+    dependencies:
+      '@volar/typescript': 2.4.28
+      '@vue/language-core': 3.3.11
+      typescript: 5.9.3
+
+  vue@3.5.42(typescript@5.9.3):
+    dependencies:
+      '@vue/compiler-dom': 3.5.42
+      '@vue/compiler-sfc': 3.5.42
+      '@vue/runtime-dom': 3.5.42
+      '@vue/server-renderer': 3.5.42
+      '@vue/shared': 3.5.42
+    optionalDependencies:
+      typescript: 5.9.3
 
   webpack-virtual-modules@0.6.2: {}
 

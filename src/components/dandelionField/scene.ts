@@ -1,5 +1,11 @@
 import { clamp } from '@cos-design/shared';
-import { GRASS_IDLE_AMP, GRASS_LIFT_STIFF, GRASS_WIND_AMP, GRASS_WIND_DAMP, GRASS_WIND_STIFF } from './constants';
+import {
+  GRASS_IDLE_AMP,
+  GRASS_LIFT_STIFF,
+  GRASS_WIND_AMP,
+  GRASS_WIND_DAMP,
+  GRASS_WIND_STIFF,
+} from './constants';
 import type { GrassTuftDef, GrassTuftWind } from './types';
 import { hash, smoothstep, softSat } from './utils';
 
@@ -28,7 +34,14 @@ export const buildSceneBackdrop = (width: number, height: number): HTMLCanvasEle
   ctx.fillStyle = atmos;
   ctx.fillRect(0, 0, width, height);
 
-  const zenith = ctx.createRadialGradient(width * 0.5, 0, 0, width * 0.5, height * 0.22, height * 0.65);
+  const zenith = ctx.createRadialGradient(
+    width * 0.5,
+    0,
+    0,
+    width * 0.5,
+    height * 0.22,
+    height * 0.65,
+  );
   zenith.addColorStop(0, 'rgba(12, 42, 90, 0.32)');
   zenith.addColorStop(0.55, 'rgba(30, 80, 140, 0.08)');
   zenith.addColorStop(1, 'rgba(30, 80, 140, 0)');
@@ -58,7 +71,7 @@ export const buildSceneBackdrop = (width: number, height: number): HTMLCanvasEle
       { ox: scale * 0.72, oy: scale * 0.08, r: scale * 0.78 },
       { ox: -scale * 0.65, oy: scale * 0.12, r: scale * 0.68 },
       { ox: scale * 0.35, oy: -scale * 0.22, r: scale * 0.55 },
-      { ox: -scale * 0.28, oy: -scale * 0.18, r: scale * 0.48 }
+      { ox: -scale * 0.28, oy: -scale * 0.18, r: scale * 0.48 },
     ];
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -102,7 +115,14 @@ export const buildSceneBackdrop = (width: number, height: number): HTMLCanvasEle
     ctx.fill();
   }
 
-  const sunWash = ctx.createRadialGradient(sunX, height * 0.64, 0, sunX, height * 0.7, width * 0.68);
+  const sunWash = ctx.createRadialGradient(
+    sunX,
+    height * 0.64,
+    0,
+    sunX,
+    height * 0.7,
+    width * 0.68,
+  );
   sunWash.addColorStop(0, 'rgba(168, 188, 118, 0.14)');
   sunWash.addColorStop(0.5, 'rgba(138, 162, 98, 0.06)');
   sunWash.addColorStop(1, 'rgba(100, 130, 80, 0)');
@@ -117,7 +137,7 @@ export const buildSceneBackdrop = (width: number, height: number): HTMLCanvasEle
     r: number,
     g: number,
     b: number,
-    a: number
+    a: number,
   ) => {
     const pg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
     pg.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${a})`);
@@ -154,7 +174,7 @@ export const buildSceneBackdrop = (width: number, height: number): HTMLCanvasEle
     height * 0.08,
     width * 0.5,
     height * 1.02,
-    height * 0.55
+    height * 0.55,
   );
   groundShade.addColorStop(0, 'rgba(12, 20, 10, 0.16)');
   groundShade.addColorStop(0.55, 'rgba(12, 20, 10, 0.06)');
@@ -168,7 +188,7 @@ export const buildSceneBackdrop = (width: number, height: number): HTMLCanvasEle
     width * 0.28,
     width * 0.5,
     height * 0.5,
-    width * 0.82
+    width * 0.82,
   );
   vignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
   vignette.addColorStop(1, 'rgba(12, 22, 8, 0.12)');
@@ -194,7 +214,7 @@ export const buildGrassField = (width: number, height: number): GrassTuftDef[] =
     sizeMin: number,
     sizeMax: number,
     alpha: number,
-    skipChance: number
+    skipChance: number,
   ) => {
     const regionTop = height * yMin;
     const regionH = height * (yMax - yMin);
@@ -217,7 +237,7 @@ export const buildGrassField = (width: number, height: number): GrassTuftDef[] =
           size,
           alpha: a,
           depth,
-          phase: hash(seed + 6) * Math.PI * 2
+          phase: hash(seed + 6) * Math.PI * 2,
         });
       }
     }
@@ -235,7 +255,7 @@ export const updateGrassFieldWind = (
   tufts: GrassTuftDef[],
   wind: { x: number; y: number; speed: number },
   time: number,
-  dt: number
+  dt: number,
 ) => {
   for (let i = 0; i < tufts.length; i++) {
     const tuft = tufts[i];
@@ -245,7 +265,9 @@ export const updateGrassFieldWind = (
     const depthMul = 0.32 + tuft.depth * 0.68;
     const stiffMul = 0.78 + hash(tuft.phase * 2.1) * 0.44;
     const idle =
-      Math.sin(time * (0.72 + hash(tuft.phase) * 0.38) + tuft.phase) * GRASS_IDLE_AMP * (0.45 + tuft.depth * 0.55);
+      Math.sin(time * (0.72 + hash(tuft.phase) * 0.38) + tuft.phase) *
+      GRASS_IDLE_AMP *
+      (0.45 + tuft.depth * 0.55);
 
     const targetSway =
       (wind.x * (0.62 + tuft.depth * 0.28) +
@@ -254,13 +276,16 @@ export const updateGrassFieldWind = (
         idle) *
       depthMul *
       GRASS_WIND_AMP;
-    const targetLift = (wind.y * (0.26 + tuft.depth * 0.16) + idle * 0.35) * depthMul * GRASS_WIND_AMP;
+    const targetLift =
+      (wind.y * (0.26 + tuft.depth * 0.16) + idle * 0.35) * depthMul * GRASS_WIND_AMP;
 
-    st.swayVel += ((targetSway - st.sway) * GRASS_WIND_STIFF * stiffMul - st.swayVel * GRASS_WIND_DAMP) * dt;
+    st.swayVel +=
+      ((targetSway - st.sway) * GRASS_WIND_STIFF * stiffMul - st.swayVel * GRASS_WIND_DAMP) * dt;
     st.sway += st.swayVel * dt;
     st.sway = clamp(st.sway, -2.6 * GRASS_WIND_AMP, 2.6 * GRASS_WIND_AMP);
 
-    st.liftVel += ((targetLift - st.lift) * GRASS_LIFT_STIFF * stiffMul - st.liftVel * GRASS_WIND_DAMP) * dt;
+    st.liftVel +=
+      ((targetLift - st.lift) * GRASS_LIFT_STIFF * stiffMul - st.liftVel * GRASS_WIND_DAMP) * dt;
     st.lift += st.liftVel * dt;
     st.lift = clamp(st.lift, -0.75 * GRASS_WIND_AMP, 0.75 * GRASS_WIND_AMP);
   }
@@ -271,7 +296,7 @@ export const drawGrassField = (
   tufts: GrassTuftDef[],
   states: GrassTuftWind[],
   height: number,
-  time: number
+  time: number,
 ) => {
   const grassStart = height * 0.68;
 
@@ -312,7 +337,8 @@ export const drawGrassField = (
 
       const baseX = tuft.x + (hash(seed + 6) - 0.5) * tuft.size * 0.08;
       const baseY = tuft.y;
-      const restCpX = baseX + Math.cos(ang) * len * 0.42 + (hash(seed + 3) - 0.5) * tuft.size * 0.22;
+      const restCpX =
+        baseX + Math.cos(ang) * len * 0.42 + (hash(seed + 3) - 0.5) * tuft.size * 0.22;
       const restCpY = baseY + Math.sin(ang) * len * 0.42 + len * 0.06;
       const restTipX = baseX + Math.cos(ang) * len;
       const restTipY = baseY + Math.sin(ang) * len;

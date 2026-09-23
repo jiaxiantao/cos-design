@@ -8,7 +8,12 @@ export interface SceneLighting {
   ay: number;
 }
 
-export const resolveSceneLighting = (cx: number, cy: number, lightX: number, lightY: number): SceneLighting => {
+export const resolveSceneLighting = (
+  cx: number,
+  cy: number,
+  lightX: number,
+  lightY: number,
+): SceneLighting => {
   const dx = lightX - cx;
   const dy = lightY - cy;
   const dist = Math.hypot(dx, dy) || 1;
@@ -17,14 +22,26 @@ export const resolveSceneLighting = (cx: number, cy: number, lightX: number, lig
   return { toLight: Math.atan2(dy, dx), lx, ly, ax: -lx, ay: -ly };
 };
 
-export const highlightOnSphere = (cx: number, cy: number, r: number, light: SceneLighting, dist = 0.36) => ({
+export const highlightOnSphere = (
+  cx: number,
+  cy: number,
+  r: number,
+  light: SceneLighting,
+  dist = 0.36,
+) => ({
   x: cx + light.lx * r * dist,
-  y: cy + light.ly * r * dist
+  y: cy + light.ly * r * dist,
 });
 
-export const shadowPoleOnSphere = (cx: number, cy: number, r: number, light: SceneLighting, dist = 0.4) => ({
+export const shadowPoleOnSphere = (
+  cx: number,
+  cy: number,
+  r: number,
+  light: SceneLighting,
+  dist = 0.4,
+) => ({
   x: cx + light.ax * r * dist,
-  y: cy + light.ay * r * dist
+  y: cy + light.ay * r * dist,
 });
 
 /** 多层羽化椭圆高光，避免硬边白块 */
@@ -35,7 +52,7 @@ export const paintSoftSpecular = (
   rx: number,
   ry: number,
   rot: number,
-  peak: number
+  peak: number,
 ) => {
   ctx.save();
   ctx.translate(x, y);
@@ -76,7 +93,7 @@ export const drawSoapCastShadow = (
   r: number,
   light: SceneLighting,
   depth: number,
-  alpha = 1
+  alpha = 1,
 ) => {
   if (r < 4) return;
   const drop = r * (0.38 + depth * 0.18);
@@ -119,7 +136,7 @@ const paintSoftVolume = (
   hiY: number,
   shX: number,
   shY: number,
-  opts: SphereShadeOpts
+  opts: SphereShadeOpts,
 ) => {
   const { shadeAmt, hash01, seed: s } = opts;
 
@@ -160,7 +177,7 @@ const paintSoftRim = (
   cx: number,
   cy: number,
   rimPeak: number,
-  path?: Path2D
+  path?: Path2D,
 ) => {
   const fresnel = ctx.createRadialGradient(cx, cy, R * 0.74, cx, cy, R * 1.02);
   fresnel.addColorStop(0, 'rgba(255,255,255,0)');
@@ -183,7 +200,7 @@ export const paintSphereShading = (
   ctx: CanvasRenderingContext2D,
   R: number,
   toLight: number,
-  opts: SphereShadeOpts
+  opts: SphereShadeOpts,
 ) => {
   const { rimPeak, specBright, hash01, seed: s } = opts;
   const cosL = Math.cos(toLight);
@@ -207,14 +224,23 @@ export const paintSphereShading = (
   if (hash01(s + 10.1) > 0.3) {
     const hx2 = cosL * R * 0.26;
     const hy2 = sinL * R * 0.26;
-    paintSoftSpecular(ctx, hx2, hy2, R * 0.09, R * 0.05, toLight - 0.15, 0.12 + hash01(s + 28.4) * 0.14);
+    paintSoftSpecular(
+      ctx,
+      hx2,
+      hy2,
+      R * 0.09,
+      R * 0.05,
+      toLight - 0.15,
+      0.12 + hash01(s + 28.4) * 0.14,
+    );
   }
 
   ctx.restore();
   paintSoftRim(ctx, R, 0, 0, rimPeak);
 };
 
-export const lambertAtAngle = (angle: number, toLight: number) => 0.35 + 0.65 * Math.max(0, Math.cos(angle - toLight));
+export const lambertAtAngle = (angle: number, toLight: number) =>
+  0.35 + 0.65 * Math.max(0, Math.cos(angle - toLight));
 
 export const paintBlobShading = (
   ctx: CanvasRenderingContext2D,
@@ -223,7 +249,7 @@ export const paintBlobShading = (
   cy: number,
   radius: number,
   light: SceneLighting,
-  opts: SphereShadeOpts
+  opts: SphereShadeOpts,
 ) => {
   const { shadeAmt, rimPeak, specBright, hash01, seed: s } = opts;
   const hi = highlightOnSphere(cx, cy, radius, light, 0.36);

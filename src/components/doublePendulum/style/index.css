@@ -1,0 +1,8 @@
+.cos-double-pendulum {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+.cos-double-pendulum__canvas {
+  display: block;
+}

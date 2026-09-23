@@ -67,7 +67,7 @@ const spawnBlister = (u: number, v: number): Blister => {
       a0,
       a1: a0 + (0.3 + rand() * 1.1) * (rand() < 0.5 ? 1 : -1),
       bend: (rand() - 0.5) * 0.5,
-      width: 0.004 + rand() * 0.007
+      width: 0.004 + rand() * 0.007,
     });
   }
   return {
@@ -85,7 +85,7 @@ const spawnBlister = (u: number, v: number): Blister => {
     thinTime: 0.6 + rand() * 0.85,
     cracks,
     tear: rand() * Math.PI * 2,
-    bias: 0.25 + rand() * 0.55
+    bias: 0.25 + rand() * 0.55,
   };
 };
 
@@ -96,7 +96,7 @@ const pushSpatter = (
   ang: number,
   launch: number,
   sp: number,
-  extras: Partial<Pick<Spatter, 'z' | 'vz' | 'life' | 'heat' | 'size' | 'vu' | 'vv'>>
+  extras: Partial<Pick<Spatter, 'z' | 'vz' | 'life' | 'heat' | 'size' | 'vu' | 'vv'>>,
 ) => {
   list.push({
     u: b.u + Math.cos(ang) * b.r * launch * b.aspect,
@@ -108,7 +108,7 @@ const pushSpatter = (
     life: extras.life ?? 0.4,
     heat: extras.heat ?? 0.2,
     size: extras.size ?? 0.01,
-    kind
+    kind,
   });
 };
 
@@ -133,7 +133,10 @@ const sampleBilinear = (field: Float32Array, x: number, y: number) => {
   const i01 = x0 + y1 * SIM;
   const i11 = x1 + y1 * SIM;
   return (
-    (1 - fx) * (1 - fy) * field[i00] + fx * (1 - fy) * field[i10] + (1 - fx) * fy * field[i01] + fx * fy * field[i11]
+    (1 - fx) * (1 - fy) * field[i00] +
+    fx * (1 - fy) * field[i10] +
+    (1 - fx) * fy * field[i01] +
+    fx * fy * field[i11]
   );
 };
 
@@ -151,7 +154,15 @@ export const createLavaSim = () => {
   const spatters: Spatter[] = [];
   let spawnWait = 0.6 + rand() * 1.4;
 
-  const addHeight = (u: number, v: number, radius: number, amount: number, aspect: number, rot: number, seed = 0) => {
+  const addHeight = (
+    u: number,
+    v: number,
+    radius: number,
+    amount: number,
+    aspect: number,
+    rot: number,
+    seed = 0,
+  ) => {
     const cx = u * (SIM - 1);
     const cy = v * (SIM - 1);
     const r = Math.max(radius * SIM, 1.5);
@@ -177,7 +188,13 @@ export const createLavaSim = () => {
     }
   };
 
-  const addHeat = (u: number, v: number, radius: number, amount: number, mode: 'add' | 'max' = 'add') => {
+  const addHeat = (
+    u: number,
+    v: number,
+    radius: number,
+    amount: number,
+    mode: 'add' | 'max' = 'add',
+  ) => {
     const cx = u * (SIM - 1);
     const cy = v * (SIM - 1);
     const r = Math.max(radius * SIM, 0.6);
@@ -198,7 +215,14 @@ export const createLavaSim = () => {
     }
   };
 
-  const addHeatStreak = (u: number, v: number, vu: number, vv: number, radius: number, amount: number) => {
+  const addHeatStreak = (
+    u: number,
+    v: number,
+    vu: number,
+    vv: number,
+    radius: number,
+    amount: number,
+  ) => {
     const len = Math.hypot(vu, vv);
     if (len < 1e-4) {
       addHeat(u, v, radius, amount, 'max');
@@ -213,7 +237,7 @@ export const createLavaSim = () => {
         v - (vv / len) * radius * 2.2 * t,
         radius * (0.7 + t * 0.4),
         amount * fade,
-        'max'
+        'max',
       );
     }
   };
@@ -297,7 +321,7 @@ export const createLavaSim = () => {
           b.v + Math.sin(ang + b.rot) * rad,
           c.width * 0.22,
           open * 0.15 * (0.3 + t * 0.7),
-          'max'
+          'max',
         );
       }
     }
@@ -323,7 +347,7 @@ export const createLavaSim = () => {
           b.v + Math.sin(ang + b.rot) * rad,
           c.width * 0.4,
           0.18 * (0.4 + t * 0.6),
-          'max'
+          'max',
         );
       }
     }
@@ -337,7 +361,7 @@ export const createLavaSim = () => {
         vz: 1.4 + rand() * 1.8,
         life: 0.22 + rand() * 0.25,
         heat: 0.22 + rand() * 0.14,
-        size: 0.003 + rand() * 0.006
+        size: 0.003 + rand() * 0.006,
       });
     }
 
@@ -352,7 +376,7 @@ export const createLavaSim = () => {
         vz: 0.55 + rand() * 1.1,
         life: 0.6 + rand() * 0.55,
         heat: 0.2 + rand() * 0.14,
-        size: 0.01 + rand() * 0.018
+        size: 0.01 + rand() * 0.018,
       });
     }
 
@@ -365,7 +389,7 @@ export const createLavaSim = () => {
         vz: 0.25 + rand() * 0.7,
         life: 0.55 + rand() * 0.5,
         heat: 0.03 + rand() * 0.06,
-        size: 0.012 + rand() * 0.024
+        size: 0.012 + rand() * 0.024,
       });
     }
   };
@@ -443,7 +467,14 @@ export const createLavaSim = () => {
     s.z += s.vz * dt;
     if (s.z > 0) {
       if (s.kind !== 2) {
-        addHeatStreak(s.u, s.v, s.vu, s.vv, s.size * (0.6 + s.z * 0.55), s.heat * 0.1 * Math.min(1, s.z + 0.15));
+        addHeatStreak(
+          s.u,
+          s.v,
+          s.vu,
+          s.vv,
+          s.size * (0.6 + s.z * 0.55),
+          s.heat * 0.1 * Math.min(1, s.z + 0.15),
+        );
       }
     } else {
       s.z = 0;
@@ -451,7 +482,12 @@ export const createLavaSim = () => {
         addHeat(s.u, s.v, s.size * 1.4, 0.035, 'max');
       } else {
         const len = Math.hypot(s.vu, s.vv) || 1;
-        addHeatSplash(s.u, s.v, s.size * (s.kind === 0 ? 1.2 : 1.8), s.heat * (s.kind === 0 ? 0.14 : 0.22));
+        addHeatSplash(
+          s.u,
+          s.v,
+          s.size * (s.kind === 0 ? 1.2 : 1.8),
+          s.heat * (s.kind === 0 ? 0.14 : 0.22),
+        );
         addHeatStreak(s.u, s.v, s.vu / len, s.vv / len, s.size * 1.6, s.heat * 0.12);
       }
       s.life = 0;
@@ -552,7 +588,9 @@ export const createLavaSim = () => {
         const lx = cos * dx + sin * dy;
         const ly = -sin * dx + cos * dy;
         const jagged =
-          0.72 + 0.22 * Math.sin(lx * 0.9 + u * 40) * Math.cos(ly * 1.1 + v * 35) + 0.1 * Math.sin(lx * 2.1 - ly * 1.3);
+          0.72 +
+          0.22 * Math.sin(lx * 0.9 + u * 40) * Math.cos(ly * 1.1 + v * 35) +
+          0.1 * Math.sin(lx * 2.1 - ly * 1.3);
         const d2 = (lx * lx) / (rx * rx * jagged) + (ly * ly) / (ry * ry * jagged);
         if (d2 > 1.35) continue;
         const w = Math.pow(Math.max(0, 1 - d2), 1.1) * strength * 0.55;
@@ -570,7 +608,9 @@ export const createLavaSim = () => {
     for (let c = 0; c < crackN; c++) {
       const seed = c * 1.7 + u * 31 + v * 17;
       const a0 = tear + (c / crackN) * Math.PI * 2 + Math.sin(seed) * 0.35;
-      const a1 = a0 + (0.35 + (Math.sin(seed * 2.1) * 0.5 + 0.5) * 0.85) * (Math.sin(seed * 3.3) < 0 ? 1 : -1);
+      const a1 =
+        a0 +
+        (0.35 + (Math.sin(seed * 2.1) * 0.5 + 0.5) * 0.85) * (Math.sin(seed * 3.3) < 0 ? 1 : -1);
       const steps = 16;
       for (let i = 0; i <= steps; i++) {
         const t = i / steps;
@@ -581,13 +621,20 @@ export const createLavaSim = () => {
           v + Math.sin(ang) * rad,
           0.004 + t * 0.006,
           strength * 0.14 * (0.25 + t * 0.75),
-          'max'
+          'max',
         );
       }
     }
   };
 
-  const stirBlister = (b: Blister, u: number, v: number, vu: number, vv: number, strength: number) => {
+  const stirBlister = (
+    b: Blister,
+    u: number,
+    v: number,
+    vu: number,
+    vv: number,
+    strength: number,
+  ) => {
     const du = (b.u - u) * 1.15;
     const dv = b.v - v;
     const dist = Math.hypot(du, dv);

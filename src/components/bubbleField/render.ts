@@ -33,7 +33,9 @@ const buildBubblePath = (bubble: Bubble, time: number) => {
   let tilt = bubble.tilt;
 
   const deformEnergy =
-    Math.abs(bubble.streamStretch) * 0.7 + Math.abs(bubble.mode2) * 0.9 + Math.abs(bubble.mode3) * 0.35;
+    Math.abs(bubble.streamStretch) * 0.7 +
+    Math.abs(bubble.mode2) * 0.9 +
+    Math.abs(bubble.mode3) * 0.35;
   if (deformEnergy > 0.03) {
     const f = Math.min(1, deformEnergy);
     const axis = bubble.streamStretch > 0.02 ? bubble.streamAngle : bubble.mode2Angle;
@@ -68,7 +70,7 @@ const metaballField = (
   ar: number,
   bx: number,
   by: number,
-  br: number
+  br: number,
 ) => {
   const d1 = (x - ax) * (x - ax) + (y - ay) * (y - ay) + 0.35;
   const d2 = (x - bx) * (x - bx) + (y - by) * (y - by) + 0.35;
@@ -84,7 +86,7 @@ const sampleMetaballPoint = (
   by: number,
   br: number,
   cx: number,
-  cy: number
+  cy: number,
 ) => {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -104,7 +106,14 @@ const sampleMetaballPoint = (
   return { x: cx + cos * r, y: cy + sin * r };
 };
 
-const buildMetaballPath = (ax: number, ay: number, ar: number, bx: number, by: number, br: number) => {
+const buildMetaballPath = (
+  ax: number,
+  ay: number,
+  ar: number,
+  bx: number,
+  by: number,
+  br: number,
+) => {
   const mass = ar + br || 1;
   const cx = (ax * ar + bx * br) / mass;
   const cy = (ay * ar + by * br) / mass;
@@ -127,7 +136,7 @@ export const drawBubble = (
   time: number,
   tint: string,
   width: number,
-  height: number
+  height: number,
 ) => {
   const path = buildBubblePath(bubble, time);
   const depth = Math.min(1, Math.max(0, bubble.y / height));
@@ -146,7 +155,7 @@ export const drawBubble = (
     bubble.radius * 0.04,
     bubble.x,
     bubble.y,
-    bubble.radius * 1.45
+    bubble.radius * 1.45,
   );
   bodyGradient.addColorStop(0, 'rgb(255 255 255 / 72%)');
   bodyGradient.addColorStop(0.12, 'rgb(186 230 253 / 42%)');
@@ -162,7 +171,14 @@ export const drawBubble = (
   ctx.save();
   ctx.clip(path);
 
-  const innerShadow = ctx.createRadialGradient(shadowX, shadowY, 0, shadowX, shadowY, bubble.radius * 0.95);
+  const innerShadow = ctx.createRadialGradient(
+    shadowX,
+    shadowY,
+    0,
+    shadowX,
+    shadowY,
+    bubble.radius * 0.95,
+  );
   innerShadow.addColorStop(0, 'rgb(1 8 20 / 58%)');
   innerShadow.addColorStop(0.55, 'rgb(2 12 27 / 28%)');
   innerShadow.addColorStop(1, 'rgb(2 12 27 / 0%)');
@@ -171,11 +187,19 @@ export const drawBubble = (
     bubble.x - bubble.radius * 1.2,
     bubble.y - bubble.radius * 1.2,
     bubble.radius * 2.4,
-    bubble.radius * 2.4
+    bubble.radius * 2.4,
   );
 
   ctx.beginPath();
-  ctx.ellipse(highlightX, highlightY, bubble.radius * 0.2, bubble.radius * 0.11, toLight - 0.25, 0, Math.PI * 2);
+  ctx.ellipse(
+    highlightX,
+    highlightY,
+    bubble.radius * 0.2,
+    bubble.radius * 0.11,
+    toLight - 0.25,
+    0,
+    Math.PI * 2,
+  );
   ctx.fillStyle = 'rgb(255 255 255 / 78%)';
   ctx.fill();
 
@@ -187,7 +211,7 @@ export const drawBubble = (
     bubble.radius * 0.04,
     toLight,
     0,
-    Math.PI * 2
+    Math.PI * 2,
   );
   ctx.fillStyle = 'rgb(255 255 255 / 22%)';
   ctx.fill();
@@ -199,7 +223,7 @@ export const drawBubble = (
     bubble.radius * 0.68,
     bubble.x,
     bubble.y,
-    bubble.radius * 1.06
+    bubble.radius * 1.06,
   );
   rim.addColorStop(0, 'rgb(255 255 255 / 0%)');
   rim.addColorStop(0.5, 'rgb(186 230 253 / 24%)');
@@ -222,7 +246,7 @@ export const drawMergingPair = (
   tint: string,
   width: number,
   height: number,
-  alpha: number
+  alpha: number,
 ) => {
   const center = buildMetaballPath(ax, ay, ar, bx, by, br);
   const depth = Math.min(1, Math.max(0, center.cy / height));
@@ -239,7 +263,7 @@ export const drawMergingPair = (
     center.radius * 0.05,
     center.cx,
     center.cy,
-    extent * 0.75
+    extent * 0.75,
   );
   bodyGradient.addColorStop(0, 'rgb(255 255 255 / 70%)');
   bodyGradient.addColorStop(0.14, 'rgb(186 230 253 / 40%)');
@@ -254,7 +278,15 @@ export const drawMergingPair = (
   ctx.save();
   ctx.clip(center.path);
   ctx.beginPath();
-  ctx.ellipse(highlightX, highlightY, center.radius * 0.22, center.radius * 0.12, toLight - 0.2, 0, Math.PI * 2);
+  ctx.ellipse(
+    highlightX,
+    highlightY,
+    center.radius * 0.22,
+    center.radius * 0.12,
+    toLight - 0.2,
+    0,
+    Math.PI * 2,
+  );
   ctx.fillStyle = 'rgb(255 255 255 / 72%)';
   ctx.fill();
   ctx.restore();

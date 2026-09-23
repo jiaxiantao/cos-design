@@ -1,7 +1,7 @@
 # cos-design
 
-> React visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases.
-> Version 3.8.1 · 91 components · MIT
+> Multi-framework visual-effect component library for marketing pages, brand landings, dashboards, and creative showcases (React default · Vue · Core · Web Components).
+> Version 4.0.0 · 91 components · MIT
 
 ## When to use (for AI agents)
 
@@ -28,16 +28,21 @@ Package naming: source folder `weatherBackground` → npm `@cos-design/weather-b
 ## Import
 
 ```tsx
-import { Fireworks, ScratchCard } from 'cos-design';
-// or
+import { Fireworks, ScratchCard } from 'cos-design'; // React (default)
 import { Fireworks } from '@cos-design/fireworks';
 ```
 
-CSS is auto-injected — no manual stylesheet import.
+```ts
+import { Fireworks } from 'cos-design/vue'; // Vue 3
+import { createFireworks } from 'cos-design/core'; // vanilla
+import 'cos-design/elements'; // Web Components → <cos-fireworks>
+```
+
+CSS is auto-injected — no manual stylesheet import. Migration: docs/migration-v4.md
 
 ## Constraints
 
-- React >= 18, client components for Canvas/WebGL
+- React >= 18 (default); Vue >= 3.4 via `/vue`; Core via `/core`; Elements via `/element` or `cos-design/elements`
 - Next.js: `dynamic(() => import(...), { ssr: false })` for canvas components
 - Canvas components need explicit `width` / `height`, or `fill` (parent must have explicit height)
 - One strong background + a few focal effects per page

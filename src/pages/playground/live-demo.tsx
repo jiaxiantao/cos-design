@@ -14,7 +14,7 @@ const liveScope = {
   useRef: React.useRef,
   useMemo: React.useMemo,
   useCallback: React.useCallback,
-  useId: React.useId
+  useId: React.useId,
 };
 
 const stripImports = (source: string) =>
@@ -29,8 +29,10 @@ export const toLiveCode = (source: string, options?: { fillContainer?: boolean }
   const body = stripImports(source);
   if (!body) return 'render(<div />);';
 
-  const needsRenderCall = /^\s*(const|let|function)\s/.test(body) || /\n\s*(const|let|function)\s/.test(body);
-  const wrap = (jsx: string) => (options?.fillContainer ? `<FillStage>\n      ${jsx}\n    </FillStage>` : jsx);
+  const needsRenderCall =
+    /^\s*(const|let|function)\s/.test(body) || /\n\s*(const|let|function)\s/.test(body);
+  const wrap = (jsx: string) =>
+    options?.fillContainer ? `<FillStage>\n      ${jsx}\n    </FillStage>` : jsx;
 
   if (needsRenderCall) {
     // 含独立语句时由示例自行 return；背景铺满在下方用 FillStage 包一层预览根节点
@@ -61,17 +63,22 @@ const LiveDemoPlayground = ({
   copied,
   onReset,
   editorRef,
-  demoContent
+  demoContent,
 }: LiveDemoPlaygroundProps) => {
   const { t } = useTranslation();
   const fillContainer = Boolean(demoContent);
-  const liveCode = useMemo(() => toLiveCode(editorCode, { fillContainer }), [editorCode, fillContainer]);
+  const liveCode = useMemo(
+    () => toLiveCode(editorCode, { fillContainer }),
+    [editorCode, fillContainer],
+  );
 
   return (
     <>
       <LiveProvider code={liveCode} scope={liveScope} noInline language="tsx">
         {/* liveStage 只包 LivePreview，避免把绝对定位的 Demo Content 也改成 relative 而挤到下方 */}
-        <div className={`${styles.livePreview} ${fillContainer ? styles.livePreviewBackground : ''}`}>
+        <div
+          className={`${styles.livePreview} ${fillContainer ? styles.livePreviewBackground : ''}`}
+        >
           <div className={styles.liveStage}>
             <LivePreview />
           </div>

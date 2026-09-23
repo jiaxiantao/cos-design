@@ -1,0 +1,11 @@
+.cos-dandelion-field {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #547044;
+}
+.cos-dandelion-field__canvas {
+  display: block;
+  cursor: pointer;
+  touch-action: none;
+}

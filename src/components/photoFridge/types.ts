@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 /** 单张冰箱磁贴照片数据 */
 export interface PhotoFridgeItem {
@@ -39,5 +39,5 @@ export interface PhotoFridgeProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

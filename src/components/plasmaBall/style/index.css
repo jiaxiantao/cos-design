@@ -1,0 +1,9 @@
+.cos-plasma-ball {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+  cursor: crosshair;
+}
+.cos-plasma-ball__canvas {
+  display: block;
+}

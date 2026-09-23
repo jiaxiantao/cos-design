@@ -1,8 +1,9 @@
 /**
  * 根据 src/components 同步生成 packages/<name>/package.json 与入口文件。
- * 组件 / shared 保留已有版本号；聚合包 cos-design 与根目录 version 对齐。
+ * v4 组件（含 core/index.ts）生成 react / vue / core / element 四入口。
  * 用法：node scripts/sync-packages.mjs
  */
+import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import {
@@ -14,13 +15,18 @@ import {
   componentUsesShared,
   listComponentNames,
   packageNameOf,
-  toExportName
+  toExportName,
 } from './component-packages.mjs';
+import { isV4Component } from './v4-utils.mjs';
+import { v4ExportMap, v4PeerDependencies, writeV4PackageEntries } from './v4-package-exports.mjs';
+import { writeUmbrellaEntries } from './generate-umbrella-entries.mjs';
 
 const AI_KEYWORDS = [
   'cos',
   'cos-design',
   'react',
+  'vue',
+  'web-components',
   'component-library',
   'visual-effects',
   'canvas',
@@ -37,7 +43,7 @@ const AI_KEYWORDS = [
   'landing-page',
   'campaign',
   'typescript',
-  'vite'
+  'vite',
 ];
 
 function writeJson(path, data) {
@@ -54,6 +60,21 @@ function readExistingVersion(pkgPath, fallback) {
   }
 }
 
+function legacyExports() {
+  return {
+    '.': {
+      import: {
+        types: './dist/index.d.ts',
+        default: './dist/index.js',
+      },
+      require: {
+        types: './dist/index.d.ts',
+        default: './dist/index.cjs',
+      },
+    },
+  };
+}
+
 function createComponentPackage(name) {
   const dir = join(PACKAGES_DIR, name);
   const srcDir = join(dir, 'src');
@@ -64,93 +85,102 @@ function createComponentPackage(name) {
   const exportName = toExportName(name);
   const extra = EXTRA_EXPORTS[name];
   const componentPath = `../../../src/components/${name}`;
-  const version = readExistingVersion(pkgPath, VERSION);
+  // v4.0：全量对齐根版本号
+  const version = VERSION;
+  const v4 = isV4Component(name);
 
-  const lines = [
-    `export { default } from '${componentPath}';`,
-    `export { default as ${exportName} } from '${componentPath}';`,
-    `export type * from '${componentPath}';`
-  ];
+  if (v4) {
+    writeV4PackageEntries(name, srcDir, exportName, extra);
+  } else {
+    const lines = [
+      `export { default } from '${componentPath}';`,
+      `export { default as ${exportName} } from '${componentPath}';`,
+      `export type * from '${componentPath}';`,
+    ];
 
-  if (extra) {
-    const fromLive = extra.from || {};
-    const byFrom = new Map();
+    if (extra) {
+      const fromLive = extra.from || {};
+      const byFrom = new Map();
 
-    for (const value of extra.values || []) {
-      const rel = fromLive[value] || '.';
-      if (rel === '.') continue;
-      if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
-      byFrom.get(rel).values.push(value);
-    }
-
-    for (const typeName of extra.types || []) {
-      const rel = fromLive[typeName] || '.';
-      if (rel === '.') continue;
-      if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
-      byFrom.get(rel).types.push(typeName);
-    }
-
-    for (const [rel, group] of byFrom) {
-      const base = `${componentPath}/${rel.replace(/^\.\//, '')}`;
-      if (group.values.length) {
-        lines.push(`export { ${group.values.join(', ')} } from '${base}';`);
+      for (const value of extra.values || []) {
+        const rel = fromLive[value] || '.';
+        if (rel === '.') continue;
+        if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
+        byFrom.get(rel).values.push(value);
       }
-      if (group.types.length) {
-        lines.push(`export type { ${group.types.join(', ')} } from '${base}';`);
+
+      for (const typeName of extra.types || []) {
+        const rel = fromLive[typeName] || '.';
+        if (rel === '.') continue;
+        if (!byFrom.has(rel)) byFrom.set(rel, { values: [], types: [] });
+        byFrom.get(rel).types.push(typeName);
+      }
+
+      for (const [rel, group] of byFrom) {
+        const base = `${componentPath}/${rel.replace(/^\.\//, '')}`;
+        if (group.values.length) {
+          lines.push(`export { ${group.values.join(', ')} } from '${base}';`);
+        }
+        if (group.types.length) {
+          lines.push(`export type { ${group.types.join(', ')} } from '${base}';`);
+        }
       }
     }
+
+    writeFileSync(join(srcDir, 'index.ts'), `${lines.join('\n')}\n`);
   }
 
-  writeFileSync(join(srcDir, 'index.ts'), `${lines.join('\n')}\n`);
+  const extraPeers = componentPeerDeps(name);
+  const { peers, peerDependenciesMeta } = v4
+    ? v4PeerDependencies(extraPeers || undefined)
+    : {
+        peers: {
+          react: '>=18.0.0',
+          'react-dom': '>=18.0.0',
+          ...(extraPeers || {}),
+        },
+        peerDependenciesMeta: undefined,
+      };
 
   const pkg = {
     name: packageNameOf(name),
     version,
     description: `${exportName} component from cos-design`,
     type: 'module',
-    main: './dist/index.cjs',
-    module: './dist/index.js',
-    types: './dist/index.d.ts',
-    exports: {
-      '.': {
-        import: {
-          types: './dist/index.d.ts',
-          default: './dist/index.js'
-        },
-        require: {
-          types: './dist/index.d.ts',
-          default: './dist/index.cjs'
-        }
-      }
-    },
+    main: v4 ? './dist/react/index.cjs' : './dist/index.cjs',
+    module: v4 ? './dist/react/index.js' : './dist/index.js',
+    types: v4 ? './dist/react/index.d.ts' : './dist/index.d.ts',
+    exports: v4 ? v4ExportMap() : legacyExports(),
     files: ['dist', 'LICENSE'],
-    sideEffects: ['**/*.css', '**/*.less'],
-    keywords: ['cos-design', 'react', name, exportName],
+    sideEffects: v4
+      ? ['**/*.css', '**/*.less', './dist/element/index.js']
+      : ['**/*.css', '**/*.less'],
+    keywords: ['cos-design', 'react', 'vue', name, exportName],
     homepage: 'https://jiaxiantao.github.io/cos-design/',
     bugs: {
-      url: 'https://github.com/jiaxiantao/cos-design/issues'
+      url: 'https://github.com/jiaxiantao/cos-design/issues',
     },
     repository: {
       type: 'git',
       url: 'git+https://github.com/jiaxiantao/cos-design.git',
-      directory: `packages/${name}`
+      directory: `packages/${name}`,
     },
     author: 'jiaxiantao <jiaxiantao@souche.com>',
     license: 'MIT',
-    peerDependencies: {
-      react: '>=18.0.0',
-      'react-dom': '>=18.0.0',
-      ...(componentPeerDeps(name) || {})
-    },
+    peerDependencies: peers,
     publishConfig: {
       access: 'public',
-      registry: 'https://registry.npmjs.org'
-    }
+      registry: 'https://registry.npmjs.org',
+    },
   };
+
+  if (peerDependenciesMeta) {
+    pkg.peerDependenciesMeta = peerDependenciesMeta;
+  }
 
   if (usesShared) {
     pkg.dependencies = {
-      '@cos-design/shared': 'workspace:*'
+      '@cos-design/shared': 'workspace:*',
     };
   }
 
@@ -165,12 +195,13 @@ function createComponentPackage(name) {
 function createUmbrellaPackage() {
   const dir = join(PACKAGES_DIR, 'cos-design');
   mkdirSync(dir, { recursive: true });
+  writeUmbrellaEntries();
 
   const pkg = {
     name: 'cos-design',
     version: VERSION,
     description:
-      'React visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases',
+      'Multi-framework visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases (React / Vue / Web Components)',
     type: 'module',
     main: './dist/index.cjs',
     module: './dist/index.js',
@@ -179,50 +210,126 @@ function createUmbrellaPackage() {
       '.': {
         import: {
           types: './dist/index.d.ts',
-          default: './dist/index.js'
+          default: './dist/index.js',
         },
         require: {
           types: './dist/index.d.ts',
-          default: './dist/index.cjs'
-        }
-      }
+          default: './dist/index.cjs',
+        },
+      },
+      './vue': {
+        import: {
+          types: './dist/vue.d.ts',
+          default: './dist/vue.js',
+        },
+      },
+      './core': {
+        import: {
+          types: './dist/core.d.ts',
+          default: './dist/core.js',
+        },
+      },
+      './elements': {
+        import: {
+          types: './dist/elements.d.ts',
+          default: './dist/elements.js',
+        },
+      },
     },
     files: ['dist', 'LICENSE', 'README.md', 'CHANGELOG.md'],
-    sideEffects: ['**/*.css', '**/*.less'],
+    sideEffects: ['**/*.css', '**/*.less', './dist/elements.js'],
     keywords: AI_KEYWORDS,
     homepage: 'https://jiaxiantao.github.io/cos-design/',
     bugs: {
-      url: 'https://github.com/jiaxiantao/cos-design/issues'
+      url: 'https://github.com/jiaxiantao/cos-design/issues',
     },
     repository: {
       type: 'git',
       url: 'git+https://github.com/jiaxiantao/cos-design.git',
-      directory: 'packages/cos-design'
+      directory: 'packages/cos-design',
     },
     author: 'jiaxiantao <jiaxiantao@souche.com>',
     license: 'MIT',
     peerDependencies: {
       react: '>=18.0.0',
       'react-dom': '>=18.0.0',
-      three: '>=0.160.0'
+      vue: '>=3.4.0',
+      three: '>=0.160.0',
+    },
+    peerDependenciesMeta: {
+      react: { optional: true },
+      'react-dom': { optional: true },
+      vue: { optional: true },
+      three: { optional: true },
     },
     publishConfig: {
       access: 'public',
-      registry: 'https://registry.npmjs.org'
-    }
+      registry: 'https://registry.npmjs.org',
+    },
   };
 
   writeJson(join(dir, 'package.json'), pkg);
 
   for (const file of ['LICENSE', 'README.md', 'CHANGELOG.md']) {
     const src = join(ROOT, file);
-    if (existsSync(src)) cpSync(src, join(dir, file));
+    if (!existsSync(src)) continue;
+    if (file === 'LICENSE') {
+      cpSync(src, join(dir, file));
+      continue;
+    }
+    // npm package root has no docs/examples — rewrite repo-relative links for consumers.
+    const raw = readFileSync(src, 'utf8');
+    const rewritten = raw.replace(
+      /\]\((\.\.?\/(?:docs|examples|website-content|QUICKSTART\.md|CHANGELOG\.md|LICENSE|AGENTS\.md|CONTRIBUTING\.md|\.cursor\/skills\/cos-design\/SKILL\.md)[^)]*)\)/g,
+      (_m, rel) => {
+        const cleaned = String(rel)
+          .replace(/^\.\//, '')
+          .replace(/^\.\.\//, '');
+        return `](https://github.com/jiaxiantao/cos-design/blob/master/${cleaned})`;
+      },
+    );
+    const outPath = join(dir, file);
+    writeFileSync(outPath, rewritten);
+    // Stabilize markdown table widths after longer GitHub URLs are injected.
+    try {
+      const prettierBin = join(ROOT, 'node_modules/prettier/bin/prettier.cjs');
+      if (existsSync(prettierBin)) {
+        execFileSync(process.execPath, [prettierBin, '--write', outPath], { stdio: 'ignore' });
+      }
+    } catch {
+      // prettier optional during bootstrap
+    }
   }
 }
 
 const sharedPkgPath = join(PACKAGES_DIR, 'shared', 'package.json');
 const sharedPkg = JSON.parse(readFileSync(sharedPkgPath, 'utf8'));
-sharedPkg.version = readExistingVersion(sharedPkgPath, VERSION);
+sharedPkg.version = VERSION;
+sharedPkg.exports = {
+  '.': {
+    import: {
+      types: './dist/index.d.ts',
+      default: './dist/index.js',
+    },
+    require: {
+      types: './dist/index.d.ts',
+      default: './dist/index.cjs',
+    },
+  },
+  './react': {
+    import: {
+      types: './dist/react/index.d.ts',
+      default: './dist/react/index.js',
+    },
+  },
+};
+sharedPkg.peerDependencies = {
+  react: '>=18.0.0',
+};
+sharedPkg.peerDependenciesMeta = {
+  react: { optional: true },
+};
+
 const licenseSrc = join(ROOT, 'LICENSE');
 if (existsSync(licenseSrc)) {
   cpSync(licenseSrc, join(PACKAGES_DIR, 'shared', 'LICENSE'));
@@ -235,11 +342,12 @@ for (const name of names) {
 }
 createUmbrellaPackage();
 
+const v4Count = names.filter(isV4Component).length;
 const uniqueVersions = new Set([
   VERSION,
   sharedPkg.version,
-  ...names.map((n) => readExistingVersion(join(PACKAGES_DIR, n, 'package.json'), VERSION))
+  ...names.map((n) => readExistingVersion(join(PACKAGES_DIR, n, 'package.json'), VERSION)),
 ]);
 console.log(
-  `Synced ${names.length} component packages + shared + cos-design (root/umbrella=${VERSION}; versions=${[...uniqueVersions].sort().join(', ')})`
+  `Synced ${names.length} component packages + shared + cos-design (v4=${v4Count}; root=${VERSION}; versions=${[...uniqueVersions].sort().join(', ')})`,
 );

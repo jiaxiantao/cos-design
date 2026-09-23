@@ -5,7 +5,7 @@ const softGlow = (
   cx: number,
   cy: number,
   radius: number,
-  colorStops: Array<[number, string]>
+  colorStops: Array<[number, string]>,
 ) => {
   const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
   for (const [t, c] of colorStops) g.addColorStop(t, c);
@@ -22,7 +22,7 @@ const softShaft = (
   angle: number,
   length: number,
   widthScale: number,
-  alpha: number
+  alpha: number,
 ) => {
   ctx.save();
   ctx.translate(ox, oy);
@@ -45,7 +45,7 @@ const drawMarineSnow = (
   width: number,
   height: number,
   time: number,
-  sprite: HTMLCanvasElement
+  sprite: HTMLCanvasElement,
 ) => {
   const count = Math.min(70, Math.floor((width * height) / 22000));
   for (let i = 0; i < count; i++) {
@@ -66,7 +66,12 @@ const drawMarineSnow = (
   ctx.globalAlpha = 1;
 };
 
-export const drawStaticBackground = (ctx: CanvasRenderingContext2D, width: number, height: number, tint: string) => {
+export const drawStaticBackground = (
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  tint: string,
+) => {
   const bg = ctx.createLinearGradient(0, 0, 0, height);
   bg.addColorStop(0, '#0c4558');
   bg.addColorStop(0.08, '#0a3c50');
@@ -87,18 +92,18 @@ export const drawStaticBackground = (ctx: CanvasRenderingContext2D, width: numbe
     [0.18, 'rgb(80 170 200 / 14%)'],
     [0.4, `${tint}12`],
     [0.65, 'rgb(30 90 120 / 4%)'],
-    [1, 'rgb(5 20 30 / 0%)']
+    [1, 'rgb(5 20 30 / 0%)'],
   ]);
 
   softGlow(ctx, width * 0.18, height * 0.12, width * 0.7, [
     [0, 'rgb(70 150 175 / 8%)'],
     [0.45, 'rgb(30 90 120 / 3%)'],
-    [1, 'rgb(10 30 45 / 0%)']
+    [1, 'rgb(10 30 45 / 0%)'],
   ]);
   softGlow(ctx, width * 0.88, height * 0.22, width * 0.55, [
     [0, 'rgb(50 120 150 / 6%)'],
     [0.5, 'rgb(20 70 100 / 2%)'],
-    [1, 'rgb(5 20 30 / 0%)']
+    [1, 'rgb(5 20 30 / 0%)'],
   ]);
 
   for (let i = 0; i < 4; i++) {
@@ -109,7 +114,7 @@ export const drawStaticBackground = (ctx: CanvasRenderingContext2D, width: numbe
     softGlow(ctx, cx, cy, height * (0.28 + b * 0.18), [
       [0, `rgb(25 70 95 / ${4 + a * 3}%)`],
       [0.5, `rgb(15 45 65 / ${2 + b * 2}%)`],
-      [1, 'rgb(5 20 30 / 0%)']
+      [1, 'rgb(5 20 30 / 0%)'],
     ]);
   }
 
@@ -125,15 +130,15 @@ export const drawStaticBackground = (ctx: CanvasRenderingContext2D, width: numbe
   softGlow(ctx, width * 0.5, height * 1.05, height * 0.55, [
     [0, 'rgb(0 2 5 / 70%)'],
     [0.45, 'rgb(0 4 8 / 35%)'],
-    [1, 'rgb(0 6 10 / 0%)']
+    [1, 'rgb(0 6 10 / 0%)'],
   ]);
   softGlow(ctx, width * 0.28, height * 1.02, width * 0.4, [
     [0, 'rgb(0 3 6 / 28%)'],
-    [1, 'rgb(0 3 6 / 0%)']
+    [1, 'rgb(0 3 6 / 0%)'],
   ]);
   softGlow(ctx, width * 0.75, height * 1.04, width * 0.35, [
     [0, 'rgb(0 2 5 / 24%)'],
-    [1, 'rgb(0 2 5 / 0%)']
+    [1, 'rgb(0 2 5 / 0%)'],
   ]);
 
   const vignette = ctx.createRadialGradient(
@@ -142,7 +147,7 @@ export const drawStaticBackground = (ctx: CanvasRenderingContext2D, width: numbe
     Math.min(width, height) * 0.35,
     width * 0.5,
     height * 0.48,
-    Math.max(width, height) * 0.78
+    Math.max(width, height) * 0.78,
   );
   vignette.addColorStop(0, 'rgb(0 0 0 / 0%)');
   vignette.addColorStop(0.55, 'rgb(0 6 10 / 6%)');
@@ -158,7 +163,7 @@ export const drawDynamicBackground = (
   height: number,
   time: number,
   snowSprite: HTMLCanvasElement,
-  reduceMotion: boolean
+  reduceMotion: boolean,
 ) => {
   const sunX = width * (0.55 + Math.sin(time * 0.07) * 0.03);
   ctx.save();
@@ -168,7 +173,15 @@ export const drawDynamicBackground = (
     const ox = width * (0.22 + i * 0.14) + Math.sin(t) * width * (reduceMotion ? 0.015 : 0.04);
     const angle = 0.12 + Math.sin(t * 0.6 + i) * (reduceMotion ? 0.02 : 0.05);
     const alpha = 0.045 + (i % 3) * 0.012 + Math.sin(time * 0.2 + i) * 0.008;
-    softShaft(ctx, ox, -height * 0.02, angle, height * (0.7 + (i % 2) * 0.12), 0.12 + (i % 3) * 0.04, alpha);
+    softShaft(
+      ctx,
+      ox,
+      -height * 0.02,
+      angle,
+      height * (0.7 + (i % 2) * 0.12),
+      0.12 + (i % 3) * 0.04,
+      alpha,
+    );
   }
   softShaft(
     ctx,
@@ -177,7 +190,7 @@ export const drawDynamicBackground = (
     0.08 + Math.sin(time * 0.09) * (reduceMotion ? 0.012 : 0.03),
     height * 0.78,
     0.2,
-    0.07 + Math.sin(time * 0.15) * 0.012
+    0.07 + Math.sin(time * 0.15) * 0.012,
   );
   ctx.restore();
   drawMarineSnow(ctx, width, height, time, snowSprite);

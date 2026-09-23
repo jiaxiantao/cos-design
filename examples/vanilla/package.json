@@ -1,0 +1,29 @@
+{
+  "name": "cos-design-vanilla-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Runnable vanilla example for cos-design Core API + Web Components",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@cos-design/confetti": "workspace:*",
+    "@cos-design/fireworks": "workspace:*",
+    "@cos-design/flip-card": "workspace:*",
+    "@cos-design/neon-text": "workspace:*",
+    "@cos-design/nine-grid": "workspace:*",
+    "@cos-design/scratch-card": "workspace:*",
+    "@cos-design/weather-background": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^8.0.16"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}

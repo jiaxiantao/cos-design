@@ -1,0 +1,7 @@
+.cos-electric-arc {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cos-electric-arc__canvas {
+  display: block;
+}

@@ -13,9 +13,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@cos-design/shared": ["packages/shared/src/index.ts"]
+      "@cos-design/shared": ["packages/shared/src/index.ts"],
+      "@cos-design/shared/react": ["packages/shared/src/react/index.ts"]
     }
   },
-  "include": ["src", "packages/shared/src", "src/vite-env.d.ts"],
+  "include": ["src", "packages/shared/src", "packages/*/src", "src/vite-env.d.ts"],
   "exclude": ["src/main.tsx", "src/pages"]
 }

@@ -2,7 +2,7 @@ export const PHASE = {
   WITHER: 3.8,
   SPROUT: 2.6,
   FLOWER: 4.8,
-  PUFFING: 5.5
+  PUFFING: 5.5,
 } as const;
 
 /** 黄花/绒球花头视觉缩放 */

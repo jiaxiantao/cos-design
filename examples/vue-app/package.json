@@ -1,0 +1,32 @@
+{
+  "name": "cos-design-vue-app-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Runnable Vue 3 + Vite example for cos-design (/vue subpath)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@cos-design/confetti": "workspace:*",
+    "@cos-design/fireworks": "workspace:*",
+    "@cos-design/flip-card": "workspace:*",
+    "@cos-design/neon-text": "workspace:*",
+    "@cos-design/nine-grid": "workspace:*",
+    "@cos-design/scratch-card": "workspace:*",
+    "@cos-design/weather-background": "workspace:*",
+    "vue": "^3.5.28"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.4",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.16",
+    "vue-tsc": "^3.2.1"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}

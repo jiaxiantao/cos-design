@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+export type StyleMap = Record<string, string | number | undefined>;
 
 export interface PhotoClotheslineItem {
   /** 图片地址 */
@@ -53,7 +53,7 @@ export interface PhotoClotheslineProps {
   /** 背景（任意 CSS background 值） */
   background?: string;
   /** 照片填充方式 */
-  objectFit?: CSSProperties['objectFit'];
+  objectFit?: string;
   /** 是否显示照片标题与说明 */
   showCaption?: boolean;
   /** 初始居中显示的照片索引 */
@@ -67,5 +67,5 @@ export interface PhotoClotheslineProps {
   /** 自定义类名 */
   className?: string;
   /** 自定义样式 */
-  style?: CSSProperties;
+  style?: StyleMap;
 }

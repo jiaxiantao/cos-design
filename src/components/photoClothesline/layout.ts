@@ -1,4 +1,12 @@
-import { BAND_POINTS, BAND_RECOVER_RATE, GRAVITY_ACCEL, PHYSICS_STEP_S, PIN_GRIP, SPIN_K, SWING_K } from './constants';
+import {
+  BAND_POINTS,
+  BAND_RECOVER_RATE,
+  GRAVITY_ACCEL,
+  PHYSICS_STEP_S,
+  PIN_GRIP,
+  SPIN_K,
+  SWING_K,
+} from './constants';
 import { clamp, pseudoRandom } from './math';
 import type { Layout, Physics, RopeAnchor } from './model';
 
@@ -27,7 +35,7 @@ export const buildLayout = ({
   ropeSag,
   bandLength,
   maxPull,
-  tilt
+  tilt,
 }: LayoutInput): Layout => {
   const contentWidth = count > 0 ? count * photoWidth + (count - 1) * photoGap : 0;
   const sidePadding = Math.round(photoWidth * 0.55);
@@ -82,17 +90,21 @@ export const buildLayout = ({
         ? [{ index, weight: 0.3 }]
         : [
             { index: index - 1, weight: 0.45 },
-            { index, weight: 0.45 }
-          ]
+            { index, weight: 0.45 },
+          ],
     });
-    anchors.push({ x: pinXs[index], baseY: baseRopeY(pinXs[index]), pulls: [{ index, weight: 1 }] });
+    anchors.push({
+      x: pinXs[index],
+      baseY: baseRopeY(pinXs[index]),
+      pulls: [{ index, weight: 1 }],
+    });
   }
   if (count > 0) {
     const midX = (pinXs[count - 1] + railWidth) / 2;
     anchors.push({
       x: midX,
       baseY: baseRopeY(midX) + spanSag * 0.5,
-      pulls: [{ index: count - 1, weight: 0.3 }]
+      pulls: [{ index: count - 1, weight: 0.3 }],
     });
   }
   anchors.push({ x: railWidth, baseY: baseRopeY(railWidth), pulls: [] });
@@ -101,7 +113,7 @@ export const buildLayout = ({
     railWidth,
     stageHeight: Math.max(
       viewportHeight,
-      Math.ceil(ropeTop + ropeSag + bandLength + PIN_GRIP + photoHeight + maxPull + 40)
+      Math.ceil(ropeTop + ropeSag + bandLength + PIN_GRIP + photoHeight + maxPull + 40),
     ),
     cardLefts,
     cardTops,
@@ -110,7 +122,7 @@ export const buildLayout = ({
     anchorYs,
     baseRots,
     centers,
-    anchors
+    anchors,
   };
 };
 
@@ -122,7 +134,13 @@ export interface PhysicsInput {
   tension: number;
 }
 
-export const buildPhysics = ({ bandLength, damping, maxPull, stiffness, tension }: PhysicsInput): Physics => {
+export const buildPhysics = ({
+  bandLength,
+  damping,
+  maxPull,
+  stiffness,
+  tension,
+}: PhysicsInput): Physics => {
   const springK = 420 * clamp(stiffness, 0.1, 3);
   const zeta = clamp(damping, 0.02, 1);
   const length = Math.max(8, bandLength);
@@ -139,6 +157,6 @@ export const buildPhysics = ({ bandLength, damping, maxPull, stiffness, tension 
     // 主绳阻尼比单独抬高：真实的绳子挂着重物不会像弹簧一样来回振好几下
     springC: 2 * clamp(0.45 + zeta, 0.1, 1.2) * Math.sqrt(springK),
     neighborK: springK * clamp(tension, 0, 1),
-    maxPull: Math.max(16, maxPull)
+    maxPull: Math.max(16, maxPull),
   };
 };

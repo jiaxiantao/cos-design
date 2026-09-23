@@ -7,7 +7,8 @@ export const DEFAULT_SMOG_LEVEL: SmogLevel = 2;
 
 export const SMOG_LEVEL_LABELS = ['', '轻霾', '中霾', '重霾'] as const;
 
-export const clampSmogLevel = (level: number): SmogLevel => Math.min(3, Math.max(1, Math.round(level))) as SmogLevel;
+export const clampSmogLevel = (level: number): SmogLevel =>
+  Math.min(3, Math.max(1, Math.round(level))) as SmogLevel;
 
 export const formatSmogLevel = (level: number): string => {
   const lv = clampSmogLevel(level);
@@ -26,7 +27,7 @@ export const intensifySmogConfig = (cfg: WeatherConfig, level: number): WeatherC
       fogBanks: 5,
       haze: 0.16,
       cloudAlpha: Math.min(cfg.cloudAlpha, 0.28),
-      sun: 'soft'
+      sun: 'soft',
     };
   }
   if (lv === 3) {
@@ -36,7 +37,7 @@ export const intensifySmogConfig = (cfg: WeatherConfig, level: number): WeatherC
       fogBanks: 16,
       haze: 0.48,
       cloudAlpha: 0.42,
-      sun: 'dim'
+      sun: 'dim',
     };
   }
   // 中霾（默认 ≈ 旧版 smog）
@@ -45,7 +46,7 @@ export const intensifySmogConfig = (cfg: WeatherConfig, level: number): WeatherC
     fogBanks: 12,
     haze: 0.34,
     cloudAlpha: 0.35,
-    sun: 'dim'
+    sun: 'dim',
   };
 };
 
@@ -61,7 +62,9 @@ export const smogBankAlphaScale = (level: number): number => {
  * 能见度（米）→ 霾强度。
  * ≥5km 轻霾 · 1~5km 中霾 · <1km 重霾
  */
-export const smogLevelFromVisibility = (visibilityMeters: number | null | undefined): SmogLevel | null => {
+export const smogLevelFromVisibility = (
+  visibilityMeters: number | null | undefined,
+): SmogLevel | null => {
   if (visibilityMeters == null || !Number.isFinite(visibilityMeters)) return null;
   if (visibilityMeters >= 5000) return 1;
   if (visibilityMeters >= 1000) return 2;

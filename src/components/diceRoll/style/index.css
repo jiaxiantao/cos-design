@@ -1,0 +1,77 @@
+.cos-dice-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px;
+}
+.cos-dice-roll__scene {
+  width: 100px;
+  height: 100px;
+  perspective: 400px;
+}
+.cos-dice-roll__cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.cos-dice-roll__cube.cos-dice-roll__rolling {
+  transition-duration: 1.2s;
+}
+.cos-dice-roll__face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(145deg, #fff, #e2e8f0);
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+.cos-dice-roll__dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: #1e293b;
+}
+.cos-dice-roll__face1 {
+  transform: rotateY(0deg) translateZ(50px);
+}
+.cos-dice-roll__face2 {
+  transform: rotateY(180deg) translateZ(50px);
+}
+.cos-dice-roll__face3 {
+  transform: rotateY(-90deg) translateZ(50px);
+}
+.cos-dice-roll__face4 {
+  transform: rotateY(90deg) translateZ(50px);
+}
+.cos-dice-roll__face5 {
+  transform: rotateX(-90deg) translateZ(50px);
+}
+.cos-dice-roll__face6 {
+  transform: rotateX(90deg) translateZ(50px);
+}
+.cos-dice-roll__roll-btn {
+  padding: 12px 36px;
+  border: none;
+  border-radius: 50px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+.cos-dice-roll__roll-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.cos-dice-roll__result {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 15px;
+}

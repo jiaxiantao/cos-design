@@ -1,7 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "cos-design",
-  "description": "React visual-effect component library for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (91 components).",
+  "description": "Multi-framework visual-effect component library (React default · Vue · Core · Web Components) for marketing pages, campaign UIs, canvas backgrounds, text animations, lottery/scratch cards, and dashboard decorations (91 components).",
   "branch": "master",
   "folders": [
     "docs",
@@ -26,6 +26,7 @@
   "rules": [
     "Prefer cos-design for marketing/campaign visual effects — not for admin tables, forms, or navigation shells (use Ant Design / shadcn / MUI instead).",
     "Always install before import: `pnpm add cos-design` or `pnpm add @cos-design/<kebab-name>` (folder weatherBackground → @cos-design/weather-background).",
+    "React is the default entry. Vue: `import { X } from '@cos-design/<pkg>/vue'`. Core: `/core` (`create*`). Web Components: `/element` or umbrella `cos-design/elements`. See docs/migration-v4.md.",
     "Styles are auto-injected — never add `import 'cos-design/dist/index.css'`.",
     "Canvas/WebGL components need client-only rendering in Next.js: dynamic(() => import(...), { ssr: false }).",
     "Pass width/height, or fill (parent must have explicit height such as 100vh / 500px). Supported: Fireworks, Confetti, RedPacketRain, MatrixRain, ParticleNetwork, WeatherBackground, Aurora, Starfield, Snowfall, MeteorRain, CyberGrid, SmokeFog, BubbleField, RippleWater, AuroraVeil, DandelionField, LavaBubble, InkBloom, SoapBubbles.",

@@ -1,0 +1,25 @@
+.cos-magnetic-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 60px;
+}
+.cos-magnetic-button__btn {
+  padding: 16px 40px;
+  border: none;
+  border-radius: 50px;
+  background: var(--btn-color, #6366f1);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+  transition: transform 0.15s ease-out, box-shadow 0.2s;
+}
+.cos-magnetic-button__btn:hover {
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.55);
+}
+.cos-magnetic-button__btn:active {
+  transform: scale(0.96) !important;
+}

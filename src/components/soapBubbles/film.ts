@@ -14,7 +14,7 @@ export const filmRgb = (thickness: number): [number, number, number] => {
     [55, 210, 120],
     [235, 195, 70],
     [170, 85, 210],
-    [55, 58, 72]
+    [55, 58, 72],
   ];
   const x = t * (stops.length - 1);
   const i = Math.floor(x);
@@ -24,7 +24,7 @@ export const filmRgb = (thickness: number): [number, number, number] => {
   return [
     Math.round(a[0] + (b[0] - a[0]) * f),
     Math.round(a[1] + (b[1] - a[1]) * f),
-    Math.round(a[2] + (b[2] - a[2]) * f)
+    Math.round(a[2] + (b[2] - a[2]) * f),
   ];
 };
 
@@ -42,7 +42,7 @@ export const softBlob = (
   ry: number,
   rot: number,
   rgb: [number, number, number],
-  peak: number
+  peak: number,
 ) => {
   ctx.save();
   ctx.translate(x, y);
@@ -70,13 +70,17 @@ export const drawSoapIridescence = (
   lightTo: number,
   time: number,
   filmBias: number,
-  peakScale = 1
+  peakScale = 1,
 ) => {
   const s = b.seed;
   ctx.globalCompositeOperation = 'lighter';
   const patches = 7 + Math.floor(hash01(s + 16.2) * 5);
   for (let i = 0; i < patches; i++) {
-    const ang = b.phase * 0.7 + i * (0.55 + hash01(s + i * 3.1) * 0.35) + time * (0.14 + (i % 3) * 0.04) + s * 0.01;
+    const ang =
+      b.phase * 0.7 +
+      i * (0.55 + hash01(s + i * 3.1) * 0.35) +
+      time * (0.14 + (i % 3) * 0.04) +
+      s * 0.01;
     const thick =
       filmBias * 0.35 +
       0.12 +
@@ -88,7 +92,10 @@ export const drawSoapIridescence = (
     const py = Math.sin(ang) * dist * (0.85 + hash01(s + i) * 0.2);
     const size = R * (0.22 + hash01(s + i * 4.1) * 0.22);
     const peak =
-      (0.2 + b.depth * 0.18) * (0.55 + hash01(s + i * 5.3) * 0.45) * lambertAtAngle(ang, lightTo) * peakScale;
+      (0.2 + b.depth * 0.18) *
+      (0.55 + hash01(s + i * 5.3) * 0.45) *
+      lambertAtAngle(ang, lightTo) *
+      peakScale;
     softBlob(ctx, px, py, size, size * (0.55 + hash01(s + i * 6) * 0.4), ang * 0.4, rgb, peak);
   }
 
@@ -107,7 +114,7 @@ export const drawSoapIridescence = (
       R * (0.1 + hash01(s + i * 2.1) * 0.1),
       mid + Math.PI / 2,
       rgb,
-      (0.22 + b.depth * 0.16 + hash01(s + i) * 0.09) * lambertAtAngle(mid, lightTo) * peakScale
+      (0.22 + b.depth * 0.16 + hash01(s + i) * 0.09) * lambertAtAngle(mid, lightTo) * peakScale,
     );
   }
   ctx.globalCompositeOperation = 'source-over';

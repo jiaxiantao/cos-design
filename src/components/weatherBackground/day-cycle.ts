@@ -53,9 +53,14 @@ const rgbToHex = ([r, g, b]: RGB): string => {
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-const lerpRgb = (a: RGB, b: RGB, t: number): RGB => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
+const lerpRgb = (a: RGB, b: RGB, t: number): RGB => [
+  lerp(a[0], b[0], t),
+  lerp(a[1], b[1], t),
+  lerp(a[2], b[2], t),
+];
 
-const mixHex = (a: string, b: string, t: number) => rgbToHex(lerpRgb(parseHexRgb(a), parseHexRgb(b), clamp01(t)));
+const mixHex = (a: string, b: string, t: number) =>
+  rgbToHex(lerpRgb(parseHexRgb(a), parseHexRgb(b), clamp01(t)));
 
 const smoothstep = (t: number) => {
   const x = clamp01(t);
@@ -137,13 +142,13 @@ export const computeDayCycle = (nowMs: number, times: DayCycleTimes): DayCycleSt
 export const celestialScreenPosition = (
   width: number,
   height: number,
-  arcProgress: number
+  arcProgress: number,
 ): { x: number; y: number } => {
   const t = clamp01(arcProgress);
   const elev = Math.sin(Math.PI * t);
   return {
     x: width * (0.1 + 0.8 * t),
-    y: height * (0.58 - 0.4 * elev)
+    y: height * (0.58 - 0.4 * elev),
   };
 };
 
@@ -160,14 +165,18 @@ const DUSK_BOTTOM = '#c4784a';
 export const resolveSkyByDayCycle = (
   daySky: [string, string],
   nightSky: [string, string],
-  cycle: DayCycleState
+  cycle: DayCycleState,
 ): [string, string] => {
   if (cycle.isDay) {
     // 地平线附近偏暖、略暗；天顶用天气日间色
     const zenith = smoothstep(cycle.elevation);
     const warmAmt = (1 - zenith) * 0.72;
     const top = mixHex(mixHex(daySky[0], WARM_TOP, warmAmt), '#1a2438', (1 - zenith) * 0.12);
-    const bottom = mixHex(mixHex(daySky[1], WARM_BOTTOM, warmAmt * 0.85), '#3a4558', (1 - zenith) * 0.08);
+    const bottom = mixHex(
+      mixHex(daySky[1], WARM_BOTTOM, warmAmt * 0.85),
+      '#3a4558',
+      (1 - zenith) * 0.08,
+    );
     return [top, bottom];
   }
 
@@ -181,7 +190,7 @@ export const resolveSkyByDayCycle = (
 export const buildSkyGradient = (
   ctx: CanvasRenderingContext2D,
   height: number,
-  sky: [string, string]
+  sky: [string, string],
 ): CanvasGradient => {
   const g = ctx.createLinearGradient(0, 0, 0, height);
   g.addColorStop(0, sky[0]);
@@ -197,6 +206,6 @@ export const celestialDrawScale = (cycle: DayCycleState): { scale: number; alpha
   const e = cycle.elevation;
   return {
     scale: 0.82 + e * 0.22,
-    alpha: 0.65 + e * 0.35
+    alpha: 0.65 + e * 0.35,
   };
 };
