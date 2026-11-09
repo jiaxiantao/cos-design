@@ -1,8 +1,9 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
-import { createLiquidProgress, type LiquidProgressController, type LiquidProgressOptions } from '../core';
+  createLiquidProgress,
+  type LiquidProgressController,
+  type LiquidProgressOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-liquid-progress';
@@ -18,7 +19,6 @@ function parseOptions(el: HTMLElement): LiquidProgressOptions {
 
 class CosLiquidProgressElement extends HTMLElement {
   private ctrl: LiquidProgressController | null = null;
-
 
   static get observedAttributes() {
     return ['value', 'max', 'size', 'color'];
@@ -36,7 +36,6 @@ class CosLiquidProgressElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createNeonText, type NeonTextController, type NeonTextOptions } from '../core';
 import '../style/index.css';
 
@@ -20,7 +16,6 @@ function parseOptions(el: HTMLElement): NeonTextOptions {
 class CosNeonTextElement extends HTMLElement {
   private ctrl: NeonTextController | null = null;
 
-
   static get observedAttributes() {
     return ['text', 'color', 'font-size', 'flicker'];
   }
@@ -37,7 +32,6 @@ class CosNeonTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

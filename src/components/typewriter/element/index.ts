@@ -1,8 +1,4 @@
-import {
-  readJsonAttr,
-  readNumberAttr,
-  readPropertyOverride,
-} from '@cos-design/shared';
+import { readJsonAttr, readNumberAttr, readPropertyOverride } from '@cos-design/shared';
 import { createTypewriter, type TypewriterController, type TypewriterOptions } from '../core';
 import '../style/index.css';
 
@@ -46,7 +42,6 @@ class CosTypewriterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

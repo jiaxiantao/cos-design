@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createRopeChain, type RopeChainController, type RopeChainOptions } from '../core';
 import '../style/index.css';
 
@@ -20,7 +17,6 @@ function parseOptions(el: HTMLElement): RopeChainOptions {
 class CosRopeChainElement extends HTMLElement {
   private ctrl: RopeChainController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'segments', 'color', 'gravity'];
   }
@@ -37,7 +33,6 @@ class CosRopeChainElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

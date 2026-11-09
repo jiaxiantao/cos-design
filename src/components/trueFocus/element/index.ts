@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createTrueFocus, type TrueFocusController, type TrueFocusOptions } from '../core';
 import '../style/index.css';
 
@@ -26,9 +22,19 @@ function parseOptions(el: HTMLElement): TrueFocusOptions {
 class CosTrueFocusElement extends HTMLElement {
   private ctrl: TrueFocusController | null = null;
 
-
   static get observedAttributes() {
-    return ['sentence', 'separator', 'manual-mode', 'blur-amount', 'border-color', 'glow-color', 'animation-duration', 'pause-between-animations', 'font-size', 'color'];
+    return [
+      'sentence',
+      'separator',
+      'manual-mode',
+      'blur-amount',
+      'border-color',
+      'glow-color',
+      'animation-duration',
+      'pause-between-animations',
+      'font-size',
+      'color',
+    ];
   }
 
   connectedCallback() {
@@ -43,7 +49,6 @@ class CosTrueFocusElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

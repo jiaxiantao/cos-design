@@ -24,7 +24,6 @@ function parseOptions(el: HTMLElement): FireworksOptions {
 class CosFireworksElement extends HTMLElement {
   private ctrl: FireworksController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'auto', 'interactive', 'hint'];
   }

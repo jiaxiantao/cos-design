@@ -37,7 +37,16 @@ class CosAuroraVeilElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'colors', 'band-count', 'speed', 'interactive', 'aria-label'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'colors',
+      'band-count',
+      'speed',
+      'interactive',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -52,7 +61,6 @@ class CosAuroraVeilElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

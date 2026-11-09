@@ -1,6 +1,4 @@
-import {
-  readNumberAttr,
-} from '@cos-design/shared';
+import { readNumberAttr } from '@cos-design/shared';
 import { createCanvasClock, type CanvasClockController, type CanvasClockOptions } from '../core';
 import '../style/index.css';
 
@@ -15,7 +13,6 @@ function parseOptions(el: HTMLElement): CanvasClockOptions {
 
 class CosCanvasClockElement extends HTMLElement {
   private ctrl: CanvasClockController | null = null;
-
 
   static get observedAttributes() {
     return ['width', 'height'];
@@ -33,7 +30,6 @@ class CosCanvasClockElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,8 +1,9 @@
+import { readBooleanAttr, readNumberAttr } from '@cos-design/shared';
 import {
-  readBooleanAttr,
-  readNumberAttr,
-} from '@cos-design/shared';
-import { createAudioVisualizer, type AudioVisualizerController, type AudioVisualizerOptions } from '../core';
+  createAudioVisualizer,
+  type AudioVisualizerController,
+  type AudioVisualizerOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-audio-visualizer';
@@ -18,7 +19,6 @@ function parseOptions(el: HTMLElement): AudioVisualizerOptions {
 
 class CosAudioVisualizerElement extends HTMLElement {
   private ctrl: AudioVisualizerController | null = null;
-
 
   static get observedAttributes() {
     return ['width', 'height', 'bar-count', 'use-mic'];
@@ -36,7 +36,6 @@ class CosAudioVisualizerElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

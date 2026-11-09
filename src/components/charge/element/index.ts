@@ -1,8 +1,4 @@
-import {
-  optionCallbackDispatcher,
-  readBooleanAttr,
-  readNumberAttr,
-} from '@cos-design/shared';
+import { optionCallbackDispatcher, readBooleanAttr, readNumberAttr } from '@cos-design/shared';
 import { createCharge, type ChargeController, type ChargeOptions } from '../core';
 import '../style/index.css';
 
@@ -23,7 +19,6 @@ function parseOptions(el: HTMLElement): ChargeOptions {
 class CosChargeElement extends HTMLElement {
   private ctrl: ChargeController | null = null;
 
-
   static get observedAttributes() {
     return ['init-quantity', 'value', 'auto-charge', 'interval', 'step'];
   }
@@ -40,7 +35,6 @@ class CosChargeElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

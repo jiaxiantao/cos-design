@@ -4,7 +4,11 @@ import {
   readNumberAttr,
   readStringAttr,
 } from '@cos-design/shared';
-import { createRedPacketRain, type RedPacketRainController, type RedPacketRainOptions } from '../core';
+import {
+  createRedPacketRain,
+  type RedPacketRainController,
+  type RedPacketRainOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-red-packet-rain';
@@ -26,7 +30,6 @@ function parseOptions(el: HTMLElement): RedPacketRainOptions {
 
 class CosRedPacketRainElement extends HTMLElement {
   private ctrl: RedPacketRainController | null = null;
-
 
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'duration', 'auto', 'grabbed-label', 'ended-text', 'hint'];

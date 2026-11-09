@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createPlasmaBall, type PlasmaBallController, type PlasmaBallOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): PlasmaBallOptions {
 class CosPlasmaBallElement extends HTMLElement {
   private ctrl: PlasmaBallController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'color', 'arc-count'];
   }
@@ -36,7 +32,6 @@ class CosPlasmaBallElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

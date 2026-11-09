@@ -28,10 +28,7 @@ export {
   subscribeSunTimes,
 } from '../live-weather-core';
 
-const initialLiveState = (
-  enabled: boolean,
-  coords?: LiveWeatherCoords,
-): LiveWeatherState => {
+const initialLiveState = (enabled: boolean, coords?: LiveWeatherCoords): LiveWeatherState => {
   const hasCoords = isValidCoords(coords);
   if (!enabled) return IDLE_LIVE_WEATHER;
   if (hasCoords) return { ...IDLE_LIVE_WEATHER, status: 'fetching' };
@@ -43,10 +40,7 @@ const initialLiveState = (
  * @param enabled 是否启用实况拉取
  * @param coords 指定经纬度；省略时使用浏览器定位（需 HTTPS 与用户授权）
  */
-export function useLiveWeather(
-  enabled = true,
-  coords?: LiveWeatherCoords,
-): Ref<LiveWeatherState> {
+export function useLiveWeather(enabled = true, coords?: LiveWeatherCoords): Ref<LiveWeatherState> {
   const state = ref<LiveWeatherState>(initialLiveState(enabled, coords));
   let stop: (() => void) | null = null;
 

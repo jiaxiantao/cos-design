@@ -36,7 +36,16 @@ class CosGameOfLifeElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['width', 'height', 'cell-size', 'speed', 'density', 'alive-color', 'grid-color', 'labels'];
+    return [
+      'width',
+      'height',
+      'cell-size',
+      'speed',
+      'density',
+      'alive-color',
+      'grid-color',
+      'labels',
+    ];
   }
 
   connectedCallback() {
@@ -51,7 +60,6 @@ class CosGameOfLifeElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

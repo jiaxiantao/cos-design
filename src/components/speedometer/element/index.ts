@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createSpeedometer, type SpeedometerController, type SpeedometerOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): SpeedometerOptions {
 class CosSpeedometerElement extends HTMLElement {
   private ctrl: SpeedometerController | null = null;
 
-
   static get observedAttributes() {
     return ['value', 'max', 'label', 'color'];
   }
@@ -36,7 +32,6 @@ class CosSpeedometerElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

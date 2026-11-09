@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createFlipCounter, type FlipCounterController, type FlipCounterOptions } from '../core';
 import '../style/index.css';
 
@@ -22,7 +18,6 @@ function parseOptions(el: HTMLElement): FlipCounterOptions {
 class CosFlipCounterElement extends HTMLElement {
   private ctrl: FlipCounterController | null = null;
 
-
   static get observedAttributes() {
     return ['value', 'digits', 'color', 'duration', 'auto', 'auto-interval'];
   }
@@ -39,7 +34,6 @@ class CosFlipCounterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

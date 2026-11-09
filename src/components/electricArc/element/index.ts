@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createElectricArc, type ElectricArcController, type ElectricArcOptions } from '../core';
 import '../style/index.css';
 
@@ -17,7 +14,6 @@ function parseOptions(el: HTMLElement): ElectricArcOptions {
 
 class CosElectricArcElement extends HTMLElement {
   private ctrl: ElectricArcController | null = null;
-
 
   static get observedAttributes() {
     return ['width', 'height', 'color'];
@@ -35,7 +31,6 @@ class CosElectricArcElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

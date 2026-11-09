@@ -1,7 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr } from '@cos-design/shared';
 import { createStarfield, type StarfieldController, type StarfieldOptions } from '../core';
 import '../style/index.css';
 
@@ -20,7 +17,6 @@ function parseOptions(el: HTMLElement): StarfieldOptions {
 class CosStarfieldElement extends HTMLElement {
   private ctrl: StarfieldController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'star-count', 'speed'];
   }
@@ -37,7 +33,6 @@ class CosStarfieldElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

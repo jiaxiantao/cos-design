@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createLavaBubble, type LavaBubbleController, type LavaBubbleOptions } from '../core';
 import '../style/index.css';
 
@@ -25,9 +21,18 @@ function parseOptions(el: HTMLElement): LavaBubbleOptions {
 class CosLavaBubbleElement extends HTMLElement {
   private ctrl: LavaBubbleController | null = null;
 
-
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'heat', 'speed', 'auto-spawn', 'activity', 'interactive', 'aria-label'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'heat',
+      'speed',
+      'auto-spawn',
+      'activity',
+      'interactive',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -42,7 +47,6 @@ class CosLavaBubbleElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

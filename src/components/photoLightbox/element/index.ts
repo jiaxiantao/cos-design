@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoLightbox, type PhotoLightboxController, type PhotoLightboxOptions } from '../core';
+import {
+  createPhotoLightbox,
+  type PhotoLightboxController,
+  type PhotoLightboxOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-lightbox';
@@ -41,7 +45,17 @@ class CosPhotoLightboxElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'slide-width', 'slide-height', 'pull-threshold', 'show-caption', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'slide-width',
+      'slide-height',
+      'pull-threshold',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -56,7 +70,6 @@ class CosPhotoLightboxElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

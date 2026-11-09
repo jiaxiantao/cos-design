@@ -1,6 +1,4 @@
-import {
-  readNumberAttr,
-} from '@cos-design/shared';
+import { readNumberAttr } from '@cos-design/shared';
 import { createReturnCity, type ReturnCityController, type ReturnCityOptions } from '../core';
 import '../style/index.css';
 
@@ -16,7 +14,6 @@ function parseOptions(el: HTMLElement): ReturnCityOptions {
 
 class CosReturnCityElement extends HTMLElement {
   private ctrl: ReturnCityController | null = null;
-
 
   static get observedAttributes() {
     return ['star-count', 'glass-count', 'glass-radius'];
@@ -34,7 +31,6 @@ class CosReturnCityElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

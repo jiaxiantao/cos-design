@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoClothesline, type PhotoClotheslineController, type PhotoClotheslineOptions } from '../core';
+import {
+  createPhotoClothesline,
+  type PhotoClotheslineController,
+  type PhotoClotheslineOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-clothesline';
@@ -56,7 +60,32 @@ class CosPhotoClotheslineElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'photo-width', 'photo-height', 'photo-gap', 'rope-top', 'rope-sag', 'band-length', 'band-width', 'max-pull', 'stiffness', 'damping', 'tension', 'tilt', 'rope-color', 'band-color', 'pin-color', 'frame-color', 'background', 'object-fit', 'show-caption', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'photo-width',
+      'photo-height',
+      'photo-gap',
+      'rope-top',
+      'rope-sag',
+      'band-length',
+      'band-width',
+      'max-pull',
+      'stiffness',
+      'damping',
+      'tension',
+      'tilt',
+      'rope-color',
+      'band-color',
+      'pin-color',
+      'frame-color',
+      'background',
+      'object-fit',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -71,7 +100,6 @@ class CosPhotoClotheslineElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

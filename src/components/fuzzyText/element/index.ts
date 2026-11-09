@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createFuzzyText, type FuzzyTextController, type FuzzyTextOptions } from '../core';
 import '../style/index.css';
 
@@ -24,9 +20,17 @@ function parseOptions(el: HTMLElement): FuzzyTextOptions {
 class CosFuzzyTextElement extends HTMLElement {
   private ctrl: FuzzyTextController | null = null;
 
-
   static get observedAttributes() {
-    return ['text', 'font-size', 'font-weight', 'color', 'base-intensity', 'hover-intensity', 'enable-hover', 'fuzz-range'];
+    return [
+      'text',
+      'font-size',
+      'font-weight',
+      'color',
+      'base-intensity',
+      'hover-intensity',
+      'enable-hover',
+      'fuzz-range',
+    ];
   }
 
   connectedCallback() {
@@ -41,7 +45,6 @@ class CosFuzzyTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

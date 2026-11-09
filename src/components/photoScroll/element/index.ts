@@ -43,7 +43,19 @@ class CosPhotoScrollElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'frame-width', 'frame-height', 'frame-gap', 'drag-sensitivity', 'friction', 'show-caption', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'frame-width',
+      'frame-height',
+      'frame-gap',
+      'drag-sensitivity',
+      'friction',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -58,7 +70,6 @@ class CosPhotoScrollElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

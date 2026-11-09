@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createRadarScan, type RadarScanController, type RadarScanOptions } from '../core';
 import '../style/index.css';
 
@@ -17,7 +14,6 @@ function parseOptions(el: HTMLElement): RadarScanOptions {
 
 class CosRadarScanElement extends HTMLElement {
   private ctrl: RadarScanController | null = null;
-
 
   static get observedAttributes() {
     return ['size', 'color', 'blip-count'];
@@ -35,7 +31,6 @@ class CosRadarScanElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

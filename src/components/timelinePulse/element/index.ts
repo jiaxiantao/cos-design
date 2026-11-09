@@ -4,7 +4,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createTimelinePulse, type TimelinePulseController, type TimelinePulseOptions } from '../core';
+import {
+  createTimelinePulse,
+  type TimelinePulseController,
+  type TimelinePulseOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-timeline-pulse';
@@ -46,7 +50,6 @@ class CosTimelinePulseElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

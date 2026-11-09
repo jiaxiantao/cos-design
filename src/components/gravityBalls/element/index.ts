@@ -1,6 +1,4 @@
-import {
-  readNumberAttr,
-} from '@cos-design/shared';
+import { readNumberAttr } from '@cos-design/shared';
 import { createGravityBalls, type GravityBallsController, type GravityBallsOptions } from '../core';
 import '../style/index.css';
 
@@ -16,7 +14,6 @@ function parseOptions(el: HTMLElement): GravityBallsOptions {
 
 class CosGravityBallsElement extends HTMLElement {
   private ctrl: GravityBallsController | null = null;
-
 
   static get observedAttributes() {
     return ['width', 'height', 'ball-count'];
@@ -34,7 +31,6 @@ class CosGravityBallsElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

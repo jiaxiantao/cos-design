@@ -1,8 +1,4 @@
-import {
-  optionCallbackDispatcher,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { optionCallbackDispatcher, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createBurnAway, type BurnAwayController, type BurnAwayOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +15,6 @@ function parseOptions(el: HTMLElement): BurnAwayOptions {
 
 class CosBurnAwayElement extends HTMLElement {
   private ctrl: BurnAwayController | null = null;
-
 
   static get observedAttributes() {
     return ['text', 'font-size', 'completed-text'];

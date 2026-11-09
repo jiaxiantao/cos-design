@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoPolaroid, type PhotoPolaroidController, type PhotoPolaroidOptions } from '../core';
+import {
+  createPhotoPolaroid,
+  type PhotoPolaroidController,
+  type PhotoPolaroidOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-polaroid';
@@ -40,7 +44,17 @@ class CosPhotoPolaroidElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'card-width', 'card-height', 'scatter', 'show-caption', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'card-width',
+      'card-height',
+      'scatter',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -55,7 +69,6 @@ class CosPhotoPolaroidElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createShinyText, type ShinyTextController, type ShinyTextOptions } from '../core';
 import '../style/index.css';
 
@@ -22,7 +18,6 @@ function parseOptions(el: HTMLElement): ShinyTextOptions {
 class CosShinyTextElement extends HTMLElement {
   private ctrl: ShinyTextController | null = null;
 
-
   static get observedAttributes() {
     return ['text', 'speed', 'color', 'shine-color', 'font-size', 'disabled'];
   }
@@ -39,7 +34,6 @@ class CosShinyTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

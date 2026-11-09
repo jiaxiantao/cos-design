@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoCarousel, type PhotoCarouselController, type PhotoCarouselOptions } from '../core';
+import {
+  createPhotoCarousel,
+  type PhotoCarouselController,
+  type PhotoCarouselOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-carousel';
@@ -46,7 +50,21 @@ class CosPhotoCarouselElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'radius', 'card-width', 'card-height', 'auto-rotate', 'auto-rotate-speed', 'drag-sensitivity', 'friction', 'show-caption', 'initial-angle', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'radius',
+      'card-width',
+      'card-height',
+      'auto-rotate',
+      'auto-rotate-speed',
+      'drag-sensitivity',
+      'friction',
+      'show-caption',
+      'initial-angle',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -61,7 +79,6 @@ class CosPhotoCarouselElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

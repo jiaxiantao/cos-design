@@ -52,7 +52,27 @@ class CosPhotoLanternElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'auto-rotate', 'auto-rotate-speed', 'drag-sensitivity', 'friction', 'frame-color', 'paper-color', 'light-color', 'background', 'light-sway', 'show-accessories', 'tassel-color', 'object-fit', 'silhouette', 'show-caption', 'initial-angle', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'auto-rotate',
+      'auto-rotate-speed',
+      'drag-sensitivity',
+      'friction',
+      'frame-color',
+      'paper-color',
+      'light-color',
+      'background',
+      'light-sway',
+      'show-accessories',
+      'tassel-color',
+      'object-fit',
+      'silhouette',
+      'show-caption',
+      'initial-angle',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -67,7 +87,6 @@ class CosPhotoLanternElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,9 +1,9 @@
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
-import { createParticleNetwork, type ParticleNetworkController, type ParticleNetworkOptions } from '../core';
+  createParticleNetwork,
+  type ParticleNetworkController,
+  type ParticleNetworkOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-particle-network';
@@ -24,9 +24,17 @@ function parseOptions(el: HTMLElement): ParticleNetworkOptions {
 class CosParticleNetworkElement extends HTMLElement {
   private ctrl: ParticleNetworkController | null = null;
 
-
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'particle-count', 'link-distance', 'repel-radius', 'color', 'hint'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'particle-count',
+      'link-distance',
+      'repel-radius',
+      'color',
+      'hint',
+    ];
   }
 
   connectedCallback() {
@@ -41,7 +49,6 @@ class CosParticleNetworkElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

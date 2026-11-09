@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createWaveText, type WaveTextController, type WaveTextOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): WaveTextOptions {
 class CosWaveTextElement extends HTMLElement {
   private ctrl: WaveTextController | null = null;
 
-
   static get observedAttributes() {
     return ['text', 'amplitude', 'color', 'font-size'];
   }
@@ -36,7 +32,6 @@ class CosWaveTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

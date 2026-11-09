@@ -1,8 +1,4 @@
-import {
-  optionCallbackDispatcher,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { optionCallbackDispatcher, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createScratchCard, type ScratchCardController, type ScratchCardOptions } from '../core';
 import '../style/index.css';
 
@@ -22,7 +18,6 @@ function parseOptions(el: HTMLElement): ScratchCardOptions {
 
 class CosScratchCardElement extends HTMLElement {
   private ctrl: ScratchCardController | null = null;
-
 
   static get observedAttributes() {
     return ['cover-color', 'prize', 'cover-text', 'reveal-threshold', 'width', 'height'];

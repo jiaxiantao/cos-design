@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createCyberGrid, type CyberGridController, type CyberGridOptions } from '../core';
 import '../style/index.css';
 
@@ -21,7 +17,6 @@ function parseOptions(el: HTMLElement): CyberGridOptions {
 class CosCyberGridElement extends HTMLElement {
   private ctrl: CyberGridController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'color', 'speed'];
   }
@@ -38,7 +33,6 @@ class CosCyberGridElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

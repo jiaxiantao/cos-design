@@ -25,7 +25,6 @@ function parseOptions(el: HTMLElement): ConfettiOptions {
 class CosConfettiElement extends HTMLElement {
   private ctrl: ConfettiController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'auto', 'interactive', 'particle-count', 'hint'];
   }

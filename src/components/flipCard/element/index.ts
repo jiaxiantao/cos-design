@@ -1,8 +1,4 @@
-import {
-  optionCallbackDispatcher,
-  readBooleanAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { optionCallbackDispatcher, readBooleanAttr, readStringAttr } from '@cos-design/shared';
 import { createFlipCard, type FlipCardController, type FlipCardOptions } from '../core';
 import '../style/index.css';
 
@@ -25,9 +21,16 @@ function parseOptions(el: HTMLElement): FlipCardOptions {
 class CosFlipCardElement extends HTMLElement {
   private ctrl: FlipCardController | null = null;
 
-
   static get observedAttributes() {
-    return ['front-title', 'front-subtitle', 'back-title', 'back-subtitle', 'flipped', 'default-flipped', 'disabled'];
+    return [
+      'front-title',
+      'front-subtitle',
+      'back-title',
+      'back-subtitle',
+      'flipped',
+      'default-flipped',
+      'disabled',
+    ];
   }
 
   connectedCallback() {

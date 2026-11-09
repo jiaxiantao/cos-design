@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createDnaHelix, type DnaHelixController, type DnaHelixOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): DnaHelixOptions {
 class CosDnaHelixElement extends HTMLElement {
   private ctrl: DnaHelixController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'speed', 'color'];
   }
@@ -36,7 +32,6 @@ class CosDnaHelixElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

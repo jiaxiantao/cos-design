@@ -4,7 +4,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createMagneticButton, type MagneticButtonController, type MagneticButtonOptions } from '../core';
+import {
+  createMagneticButton,
+  type MagneticButtonController,
+  type MagneticButtonOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-magnetic-button';

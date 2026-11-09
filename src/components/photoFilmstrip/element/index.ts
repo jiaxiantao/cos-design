@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoFilmstrip, type PhotoFilmstripController, type PhotoFilmstripOptions } from '../core';
+import {
+  createPhotoFilmstrip,
+  type PhotoFilmstripController,
+  type PhotoFilmstripOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-filmstrip';
@@ -43,7 +47,19 @@ class CosPhotoFilmstripElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'frame-width', 'frame-height', 'frame-gap', 'show-caption', 'friction', 'drag-sensitivity', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'frame-width',
+      'frame-height',
+      'frame-gap',
+      'show-caption',
+      'friction',
+      'drag-sensitivity',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -58,7 +74,6 @@ class CosPhotoFilmstripElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

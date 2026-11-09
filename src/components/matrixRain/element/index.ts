@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createMatrixRain, type MatrixRainController, type MatrixRainOptions } from '../core';
 import '../style/index.css';
 
@@ -24,7 +20,6 @@ function parseOptions(el: HTMLElement): MatrixRainOptions {
 class CosMatrixRainElement extends HTMLElement {
   private ctrl: MatrixRainController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'density', 'color', 'show-overlay', 'title', 'subtitle'];
   }
@@ -41,7 +36,6 @@ class CosMatrixRainElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,9 +1,9 @@
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
-import { createDandelionField, type DandelionFieldController, type DandelionFieldOptions } from '../core';
+  createDandelionField,
+  type DandelionFieldController,
+  type DandelionFieldOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-dandelion-field';
@@ -24,9 +24,17 @@ function parseOptions(el: HTMLElement): DandelionFieldOptions {
 class CosDandelionFieldElement extends HTMLElement {
   private ctrl: DandelionFieldController | null = null;
 
-
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'plant-count', 'seed-count', 'speed', 'interactive', 'aria-label'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'plant-count',
+      'seed-count',
+      'speed',
+      'interactive',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -41,7 +49,6 @@ class CosDandelionFieldElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

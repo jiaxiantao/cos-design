@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createRippleWater, type RippleWaterController, type RippleWaterOptions } from '../core';
 import '../style/index.css';
 
@@ -33,9 +29,26 @@ function parseOptions(el: HTMLElement): RippleWaterOptions {
 class CosRippleWaterElement extends HTMLElement {
   private ctrl: RippleWaterController | null = null;
 
-
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'from-color', 'to-color', 'color', 'wave-amplitude', 'wave-speed', 'shimmer', 'reflection', 'ripple-strength', 'ripple-radius', 'damping', 'spread', 'interactive', 'show-hint', 'hint'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'from-color',
+      'to-color',
+      'color',
+      'wave-amplitude',
+      'wave-speed',
+      'shimmer',
+      'reflection',
+      'ripple-strength',
+      'ripple-radius',
+      'damping',
+      'spread',
+      'interactive',
+      'show-hint',
+      'hint',
+    ];
   }
 
   connectedCallback() {
@@ -50,7 +63,6 @@ class CosRippleWaterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

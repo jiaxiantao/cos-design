@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createNewtonCradle, type NewtonCradleController, type NewtonCradleOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): NewtonCradleOptions {
 class CosNewtonCradleElement extends HTMLElement {
   private ctrl: NewtonCradleController | null = null;
 
-
   static get observedAttributes() {
     return ['ball-count', 'color', 'width', 'height'];
   }
@@ -36,7 +32,6 @@ class CosNewtonCradleElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

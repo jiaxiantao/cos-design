@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createSpringMass, type SpringMassController, type SpringMassOptions } from '../core';
 import '../style/index.css';
 
@@ -23,7 +20,6 @@ function parseOptions(el: HTMLElement): SpringMassOptions {
 class CosSpringMassElement extends HTMLElement {
   private ctrl: SpringMassController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'cols', 'rows', 'stiffness', 'damping', 'color', 'hint'];
   }
@@ -40,7 +36,6 @@ class CosSpringMassElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

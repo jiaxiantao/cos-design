@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createSoapBubbles, type SoapBubblesController, type SoapBubblesOptions } from '../core';
 import '../style/index.css';
 
@@ -23,7 +19,6 @@ function parseOptions(el: HTMLElement): SoapBubblesOptions {
 class CosSoapBubblesElement extends HTMLElement {
   private ctrl: SoapBubblesController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'count', 'speed', 'interactive', 'aria-label'];
   }
@@ -40,7 +35,6 @@ class CosSoapBubblesElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

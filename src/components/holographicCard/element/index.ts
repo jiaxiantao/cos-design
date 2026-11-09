@@ -1,7 +1,9 @@
+import { readStringAttr } from '@cos-design/shared';
 import {
-  readStringAttr,
-} from '@cos-design/shared';
-import { createHolographicCard, type HolographicCardController, type HolographicCardOptions } from '../core';
+  createHolographicCard,
+  type HolographicCardController,
+  type HolographicCardOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-holographic-card';
@@ -16,7 +18,6 @@ function parseOptions(el: HTMLElement): HolographicCardOptions {
 
 class CosHolographicCardElement extends HTMLElement {
   private ctrl: HolographicCardController | null = null;
-
 
   static get observedAttributes() {
     return ['title', 'subtitle', 'image'];
@@ -34,7 +35,6 @@ class CosHolographicCardElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

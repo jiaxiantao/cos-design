@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createSmokeFog, type SmokeFogController, type SmokeFogOptions } from '../core';
 import '../style/index.css';
 
@@ -27,9 +23,20 @@ function parseOptions(el: HTMLElement): SmokeFogOptions {
 class CosSmokeFogElement extends HTMLElement {
   private ctrl: SmokeFogController | null = null;
 
-
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'density', 'color', 'background-color', 'speed', 'disperse-strength', 'disperse-radius', 'interactive', 'aria-label'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'density',
+      'color',
+      'background-color',
+      'speed',
+      'disperse-strength',
+      'disperse-radius',
+      'interactive',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -44,7 +51,6 @@ class CosSmokeFogElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createCountUp, type CountUpController, type CountUpOptions } from '../core';
 import '../style/index.css';
 
@@ -22,7 +19,6 @@ function parseOptions(el: HTMLElement): CountUpOptions {
 class CosCountUpElement extends HTMLElement {
   private ctrl: CountUpController | null = null;
 
-
   static get observedAttributes() {
     return ['value', 'start', 'duration', 'decimals', 'prefix', 'suffix', 'color'];
   }
@@ -39,7 +35,6 @@ class CosCountUpElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

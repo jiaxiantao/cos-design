@@ -1,8 +1,4 @@
-import {
-  readJsonAttr,
-  readNumberAttr,
-  readPropertyOverride,
-} from '@cos-design/shared';
+import { readJsonAttr, readNumberAttr, readPropertyOverride } from '@cos-design/shared';
 import { createOrbitalChart, type OrbitalChartController, type OrbitalChartOptions } from '../core';
 import '../style/index.css';
 
@@ -44,7 +40,6 @@ class CosOrbitalChartElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

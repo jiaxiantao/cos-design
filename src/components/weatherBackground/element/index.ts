@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createWeatherBackground, type WeatherBackgroundController, type WeatherBackgroundOptions } from '../core';
+import {
+  createWeatherBackground,
+  type WeatherBackgroundController,
+  type WeatherBackgroundOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-weather-background';
@@ -48,7 +52,25 @@ class CosWeatherBackgroundElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['width', 'height', 'fill', 'weather', 'time', 'live', 'latitude', 'longitude', 'wind-level', 'rain-level', 'snow-level', 'hail-level', 'fog-level', 'smog-level', 'loading', 'aria-label', 'loading-text'];
+    return [
+      'width',
+      'height',
+      'fill',
+      'weather',
+      'time',
+      'live',
+      'latitude',
+      'longitude',
+      'wind-level',
+      'rain-level',
+      'snow-level',
+      'hail-level',
+      'fog-level',
+      'smog-level',
+      'loading',
+      'aria-label',
+      'loading-text',
+    ];
   }
 
   connectedCallback() {
@@ -63,7 +85,6 @@ class CosWeatherBackgroundElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

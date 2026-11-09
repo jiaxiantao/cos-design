@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createScrambleText, type ScrambleTextController, type ScrambleTextOptions } from '../core';
 import '../style/index.css';
 
@@ -17,7 +14,6 @@ function parseOptions(el: HTMLElement): ScrambleTextOptions {
 
 class CosScrambleTextElement extends HTMLElement {
   private ctrl: ScrambleTextController | null = null;
-
 
   static get observedAttributes() {
     return ['text', 'duration', 'charset'];
@@ -35,7 +31,6 @@ class CosScrambleTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

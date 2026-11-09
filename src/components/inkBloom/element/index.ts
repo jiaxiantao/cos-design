@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createInkBloom, type InkBloomController, type InkBloomOptions } from '../core';
 import '../style/index.css';
 
@@ -23,7 +19,6 @@ function parseOptions(el: HTMLElement): InkBloomOptions {
 class CosInkBloomElement extends HTMLElement {
   private ctrl: InkBloomController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'ink-color', 'speed', 'interactive', 'aria-label'];
   }
@@ -40,7 +35,6 @@ class CosInkBloomElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

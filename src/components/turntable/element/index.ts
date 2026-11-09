@@ -38,7 +38,16 @@ class CosTurntableElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['prizes', 'size', 'spin-duration', 'spin-rounds', 'target-index', 'button-text', 'spinning-text', 'result-prefix'];
+    return [
+      'prizes',
+      'size',
+      'spin-duration',
+      'spin-rounds',
+      'target-index',
+      'button-text',
+      'spinning-text',
+      'result-prefix',
+    ];
   }
 
   connectedCallback() {

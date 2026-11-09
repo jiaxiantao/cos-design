@@ -43,7 +43,19 @@ class CosPhotoTunnelElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'depth-step', 'drag-sensitivity', 'friction', 'auto-advance', 'auto-advance-speed', 'show-caption', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'depth-step',
+      'drag-sensitivity',
+      'friction',
+      'auto-advance',
+      'auto-advance-speed',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -58,7 +70,6 @@ class CosPhotoTunnelElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

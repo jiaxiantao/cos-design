@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoViewMaster, type PhotoViewMasterController, type PhotoViewMasterOptions } from '../core';
+import {
+  createPhotoViewMaster,
+  type PhotoViewMasterController,
+  type PhotoViewMasterOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-view-master';
@@ -44,7 +48,20 @@ class CosPhotoViewMasterElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'disc-size', 'peep-size', 'drag-sensitivity', 'friction', 'auto-rotate', 'auto-rotate-speed', 'show-caption', 'initial-index', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'disc-size',
+      'peep-size',
+      'drag-sensitivity',
+      'friction',
+      'auto-rotate',
+      'auto-rotate-speed',
+      'show-caption',
+      'initial-index',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -59,7 +76,6 @@ class CosPhotoViewMasterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

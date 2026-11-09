@@ -1,8 +1,9 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
-import { createDoublePendulum, type DoublePendulumController, type DoublePendulumOptions } from '../core';
+  createDoublePendulum,
+  type DoublePendulumController,
+  type DoublePendulumOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-double-pendulum';
@@ -20,7 +21,6 @@ function parseOptions(el: HTMLElement): DoublePendulumOptions {
 class CosDoublePendulumElement extends HTMLElement {
   private ctrl: DoublePendulumController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'trail-length', 'color', 'color2'];
   }
@@ -37,7 +37,6 @@ class CosDoublePendulumElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

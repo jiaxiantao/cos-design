@@ -1,8 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createBubbleField, type BubbleFieldController, type BubbleFieldOptions } from '../core';
 import '../style/index.css';
 
@@ -23,7 +19,6 @@ function parseOptions(el: HTMLElement): BubbleFieldOptions {
 class CosBubbleFieldElement extends HTMLElement {
   private ctrl: BubbleFieldController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'bubble-count', 'speed', 'color', 'interactive'];
   }
@@ -40,7 +35,6 @@ class CosBubbleFieldElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

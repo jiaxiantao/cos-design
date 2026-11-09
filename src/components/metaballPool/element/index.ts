@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createMetaballPool, type MetaballPoolController, type MetaballPoolOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): MetaballPoolOptions {
 class CosMetaballPoolElement extends HTMLElement {
   private ctrl: MetaballPoolController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'ball-count', 'color'];
   }
@@ -36,7 +32,6 @@ class CosMetaballPoolElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

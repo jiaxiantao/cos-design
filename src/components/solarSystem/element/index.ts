@@ -1,7 +1,4 @@
-import {
-  readBooleanAttr,
-  readNumberAttr,
-} from '@cos-design/shared';
+import { readBooleanAttr, readNumberAttr } from '@cos-design/shared';
 import { createSolarSystem, type SolarSystemController, type SolarSystemOptions } from '../core';
 import '../style/index.css';
 
@@ -19,7 +16,6 @@ function parseOptions(el: HTMLElement): SolarSystemOptions {
 class CosSolarSystemElement extends HTMLElement {
   private ctrl: SolarSystemController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'speed', 'show-orbits'];
   }
@@ -36,7 +32,6 @@ class CosSolarSystemElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

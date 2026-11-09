@@ -52,7 +52,19 @@ class CosPhotoAlbumElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'initial-index', 'page-turn-duration', 'object-fit', 'show-page-number', 'page-color', 'cover-color', 'aria-label', 'labels'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'initial-index',
+      'page-turn-duration',
+      'object-fit',
+      'show-page-number',
+      'page-color',
+      'cover-color',
+      'aria-label',
+      'labels',
+    ];
   }
 
   connectedCallback() {
@@ -67,7 +79,6 @@ class CosPhotoAlbumElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -47,7 +47,16 @@ class CosSlotMachineElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['symbols', 'spin-duration', 'target-results', 'start-text', 'button-text', 'spinning-text', 'jackpot-text', 'result-prefix'];
+    return [
+      'symbols',
+      'spin-duration',
+      'target-results',
+      'start-text',
+      'button-text',
+      'spinning-text',
+      'jackpot-text',
+      'result-prefix',
+    ];
   }
 
   connectedCallback() {

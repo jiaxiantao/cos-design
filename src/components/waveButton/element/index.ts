@@ -1,8 +1,4 @@
-import {
-  readJsonAttr,
-  readPropertyOverride,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readJsonAttr, readPropertyOverride, readStringAttr } from '@cos-design/shared';
 import { createWaveButton, type WaveButtonController, type WaveButtonOptions } from '../core';
 import '../style/index.css';
 

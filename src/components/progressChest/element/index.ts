@@ -4,7 +4,11 @@ import {
   readNumberAttr,
   readStringAttr,
 } from '@cos-design/shared';
-import { createProgressChest, type ProgressChestController, type ProgressChestOptions } from '../core';
+import {
+  createProgressChest,
+  type ProgressChestController,
+  type ProgressChestOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-progress-chest';
@@ -22,7 +26,6 @@ function parseOptions(el: HTMLElement): ProgressChestOptions {
 class CosProgressChestElement extends HTMLElement {
   private ctrl: ProgressChestController | null = null;
 
-
   static get observedAttributes() {
     return ['progress', 'auto', 'label', 'opened-label'];
   }
@@ -39,7 +42,6 @@ class CosProgressChestElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

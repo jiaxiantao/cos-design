@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createCursorTrail, type CursorTrailController, type CursorTrailOptions } from '../core';
 import '../style/index.css';
 
@@ -20,7 +17,6 @@ function parseOptions(el: HTMLElement): CursorTrailOptions {
 class CosCursorTrailElement extends HTMLElement {
   private ctrl: CursorTrailController | null = null;
 
-
   static get observedAttributes() {
     return ['color', 'length', 'width', 'height', 'hint'];
   }
@@ -37,7 +33,6 @@ class CosCursorTrailElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

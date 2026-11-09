@@ -6,7 +6,11 @@ import {
   readPropertyOverride,
   readStringAttr,
 } from '@cos-design/shared';
-import { createPhotoPostcard, type PhotoPostcardController, type PhotoPostcardOptions } from '../core';
+import {
+  createPhotoPostcard,
+  type PhotoPostcardController,
+  type PhotoPostcardOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-postcard';
@@ -43,7 +47,18 @@ class CosPhotoPostcardElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['photos', 'width', 'height', 'card-width', 'card-height', 'pull-threshold', 'show-caption', 'initial-index', 'initial-flipped', 'aria-label'];
+    return [
+      'photos',
+      'width',
+      'height',
+      'card-width',
+      'card-height',
+      'pull-threshold',
+      'show-caption',
+      'initial-index',
+      'initial-flipped',
+      'aria-label',
+    ];
   }
 
   connectedCallback() {
@@ -58,7 +73,6 @@ class CosPhotoPostcardElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

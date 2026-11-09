@@ -1,7 +1,4 @@
-import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createGlitchText, type GlitchTextController, type GlitchTextOptions } from '../core';
 import '../style/index.css';
 
@@ -20,7 +17,6 @@ function parseOptions(el: HTMLElement): GlitchTextOptions {
 class CosGlitchTextElement extends HTMLElement {
   private ctrl: GlitchTextController | null = null;
 
-
   static get observedAttributes() {
     return ['text', 'color', 'glitch-color1', 'glitch-color2', 'font-size'];
   }
@@ -37,7 +33,6 @@ class CosGlitchTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

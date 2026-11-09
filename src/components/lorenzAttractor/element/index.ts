@@ -1,8 +1,9 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
-  readNumberAttr,
-  readStringAttr,
-} from '@cos-design/shared';
-import { createLorenzAttractor, type LorenzAttractorController, type LorenzAttractorOptions } from '../core';
+  createLorenzAttractor,
+  type LorenzAttractorController,
+  type LorenzAttractorOptions,
+} from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-lorenz-attractor';
@@ -20,7 +21,6 @@ function parseOptions(el: HTMLElement): LorenzAttractorOptions {
 class CosLorenzAttractorElement extends HTMLElement {
   private ctrl: LorenzAttractorController | null = null;
 
-
   static get observedAttributes() {
     return ['width', 'height', 'speed', 'color', 'point-count'];
   }
@@ -37,7 +37,6 @@ class CosLorenzAttractorElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
-
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {
