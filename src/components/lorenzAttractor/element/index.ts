@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
   createLorenzAttractor,
   type LorenzAttractorController,
@@ -9,11 +10,11 @@ const TAG = 'cos-lorenz-attractor';
 
 function parseOptions(el: HTMLElement): LorenzAttractorOptions {
   const options = {} as LorenzAttractorOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('point-count')) options.pointCount = Number(el.getAttribute('point-count'));
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'pointCount', 'point-count');
   return options;
 }
 

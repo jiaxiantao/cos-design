@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createSpringMass, type SpringMassController, type SpringMassOptions } from '../core';
 import '../style/index.css';
 
@@ -5,14 +6,14 @@ const TAG = 'cos-spring-mass';
 
 function parseOptions(el: HTMLElement): SpringMassOptions {
   const options = {} as SpringMassOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('cols')) options.cols = Number(el.getAttribute('cols'));
-  if (el.hasAttribute('rows')) options.rows = Number(el.getAttribute('rows'));
-  if (el.hasAttribute('stiffness')) options.stiffness = Number(el.getAttribute('stiffness'));
-  if (el.hasAttribute('damping')) options.damping = Number(el.getAttribute('damping'));
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'cols', 'cols');
+  readNumberAttr(options, el, 'rows', 'rows');
+  readNumberAttr(options, el, 'stiffness', 'stiffness');
+  readNumberAttr(options, el, 'damping', 'damping');
   return options;
 }
 

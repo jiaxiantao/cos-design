@@ -1,3 +1,4 @@
+import { readNumberAttr } from '@cos-design/shared';
 import { createCanvasClock, type CanvasClockController, type CanvasClockOptions } from '../core';
 import '../style/index.css';
 
@@ -5,8 +6,8 @@ const TAG = 'cos-canvas-clock';
 
 function parseOptions(el: HTMLElement): CanvasClockOptions {
   const options = {} as CanvasClockOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
   return options;
 }
 

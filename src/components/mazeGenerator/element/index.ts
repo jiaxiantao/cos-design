@@ -1,3 +1,4 @@
+import { optionCallbackDispatcher, readNumberAttr } from '@cos-design/shared';
 import {
   createMazeGenerator,
   type MazeGeneratorController,
@@ -9,14 +10,10 @@ const TAG = 'cos-maze-generator';
 
 function parseOptions(el: HTMLElement): MazeGeneratorOptions {
   const options = {} as MazeGeneratorOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('cell-size')) options.cellSize = Number(el.getAttribute('cell-size'));
-  options.onGenerated = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('generated', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'cellSize', 'cell-size');
+  options.onGenerated = optionCallbackDispatcher(el, 'generated');
   return options;
 }
 

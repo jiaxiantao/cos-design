@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
   createLiquidProgress,
   type LiquidProgressController,
@@ -9,10 +10,10 @@ const TAG = 'cos-liquid-progress';
 
 function parseOptions(el: HTMLElement): LiquidProgressOptions {
   const options = {} as LiquidProgressOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
-  if (el.hasAttribute('max')) options.max = Number(el.getAttribute('max'));
-  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'value', 'value');
+  readNumberAttr(options, el, 'max', 'max');
+  readNumberAttr(options, el, 'size', 'size');
   return options;
 }
 

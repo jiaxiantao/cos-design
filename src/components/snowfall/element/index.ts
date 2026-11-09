@@ -1,3 +1,9 @@
+import {
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+} from '@cos-design/shared';
 import { createSnowfall, type SnowfallController, type SnowfallOptions } from '../core';
 import '../style/index.css';
 
@@ -5,19 +11,12 @@ const TAG = 'cos-snowfall';
 
 function parseOptions(el: HTMLElement): SnowfallOptions {
   const options = {} as SnowfallOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('count')) options.count = Number(el.getAttribute('count'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('mode')) {
-    try {
-      options.mode = JSON.parse(el.getAttribute('mode') ?? 'null') as SnowfallOptions['mode'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propmode = (el as CosSnowfallElement)._mode;
-  if (propmode !== undefined) options.mode = propmode as SnowfallOptions['mode'];
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'count', 'count');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readJsonAttr(options, el, 'mode', 'mode');
+  readPropertyOverride(options, el, 'mode', '_mode');
   return options;
 }
 

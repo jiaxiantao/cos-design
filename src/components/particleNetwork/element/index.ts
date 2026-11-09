@@ -1,3 +1,4 @@
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import {
   createParticleNetwork,
   type ParticleNetworkController,
@@ -9,17 +10,14 @@ const TAG = 'cos-particle-network';
 
 function parseOptions(el: HTMLElement): ParticleNetworkOptions {
   const options = {} as ParticleNetworkOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('particle-count'))
-    options.particleCount = Number(el.getAttribute('particle-count'));
-  if (el.hasAttribute('link-distance'))
-    options.linkDistance = Number(el.getAttribute('link-distance'));
-  if (el.hasAttribute('repel-radius'))
-    options.repelRadius = Number(el.getAttribute('repel-radius'));
-  options.fill = el.hasAttribute('fill');
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'particleCount', 'particle-count');
+  readNumberAttr(options, el, 'linkDistance', 'link-distance');
+  readNumberAttr(options, el, 'repelRadius', 'repel-radius');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
   return options;
 }
 

@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createDnaHelix, type DnaHelixController, type DnaHelixOptions } from '../core';
 import '../style/index.css';
 
@@ -5,10 +6,10 @@ const TAG = 'cos-dna-helix';
 
 function parseOptions(el: HTMLElement): DnaHelixOptions {
   const options = {} as DnaHelixOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'speed', 'speed');
   return options;
 }
 

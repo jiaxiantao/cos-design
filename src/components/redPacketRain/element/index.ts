@@ -1,4 +1,10 @@
 import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
+import {
   createRedPacketRain,
   type RedPacketRainController,
   type RedPacketRainOptions,
@@ -9,28 +15,16 @@ const TAG = 'cos-red-packet-rain';
 
 function parseOptions(el: HTMLElement): RedPacketRainOptions {
   const options = {} as RedPacketRainOptions;
-  if (el.hasAttribute('grabbed-label'))
-    options.grabbedLabel = el.getAttribute('grabbed-label') ?? undefined;
-  if (el.hasAttribute('ended-text')) options.endedText = el.getAttribute('ended-text') ?? undefined;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('auto')) {
-    const raw = el.getAttribute('auto');
-    options.auto = raw !== 'false' && raw !== '0';
-  }
-  options.onGrab = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('grab', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onEnd = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('end', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'grabbedLabel', 'grabbed-label');
+  readStringAttr(options, el, 'endedText', 'ended-text');
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'duration', 'duration');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'auto', 'auto', 'optional-true');
+  options.onGrab = optionCallbackDispatcher(el, 'grab');
+  options.onEnd = optionCallbackDispatcher(el, 'end');
   return options;
 }
 

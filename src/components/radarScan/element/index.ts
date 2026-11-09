@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createRadarScan, type RadarScanController, type RadarScanOptions } from '../core';
 import '../style/index.css';
 
@@ -5,9 +6,9 @@ const TAG = 'cos-radar-scan';
 
 function parseOptions(el: HTMLElement): RadarScanOptions {
   const options = {} as RadarScanOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
-  if (el.hasAttribute('blip-count')) options.blipCount = Number(el.getAttribute('blip-count'));
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'size', 'size');
+  readNumberAttr(options, el, 'blipCount', 'blip-count');
   return options;
 }
 

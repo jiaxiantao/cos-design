@@ -1,3 +1,10 @@
+import {
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createCurvedLoop, type CurvedLoopController, type CurvedLoopOptions } from '../core';
 import '../style/index.css';
 
@@ -5,28 +12,14 @@ const TAG = 'cos-curved-loop';
 
 function parseOptions(el: HTMLElement): CurvedLoopOptions {
   const options = {} as CurvedLoopOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('curve-amount'))
-    options.curveAmount = Number(el.getAttribute('curve-amount'));
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('direction')) {
-    try {
-      options.direction = JSON.parse(
-        el.getAttribute('direction') ?? 'null',
-      ) as CurvedLoopOptions['direction'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propdirection = (el as CosCurvedLoopElement)._direction;
-  if (propdirection !== undefined)
-    options.direction = propdirection as CurvedLoopOptions['direction'];
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'curveAmount', 'curve-amount');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
+  readJsonAttr(options, el, 'direction', 'direction');
+  readPropertyOverride(options, el, 'direction', '_direction');
   return options;
 }
 

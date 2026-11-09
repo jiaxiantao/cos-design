@@ -30,6 +30,10 @@ Umbrella import: `import { Fireworks } from 'cos-design/vue'`.
 
 See [examples/vue-app](../../examples/vue-app) — Vite + Vue 3 campaign page (check-in → NineGrid → Confetti).
 
+## WeatherBackground + 实况 composable
+
+Vue 侧 `useLiveWeather` / `useSunTimes` 与 React Hook 同名、同语义，见 [weather-background-vue.md](./weather-background-vue.md)。
+
 ## Related
 
 - [migration-v4.md](../migration-v4.md)

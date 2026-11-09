@@ -1,4 +1,12 @@
 import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
+import {
   createPhotoClothesline,
   type PhotoClotheslineController,
   type PhotoClotheslineOptions,
@@ -9,65 +17,33 @@ const TAG = 'cos-photo-clothesline';
 
 function parseOptions(el: HTMLElement): PhotoClotheslineOptions {
   const options = {} as PhotoClotheslineOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('rope-color')) options.ropeColor = el.getAttribute('rope-color') ?? undefined;
-  if (el.hasAttribute('band-color')) options.bandColor = el.getAttribute('band-color') ?? undefined;
-  if (el.hasAttribute('pin-color')) options.pinColor = el.getAttribute('pin-color') ?? undefined;
-  if (el.hasAttribute('frame-color'))
-    options.frameColor = el.getAttribute('frame-color') ?? undefined;
-  if (el.hasAttribute('background'))
-    options.background = el.getAttribute('background') ?? undefined;
-  if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('photo-width')) options.photoWidth = Number(el.getAttribute('photo-width'));
-  if (el.hasAttribute('photo-height'))
-    options.photoHeight = Number(el.getAttribute('photo-height'));
-  if (el.hasAttribute('photo-gap')) options.photoGap = Number(el.getAttribute('photo-gap'));
-  if (el.hasAttribute('rope-top')) options.ropeTop = Number(el.getAttribute('rope-top'));
-  if (el.hasAttribute('rope-sag')) options.ropeSag = Number(el.getAttribute('rope-sag'));
-  if (el.hasAttribute('band-length')) options.bandLength = Number(el.getAttribute('band-length'));
-  if (el.hasAttribute('band-width')) options.bandWidth = Number(el.getAttribute('band-width'));
-  if (el.hasAttribute('max-pull')) options.maxPull = Number(el.getAttribute('max-pull'));
-  if (el.hasAttribute('stiffness')) options.stiffness = Number(el.getAttribute('stiffness'));
-  if (el.hasAttribute('damping')) options.damping = Number(el.getAttribute('damping'));
-  if (el.hasAttribute('tension')) options.tension = Number(el.getAttribute('tension'));
-  if (el.hasAttribute('tilt')) options.tilt = Number(el.getAttribute('tilt'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoClotheslineOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoClotheslineElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoClotheslineOptions['photos'];
-  options.onIndexChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ropeColor', 'rope-color');
+  readStringAttr(options, el, 'bandColor', 'band-color');
+  readStringAttr(options, el, 'pinColor', 'pin-color');
+  readStringAttr(options, el, 'frameColor', 'frame-color');
+  readStringAttr(options, el, 'background', 'background');
+  readStringAttr(options, el, 'objectFit', 'object-fit');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'photoWidth', 'photo-width');
+  readNumberAttr(options, el, 'photoHeight', 'photo-height');
+  readNumberAttr(options, el, 'photoGap', 'photo-gap');
+  readNumberAttr(options, el, 'ropeTop', 'rope-top');
+  readNumberAttr(options, el, 'ropeSag', 'rope-sag');
+  readNumberAttr(options, el, 'bandLength', 'band-length');
+  readNumberAttr(options, el, 'bandWidth', 'band-width');
+  readNumberAttr(options, el, 'maxPull', 'max-pull');
+  readNumberAttr(options, el, 'stiffness', 'stiffness');
+  readNumberAttr(options, el, 'damping', 'damping');
+  readNumberAttr(options, el, 'tension', 'tension');
+  readNumberAttr(options, el, 'tilt', 'tilt');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onIndexChange = optionCallbackDispatcher(el, 'index-change');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
   return options;
 }
 

@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createGameOfLife, type GameOfLifeController, type GameOfLifeOptions } from '../core';
 import '../style/index.css';
 
@@ -5,25 +11,15 @@ const TAG = 'cos-game-of-life';
 
 function parseOptions(el: HTMLElement): GameOfLifeOptions {
   const options = {} as GameOfLifeOptions;
-  if (el.hasAttribute('alive-color'))
-    options.aliveColor = el.getAttribute('alive-color') ?? undefined;
-  if (el.hasAttribute('grid-color')) options.gridColor = el.getAttribute('grid-color') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('cell-size')) options.cellSize = Number(el.getAttribute('cell-size'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('density')) options.density = Number(el.getAttribute('density'));
-  if (el.hasAttribute('labels')) {
-    try {
-      options.labels = JSON.parse(
-        el.getAttribute('labels') ?? 'null',
-      ) as GameOfLifeOptions['labels'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proplabels = (el as CosGameOfLifeElement)._labels;
-  if (proplabels !== undefined) options.labels = proplabels as GameOfLifeOptions['labels'];
+  readStringAttr(options, el, 'aliveColor', 'alive-color');
+  readStringAttr(options, el, 'gridColor', 'grid-color');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'cellSize', 'cell-size');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'density', 'density');
+  readJsonAttr(options, el, 'labels', 'labels');
+  readPropertyOverride(options, el, 'labels', '_labels');
   return options;
 }
 

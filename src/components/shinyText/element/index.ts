@@ -1,3 +1,4 @@
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createShinyText, type ShinyTextController, type ShinyTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,13 +6,12 @@ const TAG = 'cos-shiny-text';
 
 function parseOptions(el: HTMLElement): ShinyTextOptions {
   const options = {} as ShinyTextOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('shine-color'))
-    options.shineColor = el.getAttribute('shine-color') ?? undefined;
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  options.disabled = el.hasAttribute('disabled');
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'shineColor', 'shine-color');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readBooleanAttr(options, el, 'disabled', 'disabled', 'optional-true');
   return options;
 }
 

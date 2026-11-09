@@ -1,3 +1,4 @@
+import { readBooleanAttr, readNumberAttr } from '@cos-design/shared';
 import {
   createAudioVisualizer,
   type AudioVisualizerController,
@@ -9,10 +10,10 @@ const TAG = 'cos-audio-visualizer';
 
 function parseOptions(el: HTMLElement): AudioVisualizerOptions {
   const options = {} as AudioVisualizerOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('bar-count')) options.barCount = Number(el.getAttribute('bar-count'));
-  options.useMic = el.hasAttribute('use-mic');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'barCount', 'bar-count');
+  readBooleanAttr(options, el, 'useMic', 'use-mic', 'presence');
   return options;
 }
 

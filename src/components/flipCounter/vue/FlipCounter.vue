@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createFlipCounter, type FlipCounterController, type FlipCounterOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<FlipCounterOptions>();
+const props = withDefaults(defineProps<FlipCounterOptions>(), {
+  auto: true,
+});
 const emit = defineEmits<{}>();
 const hostRef = ref<HTMLElement>();
 let ctrl: FlipCounterController | null = null;
@@ -17,10 +18,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createFlipCounter(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

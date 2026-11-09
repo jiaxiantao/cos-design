@@ -1,3 +1,4 @@
+import { optionCallbackDispatcher, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createBurnAway, type BurnAwayController, type BurnAwayOptions } from '../core';
 import '../style/index.css';
 
@@ -5,15 +6,10 @@ const TAG = 'cos-burn-away';
 
 function parseOptions(el: HTMLElement): BurnAwayOptions {
   const options = {} as BurnAwayOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('completed-text'))
-    options.completedText = el.getAttribute('completed-text') ?? undefined;
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  options.onComplete = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'completedText', 'completed-text');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  options.onComplete = optionCallbackDispatcher(el, 'complete');
   return options;
 }
 

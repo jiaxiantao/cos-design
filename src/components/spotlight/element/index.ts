@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSpotlight, type SpotlightController, type SpotlightOptions } from '../core';
 import '../style/index.css';
 
@@ -5,22 +11,11 @@ const TAG = 'cos-spotlight';
 
 function parseOptions(el: HTMLElement): SpotlightOptions {
   const options = {} as SpotlightOptions;
-  if (el.hasAttribute('dim-color')) options.dimColor = el.getAttribute('dim-color') ?? undefined;
-  if (el.hasAttribute('radius')) options.radius = Number(el.getAttribute('radius'));
-  if (el.hasAttribute('default-content'))
-    options.defaultContent = el.getAttribute('default-content') ?? undefined;
-  if (el.hasAttribute('slot-element')) {
-    try {
-      options.slotElement = JSON.parse(
-        el.getAttribute('slot-element') ?? 'null',
-      ) as SpotlightOptions['slotElement'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propslotElement = (el as CosSpotlightElement)._slotElement;
-  if (propslotElement !== undefined)
-    options.slotElement = propslotElement as SpotlightOptions['slotElement'];
+  readStringAttr(options, el, 'dimColor', 'dim-color');
+  readStringAttr(options, el, 'defaultContent', 'default-content');
+  readNumberAttr(options, el, 'radius', 'radius');
+  readJsonAttr(options, el, 'slotElement', 'slot-element');
+  readPropertyOverride(options, el, 'slotElement', '_slotElement');
   return options;
 }
 
@@ -37,7 +32,7 @@ class CosSpotlightElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['radius', 'dim-color', 'slot-element', 'default-content'];
+    return ['radius', 'dim-color', 'default-content', 'slot-element'];
   }
 
   connectedCallback() {

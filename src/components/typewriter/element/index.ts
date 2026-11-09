@@ -1,3 +1,4 @@
+import { readJsonAttr, readNumberAttr, readPropertyOverride } from '@cos-design/shared';
 import { createTypewriter, type TypewriterController, type TypewriterOptions } from '../core';
 import '../style/index.css';
 
@@ -5,19 +6,11 @@ const TAG = 'cos-typewriter';
 
 function parseOptions(el: HTMLElement): TypewriterOptions {
   const options = {} as TypewriterOptions;
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('delete-speed'))
-    options.deleteSpeed = Number(el.getAttribute('delete-speed'));
-  if (el.hasAttribute('pause')) options.pause = Number(el.getAttribute('pause'));
-  if (el.hasAttribute('texts')) {
-    try {
-      options.texts = JSON.parse(el.getAttribute('texts') ?? 'null') as TypewriterOptions['texts'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proptexts = (el as CosTypewriterElement)._texts;
-  if (proptexts !== undefined) options.texts = proptexts as TypewriterOptions['texts'];
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'deleteSpeed', 'delete-speed');
+  readNumberAttr(options, el, 'pause', 'pause');
+  readJsonAttr(options, el, 'texts', 'texts');
+  readPropertyOverride(options, el, 'texts', '_texts');
   return options;
 }
 

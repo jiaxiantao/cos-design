@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import {
-  createDoublePendulum,
-  type DoublePendulumController,
-  type DoublePendulumOptions,
-} from '../core';
+import { createDoublePendulum, type DoublePendulumController, type DoublePendulumOptions } from '../core';
 import '../style/index.css';
 
 const props = defineProps<DoublePendulumOptions>();
@@ -21,10 +16,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createDoublePendulum(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

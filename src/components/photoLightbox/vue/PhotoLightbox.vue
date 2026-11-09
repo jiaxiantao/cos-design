@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
-import {
-  createPhotoLightbox,
-  type PhotoLightboxController,
-  type PhotoLightboxOptions,
-} from '../core';
+import { createPhotoLightbox, type PhotoLightboxController, type PhotoLightboxOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<PhotoLightboxOptions>(), {
@@ -28,10 +23,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoLightbox(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

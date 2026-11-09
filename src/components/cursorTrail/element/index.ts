@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createCursorTrail, type CursorTrailController, type CursorTrailOptions } from '../core';
 import '../style/index.css';
 
@@ -5,11 +6,11 @@ const TAG = 'cos-cursor-trail';
 
 function parseOptions(el: HTMLElement): CursorTrailOptions {
   const options = {} as CursorTrailOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('length')) options.length = Number(el.getAttribute('length'));
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'length', 'length');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
   return options;
 }
 

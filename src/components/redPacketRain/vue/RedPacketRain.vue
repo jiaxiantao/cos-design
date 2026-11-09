@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
-import {
-  createRedPacketRain,
-  type RedPacketRainController,
-  type RedPacketRainOptions,
-} from '../core';
+import { createRedPacketRain, type RedPacketRainController, type RedPacketRainOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<RedPacketRainOptions>(), {
   auto: true,
 });
 const emit = defineEmits<{
-  grab: [...args: unknown[]];
-  end: [...args: unknown[]];
+  'grab': [...args: unknown[]];
+  'end': [...args: unknown[]];
 }>();
 const hostRef = ref<HTMLElement>();
 let ctrl: RedPacketRainController | null = null;
@@ -28,10 +23,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createRedPacketRain(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

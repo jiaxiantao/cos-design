@@ -1,3 +1,10 @@
+import {
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createAuroraVeil, type AuroraVeilController, type AuroraVeilOptions } from '../core';
 import '../style/index.css';
 
@@ -5,27 +12,15 @@ const TAG = 'cos-aurora-veil';
 
 function parseOptions(el: HTMLElement): AuroraVeilOptions {
   const options = {} as AuroraVeilOptions;
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('band-count')) options.bandCount = Number(el.getAttribute('band-count'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('colors')) {
-    try {
-      options.colors = JSON.parse(
-        el.getAttribute('colors') ?? 'null',
-      ) as AuroraVeilOptions['colors'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propcolors = (el as CosAuroraVeilElement)._colors;
-  if (propcolors !== undefined) options.colors = propcolors as AuroraVeilOptions['colors'];
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'bandCount', 'band-count');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
+  readJsonAttr(options, el, 'colors', 'colors');
+  readPropertyOverride(options, el, 'colors', '_colors');
   return options;
 }
 

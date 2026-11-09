@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createTextMorph, type TextMorphController, type TextMorphOptions } from '../core';
 import '../style/index.css';
 
@@ -5,19 +11,12 @@ const TAG = 'cos-text-morph';
 
 function parseOptions(el: HTMLElement): TextMorphOptions {
   const options = {} as TextMorphOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('interval')) options.interval = Number(el.getAttribute('interval'));
-  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('texts')) {
-    try {
-      options.texts = JSON.parse(el.getAttribute('texts') ?? 'null') as TextMorphOptions['texts'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proptexts = (el as CosTextMorphElement)._texts;
-  if (proptexts !== undefined) options.texts = proptexts as TextMorphOptions['texts'];
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'interval', 'interval');
+  readNumberAttr(options, el, 'duration', 'duration');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readJsonAttr(options, el, 'texts', 'texts');
+  readPropertyOverride(options, el, 'texts', '_texts');
   return options;
 }
 

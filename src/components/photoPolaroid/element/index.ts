@@ -1,4 +1,12 @@
 import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
+import {
   createPhotoPolaroid,
   type PhotoPolaroidController,
   type PhotoPolaroidOptions,
@@ -9,42 +17,17 @@ const TAG = 'cos-photo-polaroid';
 
 function parseOptions(el: HTMLElement): PhotoPolaroidOptions {
   const options = {} as PhotoPolaroidOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('card-width')) options.cardWidth = Number(el.getAttribute('card-width'));
-  if (el.hasAttribute('card-height')) options.cardHeight = Number(el.getAttribute('card-height'));
-  if (el.hasAttribute('scatter')) options.scatter = Number(el.getAttribute('scatter'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoPolaroidOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoPolaroidElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoPolaroidOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'cardWidth', 'card-width');
+  readNumberAttr(options, el, 'cardHeight', 'card-height');
+  readNumberAttr(options, el, 'scatter', 'scatter');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
   return options;
 }
 

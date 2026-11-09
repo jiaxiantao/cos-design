@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createPhotoLantern, type PhotoLanternController, type PhotoLanternOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<PhotoLanternOptions>(), {
-  // Match engine defaults — Vue casts absent Boolean props to false otherwise.
   autoRotate: true,
   showAccessories: true,
+  showCaption: true,
 });
 const emit = defineEmits<{
   'face-change': [...args: unknown[]];
@@ -28,10 +27,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoLantern(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

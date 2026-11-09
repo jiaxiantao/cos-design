@@ -1,3 +1,4 @@
+import { readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createMetaballPool, type MetaballPoolController, type MetaballPoolOptions } from '../core';
 import '../style/index.css';
 
@@ -5,10 +6,10 @@ const TAG = 'cos-metaball-pool';
 
 function parseOptions(el: HTMLElement): MetaballPoolOptions {
   const options = {} as MetaballPoolOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('ball-count')) options.ballCount = Number(el.getAttribute('ball-count'));
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'ballCount', 'ball-count');
   return options;
 }
 

@@ -1,3 +1,4 @@
+import { readBooleanAttr, readNumberAttr } from '@cos-design/shared';
 import { createSolarSystem, type SolarSystemController, type SolarSystemOptions } from '../core';
 import '../style/index.css';
 
@@ -5,10 +6,10 @@ const TAG = 'cos-solar-system';
 
 function parseOptions(el: HTMLElement): SolarSystemOptions {
   const options = {} as SolarSystemOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  options.showOrbits = el.hasAttribute('show-orbits');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readBooleanAttr(options, el, 'showOrbits', 'show-orbits', 'presence');
   return options;
 }
 

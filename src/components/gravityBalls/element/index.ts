@@ -1,3 +1,4 @@
+import { readNumberAttr } from '@cos-design/shared';
 import { createGravityBalls, type GravityBallsController, type GravityBallsOptions } from '../core';
 import '../style/index.css';
 
@@ -5,9 +6,9 @@ const TAG = 'cos-gravity-balls';
 
 function parseOptions(el: HTMLElement): GravityBallsOptions {
   const options = {} as GravityBallsOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('ball-count')) options.ballCount = Number(el.getAttribute('ball-count'));
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'ballCount', 'ball-count');
   return options;
 }
 

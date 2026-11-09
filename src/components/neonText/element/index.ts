@@ -1,3 +1,4 @@
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createNeonText, type NeonTextController, type NeonTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,10 +6,10 @@ const TAG = 'cos-neon-text';
 
 function parseOptions(el: HTMLElement): NeonTextOptions {
   const options = {} as NeonTextOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  options.flicker = el.hasAttribute('flicker');
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readBooleanAttr(options, el, 'flicker', 'flicker', 'presence');
   return options;
 }
 

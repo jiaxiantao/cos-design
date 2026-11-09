@@ -1,3 +1,9 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createConfetti, type ConfettiController, type ConfettiOptions } from '../core';
 import '../style/index.css';
 
@@ -5,25 +11,14 @@ const TAG = 'cos-confetti';
 
 function parseOptions(el: HTMLElement): ConfettiOptions {
   const options = {} as ConfettiOptions;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('particle-count'))
-    options.particleCount = Number(el.getAttribute('particle-count'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('auto')) {
-    const raw = el.getAttribute('auto');
-    options.auto = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
-  options.onComplete = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'particleCount', 'particle-count');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'auto', 'auto', 'optional-true');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
+  options.onComplete = optionCallbackDispatcher(el, 'complete');
   return options;
 }
 

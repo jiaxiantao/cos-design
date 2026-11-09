@@ -1,3 +1,11 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createPhotoAlbum, type PhotoAlbumController, type PhotoAlbumOptions } from '../core';
 import '../style/index.css';
 
@@ -5,61 +13,21 @@ const TAG = 'cos-photo-album';
 
 function parseOptions(el: HTMLElement): PhotoAlbumOptions {
   const options = {} as PhotoAlbumOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('object-fit')) options.objectFit = el.getAttribute('object-fit') ?? undefined;
-  if (el.hasAttribute('page-color')) options.pageColor = el.getAttribute('page-color') ?? undefined;
-  if (el.hasAttribute('cover-color'))
-    options.coverColor = el.getAttribute('cover-color') ?? undefined;
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('page-turn-duration'))
-    options.pageTurnDuration = Number(el.getAttribute('page-turn-duration'));
-  if (el.hasAttribute('show-page-number')) {
-    const raw = el.getAttribute('show-page-number');
-    options.showPageNumber = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoAlbumOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoAlbumElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoAlbumOptions['photos'];
-  if (el.hasAttribute('labels')) {
-    try {
-      options.labels = JSON.parse(
-        el.getAttribute('labels') ?? 'null',
-      ) as PhotoAlbumOptions['labels'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proplabels = (el as CosPhotoAlbumElement)._labels;
-  if (proplabels !== undefined) options.labels = proplabels as PhotoAlbumOptions['labels'];
-  options.onPageChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('page-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onIndexChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'objectFit', 'object-fit');
+  readStringAttr(options, el, 'pageColor', 'page-color');
+  readStringAttr(options, el, 'coverColor', 'cover-color');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readNumberAttr(options, el, 'pageTurnDuration', 'page-turn-duration');
+  readBooleanAttr(options, el, 'showPageNumber', 'show-page-number', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  readJsonAttr(options, el, 'labels', 'labels');
+  readPropertyOverride(options, el, 'labels', '_labels');
+  options.onPageChange = optionCallbackDispatcher(el, 'page-change');
+  options.onIndexChange = optionCallbackDispatcher(el, 'index-change');
   return options;
 }
 

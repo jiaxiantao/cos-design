@@ -39,8 +39,25 @@ jobs:
       - name: Build packages
         run: pnpm build
 
+      - name: Verify v4 matrix
+        run: pnpm verify:v4-matrix
+
+      - name: Verify v4 runtime audit
+        run: pnpm verify:v4-runtime
+
+      - name: Verify WebGL dispose audit
+        run: pnpm verify:webgl-dispose
+
+      - name: Unit tests
+        run: pnpm test:unit
+
       - name: Build GitHub Pages
         run: pnpm build:pages
+
+      - name: Build example apps
+        run: |
+          pnpm --dir examples/vue-app build
+          pnpm --dir examples/vanilla build
 
       - name: Build demo for smoke
         run: pnpm build:demo

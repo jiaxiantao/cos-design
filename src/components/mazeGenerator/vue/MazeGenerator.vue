@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import {
-  createMazeGenerator,
-  type MazeGeneratorController,
-  type MazeGeneratorOptions,
-} from '../core';
+import { createMazeGenerator, type MazeGeneratorController, type MazeGeneratorOptions } from '../core';
 import '../style/index.css';
 
 const props = defineProps<MazeGeneratorOptions>();
 const emit = defineEmits<{
-  generated: [...args: unknown[]];
+  'generated': [...args: unknown[]];
 }>();
 const hostRef = ref<HTMLElement>();
 let ctrl: MazeGeneratorController | null = null;
@@ -24,10 +19,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createMazeGenerator(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

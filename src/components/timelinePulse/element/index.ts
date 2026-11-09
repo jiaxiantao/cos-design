@@ -1,4 +1,10 @@
 import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
+import {
   createTimelinePulse,
   type TimelinePulseController,
   type TimelinePulseOptions,
@@ -9,19 +15,10 @@ const TAG = 'cos-timeline-pulse';
 
 function parseOptions(el: HTMLElement): TimelinePulseOptions {
   const options = {} as TimelinePulseOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('current')) options.current = Number(el.getAttribute('current'));
-  if (el.hasAttribute('steps')) {
-    try {
-      options.steps = JSON.parse(
-        el.getAttribute('steps') ?? 'null',
-      ) as TimelinePulseOptions['steps'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propsteps = (el as CosTimelinePulseElement)._steps;
-  if (propsteps !== undefined) options.steps = propsteps as TimelinePulseOptions['steps'];
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'current', 'current');
+  readJsonAttr(options, el, 'steps', 'steps');
+  readPropertyOverride(options, el, 'steps', '_steps');
   return options;
 }
 

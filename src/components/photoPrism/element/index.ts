@@ -1,3 +1,11 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createPhotoPrism, type PhotoPrismController, type PhotoPrismOptions } from '../core';
 import '../style/index.css';
 
@@ -5,45 +13,17 @@ const TAG = 'cos-photo-prism';
 
 function parseOptions(el: HTMLElement): PhotoPrismOptions {
   const options = {} as PhotoPrismOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
-  if (el.hasAttribute('drag-sensitivity'))
-    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
-  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('auto-rotate')) {
-    const raw = el.getAttribute('auto-rotate');
-    options.autoRotate = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoPrismOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoPrismElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoPrismOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'size', 'size');
+  readNumberAttr(options, el, 'dragSensitivity', 'drag-sensitivity');
+  readNumberAttr(options, el, 'friction', 'friction');
+  readBooleanAttr(options, el, 'autoRotate', 'auto-rotate', 'optional-true');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
   return options;
 }
 

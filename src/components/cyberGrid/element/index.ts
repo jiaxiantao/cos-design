@@ -1,3 +1,4 @@
+import { readBooleanAttr, readNumberAttr, readStringAttr } from '@cos-design/shared';
 import { createCyberGrid, type CyberGridController, type CyberGridOptions } from '../core';
 import '../style/index.css';
 
@@ -5,11 +6,11 @@ const TAG = 'cos-cyber-grid';
 
 function parseOptions(el: HTMLElement): CyberGridOptions {
   const options = {} as CyberGridOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  options.fill = el.hasAttribute('fill');
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
   return options;
 }
 
