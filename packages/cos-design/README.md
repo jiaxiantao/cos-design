@@ -65,6 +65,7 @@ import { Fireworks } from '@cos-design/fireworks/vue';
 - **AI index:** https://jiaxiantao.github.io/cos-design/llms.txt · **Context7:** `/jiaxiantao/cos-design`
 - **Cursor Skill install:** see [docs/ai-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/ai-discovery.md)
 - **Article:** [React marketing page effects with cos-design](https://github.com/jiaxiantao/cos-design/blob/master/website-content/cos-design-marketing-effects-en.md)
+- **Quality (all frameworks):** `pnpm verify:v4-matrix` · `pnpm verify:v4-runtime` · `pnpm test:unit` · `pnpm test:smoke` (React + Vue / Web Components / Core tabs)
 
 ---
 
