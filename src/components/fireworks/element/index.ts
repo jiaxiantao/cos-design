@@ -1,3 +1,9 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createFireworks, type FireworksController, type FireworksOptions } from '../core';
 import '../style/index.css';
 
@@ -5,28 +11,19 @@ const TAG = 'cos-fireworks';
 
 function parseOptions(el: HTMLElement): FireworksOptions {
   const options = {} as FireworksOptions;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('auto')) {
-    const raw = el.getAttribute('auto');
-    options.auto = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
-  options.onComplete = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('complete', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'auto', 'auto', 'optional-true');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
+  options.onComplete = optionCallbackDispatcher(el, 'complete');
   return options;
 }
 
 class CosFireworksElement extends HTMLElement {
   private ctrl: FireworksController | null = null;
+
 
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'auto', 'interactive', 'hint'];

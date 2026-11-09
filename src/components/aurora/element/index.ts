@@ -1,3 +1,9 @@
+import {
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+} from '@cos-design/shared';
 import { createAurora, type AuroraController, type AuroraOptions } from '../core';
 import '../style/index.css';
 
@@ -5,18 +11,11 @@ const TAG = 'cos-aurora';
 
 function parseOptions(el: HTMLElement): AuroraOptions {
   const options = {} as AuroraOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('colors')) {
-    try {
-      options.colors = JSON.parse(el.getAttribute('colors') ?? 'null') as AuroraOptions['colors'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propcolors = (el as CosAuroraElement)._colors;
-  if (propcolors !== undefined) options.colors = propcolors as AuroraOptions['colors'];
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readJsonAttr(options, el, 'colors', 'colors');
+  readPropertyOverride(options, el, 'colors', '_colors');
   return options;
 }
 
@@ -48,6 +47,7 @@ class CosAuroraElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

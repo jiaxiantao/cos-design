@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSandFall, type SandFallController, type SandFallOptions } from '../core';
 import '../style/index.css';
 
@@ -5,21 +11,14 @@ const TAG = 'cos-sand-fall';
 
 function parseOptions(el: HTMLElement): SandFallOptions {
   const options = {} as SandFallOptions;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('clear-text')) options.clearText = el.getAttribute('clear-text') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('cell-size')) options.cellSize = Number(el.getAttribute('cell-size'));
-  if (el.hasAttribute('spawn-rate')) options.spawnRate = Number(el.getAttribute('spawn-rate'));
-  if (el.hasAttribute('colors')) {
-    try {
-      options.colors = JSON.parse(el.getAttribute('colors') ?? 'null') as SandFallOptions['colors'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propcolors = (el as CosSandFallElement)._colors;
-  if (propcolors !== undefined) options.colors = propcolors as SandFallOptions['colors'];
+  readStringAttr(options, el, 'hint', 'hint');
+  readStringAttr(options, el, 'clearText', 'clear-text');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'cellSize', 'cell-size');
+  readNumberAttr(options, el, 'spawnRate', 'spawn-rate');
+  readJsonAttr(options, el, 'colors', 'colors');
+  readPropertyOverride(options, el, 'colors', '_colors');
   return options;
 }
 
@@ -51,6 +50,7 @@ class CosSandFallElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

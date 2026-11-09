@@ -15,6 +15,16 @@ export {
   optionsFingerprint,
   optionsVisualChanged,
 } from './host-layout';
+export type { BooleanAttrMode } from './element-options';
+export {
+  camelToKebabAttr,
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from './element-options';
 
 // React hooks live at `@cos-design/shared/react` only — keep the default entry framework-free
 // so Core / Web Components do not pull React.

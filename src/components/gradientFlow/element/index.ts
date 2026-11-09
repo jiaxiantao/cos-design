@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createGradientFlow, type GradientFlowController, type GradientFlowOptions } from '../core';
 import '../style/index.css';
 
@@ -5,19 +11,10 @@ const TAG = 'cos-gradient-flow';
 
 function parseOptions(el: HTMLElement): GradientFlowOptions {
   const options = {} as GradientFlowOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('colors')) {
-    try {
-      options.colors = JSON.parse(
-        el.getAttribute('colors') ?? 'null',
-      ) as GradientFlowOptions['colors'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propcolors = (el as CosGradientFlowElement)._colors;
-  if (propcolors !== undefined) options.colors = propcolors as GradientFlowOptions['colors'];
+  readStringAttr(options, el, 'text', 'text');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readJsonAttr(options, el, 'colors', 'colors');
+  readPropertyOverride(options, el, 'colors', '_colors');
   return options;
 }
 
@@ -49,6 +46,7 @@ class CosGradientFlowElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

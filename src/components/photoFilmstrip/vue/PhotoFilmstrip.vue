@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
-import {
-  createPhotoFilmstrip,
-  type PhotoFilmstripController,
-  type PhotoFilmstripOptions,
-} from '../core';
+import { createPhotoFilmstrip, type PhotoFilmstripController, type PhotoFilmstripOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<PhotoFilmstripOptions>(), {
@@ -28,10 +23,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoFilmstrip(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

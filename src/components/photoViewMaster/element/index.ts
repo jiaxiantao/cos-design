@@ -1,63 +1,33 @@
 import {
-  createPhotoViewMaster,
-  type PhotoViewMasterController,
-  type PhotoViewMasterOptions,
-} from '../core';
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
+import { createPhotoViewMaster, type PhotoViewMasterController, type PhotoViewMasterOptions } from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-view-master';
 
 function parseOptions(el: HTMLElement): PhotoViewMasterOptions {
   const options = {} as PhotoViewMasterOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('disc-size')) options.discSize = Number(el.getAttribute('disc-size'));
-  if (el.hasAttribute('peep-size')) options.peepSize = Number(el.getAttribute('peep-size'));
-  if (el.hasAttribute('drag-sensitivity'))
-    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
-  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('auto-rotate-speed'))
-    options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('auto-rotate')) {
-    const raw = el.getAttribute('auto-rotate');
-    options.autoRotate = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoViewMasterOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoViewMasterElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoViewMasterOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onIndexChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'discSize', 'disc-size');
+  readNumberAttr(options, el, 'peepSize', 'peep-size');
+  readNumberAttr(options, el, 'dragSensitivity', 'drag-sensitivity');
+  readNumberAttr(options, el, 'friction', 'friction');
+  readNumberAttr(options, el, 'autoRotateSpeed', 'auto-rotate-speed');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readBooleanAttr(options, el, 'autoRotate', 'auto-rotate', 'optional-true');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
+  options.onIndexChange = optionCallbackDispatcher(el, 'index-change');
   return options;
 }
 
@@ -74,20 +44,7 @@ class CosPhotoViewMasterElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'photos',
-      'width',
-      'height',
-      'disc-size',
-      'peep-size',
-      'drag-sensitivity',
-      'friction',
-      'auto-rotate',
-      'auto-rotate-speed',
-      'show-caption',
-      'initial-index',
-      'aria-label',
-    ];
+    return ['photos', 'width', 'height', 'disc-size', 'peep-size', 'drag-sensitivity', 'friction', 'auto-rotate', 'auto-rotate-speed', 'show-caption', 'initial-index', 'aria-label'];
   }
 
   connectedCallback() {
@@ -102,6 +59,7 @@ class CosPhotoViewMasterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

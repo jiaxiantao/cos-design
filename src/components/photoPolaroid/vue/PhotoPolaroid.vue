@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
-import {
-  createPhotoPolaroid,
-  type PhotoPolaroidController,
-  type PhotoPolaroidOptions,
-} from '../core';
+import { createPhotoPolaroid, type PhotoPolaroidController, type PhotoPolaroidOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<PhotoPolaroidOptions>(), {
@@ -26,10 +21,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoPolaroid(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

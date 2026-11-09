@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createCircularText, type CircularTextController, type CircularTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,23 +11,13 @@ const TAG = 'cos-circular-text';
 
 function parseOptions(el: HTMLElement): CircularTextOptions {
   const options = {} as CircularTextOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('spin-duration'))
-    options.spinDuration = Number(el.getAttribute('spin-duration'));
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('radius')) options.radius = Number(el.getAttribute('radius'));
-  if (el.hasAttribute('on-hover')) {
-    try {
-      options.onHover = JSON.parse(
-        el.getAttribute('on-hover') ?? 'null',
-      ) as CircularTextOptions['onHover'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proponHover = (el as CosCircularTextElement)._onHover;
-  if (proponHover !== undefined) options.onHover = proponHover as CircularTextOptions['onHover'];
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'spinDuration', 'spin-duration');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readNumberAttr(options, el, 'radius', 'radius');
+  readJsonAttr(options, el, 'onHover', 'on-hover');
+  readPropertyOverride(options, el, 'onHover', '_onHover');
   return options;
 }
 
@@ -53,6 +49,7 @@ class CosCircularTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

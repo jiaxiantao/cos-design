@@ -1,25 +1,25 @@
 import {
-  createDoublePendulum,
-  type DoublePendulumController,
-  type DoublePendulumOptions,
-} from '../core';
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
+import { createDoublePendulum, type DoublePendulumController, type DoublePendulumOptions } from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-double-pendulum';
 
 function parseOptions(el: HTMLElement): DoublePendulumOptions {
   const options = {} as DoublePendulumOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('color2')) options.color2 = el.getAttribute('color2') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('trail-length'))
-    options.trailLength = Number(el.getAttribute('trail-length'));
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'color2', 'color2');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'trailLength', 'trail-length');
   return options;
 }
 
 class CosDoublePendulumElement extends HTMLElement {
   private ctrl: DoublePendulumController | null = null;
+
 
   static get observedAttributes() {
     return ['width', 'height', 'trail-length', 'color', 'color2'];
@@ -37,6 +37,7 @@ class CosDoublePendulumElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

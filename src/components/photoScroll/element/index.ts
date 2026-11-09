@@ -1,3 +1,11 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createPhotoScroll, type PhotoScrollController, type PhotoScrollOptions } from '../core';
 import '../style/index.css';
 
@@ -5,51 +13,20 @@ const TAG = 'cos-photo-scroll';
 
 function parseOptions(el: HTMLElement): PhotoScrollOptions {
   const options = {} as PhotoScrollOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('frame-width')) options.frameWidth = Number(el.getAttribute('frame-width'));
-  if (el.hasAttribute('frame-height'))
-    options.frameHeight = Number(el.getAttribute('frame-height'));
-  if (el.hasAttribute('frame-gap')) options.frameGap = Number(el.getAttribute('frame-gap'));
-  if (el.hasAttribute('drag-sensitivity'))
-    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
-  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoScrollOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoScrollElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoScrollOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onIndexChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'frameWidth', 'frame-width');
+  readNumberAttr(options, el, 'frameHeight', 'frame-height');
+  readNumberAttr(options, el, 'frameGap', 'frame-gap');
+  readNumberAttr(options, el, 'dragSensitivity', 'drag-sensitivity');
+  readNumberAttr(options, el, 'friction', 'friction');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
+  options.onIndexChange = optionCallbackDispatcher(el, 'index-change');
   return options;
 }
 
@@ -66,19 +43,7 @@ class CosPhotoScrollElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'photos',
-      'width',
-      'height',
-      'frame-width',
-      'frame-height',
-      'frame-gap',
-      'drag-sensitivity',
-      'friction',
-      'show-caption',
-      'initial-index',
-      'aria-label',
-    ];
+    return ['photos', 'width', 'height', 'frame-width', 'frame-height', 'frame-gap', 'drag-sensitivity', 'friction', 'show-caption', 'initial-index', 'aria-label'];
   }
 
   connectedCallback() {
@@ -93,6 +58,7 @@ class CosPhotoScrollElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
-import {
-  createProgressChest,
-  type ProgressChestController,
-  type ProgressChestOptions,
-} from '../core';
+import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
+import { createProgressChest, type ProgressChestController, type ProgressChestOptions } from '../core';
 import '../style/index.css';
 
-const props = defineProps<ProgressChestOptions>();
+const props = withDefaults(defineProps<ProgressChestOptions>(), {
+  auto: true,
+});
 const emit = defineEmits<{
-  open: [...args: unknown[]];
+  'open': [...args: unknown[]];
 }>();
 const hostRef = ref<HTMLElement>();
 let ctrl: ProgressChestController | null = null;
@@ -24,10 +21,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createProgressChest(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

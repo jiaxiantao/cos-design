@@ -1,3 +1,8 @@
+import {
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createLavaBubble, type LavaBubbleController, type LavaBubbleOptions } from '../core';
 import '../style/index.css';
 
@@ -5,36 +10,24 @@ const TAG = 'cos-lava-bubble';
 
 function parseOptions(el: HTMLElement): LavaBubbleOptions {
   const options = {} as LavaBubbleOptions;
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('heat')) options.heat = Number(el.getAttribute('heat'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('activity')) options.activity = Number(el.getAttribute('activity'));
-  options.fill = el.hasAttribute('fill');
-  options.autoSpawn = el.hasAttribute('auto-spawn');
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'heat', 'heat');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'activity', 'activity');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'autoSpawn', 'auto-spawn', 'presence');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
   return options;
 }
 
 class CosLavaBubbleElement extends HTMLElement {
   private ctrl: LavaBubbleController | null = null;
 
+
   static get observedAttributes() {
-    return [
-      'width',
-      'height',
-      'fill',
-      'heat',
-      'speed',
-      'auto-spawn',
-      'activity',
-      'interactive',
-      'aria-label',
-    ];
+    return ['width', 'height', 'fill', 'heat', 'speed', 'auto-spawn', 'activity', 'interactive', 'aria-label'];
   }
 
   connectedCallback() {
@@ -49,6 +42,7 @@ class CosLavaBubbleElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

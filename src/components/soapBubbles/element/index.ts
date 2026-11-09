@@ -1,3 +1,8 @@
+import {
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSoapBubbles, type SoapBubblesController, type SoapBubblesOptions } from '../core';
 import '../style/index.css';
 
@@ -5,21 +10,19 @@ const TAG = 'cos-soap-bubbles';
 
 function parseOptions(el: HTMLElement): SoapBubblesOptions {
   const options = {} as SoapBubblesOptions;
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('count')) options.count = Number(el.getAttribute('count'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'count', 'count');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
   return options;
 }
 
 class CosSoapBubblesElement extends HTMLElement {
   private ctrl: SoapBubblesController | null = null;
+
 
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'count', 'speed', 'interactive', 'aria-label'];
@@ -37,6 +40,7 @@ class CosSoapBubblesElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

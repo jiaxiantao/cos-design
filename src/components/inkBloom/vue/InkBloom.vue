@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createInkBloom, type InkBloomController, type InkBloomOptions } from '../core';
 import '../style/index.css';
@@ -19,10 +18,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createInkBloom(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

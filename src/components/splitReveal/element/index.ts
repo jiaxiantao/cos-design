@@ -1,3 +1,7 @@
+import {
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSplitReveal, type SplitRevealController, type SplitRevealOptions } from '../core';
 import '../style/index.css';
 
@@ -5,14 +9,15 @@ const TAG = 'cos-split-reveal';
 
 function parseOptions(el: HTMLElement): SplitRevealOptions {
   const options = {} as SplitRevealOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('delay')) options.delay = Number(el.getAttribute('delay'));
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'delay', 'delay');
   return options;
 }
 
 class CosSplitRevealElement extends HTMLElement {
   private ctrl: SplitRevealController | null = null;
+
 
   static get observedAttributes() {
     return ['text', 'delay', 'color'];
@@ -30,6 +35,7 @@ class CosSplitRevealElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

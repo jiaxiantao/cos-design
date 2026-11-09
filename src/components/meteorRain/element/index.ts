@@ -1,3 +1,7 @@
+import {
+  readBooleanAttr,
+  readNumberAttr,
+} from '@cos-design/shared';
 import { createMeteorRain, type MeteorRainController, type MeteorRainOptions } from '../core';
 import '../style/index.css';
 
@@ -5,16 +9,16 @@ const TAG = 'cos-meteor-rain';
 
 function parseOptions(el: HTMLElement): MeteorRainOptions {
   const options = {} as MeteorRainOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('meteor-count'))
-    options.meteorCount = Number(el.getAttribute('meteor-count'));
-  options.fill = el.hasAttribute('fill');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'meteorCount', 'meteor-count');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
   return options;
 }
 
 class CosMeteorRainElement extends HTMLElement {
   private ctrl: MeteorRainController | null = null;
+
 
   static get observedAttributes() {
     return ['width', 'height', 'fill', 'meteor-count'];
@@ -32,6 +36,7 @@ class CosMeteorRainElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

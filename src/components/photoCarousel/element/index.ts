@@ -1,69 +1,35 @@
 import {
-  createPhotoCarousel,
-  type PhotoCarouselController,
-  type PhotoCarouselOptions,
-} from '../core';
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
+import { createPhotoCarousel, type PhotoCarouselController, type PhotoCarouselOptions } from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-carousel';
 
 function parseOptions(el: HTMLElement): PhotoCarouselOptions {
   const options = {} as PhotoCarouselOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('radius')) options.radius = Number(el.getAttribute('radius'));
-  if (el.hasAttribute('card-width')) options.cardWidth = Number(el.getAttribute('card-width'));
-  if (el.hasAttribute('card-height')) options.cardHeight = Number(el.getAttribute('card-height'));
-  if (el.hasAttribute('auto-rotate-speed'))
-    options.autoRotateSpeed = Number(el.getAttribute('auto-rotate-speed'));
-  if (el.hasAttribute('drag-sensitivity'))
-    options.dragSensitivity = Number(el.getAttribute('drag-sensitivity'));
-  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('initial-angle'))
-    options.initialAngle = Number(el.getAttribute('initial-angle'));
-  if (el.hasAttribute('auto-rotate')) {
-    const raw = el.getAttribute('auto-rotate');
-    options.autoRotate = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoCarouselOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoCarouselElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoCarouselOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onFaceChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('face-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onIndexChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'radius', 'radius');
+  readNumberAttr(options, el, 'cardWidth', 'card-width');
+  readNumberAttr(options, el, 'cardHeight', 'card-height');
+  readNumberAttr(options, el, 'autoRotateSpeed', 'auto-rotate-speed');
+  readNumberAttr(options, el, 'dragSensitivity', 'drag-sensitivity');
+  readNumberAttr(options, el, 'friction', 'friction');
+  readNumberAttr(options, el, 'initialAngle', 'initial-angle');
+  readBooleanAttr(options, el, 'autoRotate', 'auto-rotate', 'optional-true');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
+  options.onFaceChange = optionCallbackDispatcher(el, 'face-change');
+  options.onIndexChange = optionCallbackDispatcher(el, 'index-change');
   return options;
 }
 
@@ -80,21 +46,7 @@ class CosPhotoCarouselElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'photos',
-      'width',
-      'height',
-      'radius',
-      'card-width',
-      'card-height',
-      'auto-rotate',
-      'auto-rotate-speed',
-      'drag-sensitivity',
-      'friction',
-      'show-caption',
-      'initial-angle',
-      'aria-label',
-    ];
+    return ['photos', 'width', 'height', 'radius', 'card-width', 'card-height', 'auto-rotate', 'auto-rotate-speed', 'drag-sensitivity', 'friction', 'show-caption', 'initial-angle', 'aria-label'];
   }
 
   connectedCallback() {
@@ -109,6 +61,7 @@ class CosPhotoCarouselElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

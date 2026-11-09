@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import {
-  createTimelinePulse,
-  type TimelinePulseController,
-  type TimelinePulseOptions,
-} from '../core';
+import { createTimelinePulse, type TimelinePulseController, type TimelinePulseOptions } from '../core';
 import '../style/index.css';
 
 const props = defineProps<TimelinePulseOptions>();
@@ -21,10 +16,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createTimelinePulse(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

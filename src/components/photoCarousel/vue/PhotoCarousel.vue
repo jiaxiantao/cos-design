@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
-import {
-  createPhotoCarousel,
-  type PhotoCarouselController,
-  type PhotoCarouselOptions,
-} from '../core';
+import { createPhotoCarousel, type PhotoCarouselController, type PhotoCarouselOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<PhotoCarouselOptions>(), {
   autoRotate: true,
+  showCaption: true,
 });
 const emit = defineEmits<{
   'photo-click': [...args: unknown[]];
@@ -30,10 +26,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoCarousel(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

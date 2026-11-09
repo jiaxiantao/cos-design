@@ -1,3 +1,8 @@
+import {
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSmokeFog, type SmokeFogController, type SmokeFogOptions } from '../core';
 import '../style/index.css';
 
@@ -5,43 +10,26 @@ const TAG = 'cos-smoke-fog';
 
 function parseOptions(el: HTMLElement): SmokeFogOptions {
   const options = {} as SmokeFogOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('background-color'))
-    options.backgroundColor = el.getAttribute('background-color') ?? undefined;
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('density')) options.density = Number(el.getAttribute('density'));
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('disperse-strength'))
-    options.disperseStrength = Number(el.getAttribute('disperse-strength'));
-  if (el.hasAttribute('disperse-radius'))
-    options.disperseRadius = Number(el.getAttribute('disperse-radius'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'backgroundColor', 'background-color');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'density', 'density');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readNumberAttr(options, el, 'disperseStrength', 'disperse-strength');
+  readNumberAttr(options, el, 'disperseRadius', 'disperse-radius');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
   return options;
 }
 
 class CosSmokeFogElement extends HTMLElement {
   private ctrl: SmokeFogController | null = null;
 
+
   static get observedAttributes() {
-    return [
-      'width',
-      'height',
-      'fill',
-      'density',
-      'color',
-      'background-color',
-      'speed',
-      'disperse-strength',
-      'disperse-radius',
-      'interactive',
-      'aria-label',
-    ];
+    return ['width', 'height', 'fill', 'density', 'color', 'background-color', 'speed', 'disperse-strength', 'disperse-radius', 'interactive', 'aria-label'];
   }
 
   connectedCallback() {
@@ -56,6 +44,7 @@ class CosSmokeFogElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

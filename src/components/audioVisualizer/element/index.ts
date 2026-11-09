@@ -1,23 +1,24 @@
 import {
-  createAudioVisualizer,
-  type AudioVisualizerController,
-  type AudioVisualizerOptions,
-} from '../core';
+  readBooleanAttr,
+  readNumberAttr,
+} from '@cos-design/shared';
+import { createAudioVisualizer, type AudioVisualizerController, type AudioVisualizerOptions } from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-audio-visualizer';
 
 function parseOptions(el: HTMLElement): AudioVisualizerOptions {
   const options = {} as AudioVisualizerOptions;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('bar-count')) options.barCount = Number(el.getAttribute('bar-count'));
-  options.useMic = el.hasAttribute('use-mic');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'barCount', 'bar-count');
+  readBooleanAttr(options, el, 'useMic', 'use-mic', 'presence');
   return options;
 }
 
 class CosAudioVisualizerElement extends HTMLElement {
   private ctrl: AudioVisualizerController | null = null;
+
 
   static get observedAttributes() {
     return ['width', 'height', 'bar-count', 'use-mic'];
@@ -35,6 +36,7 @@ class CosAudioVisualizerElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

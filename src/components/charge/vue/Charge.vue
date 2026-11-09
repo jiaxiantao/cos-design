@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
-import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createCharge, type ChargeController, type ChargeOptions } from '../core';
 import '../style/index.css';
 
-const props = withDefaults(defineProps<ChargeOptions>(), {
-  autoCharge: true,
-});
+const props = defineProps<ChargeOptions>();
 const emit = defineEmits<{
-  change: [...args: unknown[]];
-  complete: [...args: unknown[]];
+  'change': [...args: unknown[]];
+  'complete': [...args: unknown[]];
 }>();
 const hostRef = ref<HTMLElement>();
 let ctrl: ChargeController | null = null;
@@ -24,10 +21,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createCharge(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

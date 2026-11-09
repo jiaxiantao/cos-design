@@ -1,3 +1,9 @@
+import {
+  optionCallbackDispatcher,
+  readJsonAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createDiceRoll, type DiceRollController, type DiceRollOptions } from '../core';
 import '../style/index.css';
 
@@ -5,25 +11,12 @@ const TAG = 'cos-dice-roll';
 
 function parseOptions(el: HTMLElement): DiceRollOptions {
   const options = {} as DiceRollOptions;
-  if (el.hasAttribute('roll-text')) options.rollText = el.getAttribute('roll-text') ?? undefined;
-  if (el.hasAttribute('rolling-text'))
-    options.rollingText = el.getAttribute('rolling-text') ?? undefined;
-  if (el.hasAttribute('result-prefix'))
-    options.resultPrefix = el.getAttribute('result-prefix') ?? undefined;
-  if (el.hasAttribute('sides')) {
-    try {
-      options.sides = JSON.parse(el.getAttribute('sides') ?? 'null') as DiceRollOptions['sides'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propsides = (el as CosDiceRollElement)._sides;
-  if (propsides !== undefined) options.sides = propsides as DiceRollOptions['sides'];
-  options.onRoll = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('roll', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'rollText', 'roll-text');
+  readStringAttr(options, el, 'rollingText', 'rolling-text');
+  readStringAttr(options, el, 'resultPrefix', 'result-prefix');
+  readJsonAttr(options, el, 'sides', 'sides');
+  readPropertyOverride(options, el, 'sides', '_sides');
+  options.onRoll = optionCallbackDispatcher(el, 'roll');
   return options;
 }
 
@@ -55,6 +48,7 @@ class CosDiceRollElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

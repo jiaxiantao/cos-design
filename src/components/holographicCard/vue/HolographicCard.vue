@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import {
-  createHolographicCard,
-  type HolographicCardController,
-  type HolographicCardOptions,
-} from '../core';
+import { createHolographicCard, type HolographicCardController, type HolographicCardOptions } from '../core';
 import '../style/index.css';
 
 const props = defineProps<HolographicCardOptions>();
@@ -21,10 +16,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createHolographicCard(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

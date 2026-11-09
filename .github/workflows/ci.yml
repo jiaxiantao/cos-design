@@ -54,6 +54,11 @@ jobs:
       - name: Build GitHub Pages
         run: pnpm build:pages
 
+      - name: Build example apps
+        run: |
+          pnpm --dir examples/vue-app build
+          pnpm --dir examples/vanilla build
+
       - name: Build demo for smoke
         run: pnpm build:demo
 

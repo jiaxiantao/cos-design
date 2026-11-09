@@ -1,3 +1,8 @@
+import {
+  readJsonAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createWaveButton, type WaveButtonController, type WaveButtonOptions } from '../core';
 import '../style/index.css';
 
@@ -5,20 +10,10 @@ const TAG = 'cos-wave-button';
 
 function parseOptions(el: HTMLElement): WaveButtonOptions {
   const options = {} as WaveButtonOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('button-props')) {
-    try {
-      options.buttonProps = JSON.parse(
-        el.getAttribute('button-props') ?? 'null',
-      ) as WaveButtonOptions['buttonProps'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propbuttonProps = (el as CosWaveButtonElement)._buttonProps;
-  if (propbuttonProps !== undefined)
-    options.buttonProps = propbuttonProps as WaveButtonOptions['buttonProps'];
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readJsonAttr(options, el, 'buttonProps', 'button-props');
+  readPropertyOverride(options, el, 'buttonProps', '_buttonProps');
   return options;
 }
 

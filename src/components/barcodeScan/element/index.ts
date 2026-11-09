@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createBarcodeScan, type BarcodeScanController, type BarcodeScanOptions } from '../core';
 import '../style/index.css';
 
@@ -5,22 +11,11 @@ const TAG = 'cos-barcode-scan';
 
 function parseOptions(el: HTMLElement): BarcodeScanOptions {
   const options = {} as BarcodeScanOptions;
-  if (el.hasAttribute('scan-color')) options.scanColor = el.getAttribute('scan-color') ?? undefined;
-  if (el.hasAttribute('default-content'))
-    options.defaultContent = el.getAttribute('default-content') ?? undefined;
-  if (el.hasAttribute('speed')) options.speed = Number(el.getAttribute('speed'));
-  if (el.hasAttribute('slot-element')) {
-    try {
-      options.slotElement = JSON.parse(
-        el.getAttribute('slot-element') ?? 'null',
-      ) as BarcodeScanOptions['slotElement'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propslotElement = (el as CosBarcodeScanElement)._slotElement;
-  if (propslotElement !== undefined)
-    options.slotElement = propslotElement as BarcodeScanOptions['slotElement'];
+  readStringAttr(options, el, 'scanColor', 'scan-color');
+  readStringAttr(options, el, 'defaultContent', 'default-content');
+  readNumberAttr(options, el, 'speed', 'speed');
+  readJsonAttr(options, el, 'slotElement', 'slot-element');
+  readPropertyOverride(options, el, 'slotElement', '_slotElement');
   return options;
 }
 

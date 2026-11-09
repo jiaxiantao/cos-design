@@ -1,3 +1,11 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createPhotoFridge, type PhotoFridgeController, type PhotoFridgeOptions } from '../core';
 import '../style/index.css';
 
@@ -5,43 +13,18 @@ const TAG = 'cos-photo-fridge';
 
 function parseOptions(el: HTMLElement): PhotoFridgeOptions {
   const options = {} as PhotoFridgeOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('card-width')) options.cardWidth = Number(el.getAttribute('card-width'));
-  if (el.hasAttribute('card-height')) options.cardHeight = Number(el.getAttribute('card-height'));
-  if (el.hasAttribute('scatter')) options.scatter = Number(el.getAttribute('scatter'));
-  if (el.hasAttribute('friction')) options.friction = Number(el.getAttribute('friction'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoFridgeOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoFridgeElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoFridgeOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'cardWidth', 'card-width');
+  readNumberAttr(options, el, 'cardHeight', 'card-height');
+  readNumberAttr(options, el, 'scatter', 'scatter');
+  readNumberAttr(options, el, 'friction', 'friction');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
   return options;
 }
 
@@ -58,18 +41,7 @@ class CosPhotoFridgeElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'photos',
-      'width',
-      'height',
-      'card-width',
-      'card-height',
-      'scatter',
-      'friction',
-      'show-caption',
-      'initial-index',
-      'aria-label',
-    ];
+    return ['photos', 'width', 'height', 'card-width', 'card-height', 'scatter', 'friction', 'show-caption', 'initial-index', 'aria-label'];
   }
 
   connectedCallback() {
@@ -84,6 +56,7 @@ class CosPhotoFridgeElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

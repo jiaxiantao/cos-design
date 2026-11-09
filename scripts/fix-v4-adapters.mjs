@@ -29,6 +29,8 @@ const TRUE_DEFAULT_BOOLS = new Set([
 ]);
 /** interactive follows auto in these engines (`interactive ?? auto`). */
 const INTERACTIVE_FOLLOWS_AUTO = new Set(['fireworks', 'confetti']);
+/** Controlled booleans — omit attr must leave undefined (see FlipCard). */
+const OPTIONAL_UNDEFINED_BOOLS = new Set(['flipped']);
 
 function camelToKebab(name) {
   return name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -185,55 +187,41 @@ function generateElement(componentName, exportName, fields, methods) {
   const observed = attrFields.map((f) => `'${camelToKebab(f.name)}'`).join(', ');
 
   const parseLines = [];
+  const usedHelpers = new Set();
   parseLines.push(`  const options = {} as ${optionsName};`);
 
   for (const f of strFields) {
+    usedHelpers.add('readStringAttr');
     const attr = camelToKebab(f.name);
-    parseLines.push(
-      `  if (el.hasAttribute('${attr}')) options.${f.name} = el.getAttribute('${attr}') ?? undefined;`,
-    );
+    parseLines.push(`  readStringAttr(options, el, '${f.name}', '${attr}');`);
   }
   for (const f of numFields) {
+    usedHelpers.add('readNumberAttr');
     const attr = camelToKebab(f.name);
-    parseLines.push(
-      `  if (el.hasAttribute('${attr}')) options.${f.name} = Number(el.getAttribute('${attr}'));`,
-    );
+    parseLines.push(`  readNumberAttr(options, el, '${f.name}', '${attr}');`);
   }
   for (const f of boolFields) {
+    usedHelpers.add('readBooleanAttr');
     const attr = camelToKebab(f.name);
-    if (TRUE_DEFAULT_BOOLS.has(f.name)) {
-      // Omit when absent so Core defaults (true) apply; support attr="false".
-      parseLines.push(`  if (el.hasAttribute('${attr}')) {`);
-      parseLines.push(`    const raw = el.getAttribute('${attr}');`);
-      parseLines.push(`    options.${f.name} = raw !== 'false' && raw !== '0';`);
-      parseLines.push(`  }`);
-    } else {
-      // Always emit boolean so Core update can clear flags when attribute is removed.
-      parseLines.push(`  options.${f.name} = el.hasAttribute('${attr}');`);
+    let mode = "'presence'";
+    if (OPTIONAL_UNDEFINED_BOOLS.has(f.name)) {
+      mode = "'optional-undefined'";
+    } else if (TRUE_DEFAULT_BOOLS.has(f.name) || f.name === 'disabled' || f.name === 'defaultFlipped') {
+      mode = "'optional-true'";
     }
+    parseLines.push(`  readBooleanAttr(options, el, '${f.name}', '${attr}', ${mode});`);
   }
   for (const f of jsonFields) {
+    usedHelpers.add('readJsonAttr');
+    usedHelpers.add('readPropertyOverride');
     const attr = camelToKebab(f.name);
-    parseLines.push(`  if (el.hasAttribute('${attr}')) {`);
-    parseLines.push(`    try {`);
-    parseLines.push(
-      `      options.${f.name} = JSON.parse(el.getAttribute('${attr}') ?? 'null') as ${optionsName}['${f.name}'];`,
-    );
-    parseLines.push(`    } catch { /* ignore invalid JSON */ }`);
-    parseLines.push(`  }`);
-    // JS property fallback for complex data (photos, prizes, …)
-    parseLines.push(`  const prop${f.name} = (el as Cos${exportName}Element)._${f.name};`);
-    parseLines.push(
-      `  if (prop${f.name} !== undefined) options.${f.name} = prop${f.name} as ${optionsName}['${f.name}'];`,
-    );
+    parseLines.push(`  readJsonAttr(options, el, '${f.name}', '${attr}');`);
+    parseLines.push(`  readPropertyOverride(options, el, '${f.name}', '_${f.name}');`);
   }
   for (const f of callbacks) {
+    usedHelpers.add('optionCallbackDispatcher');
     const evt = onToEvent(f.name);
-    parseLines.push(`  options.${f.name} = (...args: unknown[]) => {`);
-    parseLines.push(
-      `    el.dispatchEvent(new CustomEvent('${evt}', { detail: args.length <= 1 ? args[0] : args, bubbles: true }));`,
-    );
-    parseLines.push(`  };`);
+    parseLines.push(`  options.${f.name} = optionCallbackDispatcher(el, '${evt}');`);
   }
 
   const propAccessors = jsonFields
@@ -268,7 +256,13 @@ function generateElement(componentName, exportName, fields, methods) {
     })
     .join('');
 
-  return `import { ${createName}, type ${controllerName}, type ${optionsName} } from '../core';
+  const helperImport = [...usedHelpers].sort();
+  const helperBlock =
+    helperImport.length === 0
+      ? ''
+      : `import {\n${helperImport.map((h) => `  ${h},`).join('\n')}\n} from '@cos-design/shared';\n`;
+
+  return `${helperBlock}import { ${createName}, type ${controllerName}, type ${optionsName} } from '../core';
 import '../style/index.css';
 
 const TAG = '${tag}';

@@ -1,3 +1,10 @@
+import {
+  optionCallbackDispatcher,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSlotMachine, type SlotMachineController, type SlotMachineOptions } from '../core';
 import '../style/index.css';
 
@@ -5,45 +12,17 @@ const TAG = 'cos-slot-machine';
 
 function parseOptions(el: HTMLElement): SlotMachineOptions {
   const options = {} as SlotMachineOptions;
-  if (el.hasAttribute('start-text')) options.startText = el.getAttribute('start-text') ?? undefined;
-  if (el.hasAttribute('button-text'))
-    options.buttonText = el.getAttribute('button-text') ?? undefined;
-  if (el.hasAttribute('spinning-text'))
-    options.spinningText = el.getAttribute('spinning-text') ?? undefined;
-  if (el.hasAttribute('jackpot-text'))
-    options.jackpotText = el.getAttribute('jackpot-text') ?? undefined;
-  if (el.hasAttribute('result-prefix'))
-    options.resultPrefix = el.getAttribute('result-prefix') ?? undefined;
-  if (el.hasAttribute('spin-duration'))
-    options.spinDuration = Number(el.getAttribute('spin-duration'));
-  if (el.hasAttribute('symbols')) {
-    try {
-      options.symbols = JSON.parse(
-        el.getAttribute('symbols') ?? 'null',
-      ) as SlotMachineOptions['symbols'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propsymbols = (el as CosSlotMachineElement)._symbols;
-  if (propsymbols !== undefined) options.symbols = propsymbols as SlotMachineOptions['symbols'];
-  if (el.hasAttribute('target-results')) {
-    try {
-      options.targetResults = JSON.parse(
-        el.getAttribute('target-results') ?? 'null',
-      ) as SlotMachineOptions['targetResults'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proptargetResults = (el as CosSlotMachineElement)._targetResults;
-  if (proptargetResults !== undefined)
-    options.targetResults = proptargetResults as SlotMachineOptions['targetResults'];
-  options.onSpinEnd = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('spin-end', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'startText', 'start-text');
+  readStringAttr(options, el, 'buttonText', 'button-text');
+  readStringAttr(options, el, 'spinningText', 'spinning-text');
+  readStringAttr(options, el, 'jackpotText', 'jackpot-text');
+  readStringAttr(options, el, 'resultPrefix', 'result-prefix');
+  readNumberAttr(options, el, 'spinDuration', 'spin-duration');
+  readJsonAttr(options, el, 'symbols', 'symbols');
+  readPropertyOverride(options, el, 'symbols', '_symbols');
+  readJsonAttr(options, el, 'targetResults', 'target-results');
+  readPropertyOverride(options, el, 'targetResults', '_targetResults');
+  options.onSpinEnd = optionCallbackDispatcher(el, 'spin-end');
   return options;
 }
 
@@ -68,16 +47,7 @@ class CosSlotMachineElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'symbols',
-      'spin-duration',
-      'target-results',
-      'start-text',
-      'button-text',
-      'spinning-text',
-      'jackpot-text',
-      'result-prefix',
-    ];
+    return ['symbols', 'spin-duration', 'target-results', 'start-text', 'button-text', 'spinning-text', 'jackpot-text', 'result-prefix'];
   }
 
   connectedCallback() {

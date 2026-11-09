@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createPhotoFridge, type PhotoFridgeController, type PhotoFridgeOptions } from '../core';
 import '../style/index.css';
@@ -22,10 +21,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoFridge(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

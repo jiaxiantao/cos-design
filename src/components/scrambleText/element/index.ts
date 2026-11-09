@@ -1,3 +1,7 @@
+import {
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createScrambleText, type ScrambleTextController, type ScrambleTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,14 +9,15 @@ const TAG = 'cos-scramble-text';
 
 function parseOptions(el: HTMLElement): ScrambleTextOptions {
   const options = {} as ScrambleTextOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('charset')) options.charset = el.getAttribute('charset') ?? undefined;
-  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'charset', 'charset');
+  readNumberAttr(options, el, 'duration', 'duration');
   return options;
 }
 
 class CosScrambleTextElement extends HTMLElement {
   private ctrl: ScrambleTextController | null = null;
+
 
   static get observedAttributes() {
     return ['text', 'duration', 'charset'];
@@ -30,6 +35,7 @@ class CosScrambleTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

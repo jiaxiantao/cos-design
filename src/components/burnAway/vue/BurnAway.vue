@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createBurnAway, type BurnAwayController, type BurnAwayOptions } from '../core';
 import '../style/index.css';
 
 const props = defineProps<BurnAwayOptions>();
 const emit = defineEmits<{
-  complete: [...args: unknown[]];
+  'complete': [...args: unknown[]];
 }>();
 const hostRef = ref<HTMLElement>();
 let ctrl: BurnAwayController | null = null;
@@ -20,10 +19,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createBurnAway(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createRotatingText, type RotatingTextController, type RotatingTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,24 +11,14 @@ const TAG = 'cos-rotating-text';
 
 function parseOptions(el: HTMLElement): RotatingTextOptions {
   const options = {} as RotatingTextOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('highlight-color'))
-    options.highlightColor = el.getAttribute('highlight-color') ?? undefined;
-  if (el.hasAttribute('interval')) options.interval = Number(el.getAttribute('interval'));
-  if (el.hasAttribute('stagger')) options.stagger = Number(el.getAttribute('stagger'));
-  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  if (el.hasAttribute('texts')) {
-    try {
-      options.texts = JSON.parse(
-        el.getAttribute('texts') ?? 'null',
-      ) as RotatingTextOptions['texts'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const proptexts = (el as CosRotatingTextElement)._texts;
-  if (proptexts !== undefined) options.texts = proptexts as RotatingTextOptions['texts'];
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'highlightColor', 'highlight-color');
+  readNumberAttr(options, el, 'interval', 'interval');
+  readNumberAttr(options, el, 'stagger', 'stagger');
+  readNumberAttr(options, el, 'duration', 'duration');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readJsonAttr(options, el, 'texts', 'texts');
+  readPropertyOverride(options, el, 'texts', '_texts');
   return options;
 }
 
@@ -54,6 +50,7 @@ class CosRotatingTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

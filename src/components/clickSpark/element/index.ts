@@ -1,3 +1,9 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createClickSpark, type ClickSparkController, type ClickSparkOptions } from '../core';
 import '../style/index.css';
 
@@ -5,22 +11,11 @@ const TAG = 'cos-click-spark';
 
 function parseOptions(el: HTMLElement): ClickSparkOptions {
   const options = {} as ClickSparkOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('count')) options.count = Number(el.getAttribute('count'));
-  if (el.hasAttribute('default-content'))
-    options.defaultContent = el.getAttribute('default-content') ?? undefined;
-  if (el.hasAttribute('slot-element')) {
-    try {
-      options.slotElement = JSON.parse(
-        el.getAttribute('slot-element') ?? 'null',
-      ) as ClickSparkOptions['slotElement'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propslotElement = (el as CosClickSparkElement)._slotElement;
-  if (propslotElement !== undefined)
-    options.slotElement = propslotElement as ClickSparkOptions['slotElement'];
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'defaultContent', 'default-content');
+  readNumberAttr(options, el, 'count', 'count');
+  readJsonAttr(options, el, 'slotElement', 'slot-element');
+  readPropertyOverride(options, el, 'slotElement', '_slotElement');
   return options;
 }
 
@@ -51,6 +46,10 @@ class CosClickSparkElement extends HTMLElement {
 
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
+  }
+
+  getSlot() {
+    return this.ctrl?.getSlot();
   }
 }
 

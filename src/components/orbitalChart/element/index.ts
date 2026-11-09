@@ -1,3 +1,8 @@
+import {
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+} from '@cos-design/shared';
 import { createOrbitalChart, type OrbitalChartController, type OrbitalChartOptions } from '../core';
 import '../style/index.css';
 
@@ -5,16 +10,9 @@ const TAG = 'cos-orbital-chart';
 
 function parseOptions(el: HTMLElement): OrbitalChartOptions {
   const options = {} as OrbitalChartOptions;
-  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
-  if (el.hasAttribute('data')) {
-    try {
-      options.data = JSON.parse(el.getAttribute('data') ?? 'null') as OrbitalChartOptions['data'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propdata = (el as CosOrbitalChartElement)._data;
-  if (propdata !== undefined) options.data = propdata as OrbitalChartOptions['data'];
+  readNumberAttr(options, el, 'size', 'size');
+  readJsonAttr(options, el, 'data', 'data');
+  readPropertyOverride(options, el, 'data', '_data');
   return options;
 }
 
@@ -46,6 +44,7 @@ class CosOrbitalChartElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

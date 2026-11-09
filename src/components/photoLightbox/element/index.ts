@@ -1,57 +1,30 @@
 import {
-  createPhotoLightbox,
-  type PhotoLightboxController,
-  type PhotoLightboxOptions,
-} from '../core';
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
+import { createPhotoLightbox, type PhotoLightboxController, type PhotoLightboxOptions } from '../core';
 import '../style/index.css';
 
 const TAG = 'cos-photo-lightbox';
 
 function parseOptions(el: HTMLElement): PhotoLightboxOptions {
   const options = {} as PhotoLightboxOptions;
-  if (el.hasAttribute('width')) {
-    const raw = el.getAttribute('width');
-    const n = Number(raw);
-    options.width = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('height')) {
-    const raw = el.getAttribute('height');
-    const n = Number(raw);
-    options.height = raw != null && raw !== '' && !Number.isNaN(n) ? n : (raw ?? undefined);
-  }
-  if (el.hasAttribute('aria-label')) options.ariaLabel = el.getAttribute('aria-label') ?? undefined;
-  if (el.hasAttribute('slide-width')) options.slideWidth = Number(el.getAttribute('slide-width'));
-  if (el.hasAttribute('slide-height'))
-    options.slideHeight = Number(el.getAttribute('slide-height'));
-  if (el.hasAttribute('pull-threshold'))
-    options.pullThreshold = Number(el.getAttribute('pull-threshold'));
-  if (el.hasAttribute('initial-index'))
-    options.initialIndex = Number(el.getAttribute('initial-index'));
-  if (el.hasAttribute('show-caption')) {
-    const raw = el.getAttribute('show-caption');
-    options.showCaption = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('photos')) {
-    try {
-      options.photos = JSON.parse(
-        el.getAttribute('photos') ?? 'null',
-      ) as PhotoLightboxOptions['photos'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propphotos = (el as CosPhotoLightboxElement)._photos;
-  if (propphotos !== undefined) options.photos = propphotos as PhotoLightboxOptions['photos'];
-  options.onPhotoClick = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('photo-click', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
-  options.onIndexChange = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('index-change', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'width', 'width');
+  readStringAttr(options, el, 'height', 'height');
+  readStringAttr(options, el, 'ariaLabel', 'aria-label');
+  readNumberAttr(options, el, 'slideWidth', 'slide-width');
+  readNumberAttr(options, el, 'slideHeight', 'slide-height');
+  readNumberAttr(options, el, 'pullThreshold', 'pull-threshold');
+  readNumberAttr(options, el, 'initialIndex', 'initial-index');
+  readBooleanAttr(options, el, 'showCaption', 'show-caption', 'optional-true');
+  readJsonAttr(options, el, 'photos', 'photos');
+  readPropertyOverride(options, el, 'photos', '_photos');
+  options.onPhotoClick = optionCallbackDispatcher(el, 'photo-click');
+  options.onIndexChange = optionCallbackDispatcher(el, 'index-change');
   return options;
 }
 
@@ -68,17 +41,7 @@ class CosPhotoLightboxElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'photos',
-      'width',
-      'height',
-      'slide-width',
-      'slide-height',
-      'pull-threshold',
-      'show-caption',
-      'initial-index',
-      'aria-label',
-    ];
+    return ['photos', 'width', 'height', 'slide-width', 'slide-height', 'pull-threshold', 'show-caption', 'initial-index', 'aria-label'];
   }
 
   connectedCallback() {
@@ -93,6 +56,7 @@ class CosPhotoLightboxElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

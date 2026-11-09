@@ -1,3 +1,8 @@
+import {
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createFlipCounter, type FlipCounterController, type FlipCounterOptions } from '../core';
 import '../style/index.css';
 
@@ -5,21 +10,18 @@ const TAG = 'cos-flip-counter';
 
 function parseOptions(el: HTMLElement): FlipCounterOptions {
   const options = {} as FlipCounterOptions;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('value')) options.value = Number(el.getAttribute('value'));
-  if (el.hasAttribute('digits')) options.digits = Number(el.getAttribute('digits'));
-  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
-  if (el.hasAttribute('auto-interval'))
-    options.autoInterval = Number(el.getAttribute('auto-interval'));
-  if (el.hasAttribute('auto')) {
-    const raw = el.getAttribute('auto');
-    options.auto = raw !== 'false' && raw !== '0';
-  }
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'value', 'value');
+  readNumberAttr(options, el, 'digits', 'digits');
+  readNumberAttr(options, el, 'duration', 'duration');
+  readNumberAttr(options, el, 'autoInterval', 'auto-interval');
+  readBooleanAttr(options, el, 'auto', 'auto', 'optional-true');
   return options;
 }
 
 class CosFlipCounterElement extends HTMLElement {
   private ctrl: FlipCounterController | null = null;
+
 
   static get observedAttributes() {
     return ['value', 'digits', 'color', 'duration', 'auto', 'auto-interval'];
@@ -37,6 +39,7 @@ class CosFlipCounterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

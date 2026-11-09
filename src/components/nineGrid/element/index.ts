@@ -1,3 +1,11 @@
+import {
+  optionCallbackDispatcher,
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createNineGrid, type NineGridController, type NineGridOptions } from '../core';
 import '../style/index.css';
 
@@ -5,27 +13,13 @@ const TAG = 'cos-nine-grid';
 
 function parseOptions(el: HTMLElement): NineGridOptions {
   const options = {} as NineGridOptions;
-  if (el.hasAttribute('button-text'))
-    options.buttonText = el.getAttribute('button-text') ?? undefined;
-  if (el.hasAttribute('spinning-text'))
-    options.spinningText = el.getAttribute('spinning-text') ?? undefined;
-  if (el.hasAttribute('target-index'))
-    options.targetIndex = Number(el.getAttribute('target-index'));
-  options.disabled = el.hasAttribute('disabled');
-  if (el.hasAttribute('items')) {
-    try {
-      options.items = JSON.parse(el.getAttribute('items') ?? 'null') as NineGridOptions['items'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propitems = (el as CosNineGridElement)._items;
-  if (propitems !== undefined) options.items = propitems as NineGridOptions['items'];
-  options.onDrawEnd = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('draw-end', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'buttonText', 'button-text');
+  readStringAttr(options, el, 'spinningText', 'spinning-text');
+  readNumberAttr(options, el, 'targetIndex', 'target-index');
+  readBooleanAttr(options, el, 'disabled', 'disabled', 'optional-true');
+  readJsonAttr(options, el, 'items', 'items');
+  readPropertyOverride(options, el, 'items', '_items');
+  options.onDrawEnd = optionCallbackDispatcher(el, 'draw-end');
   return options;
 }
 

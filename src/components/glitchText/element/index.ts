@@ -1,3 +1,7 @@
+import {
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createGlitchText, type GlitchTextController, type GlitchTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,18 +9,17 @@ const TAG = 'cos-glitch-text';
 
 function parseOptions(el: HTMLElement): GlitchTextOptions {
   const options = {} as GlitchTextOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('glitch-color1'))
-    options.glitchColor1 = el.getAttribute('glitch-color1') ?? undefined;
-  if (el.hasAttribute('glitch-color2'))
-    options.glitchColor2 = el.getAttribute('glitch-color2') ?? undefined;
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'glitchColor1', 'glitch-color1');
+  readStringAttr(options, el, 'glitchColor2', 'glitch-color2');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
   return options;
 }
 
 class CosGlitchTextElement extends HTMLElement {
   private ctrl: GlitchTextController | null = null;
+
 
   static get observedAttributes() {
     return ['text', 'color', 'glitch-color1', 'glitch-color2', 'font-size'];
@@ -34,6 +37,7 @@ class CosGlitchTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

@@ -1,3 +1,10 @@
+import {
+  readBooleanAttr,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createSplitText, type SplitTextController, type SplitTextOptions } from '../core';
 import '../style/index.css';
 
@@ -5,25 +12,15 @@ const TAG = 'cos-split-text';
 
 function parseOptions(el: HTMLElement): SplitTextOptions {
   const options = {} as SplitTextOptions;
-  if (el.hasAttribute('text')) options.text = el.getAttribute('text') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('stagger')) options.stagger = Number(el.getAttribute('stagger'));
-  if (el.hasAttribute('duration')) options.duration = Number(el.getAttribute('duration'));
-  if (el.hasAttribute('loop-pause')) options.loopPause = Number(el.getAttribute('loop-pause'));
-  if (el.hasAttribute('font-size')) options.fontSize = Number(el.getAttribute('font-size'));
-  options.loop = el.hasAttribute('loop');
-  if (el.hasAttribute('animation')) {
-    try {
-      options.animation = JSON.parse(
-        el.getAttribute('animation') ?? 'null',
-      ) as SplitTextOptions['animation'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propanimation = (el as CosSplitTextElement)._animation;
-  if (propanimation !== undefined)
-    options.animation = propanimation as SplitTextOptions['animation'];
+  readStringAttr(options, el, 'text', 'text');
+  readStringAttr(options, el, 'color', 'color');
+  readNumberAttr(options, el, 'stagger', 'stagger');
+  readNumberAttr(options, el, 'duration', 'duration');
+  readNumberAttr(options, el, 'loopPause', 'loop-pause');
+  readNumberAttr(options, el, 'fontSize', 'font-size');
+  readBooleanAttr(options, el, 'loop', 'loop', 'presence');
+  readJsonAttr(options, el, 'animation', 'animation');
+  readPropertyOverride(options, el, 'animation', '_animation');
   return options;
 }
 
@@ -55,6 +52,7 @@ class CosSplitTextElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

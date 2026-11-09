@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
 import { createRippleWater, type RippleWaterController, type RippleWaterOptions } from '../core';
 import '../style/index.css';
@@ -20,10 +19,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createRippleWater(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();
@@ -34,5 +30,5 @@ defineExpose({});
 </script>
 
 <template>
-  <div ref="hostRef" class="cos-rippleWater-host" style="display: block; width: 100%; height: 100%" />
+  <div ref="hostRef" class="cos-rippleWater-host" />
 </template>

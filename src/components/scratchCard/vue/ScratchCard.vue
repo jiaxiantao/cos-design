@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createScratchCard, type ScratchCardController, type ScratchCardOptions } from '../core';
 import '../style/index.css';
 
 const props = defineProps<ScratchCardOptions>();
 const emit = defineEmits<{
-  reveal: [...args: unknown[]];
+  'reveal': [...args: unknown[]];
 }>();
 const hostRef = ref<HTMLElement>();
 let ctrl: ScratchCardController | null = null;
@@ -20,10 +19,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createScratchCard(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

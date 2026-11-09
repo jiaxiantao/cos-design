@@ -1,3 +1,10 @@
+import {
+  optionCallbackDispatcher,
+  readJsonAttr,
+  readNumberAttr,
+  readPropertyOverride,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createTurntable, type TurntableController, type TurntableOptions } from '../core';
 import '../style/index.css';
 
@@ -5,34 +12,16 @@ const TAG = 'cos-turntable';
 
 function parseOptions(el: HTMLElement): TurntableOptions {
   const options = {} as TurntableOptions;
-  if (el.hasAttribute('button-text'))
-    options.buttonText = el.getAttribute('button-text') ?? undefined;
-  if (el.hasAttribute('spinning-text'))
-    options.spinningText = el.getAttribute('spinning-text') ?? undefined;
-  if (el.hasAttribute('result-prefix'))
-    options.resultPrefix = el.getAttribute('result-prefix') ?? undefined;
-  if (el.hasAttribute('size')) options.size = Number(el.getAttribute('size'));
-  if (el.hasAttribute('spin-duration'))
-    options.spinDuration = Number(el.getAttribute('spin-duration'));
-  if (el.hasAttribute('spin-rounds')) options.spinRounds = Number(el.getAttribute('spin-rounds'));
-  if (el.hasAttribute('target-index'))
-    options.targetIndex = Number(el.getAttribute('target-index'));
-  if (el.hasAttribute('prizes')) {
-    try {
-      options.prizes = JSON.parse(
-        el.getAttribute('prizes') ?? 'null',
-      ) as TurntableOptions['prizes'];
-    } catch {
-      /* ignore invalid JSON */
-    }
-  }
-  const propprizes = (el as CosTurntableElement)._prizes;
-  if (propprizes !== undefined) options.prizes = propprizes as TurntableOptions['prizes'];
-  options.onSpinEnd = (...args: unknown[]) => {
-    el.dispatchEvent(
-      new CustomEvent('spin-end', { detail: args.length <= 1 ? args[0] : args, bubbles: true }),
-    );
-  };
+  readStringAttr(options, el, 'buttonText', 'button-text');
+  readStringAttr(options, el, 'spinningText', 'spinning-text');
+  readStringAttr(options, el, 'resultPrefix', 'result-prefix');
+  readNumberAttr(options, el, 'size', 'size');
+  readNumberAttr(options, el, 'spinDuration', 'spin-duration');
+  readNumberAttr(options, el, 'spinRounds', 'spin-rounds');
+  readNumberAttr(options, el, 'targetIndex', 'target-index');
+  readJsonAttr(options, el, 'prizes', 'prizes');
+  readPropertyOverride(options, el, 'prizes', '_prizes');
+  options.onSpinEnd = optionCallbackDispatcher(el, 'spin-end');
   return options;
 }
 
@@ -49,16 +38,7 @@ class CosTurntableElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return [
-      'prizes',
-      'size',
-      'spin-duration',
-      'spin-rounds',
-      'target-index',
-      'button-text',
-      'spinning-text',
-      'result-prefix',
-    ];
+    return ['prizes', 'size', 'spin-duration', 'spin-rounds', 'target-index', 'button-text', 'spinning-text', 'result-prefix'];
   }
 
   connectedCallback() {

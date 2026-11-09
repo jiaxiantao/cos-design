@@ -1,3 +1,8 @@
+import {
+  readBooleanAttr,
+  readNumberAttr,
+  readStringAttr,
+} from '@cos-design/shared';
 import { createRippleWater, type RippleWaterController, type RippleWaterOptions } from '../core';
 import '../style/index.css';
 
@@ -5,58 +10,32 @@ const TAG = 'cos-ripple-water';
 
 function parseOptions(el: HTMLElement): RippleWaterOptions {
   const options = {} as RippleWaterOptions;
-  if (el.hasAttribute('from-color')) options.fromColor = el.getAttribute('from-color') ?? undefined;
-  if (el.hasAttribute('to-color')) options.toColor = el.getAttribute('to-color') ?? undefined;
-  if (el.hasAttribute('color')) options.color = el.getAttribute('color') ?? undefined;
-  if (el.hasAttribute('hint')) options.hint = el.getAttribute('hint') ?? undefined;
-  if (el.hasAttribute('width')) options.width = Number(el.getAttribute('width'));
-  if (el.hasAttribute('height')) options.height = Number(el.getAttribute('height'));
-  if (el.hasAttribute('wave-amplitude'))
-    options.waveAmplitude = Number(el.getAttribute('wave-amplitude'));
-  if (el.hasAttribute('wave-speed')) options.waveSpeed = Number(el.getAttribute('wave-speed'));
-  if (el.hasAttribute('shimmer')) options.shimmer = Number(el.getAttribute('shimmer'));
-  if (el.hasAttribute('reflection')) options.reflection = Number(el.getAttribute('reflection'));
-  if (el.hasAttribute('ripple-strength'))
-    options.rippleStrength = Number(el.getAttribute('ripple-strength'));
-  if (el.hasAttribute('ripple-radius'))
-    options.rippleRadius = Number(el.getAttribute('ripple-radius'));
-  if (el.hasAttribute('damping')) options.damping = Number(el.getAttribute('damping'));
-  if (el.hasAttribute('spread')) options.spread = Number(el.getAttribute('spread'));
-  options.fill = el.hasAttribute('fill');
-  if (el.hasAttribute('interactive')) {
-    const raw = el.getAttribute('interactive');
-    options.interactive = raw !== 'false' && raw !== '0';
-  }
-  if (el.hasAttribute('show-hint')) {
-    const raw = el.getAttribute('show-hint');
-    options.showHint = raw !== 'false' && raw !== '0';
-  }
+  readStringAttr(options, el, 'fromColor', 'from-color');
+  readStringAttr(options, el, 'toColor', 'to-color');
+  readStringAttr(options, el, 'color', 'color');
+  readStringAttr(options, el, 'hint', 'hint');
+  readNumberAttr(options, el, 'width', 'width');
+  readNumberAttr(options, el, 'height', 'height');
+  readNumberAttr(options, el, 'waveAmplitude', 'wave-amplitude');
+  readNumberAttr(options, el, 'waveSpeed', 'wave-speed');
+  readNumberAttr(options, el, 'shimmer', 'shimmer');
+  readNumberAttr(options, el, 'reflection', 'reflection');
+  readNumberAttr(options, el, 'rippleStrength', 'ripple-strength');
+  readNumberAttr(options, el, 'rippleRadius', 'ripple-radius');
+  readNumberAttr(options, el, 'damping', 'damping');
+  readNumberAttr(options, el, 'spread', 'spread');
+  readBooleanAttr(options, el, 'fill', 'fill', 'presence');
+  readBooleanAttr(options, el, 'interactive', 'interactive', 'optional-true');
+  readBooleanAttr(options, el, 'showHint', 'show-hint', 'optional-true');
   return options;
 }
 
 class CosRippleWaterElement extends HTMLElement {
   private ctrl: RippleWaterController | null = null;
 
+
   static get observedAttributes() {
-    return [
-      'width',
-      'height',
-      'fill',
-      'from-color',
-      'to-color',
-      'color',
-      'wave-amplitude',
-      'wave-speed',
-      'shimmer',
-      'reflection',
-      'ripple-strength',
-      'ripple-radius',
-      'damping',
-      'spread',
-      'interactive',
-      'show-hint',
-      'hint',
-    ];
+    return ['width', 'height', 'fill', 'from-color', 'to-color', 'color', 'wave-amplitude', 'wave-speed', 'shimmer', 'reflection', 'ripple-strength', 'ripple-radius', 'damping', 'spread', 'interactive', 'show-hint', 'hint'];
   }
 
   connectedCallback() {
@@ -71,6 +50,7 @@ class CosRippleWaterElement extends HTMLElement {
   attributeChangedCallback() {
     this.ctrl?.update(parseOptions(this));
   }
+
 }
 
 if (typeof customElements !== 'undefined' && !customElements.get(TAG)) {

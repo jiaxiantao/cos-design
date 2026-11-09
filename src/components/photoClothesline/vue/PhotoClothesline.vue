@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch, withDefaults } from 'vue';
-import {
-  createPhotoClothesline,
-  type PhotoClotheslineController,
-  type PhotoClotheslineOptions,
-} from '../core';
+import { createPhotoClothesline, type PhotoClotheslineController, type PhotoClotheslineOptions } from '../core';
 import '../style/index.css';
 
 const props = withDefaults(defineProps<PhotoClotheslineOptions>(), {
@@ -28,10 +23,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createPhotoClothesline(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { optionsFingerprint } from '@cos-design/shared';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { createDnaHelix, type DnaHelixController, type DnaHelixOptions } from '../core';
 import '../style/index.css';
@@ -17,10 +16,7 @@ onMounted(() => {
   if (hostRef.value) ctrl = createDnaHelix(hostRef.value, toOptions());
 });
 
-watch(
-  () => optionsFingerprint(props),
-  () => ctrl?.update(toOptions()),
-);
+watch(() => ({ ...props }), () => ctrl?.update(toOptions()), { deep: true });
 
 onUnmounted(() => {
   ctrl?.destroy();
