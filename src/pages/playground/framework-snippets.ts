@@ -1,3 +1,5 @@
+import { version as libVersion } from '../../../package.json';
+
 export type FrameworkId = 'react' | 'vue' | 'element' | 'core';
 
 export type ExamplePropValue =
@@ -228,13 +230,57 @@ const vueProp = (key: string, value: ExamplePropValue) => {
 
 const toAttrName = (key: string) => key.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
+const escapeHtmlAttr = (value: string) =>
+  value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
 const htmlAttr = (key: string, value: ExamplePropValue) => {
   const kebab = toAttrName(key);
-  if (typeof value === 'boolean') return value ? kebab : null;
+  if (typeof value === 'boolean') return value ? kebab : `${kebab}="false"`;
   if (value == null) return null;
-  if (typeof value === 'object') return `${kebab}='${JSON.stringify(value)}'`;
-  return `${kebab}="${value}"`;
+  const raw = typeof value === 'object' ? JSON.stringify(value) : String(value);
+  return `${kebab}="${escapeHtmlAttr(raw)}"`;
 };
+
+/** 可直接保存为 index.html 的 Web Component 片段：import map + module 脚本 + 标签与示例属性。 */
+export function buildElementHtmlDocument(input: {
+  exportName: string;
+  pkg: string;
+  tag: string;
+  attrs: string[];
+}): string {
+  const { exportName, pkg, tag, attrs } = input;
+  const openTag = attrs.length ? `<${tag}\n    ${attrs.join('\n    ')}\n  >` : `<${tag}>`;
+  const threeNote =
+    exportName === 'PhotoLantern'
+      ? '\n  <!-- PhotoLantern 需要 peer 依赖 three：pnpm add three -->'
+      : '';
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${tag}</title>
+  <!--
+    保存为 index.html，用任意静态服务器打开即可运行。
+    import map 指向 esm.sh 的 ${pkg}@${libVersion}/element，不需要本地打包。
+    若页面已安装该包，可删掉 import map，保留 script type=module 里的裸导入（Vite 会解析）。
+  -->${threeNote}
+  <script type="importmap">
+    {
+      "imports": {
+        "${pkg}/element": "https://esm.sh/${pkg}@${libVersion}/element"
+      }
+    }
+  </script>
+</head>
+<body style="margin:0;min-height:100vh;background:#0b1020">
+  <script type="module">
+    import '${pkg}/element';
+  </script>
+  ${openTag}</${tag}>
+</body>
+</html>`;
+}
 
 const jsLiteral = (value: ExamplePropValue): string => {
   if (typeof value === 'string') return JSON.stringify(value);
@@ -252,14 +298,12 @@ export function buildFrameworkSnippets(exportName: string, codeExample: string) 
   // Vue prefers slot children; drop defaultContent attr when we have plain text
   const vueEntries = entries.filter(([k]) => !(slotText != null && k === 'defaultContent'));
   const vueAttrs = vueEntries.map(([k, v]) => vueProp(k, v)).join('\n  ');
-  const htmlAttrs = entries
+  const htmlAttrLines = entries
     .map(([k, v]) => htmlAttr(k, v))
-    .filter(Boolean)
-    .join('\n  ');
+    .filter((line): line is string => Boolean(line));
   const coreOptions =
     entries.length === 0 ? '' : entries.map(([k, v]) => `  ${k}: ${jsLiteral(v)},`).join('\n');
   const vueOpen = vueAttrs ? `\n  ${vueAttrs}\n` : '';
-  const htmlOpen = htmlAttrs ? `\n  ${htmlAttrs}\n` : ' ';
 
   return {
     react: codeExample.trim(),
@@ -270,11 +314,12 @@ import { ${exportName} } from '${pkg}/vue';
 <template>
   <${exportName}${vueOpen}${slotText != null ? `>${slotText}</${exportName}>` : ' />'}
 </template>`,
-    element: `<script type="module">
-  import '${pkg}/element';
-</script>
-
-<${tag}${htmlOpen}></${tag}>`,
+    element: buildElementHtmlDocument({
+      exportName,
+      pkg,
+      tag,
+      attrs: htmlAttrLines,
+    }),
     core: `import { create${exportName} } from '${pkg}/core';
 
 const host = document.getElementById('host')!;

@@ -41,7 +41,7 @@ On fetch failure, either keep the button disabled with an error status, or fall 
 
 Canvas loops that use `@cos-design/shared` `bindVisibilityPause` stop `requestAnimationFrame` when the tab is hidden. CSS backgrounds such as `Aurora` pause `animation-play-state` the same way.
 
-When `prefers-reduced-motion: reduce`, key backgrounds freeze to a static frame instead of looping.
+When `prefers-reduced-motion: reduce`, background components freeze to a static first frame instead of looping. Lottery controls (`Turntable`, `SlotMachine`, `NineGrid`) skip the spin and reveal the result. Audit: [a11y-reduced-motion.md](./a11y-reduced-motion.md).
 
 ## Celebration canvas vs controls
 

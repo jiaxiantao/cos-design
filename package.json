@@ -50,6 +50,7 @@
     "verify:v4-matrix": "node scripts/verify-v4-matrix.mjs",
     "verify:v4-runtime": "node scripts/audit-v4-runtime.mjs",
     "verify:webgl-dispose": "node scripts/audit-webgl-dispose.mjs",
+    "verify:bundle-budget": "node scripts/check-bundle-budget.mjs",
     "sync:logo": "node scripts/sync-public-logo.mjs",
     "sync:skills": "node scripts/sync-skills.mjs",
     "release": "node scripts/release-changed.mjs",

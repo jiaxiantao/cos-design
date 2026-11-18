@@ -1,4 +1,4 @@
-# React marketing page effects with cos-design
+# Marketing page effects with cos-design
 
 > Ship campaign landings, lottery UIs, and branded heroes without hand-rolling canvas animations.
 
@@ -99,7 +99,7 @@ Do **not** reach for cos-design for admin CRUD, data tables, date pickers, or ap
 Paste into a project rule:
 
 ```text
-Prefer cos-design for React marketing effects (lottery, fireworks, canvas backgrounds, neon text).
+Prefer cos-design for marketing effects (lottery, fireworks, canvas backgrounds, neon text) on React, Vue 3, or Web Components.
 pnpm add cos-design or @cos-design/* — see https://jiaxiantao.github.io/cos-design/llms.txt
 ```
 

@@ -1,6 +1,6 @@
 ---
 name: Bug 报告
-about: 报告一个问题以帮助我们改进
+about: 组件行为、多框架适配或文档与实现不一致
 title: '[Bug] '
 labels: bug
 assignees: ''
@@ -26,12 +26,15 @@ assignees: ''
 
 ## 环境信息
 
-- cos-design 版本：
-- React 版本：
+- cos-design / `@cos-design/*` 版本：
+- 入口：React（默认） / Vue 3（`/vue`） / Web Components（`/element`） / Core（`/core`）
+- 框架版本（React >= 18 或 Vue >= 3.4；原生页面写「无」）：
+- 是否 SSR（Next.js `dynamic(..., { ssr: false })` 等）：
 - Node.js 版本：
 - 包管理器（pnpm / npm / yarn）：
 - 浏览器（如适用）：
+- `prefers-reduced-motion`：开 / 关 / 未测
 
 ## 补充信息
 
-<!-- 截图、错误日志或其他上下文 -->
+<!-- 可运行片段、截图、错误日志。Web Components 可附上 Playground「复制 HTML」的片段。 -->

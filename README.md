@@ -23,10 +23,14 @@
 **cos-design** is a **multi-framework** library of **visual effects** — fireworks, scratch cards, weather/matrix backgrounds, neon headlines, flip counters — not a general admin UI kit. **React is the default entry**; Vue 3, Core APIs, and Web Components use the same package names via subpaths.
 
 ```bash
-pnpm add cos-design
-# or smaller per-component packages:
+# Campaign pages: install only the packages you render
 pnpm add @cos-design/fireworks @cos-design/scratch-card @cos-design/weather-background
+
+# Umbrella is for trying the catalog, not for a production campaign entry
+pnpm add cos-design
 ```
+
+`three` is a peer of `@cos-design/photo-lantern` only (optional on the umbrella). Gzip budgets: [docs/bundle-budget.md](./docs/bundle-budget.md).
 
 ```tsx
 import { Fireworks } from '@cos-design/fireworks';
@@ -64,7 +68,7 @@ import { Fireworks } from '@cos-design/fireworks/vue';
 - **Start here (campaign):** [Build a campaign page in 10 minutes](./docs/campaign-10-minutes.md) · runnable [examples/next-app](./examples/next-app) · [examples/vue-app](./examples/vue-app) · [examples/vanilla](./examples/vanilla)
 - **AI index:** https://jiaxiantao.github.io/cos-design/llms.txt · **Context7:** `/jiaxiantao/cos-design`
 - **Cursor Skill install:** see [docs/ai-discovery.md](./docs/ai-discovery.md)
-- **Article:** [React marketing page effects with cos-design](./website-content/cos-design-marketing-effects-en.md)
+- **Article:** [Marketing page effects with cos-design](./website-content/cos-design-marketing-effects-en.md)
 - **Quality (all frameworks):** `pnpm verify:v4-matrix` · `pnpm verify:v4-runtime` · `pnpm test:unit` · `pnpm test:smoke` (React + Vue / Web Components / Core tabs)
 
 ---
@@ -93,15 +97,16 @@ import { Fireworks } from '@cos-design/fireworks/vue';
 ### 安装
 
 ```bash
-# 安装全部组件
-pnpm add cos-design
-
-# 或按需安装单个组件（npm 包名为 kebab-case）
+# 活动页请按需安装子包（推荐）
 pnpm add @cos-design/weather-background
 pnpm add @cos-design/fireworks
+
+# 聚合包只适合本地试用全部 91 个组件，不要作为活动页的生产入口
+pnpm add cos-design
 ```
 
-> 目录 `weatherBackground` → `@cos-design/weather-background`；依赖 `@cos-design/shared` 的组件会自动安装工具包。
+> 目录 `weatherBackground` → `@cos-design/weather-background`；依赖 `@cos-design/shared` 的组件会自动安装工具包。  
+> **活动页优先 `@cos-design/*`。** 聚合包 `cos-design` 的默认入口会带上全部组件。`three` 只有 [`@cos-design/photo-lantern`](./docs/bundle-budget.md) 会拉取（聚合包把它标成 optional peer）。体积门禁见 [docs/bundle-budget.md](./docs/bundle-budget.md)。
 
 ### 最简示例
 
@@ -163,13 +168,15 @@ Context7: /jiaxiantao/cos-design
 
 ### 使用注意（摘要）
 
-| 注意点   | 说明                                                                 |
-| -------- | -------------------------------------------------------------------- |
-| **SSR**  | Canvas 组件需在 Next.js 等框架中 `dynamic(..., { ssr: false })`      |
-| **尺寸** | Canvas 组件需明确 `width` / `height`，或设 `fill` 铺满有高度的父容器 |
-| **密度** | 建议每页「一个强背景 + 若干局部交互」，避免多 Canvas 抢性能          |
-| **权限** | `AudioVisualizer` 开启麦克风时需 HTTPS 与用户授权                    |
-| **省电** | 标签页隐藏时，多数 Canvas 动画自动暂停                               |
+| 注意点       | 说明                                                                                     |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| **SSR**      | 与 Next 示例相同：`'use client'` + `@cos-design/*` + `dynamic(..., { ssr: false })`      |
+| **尺寸**     | Canvas 组件需明确 `width` / `height`，或设 `fill` 铺满有高度的父容器                     |
+| **密度**     | 建议每页「一个强背景 + 若干局部交互」，避免多 Canvas 抢性能                              |
+| **权限**     | `AudioVisualizer` 开启麦克风时需 HTTPS 与用户授权                                        |
+| **省电**     | 标签页隐藏时，多数 Canvas 动画自动暂停                                                   |
+| **减少动效** | 背景停在首帧，转盘 / 老虎机 / 九宫格跳过旋转。见 [审计表](./docs/a11y-reduced-motion.md) |
+| **体积**     | 活动页用 `@cos-design/*`。`three` 仅 PhotoLantern。见 [预算](./docs/bundle-budget.md)    |
 
 ---
 
@@ -402,10 +409,17 @@ npx --yes pnpm@9 dev   # 启动 Playground
 **Canvas 组件请客户端渲染**（依赖 `window` / `canvas` / `requestAnimationFrame`）：
 
 ```tsx
+'use client';
+
 import dynamic from 'next/dynamic';
 
-const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), { ssr: false });
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  { ssr: false },
+);
 ```
+
+与 [QUICKSTART.md](./QUICKSTART.md) 和 [examples/next-app](./examples/next-app) 相同：Canvas / WebGL 走按需子包的 `dynamic(..., { ssr: false })`。
 
 **控制使用密度** — 一个页面建议「一个强视觉背景 + 若干局部交互」，避免全场动画互相抢戏。
 
@@ -413,16 +427,19 @@ const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), {
 
 ## 文档
 
-| 文档                                                         | 内容                             |
-| ------------------------------------------------------------ | -------------------------------- |
-| [快速开始](./QUICKSTART.md)                                  | 安装、用法、注意事项与常见问题   |
-| [AI Agent 参考](./docs/ai.md)                                | 供 AI 使用的组件选型与 API 文档  |
-| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) | 机器可读索引（llmstxt 规范）     |
-| [AGENTS.md](./AGENTS.md)                                     | 编码 Agent 仓库规则              |
-| [v3.0 发布博客](./website-content/cos-design-v3-release.md)  | 重大升级解读、分类体系、技术实现 |
-| [完整介绍与实践指南](./website-content/cos-design-intro.md)  | 架构、使用规则、组件详解         |
-| [CHANGELOG](./CHANGELOG.md)                                  | 版本更新记录                     |
-| [CONTRIBUTING](./CONTRIBUTING.md)                            | 参与贡献指南                     |
+| 文档                                                         | 内容                              |
+| ------------------------------------------------------------ | --------------------------------- |
+| [快速开始](./QUICKSTART.md)                                  | 安装、用法、注意事项与常见问题    |
+| [包体积与 three](./docs/bundle-budget.md)                    | 按需子包、gzip 预算、谁依赖 three |
+| [减少动效审计](./docs/a11y-reduced-motion.md)                | 背景首帧与抽奖跳过旋转            |
+| [GitHub 发现](./docs/github-discovery.md)                    | About / topics / Discussions      |
+| [AI Agent 参考](./docs/ai.md)                                | 供 AI 使用的组件选型与 API 文档   |
+| [llms.txt](https://jiaxiantao.github.io/cos-design/llms.txt) | 机器可读索引（llmstxt 规范）      |
+| [AGENTS.md](./AGENTS.md)                                     | 编码 Agent 仓库规则               |
+| [v3.0 发布博客](./website-content/cos-design-v3-release.md)  | 重大升级解读、分类体系、技术实现  |
+| [完整介绍与实践指南](./website-content/cos-design-intro.md)  | 架构、使用规则、组件详解          |
+| [CHANGELOG](./CHANGELOG.md)                                  | 版本更新记录                      |
+| [CONTRIBUTING](./CONTRIBUTING.md)                            | 参与贡献指南                      |
 
 ---
 

@@ -260,6 +260,7 @@ const ComponentPage = () => {
             <button type="button" className={styles.installCopyBtn} onClick={handleCopyInstall}>
               {installCopied ? t('component.copied') : t('component.copyInstall')}
             </button>
+            <span className={styles.installHint}>{t('component.preferScoped')}</span>
             <button type="button" className={styles.aiCopyBtn} onClick={handleCopyForAi}>
               {aiCopied ? t('component.copied') : t('component.copyForAi')}
             </button>
@@ -284,7 +285,9 @@ const ComponentPage = () => {
             </button>
           ))}
         </div>
-        <p className={styles.frameworkHint}>{t('component.snippetHint')}</p>
+        <p className={styles.frameworkHint}>
+          {framework === 'element' ? t('component.snippetHintElement') : t('component.snippetHint')}
+        </p>
 
         {showCode ? (
           <LiveDemoPlayground
@@ -318,8 +321,19 @@ const ComponentPage = () => {
                         ? 'HTML'
                         : 'TS'}
                 </span>
-                <button type="button" className={styles.snippetCopyBtn} onClick={handleCopySnippet}>
-                  {snippetCopied ? t('component.copied') : t('component.copySnippet')}
+                <button
+                  type="button"
+                  className={styles.snippetCopyBtn}
+                  data-testid={
+                    framework === 'element' ? 'copy-html-snippet' : 'copy-framework-snippet'
+                  }
+                  onClick={handleCopySnippet}
+                >
+                  {snippetCopied
+                    ? t('component.copied')
+                    : framework === 'element'
+                      ? t('component.copyHtml')
+                      : t('component.copySnippet')}
                 </button>
               </div>
               <pre className={styles.snippetCode}>

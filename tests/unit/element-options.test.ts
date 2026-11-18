@@ -42,6 +42,9 @@ describe('element-options helpers', () => {
     el.setAttribute('flicker', '');
     readBooleanAttr(options, el, 'flicker', 'flicker', 'presence');
     expect(options.flicker).toBe(true);
+    el.setAttribute('flicker', 'false');
+    readBooleanAttr(options, el, 'flicker', 'flicker', 'presence');
+    expect(options.flicker).toBe(false);
 
     const controlled = {} as Sample;
     readBooleanAttr(controlled, el, 'flipped', 'flipped', 'optional-undefined');

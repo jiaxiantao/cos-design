@@ -37,3 +37,9 @@
     transform: rotate(360deg);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .cos-weather-background__loading-spinner {
+    animation: none;
+  }
+}

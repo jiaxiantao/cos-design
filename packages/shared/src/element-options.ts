@@ -47,7 +47,13 @@ export function readBooleanAttr<T extends object>(
 ): void {
   const a = attr ?? camelToKebabAttr(key);
   if (mode === 'presence') {
-    (options as Record<string, unknown>)[key] = el.hasAttribute(a);
+    if (!el.hasAttribute(a)) {
+      (options as Record<string, unknown>)[key] = false;
+      return;
+    }
+    // Bare `fill` stays true. `fill="false"` / `fill="0"` is false so copied HTML can opt out.
+    const raw = el.getAttribute(a);
+    (options as Record<string, unknown>)[key] = raw !== 'false' && raw !== '0';
     return;
   }
   if (!el.hasAttribute(a)) {

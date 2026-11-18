@@ -80,6 +80,20 @@ test.describe('multi-framework playground smoke', () => {
   }
 });
 
+test.describe('element HTML snippet', () => {
+  test('Web Components tab offers a paste-ready HTML fragment', async ({ page }) => {
+    await gotoZh(page, '/fireworks');
+    await selectFramework(page, 'Web Components');
+    const snippet = page.locator('pre');
+    await expect(snippet).toContainText('<script type="module">');
+    await expect(snippet).toContainText("import '@cos-design/fireworks/element';");
+    await expect(snippet).toContainText('<cos-fireworks');
+    await expect(snippet).toContainText('auto="false"');
+    await expect(snippet).toContainText('width="800"');
+    await expect(page.getByTestId('copy-html-snippet')).toHaveText('复制 HTML');
+  });
+});
+
 test.describe('multi-framework lottery busy states', () => {
   test('nine grid draw on Vue tab', async ({ page }) => {
     await gotoZh(page, '/nineGrid');

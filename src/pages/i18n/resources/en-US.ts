@@ -84,8 +84,13 @@ const enUS: typeof zhCN = {
     demoNotConfigured: 'Demo is not configured yet',
     frameworkTabsAria: 'Choose framework example',
     copySnippet: 'Copy snippet',
+    copyHtml: 'Copy HTML',
+    preferScoped:
+      'Campaign pages should install this package. The cos-design umbrella pulls all 91 components into one entry.',
     snippetHint:
       'Switch tabs for React / Vue / Web Components / Core examples. Vue and Element mounts are live.',
+    snippetHintElement:
+      'The fragment below is a save-as-index.html page: a module script registers the custom element and includes this demo’s key attributes. Copy HTML and paste it into a vanilla page.',
     weatherDebuggerHint:
       'Use the React tab for the full weather debugger (scene type, wind, rain/snow levels). This tab shows the multi-framework mount and fill layout.',
   },
@@ -257,10 +262,10 @@ Context7: /jiaxiantao/cos-design`,
 cd /tmp/cos-design-skill && git sparse-checkout set .agents/skills/cos-design
 cp -R .agents/skills/cos-design ~/.cursor/skills/cos-design
 # Claude: ~/.claude/skills/  OpenCode: ~/.config/opencode/skills/`,
-      installFull: `# Install all components (recommended for a quick trial)
+      installFull: `# Umbrella package: try the whole catalog (do not ship campaign pages on it)
 pnpm add cos-design
 # Or: npm install cos-design / yarn add cos-design`,
-      installSingle: `# Install only what you need (smaller footprint)
+      installSingle: `# Campaign pages: install scoped packages so one chunk is not all 91 components
 pnpm add @cos-design/weather-background
 pnpm add @cos-design/fireworks
 pnpm add @cos-design/scratch-card`,
@@ -275,18 +280,19 @@ export default function Page() {
     </>
   );
 }`,
-      ssr: `import dynamic from 'next/dynamic';
+      ssr: `'use client';
 
-const Fireworks = dynamic(
-  () => import('cos-design').then((m) => m.Fireworks),
-  { ssr: false }
+import dynamic from 'next/dynamic';
+
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  { ssr: false },
 );
 
-// Scoped packages work the same way:
-// const WeatherBackground = dynamic(
-//   () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
-//   { ssr: false }
-// );`,
+const Fireworks = dynamic(
+  () => import('@cos-design/fireworks').then((m) => m.Fireworks),
+  { ssr: false },
+);`,
       localDev: `git clone https://github.com/jiaxiantao/cos-design.git
 cd cos-design && npm run setup && pnpm dev
 # Open http://localhost:4000`,

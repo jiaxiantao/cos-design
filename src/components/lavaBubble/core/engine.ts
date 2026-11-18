@@ -39,6 +39,7 @@ export function createLavaBubble(
   let unbindVisibility: (() => void) | null = null;
   let unbindMotion: (() => void) | null = null;
   let glCleanup: (() => void) | null = null;
+  let resumeLoop: (() => void) | null = null;
   let click: { u: number; v: number } | null = null;
   let stir: { u: number; v: number; vu: number; vv: number } | null = null;
   let prevPointer: { u: number; v: number } | null = null;
@@ -144,15 +145,16 @@ export function createLavaBubble(
 
     const draw = (ts: number) => {
       if (destroyed) return;
+      if (reduced) {
+        frameId = 0;
+        paint(0);
+        return;
+      }
       frameId = requestAnimationFrame(draw);
       if (paused) return;
       if (!lastTs) lastTs = ts;
       const dt = clamp((ts - lastTs) / 1000, 0.008, 0.033);
       lastTs = ts;
-      if (reduced) {
-        paint(0);
-        return;
-      }
       const rate = options.speed ?? 1;
       time += dt * rate;
       const clickNow = click;
@@ -172,9 +174,16 @@ export function createLavaBubble(
       paint(time);
     };
 
+    const resume = () => {
+      if (destroyed || reduced || frameId) return;
+      draw(0);
+    };
+    resumeLoop = resume;
     draw(0);
     glCleanup = () => {
       cancelAnimationFrame(frameId);
+      frameId = 0;
+      if (resumeLoop === resume) resumeLoop = null;
       gl.deleteTexture(fieldTex);
       gl.deleteBuffer(buf);
       gl.deleteProgram(program);
@@ -214,7 +223,10 @@ export function createLavaBubble(
     paused = hidden;
   });
   unbindMotion = bindPrefersReducedMotion((value) => {
+    const wasReduced = reduced;
     reduced = value;
+    if (wasReduced === value) return;
+    if (!reduced) resumeLoop?.();
   });
   bindSize();
 
