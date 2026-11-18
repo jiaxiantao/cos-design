@@ -98,6 +98,7 @@ pnpm install   # 此时应可正常使用
 CI 会自动 lint、build，并：
 
 - 仅 publish **npm 上尚不存在** 的 `name@version`（未 bump 的子包会被 skip）
+- 用 npm Trusted Publishing（OIDC）执行 `npm publish`，不使用 `NPM_TOKEN`
 - 发布成功后打 `vX.Y.Z` tag，作为下次 `pnpm release` 的对比基线
 
 ### 首次启用
@@ -109,7 +110,7 @@ git tag v3.5.3
 git push origin v3.5.3
 ```
 
-> 首次发布 scoped 包前，需在 npm 创建并拥有 `@cos-design` organization，且 `NPM_TOKEN` 对该 scope 有 Publish 权限。
+> 发布认证使用 npm Trusted Publishing（OIDC）。workflow 文件名必须保持 `.github/workflows/ci.yml`，npmjs.com 上每个包的 Trusted Publisher 填的就是这个文件名。不要用 `NPM_TOKEN` / `NODE_AUTH_TOKEN` 盖过 OIDC。首次发布 scoped 包前，仍需在 npm 拥有 `@cos-design` organization，并为每个包配好 Trusted Publisher。
 
 ## 提交规范
 

@@ -126,20 +126,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
+      # npm Trusted Publishing needs npm >= 11.5.1. Node 22 ships npm 10, which
+      # can sign a Sigstore provenance statement and still PUT anonymously.
+      # This job alone uses Node 24. Do not set registry-url: setup-node@v4
+      # writes //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} and exports a
+      # placeholder NODE_AUTH_TOKEN, and npm then skips the OIDC exchange (E404).
+      # Do not pass secrets.NPM_TOKEN. A present but invalid token overrides OIDC.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
-          cache: pnpm
+          node-version: 24
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        env:
-          HUSKY: 0
+      - name: Install npm for trusted publishing
+        run: |
+          npm install -g npm@11.21.3
+          echo "node $(node --version)"
+          echo "npm $(npm --version)"
 
       - name: Download packages artifact
         uses: actions/download-artifact@v4
@@ -162,28 +164,12 @@ jobs:
             echo "cos-design@${{ steps.version.outputs.version }} not on npm — will publish changed packages only."
           fi
 
-      - name: Configure npm auth
-        if: steps.check.outputs.published == 'false'
-        run: |
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "::error::NPM_TOKEN secret is empty. Set it in repo Settings → Secrets → Actions."
-            exit 1
-          fi
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
-          echo "registry=https://registry.npmjs.org/" >> .npmrc
-          echo "always-auth=true" >> .npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Publish changed packages to npm
         if: steps.check.outputs.published == 'false'
         run: node scripts/publish-packages.mjs
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
 
       - name: Tag release
-        if: steps.check.outputs.published == 'false'
+        if: success() && steps.check.outputs.published == 'false'
         run: |
           TAG="v${{ steps.version.outputs.version }}"
           if git rev-parse "$TAG" >/dev/null 2>&1; then

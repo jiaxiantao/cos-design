@@ -445,9 +445,9 @@ const WeatherBackground = dynamic(
 
 ## 自动发布
 
-推送到 `master` 后，GitHub Actions 自动 lint、构建，并将新版本发布到 [npm](https://www.npmjs.com/package/cos-design)。
+推送到 `master` 后，GitHub Actions（`.github/workflows/ci.yml`）自动 lint、构建，并将新版本发布到 [npm](https://www.npmjs.com/package/cos-design)。
 
-首次配置需在 GitHub Secrets 中设置 `NPM_TOKEN`（需勾选 **Bypass 2FA for publish**）。详见 [npm Access Tokens](https://www.npmjs.com/settings/jiaxiantao/tokens)。
+发布使用 npm Trusted Publishing（OIDC），不读取 `NPM_TOKEN`。npmjs.com 上每个包的 Trusted Publisher 需指向仓库 `jiaxiantao/cos-design`、workflow 文件名 `ci.yml`。不要在该 job 里写 `registry-url`、`_authToken` 或 `NODE_AUTH_TOKEN`，否则 npm 会跳过 OIDC，未登录的 PUT 会以 `E404` 失败。
 
 ---
 
