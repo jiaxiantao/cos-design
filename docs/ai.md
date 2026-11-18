@@ -9,7 +9,7 @@
 | Name           | cos-design                                                                |
 | npm (umbrella) | cos-design                                                                |
 | npm (scoped)   | @cos-design/\*                                                            |
-| Version        | 4.0.0                                                                     |
+| Version        | 4.1.0                                                                     |
 | Components     | 91                                                                        |
 | Stack          | React 18+ (default), Vue 3.4+, Core API, Web Components, TypeScript, Vite |
 | License        | MIT                                                                       |

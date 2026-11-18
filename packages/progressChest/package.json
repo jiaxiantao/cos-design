@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/progress-chest",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "ProgressChest component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",
