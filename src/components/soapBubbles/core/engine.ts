@@ -73,6 +73,7 @@ export function createSoapBubbles(
   let unbindVisibility: (() => void) | null = null;
   let unbindMotion: (() => void) | null = null;
   let loopCleanup: (() => void) | null = null;
+  let resumeLoop: (() => void) | null = null;
   let clickPos: { x: number; y: number } | null = null;
 
   const root = document.createElement('div');
@@ -163,8 +164,21 @@ export function createSoapBubbles(
       }
     };
 
+    const paintStatic = () => {
+      drawSoapSky(ctx, width, height);
+      const { x: lightX, y: lightY } = sceneLightPos(width, height);
+      for (const b of bubbles) {
+        if (b.pop <= 0) drawSoapBubble(ctx, b, time, lightX, lightY, { skipShadow: true });
+      }
+    };
+
     const draw = (ts: number) => {
       if (destroyed) return;
+      if (reduced) {
+        frameId = 0;
+        paintStatic();
+        return;
+      }
       frameId = requestAnimationFrame(draw);
       if (paused) return;
       if (!lastTs) lastTs = ts;
@@ -173,13 +187,6 @@ export function createSoapBubbles(
       const rate = options.speed ?? 1;
       drawSoapSky(ctx, width, height);
       const { x: lightX, y: lightY } = sceneLightPos(width, height);
-
-      if (reduced) {
-        for (const b of bubbles) {
-          if (b.pop <= 0) drawSoapBubble(ctx, b, time, lightX, lightY, { skipShadow: true });
-        }
-        return;
-      }
 
       time += dt * rate;
 
@@ -430,8 +437,17 @@ export function createSoapBubbles(
       }
     };
 
+    const resume = () => {
+      if (destroyed || reduced || frameId) return;
+      draw(0);
+    };
+    resumeLoop = resume;
     draw(0);
-    loopCleanup = () => cancelAnimationFrame(frameId);
+    loopCleanup = () => {
+      cancelAnimationFrame(frameId);
+      frameId = 0;
+      if (resumeLoop === resume) resumeLoop = null;
+    };
   };
 
   const bindSize = () => {
@@ -465,7 +481,10 @@ export function createSoapBubbles(
     paused = hidden;
   });
   unbindMotion = bindPrefersReducedMotion((value) => {
+    const wasReduced = reduced;
     reduced = value;
+    if (wasReduced === value) return;
+    if (!reduced) resumeLoop?.();
   });
   bindSize();
 

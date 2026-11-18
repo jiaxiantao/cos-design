@@ -46,3 +46,9 @@
     opacity: 1;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .cos-matrix-rain__title {
+    animation: none;
+  }
+}

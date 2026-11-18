@@ -14,6 +14,8 @@ pnpm add @cos-design/weather-background @cos-design/neon-text @cos-design/firewo
 
 Canvas / WebGL components must not run on the server:
 
+This is the same recipe as [QUICKSTART.md](../../QUICKSTART.md) and [examples/next-app/app/components/campaign-hero.tsx](../../examples/next-app/app/components/campaign-hero.tsx).
+
 ```tsx
 // app/campaign/hero.tsx
 'use client';
@@ -23,9 +25,7 @@ import { NeonText } from '@cos-design/neon-text';
 
 const WeatherBackground = dynamic(
   () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 export function CampaignHero() {

@@ -158,13 +158,21 @@ pnpm dev
 
 ### 1. Canvas / 浏览器 API 组件请客户端渲染
 
-大量组件依赖 `window`、`canvas`、`requestAnimationFrame`。在 **Next.js** 等 SSR 框架中请关闭服务端渲染：
+大量组件依赖 `window`、`canvas`、`requestAnimationFrame`。在 **Next.js** App Router 中与 [examples/next-app](./examples/next-app) 使用同一写法：`'use client'` + 按需子包 + `dynamic(..., { ssr: false })`。不要从聚合包 `cos-design` 做动态导入。
 
 ```tsx
+'use client';
+
 import dynamic from 'next/dynamic';
 
-const Fireworks = dynamic(() => import('cos-design').then((m) => m.Fireworks), { ssr: false });
-const MatrixRain = dynamic(() => import('cos-design').then((m) => m.MatrixRain), { ssr: false });
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  { ssr: false },
+);
+
+const Fireworks = dynamic(() => import('@cos-design/fireworks').then((m) => m.Fireworks), {
+  ssr: false,
+});
 ```
 
 ### 2. 控制页面上的动画密度

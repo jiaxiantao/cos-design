@@ -81,8 +81,12 @@ const zhCN = {
     demoNotConfigured: '演示暂未配置',
     frameworkTabsAria: '选择框架示例',
     copySnippet: '复制示例',
+    copyHtml: '复制 HTML',
+    preferScoped: '活动页请安装这个子包，不要用聚合包 cos-design 把 91 个组件打进同一 chunk。',
     snippetHint:
       '切换 Tab 可查看 React / Vue / Web Components / Core 示例；Vue 与 Element 为实时挂载预览。',
+    snippetHintElement:
+      '下方是可直接保存为 index.html 的片段：script type=module 会注册自定义元素，并带上本页示例的关键属性。点「复制 HTML」即可粘贴运行。',
     weatherDebuggerHint:
       '天气场景调试器（天气类型 / 风力 / 雨雪强度等）请切换到 React Tab 使用；本 Tab 展示多框架挂载与铺满效果。',
   },
@@ -244,10 +248,10 @@ Context7: /jiaxiantao/cos-design`,
 cd /tmp/cos-design-skill && git sparse-checkout set .agents/skills/cos-design
 cp -R .agents/skills/cos-design ~/.cursor/skills/cos-design
 # Claude: ~/.claude/skills/  OpenCode: ~/.config/opencode/skills/`,
-      installFull: `# 安装全部组件（推荐快速试用）
+      installFull: `# 聚合包：一次试用全部组件（活动页上线不要用它）
 pnpm add cos-design
 # 或 npm install cos-design / yarn add cos-design`,
-      installSingle: `# 只装需要的组件（体积更小）
+      installSingle: `# 活动页请按需安装子包，避免把 91 个组件打进同一 chunk
 pnpm add @cos-design/weather-background
 pnpm add @cos-design/fireworks
 pnpm add @cos-design/scratch-card`,
@@ -262,18 +266,19 @@ export default function Page() {
     </>
   );
 }`,
-      ssr: `import dynamic from 'next/dynamic';
+      ssr: `'use client';
 
-const Fireworks = dynamic(
-  () => import('cos-design').then((m) => m.Fireworks),
-  { ssr: false }
+import dynamic from 'next/dynamic';
+
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  { ssr: false },
 );
 
-// 按需包同样适用：
-// const WeatherBackground = dynamic(
-//   () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
-//   { ssr: false }
-// );`,
+const Fireworks = dynamic(
+  () => import('@cos-design/fireworks').then((m) => m.Fireworks),
+  { ssr: false },
+);`,
       localDev: `git clone https://github.com/jiaxiantao/cos-design.git
 cd cos-design && npm run setup && pnpm dev
 # 访问 http://localhost:4000`,

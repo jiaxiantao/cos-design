@@ -25,15 +25,32 @@ Replace `/api/draw` with your lottery service when you ship.
 
 Scratch → Fireworks · Turntable server `spin(targetIndex)`
 
+## Client-only canvas
+
+`app/components/campaign-hero.tsx` is the canonical snippet (also copied in QUICKSTART):
+
+```tsx
+'use client';
+
+import dynamic from 'next/dynamic';
+
+const WeatherBackground = dynamic(
+  () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
+  { ssr: false },
+);
+```
+
+CSS-only components such as `NeonText` stay as static imports. Do not `import('cos-design')` for a campaign route.
+
 ## Why this shape
 
-| Topic   | Rule                                                            |
-| ------- | --------------------------------------------------------------- |
-| SSR     | Canvas components load with `next/dynamic(..., { ssr: false })` |
-| Size    | `fill` needs a parent with explicit height (`100vh` / fixed px) |
-| Density | One hero background + one interaction focal                     |
-| Busy    | NineGrid / Turntable expose `aria-busy` while animating         |
-| Pointer | Celebration canvases with `auto={false}` do not steal clicks    |
+| Topic   | Rule                                                                                                                   |
+| ------- | ---------------------------------------------------------------------------------------------------------------------- |
+| SSR     | Same recipe as [QUICKSTART.md](../../QUICKSTART.md): `'use client'` + `@cos-design/*` + `dynamic(..., { ssr: false })` |
+| Size    | `fill` needs a parent with explicit height (`100vh` / fixed px)                                                        |
+| Density | One hero background + one interaction focal                                                                            |
+| Busy    | NineGrid / Turntable expose `aria-busy` while animating                                                                |
+| Pointer | Celebration canvases with `auto={false}` do not steal clicks                                                           |
 
 ## Related
 

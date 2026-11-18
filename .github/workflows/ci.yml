@@ -48,6 +48,9 @@ jobs:
       - name: Verify WebGL dispose audit
         run: pnpm verify:webgl-dispose
 
+      - name: Verify bundle gzip budgets
+        run: pnpm verify:bundle-budget
+
       - name: Unit tests
         run: pnpm test:unit
 

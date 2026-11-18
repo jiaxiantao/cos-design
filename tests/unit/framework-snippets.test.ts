@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { version } from '../../package.json';
 import {
+  buildFrameworkSnippets,
   parseExampleProps,
   toElementTag,
   toScopedPackage,
@@ -32,5 +34,19 @@ const prizes = [{ label: 'A' }, { label: 'B' }, { label: 'C' }];
   it('maps export names to element tag and scoped package', () => {
     expect(toElementTag('NineGrid')).toBe('cos-nine-grid');
     expect(toScopedPackage('ScratchCard')).toBe('@cos-design/scratch-card');
+  });
+
+  it('builds a paste-ready HTML document for the Element tab', () => {
+    const code = `<Fireworks auto={false} interactive width={800} height={500} />`;
+    const html = buildFrameworkSnippets('Fireworks', code).element;
+    expect(html).toContain('<script type="module">');
+    expect(html).toContain("import '@cos-design/fireworks/element';");
+    expect(html).toContain(`https://esm.sh/@cos-design/fireworks@${version}/element`);
+    expect(html).toContain('<cos-fireworks');
+    expect(html).toContain('auto="false"');
+    expect(html).toContain('interactive');
+    expect(html).toContain('width="800"');
+    expect(html).toContain('height="500"');
+    expect(html).toContain('</cos-fireworks>');
   });
 });

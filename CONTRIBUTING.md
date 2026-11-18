@@ -2,6 +2,8 @@
 
 感谢你对 cos-design 的关注！欢迎通过 Issue 或 Pull Request 参与贡献。
 
+Issue 请用模板：**Bug 报告**、**新特效提案**、**框架适配**（`.github/ISSUE_TEMPLATE/`）。用法讨论走 GitHub Discussions；若入口还没开，见 [docs/github-discovery.md](./docs/github-discovery.md)。
+
 ## 开发环境
 
 - **Node.js >= 20**（见 `.nvmrc`）

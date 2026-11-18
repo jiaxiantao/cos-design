@@ -5,9 +5,7 @@ import { NeonText } from '@cos-design/neon-text';
 
 const WeatherBackground = dynamic(
   () => import('@cos-design/weather-background').then((m) => m.WeatherBackground),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 /** Full-viewport campaign open — one background + one brand signal. */

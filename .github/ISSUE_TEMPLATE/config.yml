@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 用法讨论（Discussions）
+    url: https://github.com/jiaxiantao/cos-design/discussions
+    about: 选型、接入和活动页配方走 Discussions。若页面 404，维护者需先在 Settings → General → Features 勾选 Discussions，步骤见 docs/github-discovery.md。
