@@ -15,9 +15,9 @@ import {
   componentUsesThree,
   listComponentNames,
   packageNameOf,
-  toExportName
+  toExportName,
 } from './component-packages.mjs';
-import { extraExportLines } from './v4-package-exports.mjs';
+import { extraExportLines, vueExtraExportLines } from './v4-package-exports.mjs';
 import { isV4Component, V4_ENTRIES } from './v4-utils.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -30,7 +30,7 @@ function run(cmd, args, env = {}) {
       cwd: ROOT,
       stdio: 'inherit',
       shell: process.platform === 'win32',
-      env: { ...process.env, ...env }
+      env: { ...process.env, ...env },
     });
     child.on('exit', (code) => {
       if (code === 0) resolve();
@@ -57,14 +57,14 @@ function writeLegacyTypesEntry(name) {
   const lines = [
     `export { default } from '${componentDts}';`,
     `export { default as ${exportName} } from '${componentDts}';`,
-    `export type * from '${componentDts}';`
+    `export type * from '${componentDts}';`,
   ];
 
   const liveDts = join(distDir, 'src', 'components', name, 'live-weather.d.ts');
   if (existsSync(liveDts)) {
     lines.push(
       `export { mapWmoCodeToWeatherType, useLiveWeather } from './src/components/${name}/live-weather';`,
-      `export type { LiveWeatherCoords, LiveWeatherState, LiveWeatherStatus, OpenMeteoCurrent } from './src/components/${name}/live-weather';`
+      `export type { LiveWeatherCoords, LiveWeatherState, LiveWeatherStatus, OpenMeteoCurrent } from './src/components/${name}/live-weather';`,
     );
   }
 
@@ -85,8 +85,8 @@ function writeV4TypesEntry(name, entry) {
         `export { default as ${exportName} } from '${componentRoot}/react';`,
         `export type * from '${componentRoot}/core/types';`,
         ...(extra ? extraExportLines(componentRoot, extra) : []),
-        ''
-      ].join('\n')
+        '',
+      ].join('\n'),
     );
     return;
   }
@@ -97,8 +97,9 @@ function writeV4TypesEntry(name, entry) {
       [
         `export { default as ${exportName} } from '${componentRoot}/vue/${exportName}.vue';`,
         `export type * from '${componentRoot}/core/types';`,
-        ''
-      ].join('\n')
+        ...vueExtraExportLines(name, componentRoot),
+        '',
+      ].join('\n'),
     );
     return;
   }
@@ -115,7 +116,9 @@ function writeV4TypesEntry(name, entry) {
 
 function writeSharedTypesEntry(entry) {
   const distDir =
-    entry === 'react' ? join(PACKAGES_DIR, 'shared', 'dist', 'react') : join(PACKAGES_DIR, 'shared', 'dist');
+    entry === 'react'
+      ? join(PACKAGES_DIR, 'shared', 'dist', 'react')
+      : join(PACKAGES_DIR, 'shared', 'dist');
 
   const nested =
     entry === 'react'
@@ -133,8 +136,8 @@ function writeSharedTypesEntry(entry) {
       [
         "export { useElementSize, useCanvasBox, resolveCanvasBoxSize } from './packages/shared/src/react/index';",
         "export type { UseElementSizeOptions, UseCanvasBoxOptions, UseCanvasBoxResult, CanvasBoxSizeInput, CanvasBoxSize } from './packages/shared/src/react/index';",
-        ''
-      ].join('\n')
+        '',
+      ].join('\n'),
     );
     return;
   }
@@ -144,8 +147,8 @@ function writeSharedTypesEntry(entry) {
     [
       "export { clamp, lerp, bindVisibilityPause, prefersReducedMotion, bindPrefersReducedMotion, observeElementSize, getRelativePointerPosition, resolveCanvasBoxSize } from './packages/shared/src/index';",
       "export type { ElementSize, PointerPosition, PhotoItem, PhotoIndexChangeHandler, PhotoFaceChangeHandler, CanvasBoxSizeInput, CanvasBoxSize } from './packages/shared/src/index';",
-      ''
-    ].join('\n')
+      '',
+    ].join('\n'),
   );
 }
 
@@ -161,18 +164,18 @@ function writeUmbrellaTypesEntry() {
   writeFileSync(join(distDir, 'elements.d.ts'), "export * from './src/elements';\n");
 }
 
-async function buildPackageEntry(name, entry, { usesShared = false, usesThree = false, emptyOutDir = false } = {}) {
-  await run(
-    'pnpm',
-    ['exec', 'vite', 'build', '--config', VITE_CONFIG],
-    {
-      COS_PACKAGE: name,
-      COS_ENTRY: entry,
-      COS_PACKAGE_USES_SHARED: usesShared ? '1' : '',
-      COS_PACKAGE_USES_THREE: usesThree ? '1' : '',
-      COS_EMPTY_OUT_DIR: emptyOutDir ? '1' : ''
-    }
-  );
+async function buildPackageEntry(
+  name,
+  entry,
+  { usesShared = false, usesThree = false, emptyOutDir = false } = {},
+) {
+  await run('pnpm', ['exec', 'vite', 'build', '--config', VITE_CONFIG], {
+    COS_PACKAGE: name,
+    COS_ENTRY: entry,
+    COS_PACKAGE_USES_SHARED: usesShared ? '1' : '',
+    COS_PACKAGE_USES_THREE: usesThree ? '1' : '',
+    COS_EMPTY_OUT_DIR: emptyOutDir ? '1' : '',
+  });
 }
 
 async function buildPackage(name, opts = {}) {
@@ -226,7 +229,7 @@ async function main() {
   await mapPool(names, CONCURRENCY, async (name) => {
     await buildPackage(name, {
       usesShared: componentUsesShared(name),
-      usesThree: componentUsesThree(name)
+      usesThree: componentUsesThree(name),
     });
   });
 

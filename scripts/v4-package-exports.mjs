@@ -81,6 +81,11 @@ export function writeV4PackageEntries(name, srcDir, exportName, extra) {
     lines.react.push(...extraExportLines(componentPath, extra));
   }
 
+  const vueExtra = vueExtraExportLines(name, componentPath);
+  if (vueExtra.length) {
+    lines.vue.push(...vueExtra);
+  }
+
   const written = [];
   for (const [entry, content] of Object.entries(lines)) {
     const filePath = join(srcDir, `${entry}.ts`);
@@ -89,19 +94,56 @@ export function writeV4PackageEntries(name, srcDir, exportName, extra) {
   }
 
   // EXTRA_EXPORTS 容易触发 printWidth 差异；用 prettier 固定格式，避免 sync 反复改写。
-  if (extra) {
+  const prettierTargets = [];
+  if (extra) prettierTargets.push('react.ts');
+  if (vueExtra.length) prettierTargets.push('vue.ts');
+  if (prettierTargets.length) {
     const prettierBin = join(REPO_ROOT, 'node_modules/prettier/bin/prettier.cjs');
-    const reactEntry = written.find(
-      (p) => p.endsWith(`${join('src', 'react.ts')}`) || p.endsWith('/react.ts'),
-    );
-    if (reactEntry && existsSync(prettierBin)) {
-      try {
-        execFileSync(process.execPath, [prettierBin, '--write', reactEntry], { stdio: 'ignore' });
-      } catch {
-        // prettier optional during bootstrap
+    if (existsSync(prettierBin)) {
+      for (const fileName of prettierTargets) {
+        const entryPath = written.find(
+          (p) => p.endsWith(`${join('src', fileName)}`) || p.endsWith(`/${fileName}`),
+        );
+        if (!entryPath) continue;
+        try {
+          execFileSync(process.execPath, [prettierBin, '--write', entryPath], { stdio: 'ignore' });
+        } catch {
+          // prettier optional during bootstrap
+        }
       }
     }
   }
+}
+
+/**
+ * Vue 包入口的额外具名导出。
+ * 只有 WeatherBackground 有 Vue composable；其余组件仍只导出 SFC。
+ * 这些符号与 docs/examples/weather-background-vue.md 的 import 一致。
+ */
+export function vueExtraExportLines(name, componentPath) {
+  if (name !== 'weatherBackground') return [];
+  const from = `${componentPath}/vue/useLiveWeather`;
+  return [
+    'export {',
+    '  useLiveWeather,',
+    '  useSunTimes,',
+    '  fetchLiveWeather,',
+    '  fetchSunTimes,',
+    '  formatLocalHm,',
+    '  getDayCycleTimesFromLive,',
+    '  IDLE_LIVE_WEATHER,',
+    '  isValidCoords,',
+    '  mapWmoCodeToWeatherType,',
+    '  subscribeLiveWeather,',
+    '  subscribeSunTimes,',
+    `} from '${from}';`,
+    'export type {',
+    '  LiveWeatherCoords,',
+    '  LiveWeatherState,',
+    '  LiveWeatherStatus,',
+    '  OpenMeteoCurrent,',
+    `} from '${from}';`,
+  ];
 }
 
 /** EXTRA_EXPORTS 按 from 分组，生成具名 export 行（多符号时换行，避免 prettier 反复改写） */

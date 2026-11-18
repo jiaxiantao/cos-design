@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `WeatherBackground` Vue：`useLiveWeather` / `useSunTimes`（`src/components/weatherBackground/vue/useLiveWeather.ts`，说明见 [docs/examples/weather-background-vue.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/examples/weather-background-vue.md)）
+- `WeatherBackground` Vue：`@cos-design/weather-background/vue` 导出 `useLiveWeather` / `useSunTimes`（实现 `src/components/weatherBackground/vue/useLiveWeather.ts`，说明见 [docs/examples/weather-background-vue.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/examples/weather-background-vue.md)）
 - `@cos-design/shared` 导出 `element-options`（`readBooleanAttr`、`readNumberAttr`、`readStringAttr`、`readJsonAttr`、`readPropertyOverride`、`camelToKebabAttr`、`optionCallbackDispatcher`、`BooleanAttrMode`），Element 适配器共用解析
 - GitHub 发现：仓库内记录多框架 About / topics；Issue 模板分为 Bug、新特效提案、框架适配。Discussions 需维护者在 Settings 勾选（见 [docs/github-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/github-discovery.md)）
 - Playground Element Tab：「复制 HTML」得到含 `script type="module"`、自定义元素和关键属性（含 `auto="false"`）的完整页面
