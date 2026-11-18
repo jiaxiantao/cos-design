@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/confetti",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Confetti component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",

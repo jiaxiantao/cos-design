@@ -7,29 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-已合并进 `master`、尚未发版的候选。版本号仍是 4.0.0，下列条目不是已发布的 npm 变更。
+## [4.1.0] - 2026-11-18
 
-### 4.0.1 候选（P0，PR #5 已在 master）
+4.0.0 发布后合入 `master`、此前未上 npm 的两段改动随本版本一起发布：PR #5（P0 硬化与 4.1 质量项）和 PR #6（P1 发现、HTML 片段、减少动效与体积预算）。全部包版本对齐到 **4.1.0**。
+
+### Added
+
+- `WeatherBackground` Vue：`useLiveWeather` / `useSunTimes`（`src/components/weatherBackground/vue/useLiveWeather.ts`，说明见 [docs/examples/weather-background-vue.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/examples/weather-background-vue.md)）
+- `@cos-design/shared` 导出 `element-options`（`readBooleanAttr`、`readNumberAttr`、`readStringAttr`、`readJsonAttr`、`readPropertyOverride`、`camelToKebabAttr`、`optionCallbackDispatcher`、`BooleanAttrMode`），Element 适配器共用解析
+- GitHub 发现：仓库内记录多框架 About / topics；Issue 模板分为 Bug、新特效提案、框架适配。Discussions 需维护者在 Settings 勾选（见 [docs/github-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/github-discovery.md)）
+- Playground Element Tab：「复制 HTML」得到含 `script type="module"`、自定义元素和关键属性（含 `auto="false"`）的完整页面
+- 减少动效审计表 [docs/a11y-reduced-motion.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/a11y-reduced-motion.md)
+- 活动页按需安装说明，以及 `pnpm verify:bundle-budget`（代表性包 gzip；仅 `photoLantern` 引用 `three`）
+- WebGL dispose 清单与脚本
+
+### Changed
 
 - CI：`verify:v4-matrix`、`verify:v4-runtime`、`verify:webgl-dispose`
 - Playwright 多框架 smoke（Vue / Web Components / Core）
-- Vitest：抽奖与属性解析
-- WebGL dispose 清单与脚本
-
-### 4.1 候选（同一次合并，已在 master）
-
-- `WeatherBackground` Vue：`useLiveWeather` / `useSunTimes`
-- `@cos-design/shared` 的 `element-options`，Element 适配器共用解析
-- Core 单测加深（FlipCard 受控、ScratchCard 阈值、dispose smoke）
+- Vitest：抽奖与属性解析；Core 单测加深（FlipCard 受控、ScratchCard 阈值、dispose smoke）
 - CI 构建 `examples/vue-app` 与 `examples/vanilla`
-
-### 4.1.x 候选（本轮 P1）
-
-- GitHub 发现：仓库内记录多框架 About / topics；Issue 模板分为 Bug、新特效提案、框架适配。Discussions 需维护者在 Settings 勾选（见 [docs/github-discovery.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/github-discovery.md)）
-- Playground Element Tab：「复制 HTML」得到含 `script type="module"`、自定义元素和关键属性（含 `auto="false"`）的完整页面
-- 减少动效审计表 [docs/a11y-reduced-motion.md](https://github.com/jiaxiantao/cos-design/blob/master/docs/a11y-reduced-motion.md)。`LavaBubble` / `SoapBubbles` 在减少动效时停在首帧；`MatrixRain` 标题与天气加载圈不再空转
+- `LavaBubble` / `SoapBubbles` 在减少动效时停在首帧；`MatrixRain` 标题与天气加载圈不再空转
 - Next.js client-only 写法在 QUICKSTART、`examples/next-app` 与 Playground 快速开始中对齐为 `'use client'` + `@cos-design/*` + `dynamic(..., { ssr: false })`
-- 活动页按需安装说明，以及 `pnpm verify:bundle-budget`（代表性包 gzip；仅 `photoLantern` 引用 `three`）
+- 聚合包 `cos-design` 与全部 `@cos-design/*` 子包：4.0.0 → 4.1.0
 
 ## [4.0.0] - 2026-09-23
 

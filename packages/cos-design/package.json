@@ -1,6 +1,6 @@
 {
   "name": "cos-design",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Multi-framework visual-effect components for marketing pages, campaigns, canvas backgrounds, and creative showcases (React / Vue / Web Components)",
   "type": "module",
   "main": "./dist/index.cjs",

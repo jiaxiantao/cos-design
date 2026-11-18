@@ -1,6 +1,6 @@
 {
   "name": "@cos-design/burn-away",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "BurnAway component from cos-design",
   "type": "module",
   "main": "./dist/react/index.cjs",
